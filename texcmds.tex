@@ -1,0 +1,251 @@
+%% ------------------
+%% Helpers when writing (display the TODO notes and TODO list)
+%% ------------------
+
+\usepackage{todonotes}[french]
+\usepackage{etoolbox}
+
+\newtoggle{todolist}
+\togglefalse{todolist}
+
+\newcommand{\phdseetodo}{\toggletrue{todolist}}
+\newcommand{\phdhidetodo}{\togglefalse{todolist}}
+\newcommand{\phdtodotoc}{\iftoggle{todolist}{\clearpage\listoftodos}{}}
+\newcommand{\phdtodomargin}[2][green]{\iftoggle{todolist}{\todo[color=#1!40]{#2}}{}}
+\newcommand{\phdtodo}[2][green]{\iftoggle{todolist}{\todo[inline, color=#1!40]{#2}}{}}
+\newcommand{\phdmissingfig}[2]{\missingfigure{#1}}
+
+%% ----------------------------------------------------------------
+%% --- change font
+%%
+%% --- float with adjusting left / right margins using
+%% \begin{figure}[t]
+%%  \centering
+%%  \addtolength{\leftskip}{-3cm}
+%%  \addtolength{\rightskip}{-3cm}
+%%  % figure content
+%% \end{figure}
+%%
+%% --- custom ("pro") arrays with \toprule, \midrule, \cmidrule and \bottomrule
+%% ----------------------------------------------------------------
+\renewcommand{\familydefault}{\rmdefault}
+\makeatletter
+\newcommand*{\centerfloat}{%
+  \parindent \z@
+  \leftskip \z@ \@plus 1fil \@minus \textwidth
+  \rightskip\leftskip
+  \parfillskip \z@skip}
+\makeatother
+
+\usepackage{subcaption}
+\usepackage{wrapfig}
+\usepackage{pdflscape}
+\usepackage{multirow, makecell}
+\usepackage{array,booktabs}
+
+% - Use column specifier R/C/L{size} when declaring array to fix column size with
+% - specified alignment
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+%% ----------------------------------------------------------------
+%% --- Glossary and acronyms handling
+%% - Entries loading from file.tex (don't specify the .tex extension in file below)
+%% - load acronyms definitions with \loadglsentries[\acronymtype]{file}
+%% - load main glossary entries with \loadglsentries[main]{file}
+%%
+%% - Multi-lingual acronyms declared with :
+%% \newacronym[frshort=IdO, % french acronym
+%%            frlong=Internet des Objets] % french description
+%%            {iot}
+%%            {IoT} % english acronym
+%%            {Internet of Things} % english description
+%% Note that frlong entry is not mandatory, but frshort is.
+%%
+%% Use standard \gls command for english acronym,
+%% \acrlongfr{iot} or \acrshortfr{iot} for english one.
+%%
+%% - Add glossaries in manuscrit.tex after definitions list with
+%% \printglossary[type=\acronymtype,style=listfracr]
+%% \printglossary
+%%
+%% Refer to glossary package for more infos (e.g makeglossaries command,
+%% xindy command, etc)
+%% ----------------------------------------------------------------
+\usepackage[xindy,acronym,toc,shortcuts]{glossaries}
+\usepackage[xindy]{imakeidx}
+\makeglossaries
+\makeindex
+
+\makeatletter
+\newcommand*{\glsplainhyperlink}[2]{%
+  \colorlet{currenttext}{.}% store current text color
+  \colorlet{currentlink}{\@linkcolor}% store current link color
+  \hypersetup{linkcolor={red!40!black}}% set link color to text color
+  \hyperlink{#1}{#2}% create link
+  \hypersetup{linkcolor=currentlink}% reset link color to original
+}
+\let\@glslink\glsplainhyperlink
+\makeatother
+
+% -- adding keys for multilingual acronyms
+% -- french name and french acronym
+\glsaddkey{frshort}
+{}% default value
+{\glsentryfrshort}
+{\Glsentryfrshort}
+{\acrfrshort}
+{\Acrfrshort}
+{\ACRfrshort}
+
+\glsaddkey{frlong}
+{}
+{\glsentryfrlong}
+{\Glsentryfrlong}
+{\acrfrlong}
+{\Acrfrlong}
+{\ACRfrlong}
+
+% -- test if new keys are present in entry
+\newcommand*{\glsifhasfrshort}[3]{%
+  \ifcsempty{glo@#1@frshort}{#3}{#2}%
+}
+
+\newcommand*{\glsifhasfrlong}[3]{%
+  \ifcsempty{glo@#1@frlong}{#3}{#2}%
+}
+
+\newcommand*{\glsifhasfr}[3]{%
+  \glsifhasfrshort{#1}{#2}{\glsifhasfrlong{#1}{#2}{#3}}
+}
+
+\newcommand*{\acrshortfr}[1]{%
+  \glsifhasfrshort{#1}{\acrfrshort{#1}}{\acrshort{#1}}%
+}
+
+\newcommand*{\acrlongfr}[1]{%
+  \glsifhasfrlong{#1}{\acrfrlong{#1}}{\acrlong{#1}}%
+}
+
+% -- define new acronym style
+\newacronymstyle{fracr}
+{%
+  \GlsUseAcrEntryDispStyle{long-short}%
+}%
+{% base definition on 'long-short'
+  % make some modifications for first use display
+  % Singular, no case change:
+  \GlsUseAcrStyleDefs{long-short}%
+  \renewcommand*{\genacrfullformat}[2]{%
+    \glsifhasfr{##1}%
+    {%
+      \glsentrylong{##1}##2,%
+      \space\firstacronymfont{\glsentryshort{##1}}\space%
+      (\textit{fr : \glsifhasfrlong{##1}%
+        {\glsentryfrlong{##1}##2\glsifhasfrshort{##1}{, \space}{}}{}%
+        \glsifhasfrshort{##1}{\glsentryfrshort{##1}}{}})%
+    }%
+    {%
+      \glsentrylong{##1}##2,
+      \space(\firstacronymfont{\glsentryshort{##1}})%
+    }%
+  }%
+  % Singular, first letter upper case
+  \renewcommand*{\Genacrfullformat}[2]{%
+    \glsifhasfr{##1}%
+    {%
+      \Glsentrylong{##1}##2,
+      \space\firstacronymfont{\glsentryshort{##1}}\space
+      (\textit{fr : \glsifhasfrlong{##1}%
+        {\glsentryfrlong{##1}##2\glsifhasfrshort{##1}{, \space}{}}{}%
+        \glsifhasfrshort{##1}{\glsentryfrshort{##1}}{}})%
+    }%
+    {%
+      \Glsentrylong{##1}##2,
+      \space(\firstacronymfont{\glsentryshort{##1}})%
+    }%
+  }%
+  % Plural, no case change:
+  \renewcommand*{\genplacrfullformat}[2]{%
+    \glsifhasfr{##1}%
+    {%
+      \glsentrylongpl{##1}##2,
+      \space\firstacronymfont{\glsentryshortpl{##1}}\space,
+      (\textit{fr : \glsifhasfrlong{##1}%
+        {\glsentryfrlong{##1}##2\glsifhasfrshort{##1}{, \space}{}}{}%
+        \glsifhasfrshort{##1}{\glsentryfrshort{##1}}{}})%
+    }%
+    {%
+      \glsentrylongpl{##1}##2,
+      \space(\firstacronymfont{\glsentryshortpl{##1}})%
+    }%
+  }%
+  % Plural, first letter upper case:
+  \renewcommand*{\Genplacrfullformat}[2]{%
+    \glsifhasfr{##1}%
+    {%
+      \Glsentrylongpl{##1}##2,
+      \space\firstacronymfont{\glsentryshortpl{##1}}\space,
+      (\textit{fr : \glsifhasfrlong{##1}%
+        {\glsentryfrlong{##1}##2\glsifhasfrshort{##1}{, \space}{}}{}%
+        \glsifhasfrshort{##1}{\glsentryfrshort{##1}}{}})%
+    }%
+    {%
+      \Glsentrylongpl{##1}##2,
+      \space(\firstacronymfont{\glsentryshortpl{##1}})%
+    }%
+  }%
+}
+
+\setacronymstyle{fracr}
+
+\newglossarystyle{listfracr}{%
+  \setglossarystyle{list}%
+  \renewcommand*{\glossentry}[2]{%
+  \item[\glsentryitem{##1}%
+    \glstarget{##1}{\glossentryname{##1}}]
+    \glossentrydesc{##1}%
+    \glsifhasfrlong{##1}%
+      {\space(\textit{fr : \glsentryfrlong{##1}}\glsifhasfrshort{##1}{,\space}{)}}%
+      {\glsifhasfrshort{##1}{\space(\textit{fr : }}{}}%
+    \glsifhasfrshort{##1}{\textit{\glsentryfrshort{##1}})}{}%
+    \glspostdescription\space ##2}%
+}
+
+%% ----------------------------------------------------------------
+%% --- Configure hyperlinks, minitoc, epigraph
+%% ----------------------------------------------------------------
+\usepackage{xcolor}
+\hypersetup{
+  colorlinks,
+  linkcolor={red!80!black},
+  citecolor={blue!70!black},
+  urlcolor={blue!50!black},
+}
+
+\usepackage{minitoc}
+\setcounter{minitocdepth}{2}
+
+\usepackage{epigraph}
+\setlength{\epigraphwidth}{0.7\textwidth}
+\usepackage{csquotes}
+
+% Include the listings-package for code listings
+\usepackage{algpseudocode}
+\usepackage{algorithm}
+%\usepackage{listings}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+\usepackage{amsmath}
+\usepackage{cleveref}
+\usepackage[inline]{enumitem}
+\usepackage{siunitx}
+\usepackage{subcaption}
+
+% Parameters
+\newlist{inenum}{enumerate*}{1}
+\setlist[inenum]{label=(\roman*)}
+\sisetup{range-phrase=--}
