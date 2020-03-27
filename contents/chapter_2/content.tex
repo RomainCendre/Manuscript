@@ -45,30 +45,29 @@ Après avoir abordé de manière non exhaustive les majeures pathologies de la p
 \subsection{Modalités de mesure optique}
 \begin{table}[H]
 \begin{tabular}{lllll}
-\textbf{Technologie}                                                                  & \textbf{Mode d’émission} & \textbf{Résolution Spatiale} & \textbf{Profondeur}                   \\ \hline
-Imagerie clinique                                                                     & Réflectance              & Lentille dépendant           & Surface                               \\
-Dermatoscope                                                                          & Réflectance              & Lentille dépendant           & Surface                               \\
-Microscope confocale                                                                  & Réflectance              & \si{\micro\metre}            & \textless{} \SI{200}{\micro\metre}    \\
-\begin{tabular}[c]{@{}l@{}}Tomographie en cohérence\\   optique\end{tabular}          & Réflectance              & \si{\micro\metre}            & \SIrange{1}{2}{\milli\metre}          \\
-Imagerie spectrale                                                                    & Réflectance              & Lentille dépendant           & \SIrange{0.1}{1}{\milli\metre}       \\
-\begin{tabular}[c]{@{}l@{}}Spectroscopie à réflexion\\   diffuse\end{tabular}         & Réflectance              & Diamètre de la fibre         & \SIrange{0.1}{1}{\milli\metre}        \\
-Spectroscopie de fluorescence                                                         & Fluorescence             & Diamètre de la fibre         & \SIrange{0.1}{1}{\milli\metre}        \\
-Microscope confocal Raman                                                             & Raman                    & \si{\micro\metre}            & \SI{150}{\milli\metre}                \\
-Réflectance totale atténuée                                                           & ATR                      & Dimension du Crystal         & \textless{} \SI{2}{\micro\metre}      \\
+\textbf{Technologie}                                                                & \textbf{Mode d’émission} & \textbf{Résolution Spatiale} & \textbf{Profondeur}                   \\ \hline
+Imagerie clinique                                                                   & Réflectance              & Lentille dépendant           & Surface                               \\
+Dermatoscope                                                                        & Réflectance              & Lentille dépendant           & Surface                               \\
+Microscope confocale par réflectance                                                & Réflectance              & \si{\micro\metre}            & \textless{} \SI{200}{\micro\metre}    \\
+Tomographie en cohérence optique                                                    & Réflectance              & \si{\micro\metre}            & \SIrange{1}{2}{\milli\metre}          \\
+Imagerie spectrale                                                                  & Réflectance              & Lentille dépendant           & \SIrange{0.1}{1}{\milli\metre}        \\
+Spectroscopie à réflexion/fluorescence                                              & Réflectance/Fluorescence & Diamètre de la fibre         & \SIrange{0.1}{1}{\milli\metre}        \\
+Microscope confocal Raman                                                           & Raman                    & \si{\micro\metre}            & \SI{150}{\milli\metre}                \\
+% Réflectance totale atténuée                                                         & ATR                      & Dimension du Crystal         & \textless{} \SI{2}{\micro\metre}      \\
 \end{tabular}
-\caption{Aperçu des divers type d’imageurs utilisés en dermatologie \cite{Kollias2002}.}
+\caption{Aperçu des principales modalités de mesure optique utilisés en dermatologie à but clinique ou exéprimentales \cite{Kollias2002}.}
 \label{tab:light_absorption}
 \end{table}
 \subsubsection{Imagerie clinique}
 L’examen de dépistage classique est associé en dermatologie à une inspection à l’œil nu exercée par une personne compétente ou sensibilisée à la détection de pathologies. Cette première modalité fait appel à un dispositif de photographie non propre à la dermatologie. Par ailleurs, n’étant pas spécifique à ce domaine, elle constitue la modalité la moins onéreuse de la discipline dans le cadre de l’imagerie des lésions.\par
 Cette modalité, avant l’avènement de l’informatique, se basait sur des supports de type argentique. L’évolution de ce matériel vers le numérique, et l’arrivée de systèmes de type \gls{pacs} ont conjointement motivé une transition vers des données dématérialisées.\par
 Ce type d’imagerie donne à l’observateur un point de vue subjectif, similaire à une observation à l’œil nu, utile dans le cadre d’un diagnostic à distance ou dans le suivi à long terme d’un patient. Néanmoins, l'un des points faible est le manque de standard concernant le format d'image et de protocole concernant l'acquisition des images: pas de contraintes d'éclairage, ni de contraintes sur le point de vue à adopter au moment de la prise d'image. Ces éléments amènent à une grande diversité de données, comme nous pouvons le voir en \Cref{fig:photography_example}.\par
-\begin{figure}
+\begin{figure}[H]
 \centering
     \begin{subfigure}{.5\textwidth}
       \centering
       \includegraphics[width=\linewidth]{contents/chapter_2/resources/photography_example_1.png}
-    \end{subfigure}%
+    \end{subfigure}
     \begin{subfigure}{.5\textwidth}
       \centering
       \includegraphics[width=\linewidth]{contents/chapter_2/resources/photography_example_2.png}
@@ -80,14 +79,13 @@ Ce type d’imagerie donne à l’observateur un point de vue subjectif, similai
 La dermatoscopie est l'une modalité d’imagerie mise à disposition des praticiens en dermatologie qui a connu son essor durant les années 1980. Également appelé dermatoscopie, microscopie en épiluminescence ou encore microscopie de surface, ce dispositif permet d’observer les lésions cutanées. Cette technique d’imagerie est partiellement attribuée à Johan Christophorus Kohlhaus dont les travaux menés, au XVIIème siècle, sur la microscopie de surface, auraient grandement contribué à initier cette modalité.\par
 Cet outil possède comme première caractéristique, de réduire les réflexions de lumière et contribue à rendre le stratum corneum translucide \cite{Katz2001}, permettant ainsi au praticien de visualiser les couches sous-jacentes : épiderme, jonction derme/épiderme ou encore le derme papillaire non visible à l’œil nu. Cette réflexion de lumière était initialement supprimée par l’utilisation d’un fluide (eau, gel, …) entre la peau et le dispositif, mais ce procédé est devenu obsolète sur les derniers modèles avec l’utilisation de lumière  polarisée \cite{Campos-do-Carmo2008}.\par
 Une seconde caractéristique non négligeable, est la mise à disposition d’un zoom pouvant varier de 10x à 70x selon la complexité des modèles proposés \cite{Campos-do-Carmo2008}. Cette dernière caractéristique octroie au praticien la possibilité d’appréhender au mieux la structure dans ses moindres détails.\par
-De plus, son faible coût d’achat, sa rapidité de diagnostic et son efficacité en comparaison avec le seul œil humain \cite{Lallas2013} contribuent largement  à sa démocratisation dans la profession. Bien qu’utilisé majoritairement dans le dépistage de lésions pigmentaires, son efficacité semble avérée dans le cas de lésions dites non pigmentaires (BCC et SCC) \cite{Lallas2013}. Ces dispositifs tendent à s'adapter de plus en plus à leur marché, s'orientant vers une utilisation tel en \Cref{fig:dermatoscope_example}.\par
-
-\begin{figure}
+De plus, son faible coût d’achat, sa rapidité de diagnostic et son efficacité en comparaison avec le seul œil humain \cite{Lallas2013} contribuent largement  à sa démocratisation dans la profession. Bien qu’utilisé majoritairement dans le dépistage de lésions pigmentaires, son efficacité semble avérée dans le cas de lésions dites non pigmentaires (\gls{bcc} et \gls{scc}) \cite{Lallas2013}. Ces dispositifs tendent à s'adapter de plus en plus à leur marché, s'orientant vers une utilisation tel en \Cref{fig:dermatoscope_example}.\par
+\begin{figure}[H]
 \centering
     \begin{subfigure}{.33\textwidth}
       \centering
       \includegraphics[width=\linewidth]{contents/chapter_2/resources/dermatoscope_example_1.png}
-    \end{subfigure}%
+    \end{subfigure}
     \begin{subfigure}{.33\textwidth}
       \centering
       \includegraphics[width=\linewidth]{contents/chapter_2/resources/dermatoscope_example_2.png}
@@ -100,36 +98,29 @@ De plus, son faible coût d’achat, sa rapidité de diagnostic et son efficacit
     \label{fig:dermatoscope_example}
 \end{figure}\par
 
-\subsubsection{Microscopie confocale}
-La microscopie confocale ou monofocale est une technique d’imagerie décrite durant les années 1950 par Marvin Minsky. Les avancés réalisées durant les années 1990 ont permis de réduire considérablement la taille de cet appareil et de faciliter ainsi son utilisation dans divers domaines. Cette techniques de plus en plus répandue dans les services de dermatologie a également connu un regain de notoriété dans les journaux scientifiques : une recherche à l’aide des mots clés « reflectance confocal microscopy skin » apporte une dizaine de publications en 2000 contre 150 en 2010.\par
- 
+\subsubsection{Microscopie confocale par réflectance}
+La \gls{rcm} est une technique d’imagerie décrite durant les années 1950 par Marvin Minsky. Les avancés réalisées durant les années 1990 ont permis de réduire considérablement la taille de cet appareil et de faciliter ainsi son utilisation dans divers domaines. Cette techniques de plus en plus répandue dans les services de dermatologie a également connu un regain de notoriété dans les journaux scientifiques: une recherche à l’aide des mots clés « reflectance confocal microscopy skin » apporte une dizaine de publications en 2000 contre 150 en 2010.\par
 \begin{figure}[H]
-    \begin{center}
-        \includegraphics[width=0.6\linewidth]{contents/chapter_2/resources/rcm_principle.pdf}
-        \caption{Schéma de fonctionnement du microscope confocal en deux temps: un laser est émis et focalisé en un point spécifique de la peau (Émission) puis la lumière est réfléchie et reçue par une caméra au travers d'un trou de faible diamètre (Réception).}
-        \label{fig:rcm}
-    \end{center} 
-    \caption{A gauche, un prototype déposé par Minsky en 1988. A droite, une version actuelle de microscope confocal. Sources : mit.edu et [19] }
+\centering
+    \includegraphics[width=0.6\linewidth]{contents/chapter_2/resources/rcm_principle.pdf}
+    \caption{Schéma de fonctionnement du \gls{rcm} en deux temps: un laser est émis et focalisé en un point spécifique de la peau (Émission) puis la lumière est réfléchie et reçue par une caméra au travers d'un trou de faible diamètre (Réception).}
+    \label{fig:rcm_principle}
 \end{figure}\par
-
-Cette technique emploie l’utilisation d’un sténopé  situé devant le capteur et permet de conserver uniquement les photons issus du plan focal choisi (Figure 23). Nous pouvons par ce principe, obtenir différents plans focaux ou plans de coupes, participant à l’obtention d’une information 3D. En dermatologie, les dispositifs se basent sur des longueurs d’ondes de 830 nm non invasives pour la peau et les yeux, mais limitent la profondeur de l’imageur à 200–300 µm. 
-Pour finir, à la manière du dermoscope, un gel à base d’eau de réfraction proche de celle de l’épiderme est utilisé entre la lentille du microscope et la peau afin de limiter la perte de photons et de permettre l’obtention d’image du derme.
+Cette technique emploie l’utilisation d’un sténopé situé devant le capteur et permet de conserver uniquement les photons issus du plan focal choisi, illustré en \Cref{fig:rcm_principle}. Nous pouvons par ce principe, obtenir différents plans focaux ou plans de coupes, participant à l’obtention d’une information 3D. En dermatologie, les dispositifs se basent sur des longueurs d’ondes de \SI{830}{\nano\metre} non invasives pour la peau et les yeux, mais limitent la profondeur de du dispositif à \SIrange{200}{300}{\micro\metre}.\par
+Pour finir, à la manière du dermatoscope, un gel à base d’eau de réfraction proche de celle de l’épiderme est utilisé entre la lentille du microscope et la peau afin de limiter la perte de photons et de permettre l’obtention d’image du derme.\par
 
 \subsubsection{Tomographie en cohérence optique}
-Initialement conçue pour le domaine de l’ophtalmologie, la tomographie en cohérence optique (OCT pour Optical Coherence Tomography) est une technologie récente qui tend à se démocratiser à de nombreux domaines d’intervention dont celui de la dermatologie. Ces dispositifs se basent sur un principe d’interférométrie, préalablement utilisée pour les dispositifs dits d’interférométrie à faible cohérence temporelle fournissant une information à une dimension. Le principe consiste à utiliser une source de lumière commune divisée en deux faisceaux, l’un servant de référence et le second servant à l’analyse de l’échantillon considéré. Le faisceau de référence possède un miroir ajustable, permettant de modifier sa distance parcourue et définissant ainsi la profondeur d’échantillon analysable. En effet, deux faisceaux peuvent interférer si la distance parcourue (et leur déphasage) est identique (Figure 24).
-L’OCT est une extension de ce principe à deux dimensions, permettant la caractérisation d’une « tranche » de tissu. Cette modalité d’imagerie propose ainsi une information temps réel en profondeur (de l’ordre du millimètre), avec une résolution proche du micromètre. Nous pouvons obtenir, par acquisition de plusieurs plans de coupe, une reconstruction de la peau et de ses structures (Figure 25).
+Initialement conçue pour le domaine de l’ophtalmologie, la \gls{oct} est une technologie récente qui tend à se démocratiser à de nombreux domaines d’intervention dont celui de la dermatologie. Ces dispositifs se basent sur un principe d’interférométrie, préalablement utilisée pour les dispositifs dits d’interférométrie à faible cohérence temporelle fournissant une information à une dimension. Le principe consiste à utiliser une source de lumière commune divisée en deux faisceaux, l’un servant de référence et le second servant à l’analyse de l’échantillon considéré. Le faisceau de référence possède un miroir ajustable, permettant de modifier sa distance parcourue et définissant ainsi la profondeur d’échantillon analysable. En effet, deux faisceaux peuvent interférer si la distance parcourue (et leur déphasage) est identique \Cref{fig:oct_principle}.\par
+L’\gls{oct} est une extension de ce principe à deux dimensions, permettant la caractérisation d’une « tranche » de tissu. Cette modalité d’imagerie propose ainsi une information temps réel en profondeur (de l’ordre du millimètre), avec une résolution proche du micromètre. Nous pouvons obtenir, par acquisition de plusieurs plans de coupe, une reconstruction de la peau et de ses structures.\par
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\linewidth]{contents/chapter_2/resources/.pdf}
-    \caption{Exemple d’image fournie par un dispositif de tomographie en cohérence optique. Source : Wikipédia - OCT.}
-    \label{fig:statistics}
+    \includegraphics[width=0.8\linewidth]{contents/chapter_2/resources/oct_principle.pdf}
+    \caption{Schéma de fonctionnement du \gls{oct}.}
+    \label{fig:oct_principle}
 \end{figure}\par
 
-\subsubsection{Tomographie en cohérence optique}
-
+\subsubsection{Spectrocopie}
 \subsubsection{Microscope confocal Raman}
-
-\subsubsection{Réflectance Totale Atténuée}
 
 \subsection{Modalités de mesure non optique}
 Nous évoquerons au travers de ces quelques lignes les modalités employées de manière expérimentale. Ces modalités n’interviennent pas dans nos travaux, mais nécessitent d’être évoquées à titre formel.
@@ -140,11 +131,11 @@ Nous évoquerons au travers de ces quelques lignes les modalités employées de 
 \clearpage
 \section{Données de travail}
 \subsection{Présentation}
-Nous traiterons au sein de cette partie de notre "matière" de travail. En effet, l'ensemble de ce travail prend appuie sur une base de données mise à disposition initialement pour la réalisation d'une étude clinique menée sur la pertinence de la dermatoscopie et de la \gls{mcr} en milieu clinique~\cite{Cinotti2018}. Cette base a reçue une autorisation de la part du comité d'éthique du \gls{chu} de Saint-Etienne pour son exploitation au sein de l'étude clinique mentionnée précédemment mais également pour ce travail universitaire (Numéro du comité d'examen institutionnel 672016/CHUSTE).\par 
+Nous traiterons au sein de cette partie de notre "matière" de travail. En effet, l'ensemble de ce travail prend appuie sur une base de données mise à disposition initialement pour la réalisation d'une étude clinique menée sur la pertinence de la dermatoscopie et de la \gls{rcm} en milieu clinique~\cite{Cinotti2018}. Cette base a reçue une autorisation de la part du comité d'éthique du \gls{chu} de Saint-Etienne pour son exploitation au sein de l'étude clinique mentionnée précédemment mais également pour ce travail universitaire (Numéro du comité d'examen institutionnel 672016/CHUSTE).\par 
 Cette base de données compile des lésions faciales possédant les critères suivant:
 \begin{itemize}
 \item les patients ont été acquis entre les années 2011 et 2015 au \gls{chu} de Saint-Etienne
-\item les données sont disponibles pour chaque patient sous 3 formes: photographie clinique, dermatoscopie et \gls{mcr}
+\item les données sont disponibles pour chaque patient sous 3 formes: photographie clinique, dermatoscopie et \gls{rcm}
 \item les lésions inclues été supposées de \gls{lm}/\gls{lmm} et le diagnostique différentiel était fortement controversé.
 \end{itemize}\par
 
@@ -161,7 +152,7 @@ En terme de composition, la base regroupe 201 patients répartie entre 96 femmes
     \label{fig:statistics}
 \end{figure}\par
 
-En ce qui concerne leur acquisition, celle-ci a à chaque fois été réalisée par l'un des 3 experts investigateurs de l'étude clinique~\cite{Cinotti2018}. Tout cas de collisions de tumeurs au sein d'un même groupe a été exclue de cette étude. En ce qui concerne la modalité de dermatoscopie, les données ont été produites à l'aide d'une caméra PowerShot® G7~\textsuperscript{\ref{footnote:device_powershot}} couplé au dispositif proposé par Fotofinder~\textsuperscript{\ref{footnote:device_fotofinder}}. Pour ce qui est de la modalité de \gls{mcr}, les données proviennent d'une caméra VivaScope 3000®~\textsuperscript{\ref{footnote:device_mavig}}. En revanche, aucune information lié à l'acquisition des données de photographie clinique n'a été mentionnée.\par
+En ce qui concerne leur acquisition, celle-ci a à chaque fois été réalisée par l'un des 3 experts investigateurs de l'étude clinique~\cite{Cinotti2018}. Tout cas de collisions de tumeurs au sein d'un même groupe a été exclue de cette étude. En ce qui concerne la modalité de dermatoscopie, les données ont été produites à l'aide d'une caméra PowerShot® G7~\textsuperscript{\ref{footnote:device_powershot}} couplé au dispositif proposé par Fotofinder~\textsuperscript{\ref{footnote:device_fotofinder}}. Pour ce qui est de la modalité de \gls{rcm}, les données proviennent d'une caméra VivaScope 3000®~\textsuperscript{\ref{footnote:device_mavig}}. En revanche, aucune information lié à l'acquisition des données de photographie clinique n'a été mentionnée.\par
 
 \addtocounter{footnote}{1}
 \footnotetext[\thefootnote]{Source : Canon Powershot®, Canon, Tokyo, Japon. \label{footnote:device_powershot}}
@@ -171,12 +162,24 @@ En ce qui concerne leur acquisition, celle-ci a à chaque fois été réalisée 
 \footnotetext[\thefootnote]{Source : Distribué en Europe par MAVIG GmbH, Munich, Allemagne. \label{footnote:device_mavig}}
 
 \subsection{Évaluation des experts}
-Afin d'évaluer les performances de praticiens face à ces lésions, les investigateurs ont recouru à 21 dermatologues expert des modalités d'imagerie non invasives. \Cref{fig:experts_evaluation} 
+Afin d'évaluer les performances de praticiens face à ces lésions, les investigateurs ont eu recours à 21 dermatologues détenant une expertise des modalités d'imagerie non invasives. Ces experts sont réparti de manière homogène selon leur compétences respectives pour chacun des dispositifs. Ainsi, le panel d'évaluation se décompose de la façon suivante: 
+\begin{inenum}
+\item 6 experts sont soumis à l'ensemble des modalités,
+\item 15 experts sont soumis à l'évaluation de la photographie clinique et de la dermatoscopie (dont 6 sur l'ensemble et 9 uniques)
+\item et 12 sont soumis à la \gls{rcm} (dont 6 sur l'ensemble et 6 uniques)~\cite{Cinotti2018}.
+\end{inenum}
+Cette situation est résumée en \Cref{fig:experts_evaluation}.
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.4\linewidth]{contents/chapter_2/resources/experts_evaluation.pdf}
-    \caption{Répresentation du nombre d'experts évalué par modalité.}
+    \caption{Répartition du panel de 21 dermatologues sur l'évaluation des diverses modalités~\cite{Cinotti2018}.}
     \label{fig:experts_evaluation}
 \end{figure}\par
- 
+Pour éviter tout biais dans l'évaluation, les experts évalués sur l'ensemble des modalités ont contactés sur 3 journées différentes: 
+\begin{inenum}
+\item une première évaluation sur images de photographie clinique et dermatoscopie,
+\item une seconde évaluation sur images de \gls{rcm}
+\item et une dernière évaluation sur l'ensemble des images.
+\end{inenum}
+Par ailleurs, les images ont été présentée dans un ordre différents enter chaque journée d'évaluation. De plus, l'évaluation sur base d'image de photographie clinique a toujours été réalisée avant la dermatoscopie.\par
 

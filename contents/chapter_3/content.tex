@@ -2,9 +2,11 @@
 \label{chap:chapter_3}
 \section{Informatique et dermatologie}
 L’informatique est une ressource omniprésente dans de nombreux domaines d’application. Sa faculté à nous divertir ou encore à nous guider dans nos choix quotidiens personnels et professionnels en fait un précieux allié. Sur un plan purement professionnel, ses atouts en comparaison à l’être humain peuvent se résumer à :
-	Sa rapidité à effectuer des traitements, parfois répétitifs, dans un temps réduit conjoint à l’évolution matérielle
-	Sa robustesse face à l’erreur, sur des cas multiples
-	Son objectivité face aux situations rencontrées.
+\begin{itemize}
+    \item Sa rapidité à effectuer des traitements, parfois répétitifs, dans un temps réduit conjoint à l’évolution matérielle
+	\item Sa robustesse face à l’erreur, sur des cas multiples
+	\item Son objectivité face aux situations rencontrées.
+\end{itemize}
 De nouvelles pratiques font leurs apparitions, intégrant la machine au cœur des processus décisionnels. Les disciplines médicales évoluent largement, l’ordinateur permettant de répondre aux besoins croissants de précision et reproductibilité (intra et inter opérateur) et de gain de temps au sein de la pratique clinique. Il s’agit également d’un moyen de formaliser la connaissance au travers d’un outil, qui dans un cadre bien défini, peut être utilisé par des non-initiés.\par
 Nous retrouvons au travers de certains outils, la notion d’intelligence artificielle, définie comme étant « L’ensemble de théories et de techniques mises en œuvre en vue de réaliser des machines capables de simuler l'intelligence humaine » . Ainsi, la retranscription sous forme informatique de mécanismes de pensée humaine, sont compris dans cette notion.\par
 Cette partie a pour vocation d’amener à la compréhension générale des courants d’intelligence artificielle, qui permettent la résolution de problématiques variées, et nous tentons de faire le rapprochement au domaine de la dermatologie. Nous abordons de manière générale dans une première partie, les approches que nous qualifierons d’algorithmique et dans une seconde partie, les approches par apprentissage. Ces deux catégories se référent directement à notre thématique, à savoir l’analyse de lésions assistée par l’imagerie optique.\par
@@ -31,26 +33,30 @@ La littérature traitant de « la détection de lésions de la peau » est assez
 \section{Approches par apprentissage}
 Ce courant a été « évoqué » en 1948 par Turing A : son idée était de proposer des « machine à apprendre susceptibles de construire elles-mêmes leurs propres codes » \cite{Turing1950}. En 1959, Arthur Samuel  formule une première définition du « Machine Learning » comme étant « domaine d’étude dans lequel nous donnons à l’ordinateur la possibilité d’apprendre sans avoir été explicitement programmé ». Les approches par apprentissage automatique peuvent être résumées aux techniques permettant à un système informatique d’adapter son analyse et son comportement en fonction de ses données d’entrée  . Une définition plus formelle et récente de ce domaine par Tom M. Mitchell  est « qu’un programme informatique apprend d’une expérience E, en adéquation avec des tâches T et une mesure de performance P, si sa performance sur les tâches T, mesurée par P, s’améliore avec l’expérience E ».
 Nous pouvons distinguer deux grands courants d’apprentissage, synthétisé dans la Figure 28, dont : 
-	Le premier courant est exploratoire, également surnommé « approche non supervisée » dans laquelle l’ordinateur tente de trouver des correspondances au sein des données.
-	Le second courant est prédictif, également appelé « approche supervisée » dans laquelle l’ordinateur tente de faire correspondre des données d’entrée avec des données de sortie attendues. Les prédictions peuvent aboutir à :
-	Des valeurs discrètes : nous parlons d’un problème de classification.
-	Des valeurs continues : nous parlons d’un problème de régression.
+\begin{itemize}
+    \item Le premier courant est exploratoire, également surnommé « approche non supervisée » dans laquelle l’ordinateur tente de trouver des correspondances au sein des données.
+    \item Le second courant est prédictif, également appelé « approche supervisée » dans laquelle l’ordinateur tente de faire correspondre des données d’entrée avec des données de sortie attendues. Les prédictions peuvent aboutir à :
+    \begin{itemize}
+	    \item Des valeurs discrètes : nous parlons d’un problème de classification.
+	    \item Des valeurs continues : nous parlons d’un problème de régression.
+	\end{itemize}
+\end{itemize}
 
 La combinaison de ces deux approches aboutit à une troisième variante dite semi supervisée, permettant d’accroître la précision d’un modèle supervisé par l’ajout de données non labelisées \cite{Murphy2012}.
  
  \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{contents/chapter_3/resources/MachineLearning.png}
-    \caption{Figure 28 : Machine Learning et sous ensemble. Source : MathWorks}
+    \caption{Machine Learning et sous ensemble. Source : MathWorks}
     \label{fig:chapter_3:machine_learning}
 \end{figure}
 
 
 \section*{Apprentissage supervisé}
 L’apprentissage supervisé ou « prédictif » consiste de manière simple à trouver une corrélation entre des données d’entrée x et des sorties attendue y et cela, dans le but de produire sur de nouvelles données d’entrée x' de nouvelles sorties y'.\par
-Cette approche implique l’utilisation d’une base d’apprentissage, définie comme « un ensemble de couples entrée-sortie » noté \${(x_1,y_1 ),…,(x_n,y_n )}\$ avec \$n ∈ N\$  . Ainsi, l’humain tente de donner une signification aux données utilisées, pour lesquelles la machine sera en mesure de trouver une corrélation.\par
-L’algorithme tente de répondre au problème y=f(x) où f() est notre fonction inconnue correspondant au phénomène observé, par une fonction d’approche g() appelée fonction de prédiction, tel que y=g(x).
-Cet apprentissage, schématisé en Figure 29, se découpe en deux processus distincts : d’une part, l’entraînement consistant à approcher la fonction f() et d’autre part, la prédiction consistant à évaluer de nouvelles données.\par
+Cette approche implique l’utilisation d’une base d’apprentissage, définie comme « un ensemble de couples entrée-sortie » noté $\{(x_1,y_1 ),…,(x_n,y_n )\}$ avec $n \in N$. Ainsi, l’humain tente de donner une signification aux données utilisées, pour lesquelles la machine sera en mesure de trouver une corrélation.\par
+L’algorithme tente de répondre au problème $y=f(x)$ où $f()$ est notre fonction inconnue correspondant au phénomène observé, par une fonction d’approche $g()$ appelée fonction de prédiction, tel que $y=g(x)$.
+Cet apprentissage, schématisé en Figure 29, se découpe en deux processus distincts : d’une part, l’entraînement consistant à approcher la fonction $f()$ et d’autre part, la prédiction consistant à évaluer de nouvelles données.\par
   
 \begin{figure}[H]
     \centering
@@ -60,12 +66,16 @@ Cet apprentissage, schématisé en Figure 29, se découpe en deux processus dist
 \end{figure}
 
 Ces approches se regroupent au travers de deux types majeurs de résolution :
-	La prédiction de valeurs discrètes soit l’ensemble des entiers relatifs noté ℤ, désignée sous le terme classification. Cette catégorie se subdivise en deux nouveaux types de classifications, qualifié de binaire ou de multi-classes lorsque la situation nécessite de prédire plus de deux valeurs.
-	La prédiction de valeurs continues soit l’ensemble des nombres réels noté ℝ, désignée sous le terme de régression.
+\begin{itemize}
+    \item La prédiction de valeurs discrètes soit l’ensemble des entiers relatifs noté $\pmb{\mathbb{Z}}$, désignée sous le terme classification. Cette catégorie se subdivise en deux nouveaux types de classifications, qualifié de binaire ou de multi-classes lorsque la situation nécessite de prédire plus de deux valeurs.
+    \item La prédiction de valeurs continues soit l’ensemble des nombres réels noté $\pmb{\mathbb{R}}$, désignée sous le terme de régression.
+\end{itemize}\par
+	
+	
 
 Apprentissage profond
 L’apprentissage profond correspond à un sous ensemble des méthodes d’apprentissage automatique qui tentent, par l’apports des neurosciences, de modéliser les schémas de fonctionnement du cerveau humain. Les derniers constats réalisés dans ce domaine, semblent démontrer que le cerveau possède divers niveaux de traitement de l’information . 
-En effet, dans le cadre des méthodes « standard » d’apprentissage évoquées dans la partie précédente, la dimension de « couches » de traitement n’est pas intégrée. Les approches par apprentissage simple proposent une architecture en trois couches, dont l’une des couches est allouée à la corrélation entre nos données d’entrée et de sortie. Par opposition, les approches par apprentissage profond proposant des structures en n couches, avec n ∈ ℕ et n>1. 
+En effet, dans le cadre des méthodes « standard » d’apprentissage évoquées dans la partie précédente, la dimension de « couches » de traitement n’est pas intégrée. Les approches par apprentissage simple proposent une architecture en trois couches, dont l’une des couches est allouée à la corrélation entre nos données d’entrée et de sortie. Par opposition, les approches par apprentissage profond proposant des structures en n couches, avec $n \in \pmb{\mathbb{N}}$ et $n>1$. 
 Ce choix d’architecture permet l’autodétermination de structures de caractéristiques complexes, définies par une combinaison non linéaire de caractéristiques plus simples. La  Figure 30 met en évidence un cas plus simple de résolution par apprentissage pour appréhender cette notion. 
  
 \begin{figure}[H]
@@ -78,14 +88,14 @@ Ce choix d’architecture permet l’autodétermination de structures de caract�
 Ces solutions ont le désavantage de nécessiter des quantités de données non négligeables ainsi qu’une puissance de calcul, ou a contrario du temps, supérieur aux techniques d’apprentissage « simples ».
 Plusieurs travaux ont été menés dans le domaine de la dermatologie pour permettre de déterminer la pertinence de ces méthodes. Nous retiendrons des thématiques autour de la reconnaissance du mélanome [24][25] largement abordé, ainsi que des travaux autour de la classification des lésions de natures diverses [26]. Ce dernier utilise un procédé de transfert de connaissance entre un réseau préalablement entrainé moins spécifique, et un nouveau réseau spécifique au problème de classification des lésions, dans le but de réduire le temps et les ressources nécessaires à l’entrainement du nouveau réseau.
 Apprentissage par transfert
-L’apprentissage par transfert est une discipline connexe à l’apprentissage profond défini comme « faisant référence à la situation où ce qui a été appris dans un contexte […] est exploité pour améliorer la généralisation dans une autre contexte » [27]. Cette discipline s’inscrit dans le champ de « l’adaptation de domaine », définie comme le transfert des connaissances d’un domaine D_S, défini par l’hypothèse  h:〖 X〗_S→Y_S, vers un domaine cible D_T afin de satisfaire h:〖 X〗_T→Y_T.
+L’apprentissage par transfert est une discipline connexe à l’apprentissage profond défini comme « faisant référence à la situation où ce qui a été appris dans un contexte […] est exploité pour améliorer la généralisation dans une autre contexte » [27]. Cette discipline s’inscrit dans le champ de « l’adaptation de domaine », définie comme le transfert des connaissances d’un domaine $D_S$, défini par l’hypothèse $h: X_S \rightarrow Y_S$, vers un domaine cible $D_T$ afin de satisfaire $h: X_T \rightarrow Y_T$.
 Ces solutions permettent de réduire les difficultés liées à la grande quantité de ressources de calcul, de temps, mais également de données mobilisées nécessaires à un entrainement depuis sa base. Le modèle d’apprentissage attendu est alors initialement plus performant, croît plus efficacement et plus performant qu’un apprentissage spécifique (Figure 31).
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{contents/chapter_3/resources/DeepLearningCurves.png}
     \caption{ Attentes liées à un apprentissage par transfert en opposition à un apprentissage classique. Source : machinelearningmastery.com}
-    \label{fig:chapter_3:deep_understanding}
+    \label{fig:deep_understanding}
 \end{figure}
 
 Néanmoins, cette solution n’est envisageable que lorsque l’apprentissage, réalisé lors de la première tâche, généralise suffisamment le phénomène observé. Ainsi, il est d’usage courant de ne spécifier lors du transfert que la couche finale de classification du réseau, les premières couches n’étant employé comme extracteur général de caractéristiques. Toutefois, la littérature s’accorde sur une possible spécialisation des couches de classification et hautes moins génériques (Figure 32).
@@ -120,17 +130,17 @@ Les données labellisées permettent de définir des groupes spécifiques au sei
     \centering
     \includegraphics[width=\linewidth]{contents/chapter_3/resources/Semisupervised.pdf}
     \caption{A gauche, une classification obtenue à partir de deux données labellisées, à droite ces mêmes données avec l’ajout de données non labellisés. Ces nouvelles données sont alors attribuées à l’une ou l’autre des classes.}
-    \label{fig:chapter_3:semisupervised}
+    \label{fig:semisupervised}
 \end{figure}
 
 \subsection{Détection de valeurs aberrantes / anomalies}
-Cette technique est particulièrement propice aux données représentant majoritairement les cas définis comme « normaux », et pour lesquels nous souhaitons détecter les cas « aberrants ». En 1980, Douglas Hawkins apporte la définition d’une valeur aberrante comme « Une observation qui s’écarte tellement des autres observations, qu’elle éveille le soupçon d’avoir été généré par un mécanisme différent ». Diverses méthodes existent, dont l’une des plus utilisées se base sur une distribution gaussienne, excluant les valeurs qualifiées d’extrême déterminée par un seuil Ɛ (Figure 35). Gaussian mixture model.
+Cette technique est particulièrement propice aux données représentant majoritairement les cas définis comme « normaux », et pour lesquels nous souhaitons détecter les cas « aberrants ». En 1980, Douglas Hawkins apporte la définition d’une valeur aberrante comme « Une observation qui s’écarte tellement des autres observations, qu’elle éveille le soupçon d’avoir été généré par un mécanisme différent ». Diverses méthodes existent, dont l’une des plus utilisées se base sur une distribution gaussienne, excluant les valeurs qualifiées d’extrême déterminée par un seuil $\varepsilon$ (Figure 35). Gaussian mixture model.
   
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{contents/chapter_3/resources/AnomalyDetection.png}
-    \caption{Exemple sur des données arbitraires. Un seuil Ɛ (en bleu) est déterminé à partir des moyennes et écart type des données.}
-    \label{fig:chapter_3:anomaly}
+    \caption{Exemple sur des données arbitraires. Un seuil $\varepsilon$ (en bleu) est déterminé à partir des moyennes et écart type des données.}
+    \label{fig:anomaly}
 \end{figure}
 
 \subsection{Problématiques}
@@ -166,10 +176,10 @@ Pour répondre à cette problématique, diverses métriques seront à envisager 
 Il peut être préférable de privilégier des métriques plus robustes, dans le cadre de données non balancées. Dans ces cas, les sources s’accordent à l’utilisation de métriques tels que le F-Score, associant conjointement sensibilité et précision (principe de la moyenne harmonique, voir Équation 2), ou d’aire sous la courbe (AUC), associant sensibilité ainsi que spécificité et intégrant une indépendance vis-à-vis de seuils de classification (Figure 37).\par
 
 \begin{equation} 
-    \label{eq:chapter_3:FScore}
-    FScore=(1+β²)*(Précision*Sensibilité)/((β^2*Précision )+Sensibilité)
-    \caption{Expression du FScore.}
+    FScore=(1+\beta²)*(Précision*Sensibilité)/((\beta^2*Précision )+Sensibilité)
+    \label{eq:FScore}
 \end{equation}
+
 
 Bien entendu, les scores dépendront du caractère souhaité pour notre classifieur, en minimisant la sensibilité ou spécificité dans le cadre du FScore par exemple. Ce que l’indépendance de l’AUC ne permet pas.\par
  
