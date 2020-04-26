@@ -240,12 +240,17 @@
 \usepackage{csquotes}
 
 \usepackage{amsmath}
+\usepackage{bibentry}
 \usepackage{cleveref}
 \usepackage[inline]{enumitem}
 \usepackage{siunitx}
 \usepackage{subcaption}
 
 % Parameters
-\newlist{inenum}{enumerate*}{1}
-\setlist[inenum]{label=(\roman*)}
+\newlist{inlinerate}{enumerate*}{1}
+\setlist[inlinerate]{label=(\roman*)}
+
 \sisetup{range-phrase=--}
+\DeclareSIUnit\px{px}
+
+\nobibliography*
