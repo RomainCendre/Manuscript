@@ -51,8 +51,8 @@
 %% \addjury{Firstname}{Lastname}{Role in the jury}{Position}
 \addjury{Prenom}{Nom}{Rapporteur}{Professeur, Université XXX}
 \addjury{Prenom}{Nom}{Rapporteur}{Professeur, Université XXX}
-\addjury{Prenom}{Nom}{Directeur de thèse}{Professeur, Université XXX}
-\addjury{Prenom}{Nom}{Co-encadrant}{Maître de Conférences, Université XXX}
+\addjury{Franck}{MARZANI}{Directeur de thèse}{Professeur, Université de Bourgogne}
+\addjury{Alamin}{MANSOURI}{Co-encadrant}{Maître de Conférences, Université Bourgogne}
 
 %%--------------------
 %% Change style of the table of the jury
@@ -68,7 +68,7 @@ English resume
 %%--------------------
 %% Set the English keywords. They only appear if
 %% there is an English abstract
-\thesiskeywords[english]{Dermatology, Lentigo, Machine Learning, Deep Learning, Image processing, Image classification}
+\thesiskeywords[english]{Dermatology, Lentigo, Machine Learning, Deep Learning, Image processing, Image classification, Multimodality, Data fusion, Reflectance Confocal Microscopy}
 
 %%--------------------
 %% Set the French abstract
@@ -79,7 +79,7 @@ Résumé français
 %%--------------------
 %% Set the French keywords. They only appear if
 %% there is an French abstract
-\thesiskeywords[french]{Dermatologie, Lentigo, Apprentissage automatique, Apprentissage profond, Traitement d'image, Classification d'images}
+\thesiskeywords[french]{Dermatologie, Lentigo, Apprentissage automatique, Apprentissage profond, Traitement d'image, Classification d'images, Multimodalité, Fusion de données, Microscopie confocale par réflectance}
 
 %%--------------------
 %% Change the layout and the style of the text of the "primary" abstract.
@@ -113,7 +113,6 @@ Résumé français
 %% Change the institution
 \Set{universityname}{Université de Bourgogne}
 
-
 %%--------------------
 %% Clear the list of the laboratories
 \resetlaboratories
@@ -122,7 +121,6 @@ Résumé français
 %% Add the laboratory where the thesis was made
 %\addlaboratory{Laboratoire Waynes Industry}
 \addlaboratory{ImVia}
-
 
 %%--------------------
 %% Clear the list of the partner/sponsor logos
@@ -133,26 +131,8 @@ Résumé français
 %%
 %% CAUTION 1: At least, the logo of the University should appear (UB)
 %%
-%\addpartner[image options]{image name}
-
 \addpartner{resources/logos/ub}
 
-%%--------------------
-%% Change the header and the foot of the pages.
-%% You must include the package "fancyhdr" to
-%% have access to these macros.
-%% Left header
-%\lhead{}
-%% Center header
-%\chead{}
-%% Right header
-%\rhead{}
-%% Left footer
-%\lfoot{}
-%% Center footer
-%\cfoot{}
-%% Right footer
-%\rfoot{}
 
 %%--------------------
 % Declare several theorems
@@ -163,56 +143,6 @@ Résumé français
 \Set{backcovermessage}{
   % Ajouter logos partenaires de la thèse
 }
-
-
-
-% fancy quotes
-\definecolor{quotemark}{gray}{0.7}
-\makeatletter
-\def\fquote{%
-    \@ifnextchar[{\fquote@i}{\fquote@i[]}%]
-           }%
-\def\fquote@i[#1]{%
-    \def\tempa{#1}%
-    \@ifnextchar[{\fquote@ii}{\fquote@ii[]}%]
-                 }%
-\def\fquote@ii[#1]{%
-    \def\tempb{#1}%
-    \@ifnextchar[{\fquote@iii}{\fquote@iii[]}%]
-                      }%
-\def\fquote@iii[#1]{%
-    \def\tempc{#1}%
-    \vspace{1em}%
-    \noindent%
-    \begin{list}{}{%
-         \setlength{\leftmargin}{0.55\textwidth}%
-         \setlength{\rightmargin}{0.01\textwidth}%
-                  }%
-         \item[]%
-         \begin{picture}(0,0)%
-         \put(-15,-5){\makebox(0,0){\scalebox{3}{\textcolor{quotemark}{``}}}}%
-         \end{picture}%
-         \begingroup\itshape}%
- %%%%********************************************************************
- \def\endfquote{%
- \endgroup\par%
- \makebox[0pt][l]{%
- \hspace{0.4\textwidth}%
- \begin{picture}(0,0)(0,0)% 
-	 \put(15,15){\makebox(0,0){%
-	 \scalebox{3}{\color{quotemark}''}}}%
- \end{picture}}%
- \ifx\tempa\empty%
- \else%
-    \ifx\tempc\empty%  
-       \hfill\rule{100pt}{0.5pt}\\\mbox{}\hfill\tempa,\ \emph{\tempb}%
-   \else%		
-       \hfill\rule{100pt}{0.5pt}\\\mbox{}\hfill\tempa,\ \emph{\tempb},\ \tempc%
-   \fi\fi\par%
-   \vspace{0.5em}%
- \end{list}%
- }%
-\makeatother
 
 \begin{document}
 \dominitoc
@@ -236,25 +166,31 @@ Résumé français
 	}
 	
 \chapter*{Remerciements}
-Ces travaux ont été rendus possibles par le Conseil Régional de Bourgogne Franche Comté et le \gls{feder} dans le cadre de l'initiative des \gls{jce}. Je tiens naturellement à leur exprimer mes plus sincères remerciements, sans quoi toute cette aventure n'aurait pas pu voir le jour. En effet, ces trois années auront été l'occasion d'une expérience scientifique intense, mais également de cours prenant auprès de l'IAE de Dijon et de la Business School of Burgundy.\par
+Comme l'usage le permet, je profite de ces quelques paragraphes pour exprimer, par ces éléments subjectifs mais pourtant cruciaux à l'élaboration d'une thèse, ma gratitude envers celles et ceux qui m'ont soutenu durant l'élaboration de ce projet.\par
 
-A ce titre, je remercie fortement Franck Marzani ainsi que Alamin Mansouri d'avoir considéré et soutenu ma candidature à ce financement et à ce projet commun. Par ailleurs, je les remercient également pour leur précieux soutien moral mais également pour leur oreille attentive et bienveillante et ce malgré les nombreuses responsabilités qui les incombent. Je dédie, par la même occasion ces propos à deux médecins, Jean-Luc Perrot et Elisa Cinotti, dont la participation, le temps consacré, ainsi que la bonne humeur auront été essentiel à la réussite de ce projet.\par
+Ainsi, ces travaux ont été rendus possibles grâce au Conseil Régional de Bourgogne Franche Comté et le \gls{feder} dans le cadre de l'initiative des \gls{jce}. Je tiens naturellement à leur exprimer mes plus sincères remerciements, sans quoi toute cette aventure n'aurait pas pu voir le jour. En effet, ces trois années auront été l'occasion d'une expérience scientifique, mais également de formations intenses à l'administration des entreprises auprès de l'IAE de Dijon et de la Business School of Burgundy.\par
 
-Cette page est également le lieu pour exprimer ma gratitude envers mon environnement proche professionnel. Ainsi, je remercie tout naturellement ma structure d'accueil, le laboratoire \gls{imvia} et l'ensemble de ses membres permanents (administratif et non administratif) et non permanents qui m'auront permis de travailler dans un cadre des plus favorables durant ces 3 années. Je pense essentiellement à Fabienne Blaise, Anne Fournier, et Khadija Jourani qui m'ont épaulé pour certaines démarches administratives, et à Cyrille Migniot, Barthelemy Heyrman, et Julien Dubois qui ont beaucoup contribué pour rendre la vie au quotidien plus aisée.\par
+Il est important de débuter ces remerciements envers ceux qui ont initié ce travail, Messieurs Franck Marzani et Alamin Mansouri, et qui ont soutenu ma candidature à ce financement et à ce projet commun. Par ailleurs, je les remercie également pour leur précieux soutien moral et pour leur oreille attentive malgré les nombreuses responsabilités qui leur incombent. Par cette même occasion, je dédie mes remerciements à deux médecins, M. Jean-Luc Perrot et Mme Elisa Cinotti, dont la participation, le temps consacré, ainsi que la bonne humeur auront été essentiel à la réussite de ce projet.\par
+
+Également, un grand merci aux membres du jury... mais également à mes rapporteurs qui ont eu à la tâche\par
+
+Cette page est également le lieu pour exprimer ma gratitude envers mon environnement proche professionnel. Ainsi, je remercie tout naturellement ma structure d'accueil, le laboratoire \gls{imvia}, et l'ensemble de ses membres qui m'auront permis de travailler dans un cadre des plus favorables durant ces trois années. Je pense essentiellement à Mme Fabienne Blaise, Mme Anne Fournier, et Mme Khadija Jourani qui m'ont épaulé pour certaines démarches administratives, et à M. Cyrille Migniot, M. Barthelemy Heyrman, et M. Julien Dubois qui ont beaucoup contribué pour rendre la vie au quotidien plus aisée. J'exprime également une pensée envers M. Dominique Ginhac et M. Barthelemy Heyrman qui ont gracieusement mis à ma disposition des ressources informatiques sans lesquelles ce travail aurait été difficile à réaliser.\par
 
 J'ai une pensée toute particulière pour l'ensemble de mes collègues de laboratoire et de Master, qui par leur présence m'ont rendu ces trois années plus conviviale. Ne pouvant leur consacrer une pensée particulière faute de place, je me résout à des listes. Au sein du laboratoire, je pense à: Abdelali Douiyek, Mustapha Bouderbane, Axel Moinet, Margarita Khokhlova, Yoan Marin, Pierre Bonazza, Duncan Luguern. En ce qui concerne le master: Jérémie Vion et Antoine Greisner auront été deux super collègues de travaux, mais également des collègues de \gls{jce} dont Alicia Froidurot, Garance Dejouy et Anne Berrou ont fait partie. Enfin, je profite de ce paragraphe pour dresser une liste toute particulière à notre noyau de course soudé composé de: Fan Yang, Yannick Benezeth, Alexandre Krebs, Abir Zendagui et Rita Meziati.\par
 
-Bien évidemment, je terminerait par mes proches, qui ont été constamment à mes côtés durant les moments les plus difficiles et ont eus des paroles réconfortantes quand je le nécessitait. Tout d'abord, mes amis avec qui il n'a pas été facile toujours de garder contact malgré la distance, dont j'aurais vu pour la plupart l'évolution et devenir une famille. Et enfin, mon cercle plus proche, incluant mes parents qui m'ont porté durant toutes ces années et encouragé à aller de l'avant, et depuis 5 années ma compagne, Claire, qui me suis au quotidien et dont la présence me permet de surmonter certaines périodes difficiles.\par
+Bien évidemment, je terminerait par mes proches, qui ont été constamment à mes côtés durant les moments les plus difficiles et ont eus des paroles réconfortantes quand je le nécessitait. Tout d'abord, mes amis avec qui il n'a pas été facile toujours de garder contact malgré la distance, dont j'aurais vu pour la plupart l'évolution et devenir une famille. Et enfin, mon cercle plus proche, incluant mes parents qui m'ont porté durant toutes ces années et encouragé à aller de l'avant. Enfin, je ne peux oublier ma compagne, Claire, qui m'épaule dans l'ombre depuis maintenant 5 années et qui me suis au quotidien, et dont la présence me permet de surmonter maintes périodes difficiles.\par
 		
 %%--------------------
 %% Include a general table of contents
-%\phdseetodo
-%\phdtodotoc
 \tableofcontents
 
 %%--------------------
 %% The content of the PhD thesis
 \mainmatter
+%% Set part of page headings
+% \renewcommand\chaptermark[1]{\markboth{\chaptername~\thechapter\ --- #1}{}}
+\renewcommand\chaptermark[1]{\markboth{\uppercase{#1}}{}}
+
 
 % Introduction
 \include{contents/x_introduction/content}
@@ -315,6 +251,6 @@ Bien évidemment, je terminerait par mes proches, qui ont été constamment à m
 %%--------------------
 %% Appendixes
 \appendix
-\input{contents/annexes.tex}
+% \input{contents/annexes.tex}
 
 \end{document}

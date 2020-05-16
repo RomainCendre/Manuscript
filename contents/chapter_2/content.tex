@@ -1,49 +1,50 @@
 %%%%% CHAPTER SKIN PROPERTIES TO DATA
-% \chapter{De propriété physiques de la peau aux données de travail}
 \chapter{Des propriétés physiques aux données cliniques}
 \label{chap:chapter_2}
 \chapterintro
-Lors du précédent chapitre, nous avons pu présenter la peau, ses pathologies dont l'une d'entre elle en particulier: le Lentigo Maligna et le Lentigo Maligna Melanoma. Nous avons également pu présenter les moyens actuels permettant son diagnostic et ses contraintes actuelles.\par
-Ce nouveau nouveau chapitre nous permet d'appréhender certaines propriétés physiques de la peau, notamment les mécanismes d'interaction avec la lumière. Dans un second temps, ce chapitre évoque les principaux dispositifs optiques actuels et le type d'information mise à disposition pouvant servir le diagnostic, mais également certains dispositifs actuellement considéré pour la dermatologie basés sur des mesures physique autres.\par
-Pour finir, ce chapitre servira à présenter nous permet de présenter l'étude clinique ayant servie de base à ce travail et de comprendre sa construction. Nous présenterons également la base d'image permettant la réalisation de nos divers tests.\par 
+Lors du précédent chapitre, nous avons présenté la peau, ses pathologies dont l'une d'entre elle en particulier : le Lentigo Maligna et le Lentigo Maligna Melanoma. Nous avons également présenté les moyens actuels permettant son diagnostic et ses contraintes actuelles.\par
+
+Ce nouveau chapitre nous permet d'appréhender certaines propriétés physiques de la peau, notamment les mécanismes d'interaction avec la lumière. Dans un second temps, ce chapitre évoque les principaux dispositifs optiques actuels et le type d'information mise à disposition pouvant servir le diagnostic, mais également certains dispositifs actuellement considérés pour la dermatologie et basés sur des mesures physique autres.\par
+
+Pour finir, ce chapitre nous permet de présenter l'étude clinique ayant servi de base à ce travail et de comprendre sa construction. Nous présenterons également la base d'images permettant la réalisation de nos divers tests.\par 
 \newpage
 
 % SECTION SKIN PROPERTIES
 \section{Propriétés de la peau}
-Notre perception de la peau est façonnés par divers phénomènes physique d'interaction entre la lumière et ses tissus. Ces derniers influent: 
+Notre perception de la peau est façonnée par divers phénomènes physiques d'interaction entre la lumière et ses tissus. Ces derniers influent essentiellement de : 
 \begin{inlinerate}
-\item de par leur structure 
-\item et de par leur composantes.
+\item par leur structure, c'est à dire par la disposition de la matière constituant la peau,
+\item et de par leur composantes, c'est à dire par la matière elle même.
 \end{inlinerate}
-Nous aborderons cette section de manière descendante, en déroulant le processus d'interaction d'un photon qui entre en contact avec la peau. Ce processus est schématisé de manière macroscopique en \Cref{fig:light_interaction}. La réflexion spéculaire est le premier phénomène pouvant se produire, à l'interface air/peau et est due au changement d'indice de réfraction. Ce faisant, la partie résiduelle parvenue à la peau va interagir avec les diverses structures de la peau et être soit ré émise sans modification de longueur d'onde, nous parlons alors de réflexion diffuse, soit absorbé, nous parlons dans ce cas d'absorption. Cette absorption peut réagir de diverses manière selon la nature du composé et selon la longueur d'onde de l'énergie reçue: 
+Nous aborderons cette section de manière descendante, en déroulant le processus d'interaction d'un photon qui entre en contact avec la peau. Ce processus est schématisé de manière macroscopique sur la \Cref{fig:scheme_light_interaction}. La \textbf{réflexion spéculaire} est le premier phénomène de structure pouvant se produire à l'interface entre l'air et la peau. La lumière incidente est par ce phénomène réfléchie à un angle identique avec celui de la surface considérée. Ce phénomène sera accentué par une peau lisse et uniforme~\cite{Yang2009}. Cette lumière est ainsi identique en propriété à celle de sa source d'émission, et peux être la plupart du temps considérée comme un parasite car elle ne contient aucune information propre aux composants du milieu et apparaît souvent saturée sur un capteur. La \textbf{réflexion diffuse}, est un second phénomène par lequel la lumière sera réfléchie dans une multitude de directions. Ce phénomène peut avoir pour origine de multiples réflexions liée à la structure du composé, ou être issu de diffractions liées au changement de propriétés du milieu~\cite{Yang2009} (coefficient de réfraction proche de celui de l'eau pour la peau). Enfin, une partie de cette lumière sera perdue ou transformée selon la longueur d'onde de celle-ci :
 \begin{inlinerate}
-\item l'énergie peut-être dissipé sous forme de chaleur
-\item ou être ré émise avec longueur d'onde différente souvent caractérisé par le terme de fluorescence~\cite{Kollias2002}.
+\item son énergie peut-être dissipée sous forme de chaleur, on parle alors de phénomène \textbf{d'absorption},
+\item ou être ré-émise avec longueur d'onde différente souvent caractérisée par le terme de \textbf{fluorescence} ou de \textbf{phosphorescence}~\cite{Kollias2002}.
 \end{inlinerate}\par
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\linewidth]{contents/chapter_2/resources/light_interaction.pdf}
-    \caption{Mécanismes d'interaction primaire avec un photon incident.}
-    \label{fig:light_interaction}
+    \includegraphics[width=\linewidth]{contents/chapter_2/resources/scheme_light_interaction.pdf}
+    \caption{Schéma représentant les divers mécanismes d'interaction qui peuvent survenir suite à l'interaction de la lumière avec la peau. Ce sont ces divers phénomènes que les modalités optiques tenteront d'exploiter pour extraire une information sur les tissus analysés.}
+    \label{fig:scheme_light_interaction}
 \end{figure}\par
 
-Dans cette configuration, le choix de la source d'émission de lumière sera l'un des points importants. En effet, comme démontré dans un travail précédent sur les \gls{led} en dermatologie~\cite{Barolet2008}, la longueur d'onde d'émission est l'un des paramètre d'influence possible quand à la profondeur des structures à observer dans la peau. Ainsi, des longueurs d'onde à l'entrée du spectre visible humain ($\approx$\SI{300}{\nano\metre}) ne parviennent pas à se frayer un chemin en profondeur et ne frôlent que les couches supérieures de l'épiderme, tandis que des longueur d'ondes plus élevée de ce même spectre ($\approx$\SI{900}{\nano\metre}) tendent à atteindre l'hypoderme et ses vaisseaux sanguins. Une synthèse de la pénétration de la lumière en fonction de la longueur d'onde est visible en \Cref{fig:light_penatrating}.\par
+Dans cette configuration, le choix de la source d'émission de lumière sera l'un des points importants. En effet, comme démontré dans un travail précédent sur les \gls{led} en dermatologie~\cite{Barolet2008}, la longueur d'onde d'émission est l'un des paramètre d'influence possible quand à la profondeur des structures à observer dans la peau. Ainsi, des longueurs d'onde à l'entrée du spectre visible humain ($\approx$\SI{300}{\nano\metre}) ne parviennent pas à se frayer un chemin en profondeur et ne frôlent que les couches supérieures de l'épiderme, tandis que des longueur d'ondes plus élevées de ce même spectre ($\approx$\SI{900}{\nano\metre}) tendent à atteindre l'hypoderme et ses vaisseaux sanguins. Une synthèse de la pénétration de la lumière en fonction de la longueur d'onde est visible sur la \Cref{fig:scheme_light_penatrating}.\par
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\linewidth]{contents/chapter_2/resources/light_penatrating.png}
-    \caption{Schéma représentatif des longueurs d’onde et de leur capacité de pénétration de la peau \cite{Barolet2008}.}
-    \label{fig:light_penatrating}
+    \includegraphics[width=0.8\linewidth]{contents/chapter_2/resources/scheme_light_penatrating.pdf}
+    \caption{Schéma représentatif de la profondeur de pénétration (en mm) de la peau en fonction de la longueur d’onde de la lumière~\cite{Barolet2008}. Il s'agit d'un ordre de grandeur moyen constaté chez l'être humain, les propriétés de la peau varient d'un emplacement à un autre. Aucune information relative aux types de peau étudiées, selon l'échelle de Fitzpatrick par exemple, n'a été mentionné.}
+    \label{fig:scheme_light_penatrating}
 \end{figure}\par
 
-Outre la question de la profondeur, le choix de la longueur d'onde permet d'interagir avec différents types de chromophores pouvant renseigner l'observateur sur des propriétés locales à la peau. Certains travaux focalisés sur les systèmes lasers et d'émission en général~\cite{Stewart2013} ont permis de mettre en avant le rapport entre la longueur d'onde et des composés majeurs de la peau tels que l'eau, la mélanine ou l'hémoglobine (oxygénée ou non). Pour illustrer ce propos, la \Cref{fig:light_absorption} synthétise ce rapport entre la longueur d'onde d'émission et l'absorption associée à ces quatre composés. La quantification de ces composés peut présenter un intérêt dans la mesure où certaines pathologie peuvent altérer le métabolisme et donc modifier fondamentalement le ratio de chromophores présents, pouvant par exemple amener à une hypervascularisation. Certains travaux tentent ainsi de revenir à des fonctions de métabolisme~\cite{Im2016}.\par
+Outre la question de la profondeur, le choix de la longueur d'onde permet d'interagir avec différents types de chromophores pouvant renseigner l'observateur sur des propriétés locales à la peau. Certains travaux focalisés sur les systèmes lasers et d'émission en général~\cite{Stewart2013} ont permis de mettre en avant le rapport entre la longueur d'onde et des composés majeurs de la peau tels que l'eau, la mélanine ou l'hémoglobine (oxygénée ou non). Pour illustrer ce propos, la \Cref{fig:scheme_light_absorption} synthétise ce rapport entre la longueur d'onde d'émission et l'absorption associée à ces quatre composés. La quantification de ces composés peut présenter un intérêt dans la mesure où certaines pathologies peuvent altérer le métabolisme et donc modifier fondamentalement le ratio de chromophores présents, pouvant par exemple amener à une hypervascularisation. Certains travaux tentent ainsi de revenir à des fonctions de métabolisme~\cite{Im2016}.\par
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\linewidth]{contents/chapter_2/resources/light_absorption.png}
-    \caption{Représentation des longueurs d'ondes et coefficients d'absorption associé selon le type de composé \cite{Stewart2013}.}
-    \label{fig:light_absorption}
+    \includegraphics[width=\linewidth]{contents/chapter_2/resources/scheme_light_absorption.png}
+    \caption{Représentation des coefficients d'absorption en fonction de la longueur d'onde selon les principaux types de composés présent dans la peau~\cite{Stewart2013}.}
+    \label{fig:scheme_light_absorption}
 \end{figure}
  
 \clearpage
@@ -51,25 +52,27 @@ Outre la question de la profondeur, le choix de la longueur d'onde permet d'inte
 Afin de mieux suivre, voire de conserver une trace de leurs patients, les dermatologues disposent de nombreux outils divers. Ils peuvent entre autres dans leur pratique clinique se référer à divers types d’examen que nous distinguerons au travers de deux catégories :
 \begin{itemize}
 \item D’une part les examens invasifs, pouvant altérer l’organisme du patient à plus ou moins grande échelle. La biopsie est à ce jour le « gold standard » de ce domaine et se réalise par prélèvement et analyse des tissus du patient. Ces techniques sont généralement plus coûteuses à réaliser par unité, nécessitent davantage de temps et peuvent engendrer une gêne voire un risque lors de leur exécution.
-\item D’autres part, les examens dit non invasifs, c’est-à-dire ne provoquant pas d’effraction des tissus de la peau parmi lesquels les « imageurs », dispositifs capables de nous restituer une image de différente nature selon le phénomène physique observé. Les coûts peuvent être plus ou moins élevées selon le type de dispositif utilisé et ne procurent en général pas d’inconfort particulier pour la plupart.
+\item D’autres part, les examens dit non-invasifs, c’est-à-dire ne provoquant pas de destruction des tissus du corps humain parmi lesquels les « imageurs », dispositifs capables de nous restituer une image de différente nature selon le phénomène physique observé. Ces dispositifs peuvent représenter un investissement initial important à leur achat, mais s'amortissent pour la plupart sur le long terme. Autre avantage, ces examens ne procurent en général pas d’inconfort particulier pour le patient.
 \end{itemize}\par
 
-Après avoir abordé de manière non exhaustive les majeures pathologies de la peau et quelques principes d'interaction avec la peau, il convient désormais d'aborder les diverses méthodes permettant une observation non invasives. Ces modalités d'imagerie franchissent en majorité le cap du numérique permettant un suivi plus aisé, voire un échange plus rapide entre professionnels, et l’utilisation de traitements automatiques. Nous séparerons ces techniques en deux catégories distinctes: d’une part les techniques de mesure optique et d'autres part les autres dispositifs basées sur une mesures physique indépendante de l'optique.\par
+Après avoir abordé de manière non exhaustive les majeures pathologies de la peau et les principes d'interaction majeure de la lumière avec la peau, il convient désormais d'aborder les diverses méthodes permettant une observation non invasive. Ces modalités d'imagerie franchissent en majorité le cap du numérique permettant un suivi plus aisé, voire un échange plus rapide entre professionnels, et l’utilisation de traitements automatiques. Nous séparerons ces techniques en deux catégories distinctes: d’une part les techniques de mesure optique et d'autre part les autres dispositifs basés sur une mesures physique indépendante de l'optique.\par
 
 \subsection{Modalités par mesure optique}
+Cette partie va nous permettre de décrire les principaux appareillages existant permettant l'observation des cellules de la peau. Évidement, ces modalités sont également transposables à d'autres domaine d'applications que celui de la dermatologie. Nous ne traiterons pas des dispositifs méconnus ou expérimentaux encore loin d'une application clinique, bien que certains ne soit pas encore utilisés dans un contexte clinique mais plutôt de recherche clinique. La \Cref{tab:light_absorption} met en lumière ces dispositifs et leurs caractéristiques générales à but indicatif.\par
 \begin{table}[H]
 \begin{tabular}{lllll}
-\textbf{Technologie}                                                                & \textbf{Mode d’émission} & \textbf{Résolution Spatiale} & \textbf{Profondeur}                   \\ \hline
-Imagerie clinique                                                                   & Réflectance              & Lentille dépendant           & \SIrange{0.1}{1}{\milli\metre}        \\
-Dermatoscope                                                                        & Réflectance              & Lentille dépendant           & \SIrange{0.1}{1}{\milli\metre}        \\
-Microscope confocale par réflectance                                                & Réflectance              & \si{\micro\metre}            & \textless{} \SI{200}{\micro\metre}    \\
-Tomographie en cohérence optique                                                    & Réflectance              & \si{\micro\metre}            & \SIrange{1}{2}{\milli\metre}          \\
-Imagerie multispectrale                                                             & Réflectance              & Lentille dépendant           & \SIrange{0.1}{1}{\milli\metre}        \\
-Spectroscopie à réflexion/fluorescence                                              & Réflectance/Fluorescence & Diamètre de la fibre         & \SIrange{0.1}{1}{\milli\metre}        \\
-Microscopie confocal Raman                                                           & Raman                    & \si{\micro\metre}            & \SI{150}{\milli\metre}                \\
-% Réflectance totale atténuée                                                         & ATR                      & Dimension du Crystal         & \textless{} \SI{2}{\micro\metre}      \\
+    \toprule
+    \textbf{Technologie}                        & \textbf{Effet}    & \textbf{Résolution Spatiale} & \textbf{Profondeur}                \\ \hline
+    Imagerie clinique                           & Réflectance       & Lentille dépendant           & \SIrange{0.1}{1}{\milli\metre}     \\
+    Dermoscopie                                 & Réflectance       & Lentille dépendant           & \SIrange{0.1}{1}{\milli\metre}     \\
+    Microscopie confocale par réflectance       & Réflectance       & \si{\micro\metre}            & \textless{} \SI{200}{\micro\metre} \\
+    Tomographie en cohérence optique            & Réflectance       & \si{\micro\metre}            & \SIrange{1}{2}{\milli\metre}       \\
+    Imagerie multispectrale                     & Réflectance       & Lentille dépendant           & \SIrange{0.1}{1}{\milli\metre}     \\
+    Spectroscopie à réflexion                   & Réflectance       & Diamètre de la fibre         & \SIrange{0.1}{1}{\milli\metre}     \\
+    Microscopie confocal Raman                  & Raman             & \si{\micro\metre}            & \SI{150}{\milli\metre}             \\
+    \bottomrule
 \end{tabular}
-\caption{Aperçu des principales modalités de mesure optique actuelles en dermatologie utilisées cliniquement ou expérimetalement \cite{Kollias2002}.}
+\caption{Aperçu des principales modalités de mesure optique actuelles en dermatologie, utilisées à but clinique ou à un stade de recherche clinique~\cite{Kollias2002}.}
 \label{tab:light_absorption}
 \end{table}\par
 
@@ -78,153 +81,235 @@ L’examen de dépistage classique est associé en dermatologie à une inspectio
 
 Cette modalité, avant l’avènement de l’informatique, se basait sur des supports de type argentique. L’évolution de ce matériel vers le numérique, et l’arrivée de systèmes de type \gls{pacs} ont conjointement motivé une transition vers des données dématérialisées.\par
 
-Ce type d’imagerie donne à l’observateur un point de vue subjectif, similaire à une observation à l’œil nu, utile dans le cadre d’un diagnostic à distance ou dans le suivi à long terme d’un patient. Néanmoins, l'un des points faible est le manque de standard concernant le format d'image et de protocole concernant l'acquisition des images: pas de contraintes d'éclairage, ni de contraintes sur le point de vue à adopter au moment de la prise d'image. Ces éléments amènent à une grande diversité de données, comme nous pouvons le voir en \Cref{fig:photography_example}.\par
+Ce type d’imagerie donne à l’observateur un point de vue subjectif, similaire à une observation à l’œil nu, utile dans le cadre d’un diagnostic à distance ou dans le suivi à long terme d’un patient. Néanmoins, l'un des points faibles est le manque de standard concernant le format d'image et de protocole concernant l'acquisition des images: pas de contraintes d'éclairage, ni de contraintes sur le point de vue à adopter au moment de la prise d'image. Ces éléments amènent à une grande diversité de données, comme nous pouvons le voir sur la \Cref{fig:example_photography}.\par
 
 \begin{figure}[H]
 \centering
-    \begin{subfigure}{.5\textwidth}
+    \begin{subfigure}{.45\textwidth}
       \centering
-      \includegraphics[width=\linewidth]{contents/chapter_2/resources/photography_example_1.png}
+      \includegraphics[width=\linewidth]{contents/chapter_2/resources/example_photography_1.png}
     \end{subfigure}
-    \begin{subfigure}{.5\textwidth}
+    \begin{subfigure}{.45\textwidth}
       \centering
-      \includegraphics[width=\linewidth]{contents/chapter_2/resources/photography_example_2.png}
+      \includegraphics[width=\linewidth]{contents/chapter_2/resources/example_photography_2.png}
     \end{subfigure}
-    \caption{Exemple d'images dites de photographie clinique.}
-    \label{fig:photography_example}
+    \caption{Exemple d'images dites de photographie clinique. Ces deux exemples donne un aperçu de la diversité des acquisitions en terme d'exposition, d'angle de vue et de résolution d'image.}
+    \label{fig:example_photography}
 \end{figure}\par
 
-\subsubsection{Dermatoscopie}
-Également appelé dermatoscopie, microscopie en épiluminescence ou encore microscopie de surface, ce dispositif permet d’observer les lésions cutanées, nous préfererons le terme de dermatoscopie pour la suite de ce manuscrit. Cette technique d’imagerie est partiellement attribuée à Johan Christophorus Kohlhaus dont les travaux menés, au XVIIème siècle, sur la microscopie de surface, auraient grandement contribué à initier cette modalité. Les premiers dispositifs ont émergés en 1971~\cite{MacKie1972}, et ce sont les années 1980 qui contribuerons à son essor chez un grand nombre de praticiens.\par
-
-Cet outil possède comme première caractéristique, de réduire les réflexions de lumière et contribue à rendre le stratum corneum translucide~\cite{Katz2001}, permettant ainsi au praticien de visualiser les couches sous-jacentes : épiderme, jonction derme/épiderme ou encore le derme papillaire non visible à l’œil nu. Cette réflexion de lumière était initialement supprimée par l’utilisation d’un fluide (eau, gel, …) entre la peau et la lentille du dispositif (dermatoscope non polarisé). De récentes améliorations ont permis de rendre l'utilisation d'un fluide obsolète par l'utilisation de lumière polarisée (dermatoscope polarisé). Un premier filtre, polarisée horizontalement, est disposé juste après la source de lumière, puis un second filtre, polarisé verticalement, est mis en place avant le capteur/fenêtre de visée (voir \Cref{fig:polarized_dermoscopy}). Ce dispositif permet ainsi de s'affranchir de la lumière spéculaire directement issue de la source de lumière qui parasite l'observation~\cite{Campos-do-Carmo2008}.\par
+Ces dernières années ont vu l'émergence de nouveaux types d'appareillages qui étendent la photographie clinique au corps entier. Ces appareils permette une traçabilité et un suivi des lésions apparentes sur le corps d'un patient. En effet, l'un des meilleurs critères du suivi de lésions dans le dépistage de maladie tel que le mélanome, reste l'évolution au cours du temps de ces lésions. Cet élément à notamment été mis en avant en 2004, et est encore considéré de nos jours comme l'un des critères majeurs~\cite{Abbasi2004,Glazer2017}. La société Pixience® à notamment développé un des ces appareils, le "Body-Mapper®" permettant ce suivi ainsi qu'un contrôle de l'éclairage lors de la prise de vue. Une interface guide le médecin lors de la prise d'images et permet d'associer à un modèle humain les diverses parties du corps (voir la \Cref{fig:example_device_bodymapper}).\par
 
 \begin{figure}[H]
 \centering
-    \includegraphics[width=0.85\linewidth]{contents/chapter_2/resources/polarized_dermoscopy.pdf}
-    \caption{Principe de dermatoscope à lumière polarisée. Un filtre est disposé après la source de lumière, puis un second dont la polarisation est perpendiculaire au premier juste avant la fenêtre pod'observation~\cite{sonthalia2019}}
-    \label{fig:polarized_dermoscopy}
+    \begin{subfigure}{.28\textwidth}
+      \centering
+      \includegraphics[width=\linewidth]{contents/chapter_2/resources/example_device_bodymapper_1.png}
+    \end{subfigure}
+    \begin{subfigure}{.65\textwidth}
+      \centering
+      \includegraphics[width=\linewidth]{contents/chapter_2/resources/example_device_bodymapper_2.png}
+    \end{subfigure}
+    \caption{Exemple du Body-Mapper, un appareil de photographie clinique corps entier, proposé par Pixience. A gauche, l'appareil d'acquisition; A droite, son interface logicielle permettant d'acquérir les diverses partie du corps.}
+    \label{fig:example_device_bodymapper}
+\end{figure}\par
+
+
+\subsubsection{Dermoscopie}
+Également appelé dermatoscopie, microscopie en épiluminescence ou encore microscopie de surface, ce dispositif permet d’observer les lésions cutanées. Nous préférerons le terme de dermoscopie pour la suite de ce manuscrit. Cette technique d’imagerie est partiellement attribuée à Johan Christophorus Kohlhaus dont les travaux menés, au XVIIème siècle, sur la microscopie de surface, auraient grandement contribué à initier cette modalité. Les premiers dispositifs ont émergés en 1971~\cite{MacKie1972}, et ce sont les années 1980 qui contribuerons à son essor chez un grand nombre de praticiens.\par
+
+Cet outil possède comme première caractéristique, de réduire les réflexions de lumière et contribue à rendre le stratum corneum translucide~\cite{Katz2001}, permettant ainsi au praticien de visualiser les couches sous-jacentes : épiderme, jonction derme/épiderme ou encore le derme papillaire non visible à l’œil nu. Cette réflexion de lumière était initialement supprimée par l’utilisation d’un fluide (eau, gel, …) entre la peau et la lentille du dispositif (dermatoscope non polarisé). De récentes améliorations ont permis de rendre l'utilisation d'un fluide obsolète par l'utilisation de lumière polarisée (dermatoscope polarisé). Un premier filtre, polarisée horizontalement, est disposé juste après la source de lumière, puis un second filtre, polarisé verticalement, est mis en place avant le capteur/fenêtre de visée (voir \Cref{fig:scheme_polarized_dermoscopy}). Ce dispositif permet ainsi de s'affranchir de la lumière spéculaire directement issue de la source de lumière qui parasite l'observation~\cite{Campos-do-Carmo2008}.\par
+
+\begin{figure}[H]
+\centering
+    \includegraphics[width=0.7\linewidth]{contents/chapter_2/resources/scheme_polarized_dermoscopy.pdf}
+    \caption{Principe de dermatoscope à lumière polarisée. Un filtre est disposé après la source de lumière, puis un second dont la polarisation est perpendiculaire au premier juste avant la fenêtre d'observation~\cite{sonthalia2019}}
+    \label{fig:scheme_polarized_dermoscopy}
 \end{figure}\par
 
 Une seconde caractéristique non négligeable, est la mise à disposition d’un zoom pouvant varier de 10x à 70x selon la complexité des modèles proposés \cite{Campos-do-Carmo2008}. Cette dernière caractéristique octroie au praticien la possibilité d’appréhender au mieux la structure dans ses moindres détails.\par
 
-De plus, son faible coût d’achat, sa rapidité de diagnostic et son efficacité en comparaison avec le seul œil humain \cite{Lallas2013} contribuent largement  à sa démocratisation dans la profession. Bien qu’utilisé majoritairement dans le dépistage de lésions pigmentaires, son efficacité semble avérée dans le cas de lésions dites non pigmentaires (\gls{bcc} et \gls{scc}) \cite{Lallas2013}. Ces dispositifs tendent à s'adapter de plus en plus à leur marché, s'orientant vers une utilisation tel en \Cref{fig:dermatoscope_example}.\par
+De plus, son faible coût d’achat, sa rapidité de diagnostic et son efficacité en comparaison avec le seul œil humain \cite{Lallas2013} contribuent largement à sa démocratisation dans la profession. Bien qu’utilisée majoritairement dans le dépistage de lésions pigmentaires, son efficacité semble avérée dans le cas de lésions dites non pigmentaires (\gls{bcc} et \gls{scc}) \cite{Lallas2013}. 
+
+Ces dispositifs tendent à s'adapter de plus en plus aux besoins de leur marché, en proposant par exemple une caméras haute résolution et permettant une utilisation polyvalente de l'appareil avec un connecteur générique comme le propose Pixience® (voir \Cref{fig:example_device_ccube}). Leur appareil à permis la mise en avant de lésions chez la souris et l'homme~\cite{Cinotti2016,Pillon2017}. D'autres société comme Dermlite® propose une solution plus nomade est adaptable aux principaux appareils du marché \Cref{fig:example_device_dermlite}.\par
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.60\linewidth]{contents/chapter_2/resources/example_device_ccube.jpg}
+    \caption{Exemple du dermatoscope C-Cube proposé par la société Pixience.}
+    \label{fig:example_device_ccube}
+\end{figure}\par
 
 \begin{figure}[H]
 \centering
-    \begin{subfigure}{.33\textwidth}
+    \begin{subfigure}{.32\textwidth}
       \centering
-      \includegraphics[width=\linewidth]{contents/chapter_2/resources/dermatoscope_example_1.png}
+      \includegraphics[width=\linewidth]{contents/chapter_2/resources/example_device_dermlite_1.png}
     \end{subfigure}
-    \begin{subfigure}{.33\textwidth}
+    \begin{subfigure}{.32\textwidth}
       \centering
-      \includegraphics[width=\linewidth]{contents/chapter_2/resources/dermatoscope_example_2.png}
+      \includegraphics[width=\linewidth]{contents/chapter_2/resources/example_device_dermlite_2.png}
     \end{subfigure}
-    \begin{subfigure}{.33\textwidth}
+    \begin{subfigure}{.32\textwidth}
       \centering
-      \includegraphics[width=\linewidth]{contents/chapter_2/resources/dermatoscope_example_3.png}
+      \includegraphics[width=\linewidth]{contents/chapter_2/resources/example_device_dermlite_3.png}
     \end{subfigure}
-    \caption{Exemple de dispositifs de dermatoscopie proposé par Dermlite: à gauche le dispositif seul, au milieu ce même dispositif adapté à un appareil photo standard et à droite le dispositif adapté à une caméra de smartphone.}
-    \label{fig:dermatoscope_example}
+    \caption{Exemple de dermatoscope proposé par Dermlite: à gauche le dispositif seul, au milieu ce même dispositif adapté à un appareil photo standard et à droite le dispositif adapté à une caméra de smartphone.}
+    \label{fig:example_device_dermlite}
 \end{figure}\par
 
 \subsubsection{Microscopie confocale par réflectance}
-La \gls{rcm} est une technique d’imagerie décrite durant les années 1950 par Marvin Minsky. Les avancés réalisées durant les années 1990 ont permis de réduire considérablement la taille de cet appareil et de faciliter ainsi son utilisation dans divers domaines. Cette techniques de plus en plus répandue dans les services de dermatologie a également connu un regain de notoriété dans les journaux scientifiques: une recherche à l’aide des mots clés « reflectance confocal microscopy skin » apporte une dizaine de publications en 2000 contre 150 en 2010.\par
+La \gls{rcm} est une technique d’imagerie décrite durant les années 1950 par Marvin Minsky. Les avancées réalisées durant les années 1990 ont permis de réduire considérablement la taille de cet appareil et de faciliter ainsi son utilisation dans divers domaines. Cette technique de plus en plus répandue dans les services de dermatologie a également connu un regain de notoriété dans les journaux scientifiques: une recherche à l’aide des mots clés « reflectance confocal microscopy skin » apporte une dizaine de publications vers les années 2000 contre un moyenne de 1500 chaque année depuis 2010~\textsuperscript{\ref{footnote:scholar_rcm}}.\par
+
+\addtocounter{footnote}{1}
+\footnotetext[\thefootnote]{Source : Google Scholar. \label{footnote:scholar_rcm}}
 
 \begin{figure}[H]
 \centering
-    \includegraphics[width=0.85\linewidth]{contents/chapter_2/resources/rcm_principle.pdf}
+    \includegraphics[width=0.9\linewidth]{contents/chapter_2/resources/scheme_principle_rcm.pdf}
     \caption{Schéma de fonctionnement du \gls{rcm} par Marvin Minsky. Une source de lumière est émise et focalisée en un point spécifique de la peau puis la lumière est réfléchie et reçue par une caméra au travers d'un sténopé (trou de faible diamètre). La lumière hors focale est ainsi arrêtée.}
-    \label{fig:rcm_principle}
+    \label{fig:scheme_principle_rcm}
 \end{figure}\par
 
-Cette technique emploie l’utilisation d’un sténopé situé devant le capteur et permet de conserver uniquement les photons issus du plan focal choisi, illustré en \Cref{fig:rcm_principle}. Nous pouvons par ce principe, obtenir différents plans focaux ou plans de coupes, participant à l’obtention d’une information 3D. En dermatologie, les dispositifs se basent sur des longueurs d’ondes de \SI{830}{\nano\metre} non invasives pour la peau et les yeux, mais limitent la profondeur de du dispositif à \SIrange{200}{300}{\micro\metre}.\par
+Cette technique emploie l’utilisation d’un sténopé situé devant le capteur et permet de conserver uniquement les photons issus du plan focal choisi, illustré en \Cref{fig:scheme_principle_rcm}. Nous pouvons par ce principe, obtenir différents plans focaux ou plans de coupes, participant à l’obtention d’une information 3D. En dermatologie, les dispositifs se basent sur des longueurs d’ondes de \SI{830}{\nano\metre} non invasives pour la peau et les yeux, mais limitent la profondeur du dispositif à \SIrange{200}{300}{\micro\metre}.\par
 
-Pour finir, à la manière du dermatoscope, un gel à base d’eau de réfraction proche de celle de l’épiderme est utilisé entre la lentille du microscope et la peau afin de limiter la perte de photons et de permettre l’obtention d’image du derme.\par
+Pour finir, à la manière du dermatoscope, un gel à base d’eau de réfraction proche de celle de l’épiderme est utilisé entre la lentille du microscope et la peau afin de limiter la perte de photons et de permettre l’obtention d’images du derme.\par
 
 \subsubsection{Tomographie en cohérence optique}
-Initialement conçue pour le domaine de l’ophtalmologie, la \gls{oct} est une technologie récente qui tend à se démocratiser à de nombreux domaines d’intervention dont celui de la dermatologie. Ces dispositifs se basent sur un principe d’interférométrie, préalablement utilisée pour les dispositifs dits d’interférométrie à faible cohérence temporelle fournissant une information à une dimension. Le principe consiste à utiliser une source de lumière commune divisée en deux faisceaux, l’un servant de référence et le second servant à l’analyse de l’échantillon considéré. Le faisceau de référence possède un miroir ajustable, permettant de modifier sa distance parcourue et définissant ainsi la profondeur d’échantillon analysable. En effet, deux faisceaux peuvent interférer si la distance parcourue (et leur déphasage) est identique \Cref{fig:oct_principle}.\par
+Initialement conçue pour le domaine de l’ophtalmologie, la \gls{oct} est une technologie récente qui tend à se démocratiser à de nombreux domaines d’intervention dont celui de la dermatologie. Ces dispositifs se basent sur un principe d’interférométrie, préalablement utilisé pour les dispositifs dits d’interférométrie à faible cohérence temporelle fournissant une information à une dimension. Le principe consiste à utiliser une source de lumière commune divisée en deux faisceaux, l’un servant de référence et le second servant à l’analyse de l’échantillon considéré. Le faisceau de référence possède un miroir ajustable, permettant de modifier sa distance parcourue et définissant ainsi la profondeur d’échantillon analysable. En effet, deux faisceaux peuvent interférer si la distance parcourue (et leur déphasage) est identique comme représenté dans la \Cref{fig:scheme_principle_oct}.\par
 
 L’\gls{oct} est une extension de ce principe à deux dimensions, permettant la caractérisation d’une « tranche » de tissu. Cette modalité d’imagerie propose ainsi une information temps réel en profondeur (de l’ordre du millimètre), avec une résolution proche du micromètre. Nous pouvons obtenir, par acquisition de plusieurs plans de coupe, une reconstruction de la peau et de ses structures.\par
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\linewidth]{contents/chapter_2/resources/oct_principle.pdf}
+    \includegraphics[width=0.8\linewidth]{contents/chapter_2/resources/scheme_principle_oct.pdf}
     \caption{Schéma de fonctionnement du \gls{oct}.}
-    \label{fig:oct_principle}
+    \label{fig:scheme_principle_oct}
 \end{figure}\par
 
 \subsubsection{Imagerie multispectrale}
-L'imagerie multispectrale est un principe d'imagerie dans lequel chaque pixel de l'image détient non pas 1 ou 3 valeurs (gris ou RGB), mais une multitude de valeurs décrivant un spectre. Ces dispositifs sont initialement séquentiels, même si les temps d'acquisitions entre spectre tendent à se réduire fortement. Différents principes d'imagerie spectrale existent, visible en \Cref{fig:multispectral_principle}, dont ceux:
-\begin{enumerate}
-\item par modification de la source: dans lequel la source d'émission elle même est modifiée utilisation de \gls{led} différentes ou filtrée à l'aide de filtres dédiés statiques ou programmables.
-\item par modification du récepteur: dans lequel la lumière est filtrée à réception à l'aide filtre dédiés, ici encore statiques ou programmables. Des capteurs commencent à émerger avec un filtrage réalisé directement par le capteur en lui même~\textsuperscript{\ref{footnote:foveon_sensor}}.
-\end{enumerate}\par
+L'imagerie multispectrale est un principe d'imagerie dans lequel les pixels contenus dans une image ne se résume pas une ou trois valeurs (respectivement pour une image en intensités ou RGB), mais à une multitude de valeurs décrivant chacune une longueur d'onde. Ce nombre de valeurs (ou échantillonage) spectral sera ainsi dépendant de la précision recherchée dans un domaine d'application particulier. Ces dispositifs sont séquentiels, même si les temps d'acquisition entre les diverses valeurs tendent à se réduire fortement avec les évolutions technologiques. Différents principes sont mis en oeuvre pour parvenir à l'obtention de ces images, visible sur la \Cref{fig:scheme_multispectral_principle}. Nous retiendrons les principes suivants :
+\begin{itemize}
+\item par modification \textbf{de la source émettrice de lumière}, soit en utilisant des \gls{led} programmables ou soit des combinaisons de filtres (il peut s'agir de filtres programmables) permettant de modifier les propriétés de la lumière,
+\item par personnalisation \textbf{de la lumière reçue}, bien souvent à l'aide de combinaison de filtres (il peut s'agir de filtres programmables) permettant de choisir les longueurs d'ondes désirées. Des capteurs multicouches émergent permettant une acquisition quasiment simultanée de l'information sur le capteur en lui même~\textsuperscript{\ref{footnote:foveon_sensor}}.
+\end{itemize}\par
+
+Ce principe à ainsi pour but de revenir à une information plus riche, que celle transmise par les capteurs standards. Ces appareils permettent de mettre leur information en relation des modèles d'absorptions (cf \Cref{fig:scheme_light_absorption}), et d'isoler les longueurs d'ondes responsables du phénomène à analyser.\par 
 
 \addtocounter{footnote}{1}
 \footnotetext[\thefootnote]{Source : Foveon X3®, Foveon, Santa Clara, Californie. \label{footnote:foveon_sensor}}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\linewidth]{contents/chapter_2/resources/multispectral_principle.pdf}
+    \includegraphics[width=\linewidth]{contents/chapter_2/resources/scheme_multispectral_principle.pdf}
     \caption{Schéma de fonctionnement d'une caméra multispectrale. Les dispositifs peuvent de nos jours adapter la longueur d'onde de la source à partir d'éclairage \gls{led} ou de filtres de lumière (Filtre 1), ou capter différentes longueurs d'ondes à partir de la lumière ré émise (Filtre 2).}
-    \label{fig:multispectral_principle}
+    \label{fig:scheme_multispectral_principle}
 \end{figure}\par
 
-Ce principe permet ainsi de revenir à des éléments observables plus important selon le type d'information recherché par l'utilisateur.\par 
 
-\subsubsection{Spectroscopie par réflectance/fluorescence}
+\subsubsection{Spectroscopie par réflectance}
+La spectroscopie de réflectance peut être assimilé à l'imagerie multispectrale dans le sens ou elle fournie également une information de spectre à un même instant, c'est à dire contenant plusieurs valeurs numériques chacune propre à une longueur d'onde spécifique. Néanmoins ce principe diffère en plusieurs points : l'information fournie est propre à un unique point de l'espace et est obtenue en temps réel.\par
+
+Pour cela, une source de lumière stable dans le temps, uniforme et couvrant l'ensemble du spectre que l'on désire observer est utilisée. Cette lumière est ensuite canalisée au sein d'une ou plusieurs fibres optiques afin d'être conduite jusqu'à l'échantillon supposé. Le phénomène de réflectance de l'échantillon est ensuite capté à l'aide d'une ou plusieurs fibres optiques jusqu'à un spectromètre qui va dissocier le signal (phénomène de diffraction), afin de cibler de multiples cellules présente sur un capteur numérique~\cite{Murphy2005,Malla2008}\textsuperscript{\ref{footnote:aventes_spectrometer}}.\par
+
+Ces capteurs font l'objet d'une procédure de calibration à l'aide de pantones ou nuancier dont les propriétés visuelles sont établies, comme le propose par exemple le ColorChecker\textsuperscript{®}~\textsuperscript{\ref{footnote:colorchecker}}. En effet, il est nécessaire d'empêcher une saturation inutile du signal conduisant à une perte d'information mais également d'utiliser au mieux la quantification. Cette procédure est notamment due  à la lumière source pouvant être substituée, aux conditions d'éclairage environnante variées et à la chaîne d'acquisition pouvant impacter le signal source. Cette étape permet ainsi de rectifier et compenser le signal "idéal".\par
+
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\linewidth]{contents/chapter_2/resources/spectroscopy_principle.pdf}
-    \caption{}
+    \includegraphics[width=\linewidth]{contents/chapter_2/resources/scheme_principle_spectroscopy.pdf}
+    \caption{Schéma représentant le fonctionnement d'un spectroscope par réflectance. Une lumière de référence est générée puis acheminée jusqu'à la zone cible. Cette lumière transite le long d'une ou plusieurs fibres optiques. Puis le phénomène de réflectance est capté et envoyé au spectromètre par le biais d'une ou plusieurs fibres. Le signal reçu est ensuite décomposé puis envoyé à la surface d'un capteur numérique.}
     \label{fig:spectroscopy_principle}
 \end{figure}\par
 
+\addtocounter{footnote}{1}
+\footnotetext[\thefootnote]{Source : Spectromètres AvaSpec\textsuperscript{®}, Avantes, Pays-Bas. \label{footnote:aventes_spectrometer}}
+
+\addtocounter{footnote}{1}
+\footnotetext[\thefootnote]{Source : X-Rite, ColorChecker\textsuperscript{®}, Michigan, États-Unis. \label{footnote:colorchecker}}
+
 \subsubsection{Microscopie confocal Raman}
-Ce type de dispositif porte le nom de l'effet Raman, lui même inspiré par le nom du physicien Chandrashekhara Venkata Râman à  l'origine de cette découverte. Son principe consiste à analyser un décalage de fréquence entre la lumière incidente et la lumière diffusée. Ainsi, ce décalage est propre à chaque matériaux et permet de retrouver ce dernier. Cet effet est de par son principe non destructif, et possède l'avantage de ne pas être dépendant de la fréquence de l'onde d'excitation. Son principe est schématisé en \Cref{fig:raman_effect}.\par
+Ce type de dispositif porte le nom de l'effet Raman, lui même inspiré par le nom du physicien Chandrashekhara Venkata Râman à  l'origine de cette découverte. Son principe consiste à analyser un décalage de fréquence entre la lumière incidente et la lumière diffusée. Ainsi, ce décalage est propre à chaque matériau et permet de retrouver ce dernier. Cet effet est par son principe non destructif, et a l'avantage de ne pas être dépendant de la longueur d'onde d'excitation. Contrairement à l'effet de fluorescence pour lequel la lumière doit posséder une longueur d'onde spécifique afin d'entrer en "résonance" avec la matière traversée, l'effet Raman s'obtient quelque soit la longueur d'onde de la lumière. Les différentes interactions et leurs différences sont schématisée sur la \Cref{fig:scheme_principle_raman}.\par
+
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\linewidth]{contents/chapter_2/resources/raman_effect.png}
-    \caption{Schéma des principe d'interaction entre la lumière et un milieu.}
-    \label{fig:raman_effect}
+    \includegraphics[width=\linewidth]{contents/chapter_2/resources/scheme_principle_raman.pdf}
+    \caption{Schéma reprenant les divers effets résultant de l'interaction entre la lumière et la matière\textsuperscript{\ref{footnote:edinburgh_instruments}}. La diffusion Raman se distingue par un décalage de longueur d'onde supérieur (Stokes) ou inférieur (anti-Stokes).}
+    \label{fig:scheme_principle_raman}
 \end{figure}\par
-Cet effet à d'abord été employé en spectroscopie et s'est étendue à la microscopie confocale permettant d'obtenir non plus une information en point unique mais d'obtenir des images à deux dimensions, avec une profondeur focale ajustable.\par
+
+\addtocounter{footnote}{1}
+\footnotetext[\thefootnote]{Source : Edinburgh Instruments, Livingston, Royaume-Uni. \label{footnote:edinburgh_instruments}}
+
+Cet effet à été employé en spectroscopie assez tôt~\cite{Ferraro2003,Ferraro2003b} et s'est étendue progressivement à la microscopie confocale\cite{Casper2003} permettant d'obtenir non plus une information relative à un point unique, mais d'obtenir des images à deux dimensions, avec une profondeur ajustable par modification du plan focal.\par
+
+Ses application au milieu de la dermatologie sont variées et maintenues. En effet, de nombreux travaux ont porté sur la détection des lésions cancéreuses mélanocytaires, dont essentiellement le mélanome avec une sensibilité supérieur à 90\%~\cite{Lui2012,Schleusener2015}. Les lésions cancéreuses non mélanocytaires ont également été abordées dont essentiellement le \gls{bcc} et le \gls{scc} avec des précision de détection élevées, supérieure à 90\%~\cite{Lieber2008,Silveira2015}.\par
+\clearpage
 
 \subsection{Modalités par mesure non optique}
-Nous évoquerons au travers de ces quelques lignes les modalités employées de manière expérimentale. Ces modalités n’interviennent pas dans nos travaux, mais nécessitent d’être évoquées à titre formel.
+Nous évoquerons au travers de ces quelques lignes des modalités alternatives aux techniques optiques employées dans le milieu de la dermatologie à titre plus expérimental. Nous décrirons dans un premier temps le fonctionnement de l'\gls{mri} et dans un second temps celui de l'échographie haute fréquence.\par
 
 \subsubsection{Imagerie par résonance magnétique}
-\subsubsection{Ultrasons haute fréquence}
+Le principe global de fonctionnement de l'\gls{mri} est basé sur l'interaction et l'observation des moments magnétiques des noyaux d'hydrogène. A leur état initial, les noyaux d'hydrogène possède un moment magnétique non contraint et donc désordonné (la somme de ces moments magnétique à l'échelle macroscopique est approximativement nulle). Ainsi, la première étape consiste à contraindre le moment magnétique des noyaux d'hydrogène dans une même direction (mais pas forcément un même sens) par un champ magnétique constant, on parle de précession. Dans un seconde étape, des radio-fréquences seront émises pour contraindre, de manière homogène, ces moments magnétiques dans une nouvelle direction (généralement perpendiculairement à ce champ) et ce par excitation. Enfin, l'émission de radio-fréquences est stoppée, puis le temps de retour à l'équilibre est mesuré (temps de relaxation) à l'aide d'une antenne de réception. Ce fonctionnement est résumé à l'aide du schéma disponible sur la ~\Cref{fig:scheme_principle_mri}.\par
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{contents/chapter_2/resources/scheme_principle_mri.pdf}
+    \caption{Schéma du principe de fonctionnement de l'\gls{mri} en quatre étapes. Le champ magnétique constant permet de contraindre les noyaux d'hydrogène, puis l'excitation par radio-fréquence permet d'observer par la suite leur temps de relaxation.}
+    \label{fig:scheme_principle_mri}
+\end{figure}\par
+
+En ce qui concerne l'utilisation de l'\gls{mri} en dermatologie, le champs d'étude semble assez restreint, malgré des études positives concernant son utilisation dans le cadre de dépistage et l'utilisation à but pré-opératoire du mélanome. De plus, l'utilisation d'agent de contraste comme le gadolinium semble être opportun pour le dépistage de lésions en générale de la peau~\cite{Zemtsov1993}. Une étude plus récente impliquant la dermatologie a été menée sur les mécanismes de récompense associés aux démangeaisons, mais impliquant une \gls{mri} fonctionnelle du cerveau et non de la peau en elle même~\cite{Mueller2017}. Néanmoins, l'une des principales contraintes évoquée concerne l'acquisition d'échantillon de faible taille sur des machines conventionnelles rendant le ratio signal sur bruit important et les temps d'acquisition pour compenser ce dernier inexploitable~\cite{Gobel2016}. De plus, les forts coûts associés à ces appareils et leur utilisation contraignantes en font des outils difficilement applicable au domaine de la dermatologie.\par
+
+\subsubsection{Échographie haute fréquence}
+Les dispositifs d'échographie sont des appareils d'imagerie basés sur l'utilisation d'ondes acoustiques. Pour cela, une sonde composées de transducteurs électro-acoustique va être employée pour l'émission mais également la réception de ces ondes, par utilisation de l'effet piézoélectrique inverse et direct. Il existe de multiples sondes pouvant émettre à diverses intervalles de fréquences et, permettant d'atteindre diverses profondeurs. Ces ondes seront ainsi émises par la sonde (effet piézoélectrique inverse) et vont se propager au sein des tissus du corps humain, et seront partiellement renvoyés à chaque changement de l'impédance de ces tissus. Les ondes renvoyées seront ainsi réceptionnées par la sonde émettrice (effet piézoélectrique direct) et formeront un signal.\par
+
+Comme énoncé différentes fréquences seront employées selon la profondeur recherchée, de  \SIrange{2}{10}{\mega\hertz} pour des structures assez lointaines allant de l'abdomen aux artères, et \SIrange{10}{50}{\mega\hertz} pour des structures plus proches et fines telles que la peau et l'oeil. Ainsi, les travaux de la peau par échographie emploie le terme d'échographie haute fréquences.\par
+
+Les travaux de recherches mêlant dermatologie et échographie avant les années 2000 ont montré une efficacité de la technique afin de suivre l'évaluation de mélanomes~\cite{Cammarota1998}. Des travaux plus récents, ont permis d'étendre la techniques à d'autres pathologies cancéreuses tels que les \gls{bcc}~\cite{Barcaui2014}, mais également des \gls{scc}~\cite{Catalano2010}. Enfin, cette technique aurait un potentiel pour le suivi de pathologie plus bénigne tels que l'eczema ou l'arthrose psoriasique~\cite{Bhatta2018}.\par
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{contents/chapter_2/resources/exemple_ultrasound.jpg}
+    \caption{Exemple de la sonde à ultrasons Butterfly iQ\textsuperscript{\ref{footnote:device_ultrasound}}, proposant une solution nomade et connectée.}
+    \label{fig:exemple_ultrasound}
+\end{figure}\par
+
+
+\addtocounter{footnote}{1}
+\footnotetext[\thefootnote]{Source : Butterfly Network, New York, États-Unis. \label{footnote:device_ultrasound}}
 
 \clearpage
-\section{Données de travail}
-\subsection{Présentation de l'étude clinique}
-Nous traiterons au sein de cette partie de notre "matière" de travail. En effet, l'ensemble de ce travail prend appuie sur une base de données mise à disposition initialement pour la réalisation d'une étude clinique menée sur la pertinence de la dermatoscopie et de la \gls{rcm} en milieu clinique~\cite{Cinotti2018}. Cette base a reçue une autorisation de la part du comité d'éthique du \gls{chu} de Saint-Etienne pour son exploitation au sein de l'étude clinique mentionnée précédemment mais également pour ce travail universitaire (Numéro du comité d'examen institutionnel 672016/CHUSTE).\par
 
-Cette base de données compile des lésions faciales possédant les critères suivant:
+\section{Données de travail}
+Nous traiterons au sein de cette partie de notre "matière" de travail. En effet, l'ensemble de ce travail prend appui sur une base de données mise à disposition initialement pour la réalisation d'une étude clinique menée sur la pertinence de la dermoscopie et de la \gls{rcm} en milieu clinique~\cite{Cinotti2018}. Ainsi, nous débuterons par une présentation de l'étude clinique en décrivant les conditions d'inclusions des patients, les dispositifs d'acquisition et le protocole d'évaluation des experts. Puis, nous étudierons en détail les résultats obtenus par ces experts qui nous servirons de repère dans cet étude. Enfin, nous aborderons des aspects de structuration de la base nécessaire à son utilisation dans le reste de ce document.\par
+
+\subsection{Présentation de l'étude clinique}
+Le travail évoqué  d'une étude clinique 
+Cette base a reçu une autorisation de la part du comité d'éthique du \gls{chu} de Saint-Etienne pour son exploitation au sein de l'étude clinique mentionnée précédemment mais également pour ce travail universitaire (Numéro du comité d'examen institutionnel 672016/CHUSTE).\par
+
+Cette base de données compile des lésions faciales possédant les critères suivants :
 \begin{itemize}
-\item les patients ont été acquis entre les années 2011 et 2015 au \gls{chu} de Saint-Etienne
-\item les données sont disponibles pour chaque patient sous 3 formes: photographie clinique, dermatoscopie et \gls{rcm}
-\item les lésions inclues été supposées de \gls{lm}/\gls{lmm} et le diagnostique différentiel était fortement controversé.
+\item les images proviennent de patients inclus entre les années 2011 et 2015 au \gls{chu} de Saint-Etienne (monocentrique),
+\item les données sont disponibles pour chaque patient sous 3 formes que sont la photographie clinique, la dermoscopie et la \gls{rcm} (multimodales),
+\item les lésions considérées cette base sont celles dont le diagnostic différentiel, c'est à dire par élimination méthodique des causes (voir
+\Cref{subsec:lentigo}), était fortement controversé et supposé comme étant un \gls{lm} ou \gls{lmm}.
 \end{itemize}\par
 
-En terme de composition, la base regroupe 201 patients répartie entre 96 femmes et 105 hommes d'un âge moyen égal à 70 ans compris entre 29 et 97 ans \Cref{fig:statistics}. Cette base comporte 223 lésions uniques dont le diagnostique que nous utiliserons comme référence provient de l'histologie. Ces lésions se décomposent en :
+En terme de composition, la base regroupe 201 patients répartis entre 96 femmes et 105 hommes d'un âge moyen égal à 70 ans compris entre 29 et 97 ans comme présenté sur la \Cref{fig:statistics}. Cette base comporte 223 lésions uniques dont le diagnostic que nous utiliserons comme référence provient de l'histologie. Ces lésions se décomposent en :
 \begin{itemize}
 \item 115 malignes : scindée en 92 \gls{lm} et 23 \gls{lmm}
-\item 108 bénignes : dont 20 \gls{bcc}, 37 \gls{sl}, 23 \gls{sk}, 15 \gls{pak}, 8 naevus, 2 kératose lichénoïde, 2 cicatrices et 1 maladie de Bowen pigmentée.
+\item 108 bénignes : dont 20 \gls{bcc}, 37 \gls{sl}, 23 \gls{sk}, 15 \gls{pak}, 8 nævus, 2 kératoses lichénoïde, 2 cicatrices et 1 maladie de Bowen pigmentée.
 \end{itemize}\par
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\linewidth]{contents/chapter_2/resources/statistics.pdf}
-    \caption{A gauche, répartition en fonction de l'âge et du sexe. A droite, répartition entre l'âge et le sexe en tenant compte du diagnostique binaire.}
+    \includegraphics[width=0.8\linewidth]{contents/chapter_2/resources/statistics_age_sex.pdf}
+    \caption{A gauche, répartition en fonction de l'âge et du sexe. A droite, répartition entre l'âge et le sexe en tenant compte du diagnostic binaire.}
     \label{fig:statistics}
 \end{figure}\par
 
-En ce qui concerne leur acquisition, celle-ci a à chaque fois été réalisée par l'un des 3 experts investigateurs de l'étude clinique~\cite{Cinotti2018}. Tout cas de collisions de tumeurs au sein d'un même groupe a été exclue de cette étude. En ce qui concerne la modalité de dermatoscopie, les données ont été produites à l'aide d'une caméra PowerShot® G7~\textsuperscript{\ref{footnote:device_powershot}} couplé au dispositif proposé par Fotofinder~\textsuperscript{\ref{footnote:device_fotofinder}}. Pour ce qui est de la modalité de \gls{rcm}, les données proviennent d'une caméra VivaScope 3000®~\textsuperscript{\ref{footnote:device_mavig}}. En revanche, aucune information lié à l'acquisition des données de photographie clinique n'a été mentionnée.\par
+En ce qui concerne leur acquisition, celle-ci a été à chaque fois réalisée par l'un des 3 experts investigateurs de l'étude clinique~\cite{Cinotti2018}. Tout cas de collisions de tumeurs au sein d'un même groupe a été exclu de cette étude. En ce qui concerne la modalité de dermatoscopie, les données ont été produites à l'aide d'une caméra PowerShot® G7~\textsuperscript{\ref{footnote:device_powershot}} couplée au dispositif proposé par Fotofinder~\textsuperscript{\ref{footnote:device_fotofinder}}. Pour ce qui est de la modalité de \gls{rcm}, les données proviennent d'un VivaScope 3000®~\textsuperscript{\ref{footnote:device_mavig}}. En revanche, aucune information liée à l'acquisition des données de photographie clinique n'a été mentionnée.\par
 
-L'intérêt de ces trois modalités est grand dans le contexte dermatologique puisqu'elles représentent le processus "classique" de prise en charge clinique, de la modalité la moins onéreuse avec la \textbf{photographie clinique} mais également la moins précise, à la modalité la plus onéreuse et apportant un degrés d'information plus important avec la \textbf{\gls{rcm}}. Ainsi, chaque modalité permet de réduire ainsi la zone d'incertitude chez un patient souffrant d'une pathologie de lapeau.
+L'intérêt de ces trois modalités est grand dans le contexte de la dermatologie puisqu'elles représentent le processus "classique" de prise en charge clinique, de la modalité la moins onéreuse avec la \textbf{photographie clinique} mais également la moins précise, à des modalités plus onéreuses, également plus riche en information, avec la \textbf{\gls{rcm}}. Ainsi, chaque modalité permet de réduire ainsi la zone d'incertitude chez un patient souffrant d'une pathologie de la peau.
 
 \addtocounter{footnote}{1}
 \footnotetext[\thefootnote]{Source : Canon Powershot®, Canon, Tokyo, Japon. \label{footnote:device_powershot}}
@@ -233,12 +318,11 @@ L'intérêt de ces trois modalités est grand dans le contexte dermatologique pu
 \addtocounter{footnote}{1}
 \footnotetext[\thefootnote]{Source : Distribué en Europe par MAVIG GmbH, Munich, Allemagne. \label{footnote:device_mavig}}
 
-\subsection{Protocole d'évaluation des experts}
-Afin d'évaluer les performances de praticiens face à ces lésions, les investigateurs ont eu recours à 21 dermatologues détenant une expertise des modalités d'imagerie non invasives. Ces experts sont réparti de manière homogène selon leur compétences respectives pour chacun des dispositifs. Ainsi, le panel d'évaluation se décompose de la façon suivante: 
+Afin d'évaluer les performances de praticiens face à ces lésions, les investigateurs ont eu recours à 21 dermatologues détenant une expertise des modalités d'imagerie non invasives. Ces experts sont répartis de manière homogène selon leurs compétences respectives pour chacun des dispositifs. Ainsi, le panel d'évaluation se décompose de la façon suivante: 
 \begin{inlinerate}
 \item 6 experts sont soumis à l'ensemble des modalités,
-\item 15 experts sont soumis à l'évaluation de la photographie clinique et de la dermatoscopie (dont 6 sur l'ensemble et 9 uniques)
-\item et 12 sont soumis à la \gls{rcm} (dont 6 sur l'ensemble et 6 uniques)~\cite{Cinotti2018}.
+\item 15 experts sont soumis à l'évaluation de la photographie clinique et de la dermoscopie (dont 9 uniquement dédiés a ces deux modalités),
+\item et 12 sont soumis à la \gls{rcm} (dont 6 uniquement dédiés à la \gls{rcm})~\cite{Cinotti2018}.
 \end{inlinerate}
 Cette répartition est résumée en \Cref{fig:experts_evaluation}. Pour chaque cas clinique étudié, ces experts ont évalué la gravité du cas à l'aide des termes bénin et malin.\par
 
@@ -249,13 +333,13 @@ Cette répartition est résumée en \Cref{fig:experts_evaluation}. Pour chaque c
     \label{fig:experts_evaluation}
 \end{figure}\par
 
-Pour éviter tout biais dans l'évaluation, les experts évalués sur l'ensemble des modalités ont contactés sur 3 journées différentes: 
+Pour éviter tout biais dans l'évaluation, les experts évalués sur l'ensemble des modalités ont été sollicités sur trois journées différentes: 
 \begin{inlinerate}
-\item une première évaluation sur images de photographie clinique et dermatoscopie,
-\item une seconde évaluation sur images de \gls{rcm}
-\item et une dernière évaluation sur l'ensemble des images.
+\item une première évaluation ne comprenant que les images de photographie clinique et de dermoscopie,
+\item une seconde évaluation ne comprenant que les images de \gls{rcm}
+\item et une dernière évaluation sur l'ensemble de la base d'images.
 \end{inlinerate}
-Par ailleurs, les images ont été présentée dans un ordre différents enter chaque journée d'évaluation. De plus, l'évaluation sur base d'image de photographie clinique a toujours été réalisée avant la dermatoscopie.\par
+Par ailleurs, les cas cliniques ont été présentés dans un ordre différents entre chaque journée d'évaluation afin d'éviter des biais liés à l'activité précédente des experts.\par
 
 \subsection{Résultats des experts}
 
@@ -267,21 +351,21 @@ Afin de réaliser nos divers tests, une base d'images anonymisée nous a été r
         \item en colonne, les diverses informations: \textit{Âge, Sexe,	Zone, Côté,	Diagnostic Binaire et Diagnostic},
         \item en ligne, les divers enregistrement liée à chaque lésion.
     \end{inlinerate}
-    \item d'un répertoire comprenant les images des divers cas clinique recensé dans l'étude sous divers format image.
+    \item d'un répertoire comprenant les images des divers cas clinique recensés dans l'étude sous divers formats image.
 \end{itemize}\par
 
-Afin d'exploiter au mieux cette base, quelques modifications y sont apportées. D'une part, la diversité des formats images est un frein quand à la gestion de ces données et nous avons opté pour un format matriciel sans perte de type bitmap. D'autre part, la structure de la base ne permet pas l'utilisation d'annotation au niveau des images ou des instances autres. Afin de rendre plus dynamique cette partie, nous avons opté pour une structure reprenant le fichier table initial (au format \gls{csv}) et de répertoires associés à chaque lésion. Chaque dossier de lésion se compose lui même de fichiers d'annotation propre au type de données stockées (images ou patchs). Par ailleurs, certaines ajout d'informations tel que l'appartenance à un patient ont été ajouté pour la suite de notre travail. La \Cref{fig:db_structure} synthétise la structure de cette base avant et après modification.\par
+Afin d'exploiter au mieux cette base, quelques modifications y sont apportées. D'une part, la diversité des formats images est un frein quand à la gestion de ces données et nous avons opté pour un format matriciel sans perte de type bitmap. D'autre part, la structure de la base ne permet pas l'utilisation d'annotation au niveau des images ou des instances autres. Afin de rendre plus dynamique cette partie, nous avons opté pour une structure reprenant le fichier table initial (au format \gls{csv}) et de répertoires associés à chaque lésion. Chaque dossier de lésion se compose lui même de fichiers d'annotation propre au type de données stockées (images ou patchs). Par ailleurs, certains apports d'informations ont été réalisés pour permettre un bon déroulement de la suite de notre travail, tel que l'appartenance à un patient. La \Cref{fig:db_structure} synthétise la structure de cette base avant et après modification.\par
 
 \begin{figure}[H]
 \centering
     \begin{subfigure}{.45\textwidth}
       \centering
-      \includegraphics[width=\linewidth]{contents/chapter_2/resources/db_structure_old.pdf}
+      \includegraphics[width=\linewidth]{contents/chapter_2/resources/scheme_dbstructure_old.pdf}
     \end{subfigure}
     \begin{subfigure}{.45\textwidth}
       \centering
-      \includegraphics[width=\linewidth]{contents/chapter_2/resources/db_structure_new.pdf}
+      \includegraphics[width=\linewidth]{contents/chapter_2/resources/scheme_dbstructure_new.pdf}
     \end{subfigure}
-    \caption{Schématisation de la base de ressources employé. A gauche, la base initiale et à droite, la base restructurée afin de supporter de nouvelles annotations.}
+    \caption{Schéma de l'organisation de la base de ressources employée. A gauche, la base initiale et à droite, la base restructurée afin de supporter de nouvelles annotations.}
     \label{fig:db_structure}
 \end{figure}\par

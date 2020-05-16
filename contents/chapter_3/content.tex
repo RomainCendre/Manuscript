@@ -1,7 +1,7 @@
 \chapter{Intelligence artificielle et compléments}
 \label{chap:chapter_3}
 \chapterintro
-Lors du précédent chapitre, nous avons pu aborder les interactions entre la peau et la lumière, ainsi que les dispositifs majeurs permettant l'acquisition d'informations de la peau. Dans la continuité de cette partie nous avons pu y présenter l'étude clinique de référence et les données associées.\par
+Lors du précédent chapitre, nous avons abordé les interactions entre la peau et la lumière, ainsi que les dispositifs majeurs permettant l'acquisition d'informations de la peau. Dans la continuité de cette partie nous avons présenté l'étude clinique de référence et les données associées.\par
 
 De nos jours, l’informatique est une ressource omniprésente dans de nombreux domaines d’application. Sa faculté à nous divertir ou encore à nous guider dans nos choix quotidiens personnels et professionnels en fait un précieux allié.\par 
 
@@ -11,73 +11,61 @@ Cette nouvelle partie nous permet de dérouler un peu plus notre plan, en aborda
 \newpage
 
 \section{Généralités sur l'intelligence artificielle}
-La notion d’intelligence artificielle est assez souvent contesté, mais se définie plus généralement comme étant « L’ensemble de théories et de techniques mises en œuvre en vue de réaliser des machines capables de simuler l'intelligence humaine ». Ainsi, la retranscription sous forme informatique de mécanismes de pensée humaine, sont compris dans cette notion.\par
+La notion \textbf{d’\gls{ai}} est assez souvent contestée, mais se définit plus généralement comme étant « L’ensemble de théories et de techniques mises en œuvre en vue de réaliser des machines capables de simuler l'intelligence humaine »~\textsuperscript{\ref{footnote:ia_larousse}}. Ainsi, la retranscription sous forme informatique de mécanismes de pensée humaine, sont compris dans cette notion.\par
 
-\Cref{fig:ia_overview}
+Une vision plus complète de ce terme consiste a décomposer l'\gls{ai} en une discipline composée de sous domaines possédant chacun leurs spécificités, comme schématisé sur la \Cref{fig:scheme_overview_ia}. Ainsi, le terme \textbf{d'apprentissage automatique} ou de "Machine Learning" caractérise un premier sous champs de l'\gls{ai} et sera employé pour qualifier l'utilisation de mécanismes statistiques dans le but de générer des règles, à partir de données d'apprentissage. Ces données, souvent complexes, il sera souvent nécessaire de laisser l'humain intervenir pour extraire l'information pertinente à l'accomplissement de la tâche souhaitée. Enfin, le terme \textbf{d'apprentissage profond} ou de "Deep Learning" va désigner un sous champ de l'apprentissage automatique, dans lequel des couches de prises de décision vont permettre d'augmenter la complexité des relations entre les données d'entrée et les tâches.\par
+
+\addtocounter{footnote}{1}
+\footnotetext[\thefootnote]{Source : Encyclopédie Larousse. \label{footnote:ia_larousse}}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\linewidth]{contents/chapter_3/resources/ia_overview.pdf}
+    \includegraphics[width=\linewidth]{contents/chapter_3/resources/scheme_overview_ia.pdf}
     \caption{Représentation des relations entre "Intelligence artificielle", "Apprentissage automatique" et "Apprentissage profond".}
-    \label{fig:ia_overview}
+    \label{fig:scheme_overview_ia}
 \end{figure}\par
 
-Cette partie a pour vocation d’amener à la compréhension générale des courants d’intelligence artificielle, qui permettent la résolution de problématiques variées, mais également la résolution de problèmes de dermatologie ces dix dernières années. Nous abordons de manière générale dans une première partie, les approches que nous qualifierons d’algorithmique ou méthode analytique et dans une seconde partie, les approches par apprentissage. Ces deux catégories se référent directement à notre thématique, à savoir l’analyse de lésions assistée par l’imagerie optique.\par
-
-Ce terme caractérise, dans le cadre de ce travail, les approches d’intelligence artificielle n’appartenant pas au cadre de l’apprentissage automatique. Il s’agit d’approches dont la succession de règles, ou des traitements pas à pas, est définie par un humain. Cette démarche fait suite aux travaux de Turing, décrivant que tout problème peut se résoudre par une suite d’étapes successives \cite{Turing1937}. L’ordinateur ne cherchera pas à comprendre la relation entre les données d’entrée et attendues en sortie, mais appliquera les divers traitements qui lui ont été demandés.\par
-
-Ces solutions proposent ainsi des règles statiques et nécessitent une révision de toute ou partie du processus lorsque les données d’entrées sont vouées à varier. De plus, ces approches peuvent être dépassées en cas d’une grande diversité des données d’entrée.\par
- 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\linewidth]{contents/chapter_3/resources/classic_pipeline.pdf}
-    \caption{Schématisation d’une approche par algorithme.}
-    \label{fig:standard_process}
-\end{figure}\par
-
-La littérature traitant de « la détection de lésions de la peau » est assez peu développée pour ces approches « algorithmiques » \cite{Moss1989}. Les approches par apprentissage, dont nous allons aborder les grandes lignes dans la section suivante, ont grandement contribué au développement de cette thématique dans la littérature scientifique.\par
+Cette partie a pour vocation d’amener à la compréhension générale des courants d’\gls{ai}, qui permettent la résolution de problématiques variées, mais surtout la résolution de certains problèmes de dermatologie. Nous décrirons dans une première partie, les approches par apprentissage. Ces deux catégories se référent directement à notre thématique, à savoir l’analyse de lésions assistée par l’imagerie optique.\par
 
 \section{Approches par apprentissage}
+Ce courant a été « évoqué » en 1948 par Alan Turing, son idée était de proposer des « machine à apprendre susceptibles de construire elles-mêmes leurs propres codes » \cite{Turing1950}. En 1959, Arthur Samuel  formule une première définition des approches par apprentissage comme étant un « domaine d’étude dans lequel nous donnons à l’ordinateur la possibilité d’apprendre sans avoir été explicitement programmé ».\par 
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\linewidth]{contents/chapter_3/resources/pipeline_machine_learning.pdf}
-    \caption{Schéma de machine learning classique.}
-    \label{fig:pipeline_machine_learning}
-\end{figure}
+Les approches par apprentissage automatique peuvent être résumées aux techniques permettant à un système informatique d’adapter son analyse et son comportement en fonction de ses données d’entrée. Une définition plus formelle et récente de ce domaine proposée par Tom Michael Mitchell est qu’un « programme informatique apprend d’une expérience E, en adéquation avec des tâches T et une mesure de performance P, si sa performance sur les tâches T, mesurée par P, s’améliore avec l’expérience E ».\par
 
-Ce courant a été « évoqué » en 1948 par Turing A : son idée était de proposer des « machine à apprendre susceptibles de construire elles-mêmes leurs propres codes » \cite{Turing1950}. En 1959, Arthur Samuel  formule une première définition du « Machine Learning » comme étant « domaine d’étude dans lequel nous donnons à l’ordinateur la possibilité d’apprendre sans avoir été explicitement programmé ». Les approches par apprentissage automatique peuvent être résumées aux techniques permettant à un système informatique d’adapter son analyse et son comportement en fonction de ses données d’entrée  . Une définition plus formelle et récente de ce domaine par Tom M. Mitchell  est « qu’un programme informatique apprend d’une expérience E, en adéquation avec des tâches T et une mesure de performance P, si sa performance sur les tâches T, mesurée par P, s’améliore avec l’expérience E ».
-Nous pouvons distinguer deux grands courants d’apprentissage, synthétisé dans la Figure 28, dont : 
+Nous pouvons distinguer deux grandes sous catégories au sein des courants d’apprentissage, synthétisé dans la \Cref{fig:scheme_machine_learning}, dont : 
 \begin{itemize}
-    \item Le premier courant est exploratoire, également surnommé « approche non supervisée » dans laquelle l’ordinateur tente de trouver des correspondances au sein des données.
-    \item Le second courant est prédictif, également appelé « approche supervisée » dans laquelle l’ordinateur tente de faire correspondre des données d’entrée avec des données de sortie attendues. Les prédictions peuvent aboutir à :
-    \begin{itemize}
-	    \item Des valeurs discrètes : nous parlons d’un problème de classification.
-	    \item Des valeurs continues : nous parlons d’un problème de régression.
-	\end{itemize}
+    \item L'apprentissage \textbf{supervisé} correspond aux techniques visant à faire correspondre les données d'entrée avec des sorties de valeurs discrètes (on parle aussi de classification) ou continues (on parle alors de régression),
+    \item L'apprentissage \textbf{non-supervisé} correspond à des approches exploratoires, dans lesquelles l'ordinateur tente d'identifier des corrélations au sein des données (désigné par le terme de clustering),
+    \item L'apprentissage \textbf{semi-supervisé}~\cite{Murphy2012} reprend les précédentes théories afin d'exploiter au mieux l'ensemble des données à disposition et de mieux discerner le problème.
 \end{itemize}
 
-La combinaison de ces deux approches aboutit à une troisième variante dite semi supervisée, permettant d’accroître la précision d’un modèle supervisé par l’ajout de données non labelisées \cite{Murphy2012}.
+Nous présenterons plus en détail chacune de ces catégories au seins des sous parties qui suivront.
  
  \begin{figure}[H]
-    \centering
-    \includegraphics[width=\linewidth]{contents/chapter_3/resources/machine_learning.png}
-    \caption{Machine Learning et sous ensemble. Source : MathWorks}
-    \label{fig:machine_learning_categories}
+    \centering 
+    \includegraphics[width=\linewidth]{contents/chapter_3/resources/scheme_machine_learning.pdf}
+    \caption{Schéma de décomposition des approches par apprentissage automatique.}
+    \label{fig:scheme_machine_learning}
 \end{figure}
 
-
 \subsection{Apprentissage supervisé}
-L’apprentissage supervisé ou « prédictif » consiste de manière simple à trouver une corrélation entre des données d’entrée x et des sorties attendue y et cela, dans le but de produire sur de nouvelles données d’entrée x' de nouvelles sorties y'.\par
-Cette approche implique l’utilisation d’une base d’apprentissage, définie comme « un ensemble de couples entrée-sortie » noté $\{(x_1,y_1 ),…,(x_n,y_n )\}$ avec $n \in N$. Ainsi, l’humain tente de donner une signification aux données utilisées, pour lesquelles la machine sera en mesure de trouver une corrélation.\par
-L’algorithme tente de répondre au problème $y=f(x)$ où $f()$ est notre fonction inconnue correspondant au phénomène observé, par une fonction d’approche $g()$ appelée fonction de prédiction, tel que $y=g(x)$.
-Cet apprentissage, schématisé en Figure 29, se découpe en deux processus distincts : d’une part, l’entraînement consistant à approcher la fonction $f()$ et d’autre part, la prédiction consistant à évaluer de nouvelles données.\par
+L’apprentissage supervisé ou « prédictif » consiste de manière simple à trouver une corrélation entre des données d’entrée $x$ et des sorties attendue $y$ et cela, dans le but de produire sur de nouvelles données d’entrée $x'$ de nouvelles sorties $y'$.\par
+
+Cette approche implique l’utilisation d’une base d’apprentissage, définie comme « un ensemble de couples entrée-sortie » noté $\{(x_1,y_1 ),\ldots,(x_n,y_n )\}$ avec $n \in N$. Ainsi, l’humain tente de donner une signification aux données utilisées, pour lesquelles la machine devra être en mesure de trouver une corrélation.\par
+
+L’algorithme tente de répondre au problème $y=f(x)$ où $f$ est notre fonction inconnue correspondant au phénomène observé, par une fonction d’approche $g$ appelée fonction de prédiction, tel que $y=g(x)$.\par 
+
+Cet apprentissage, schématisé sur la \Cref{fig:scheme_supervised_classification}, se découpe en deux processus distincts :
+\begin{itemize}
+    \item D’une part, l’entraînement consistant à approcher la fonction $f$ par une fonction d’approche $g$,
+    \item D’autre part, la prédiction consistant à prédire sur de nouvelles données à partir de $g$ tel que $g(x') = y'$.
+\end{itemize}\par
   
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\linewidth]{contents/chapter_3/resources/supervised_classification.pdf}
-    \caption{Schématisation de l’approche dite supervisée}
-    \label{fig:supervised_classification}
+    \includegraphics[width=0.8\linewidth]{contents/chapter_3/resources/scheme_supervised_classification.pdf}
+    \caption{Schéma de l’approche dite supervisée. La phase d'entraînement va permettre de déterminer les relations entre données et attentes, sur des données connues dites d'apprentissages. La phase dé prédiction réutilisera les relation déterminées lors de la phase d'entraînement. }
+    \label{fig:scheme_supervised_classification}
 \end{figure}
 
 Ces approches se regroupent au travers de deux types majeurs de résolution :
@@ -85,205 +73,196 @@ Ces approches se regroupent au travers de deux types majeurs de résolution :
     \item La prédiction de valeurs discrètes soit l’ensemble des entiers relatifs noté $\pmb{\mathbb{Z}}$, désignée sous le terme classification. Cette catégorie se subdivise en deux nouveaux types de classifications, qualifié de binaire ou de multi-classes lorsque la situation nécessite de prédire plus de deux valeurs.
     \item La prédiction de valeurs continues soit l’ensemble des nombres réels noté $\pmb{\mathbb{R}}$, désignée sous le terme de régression.
 \end{itemize}\par
-	
-	
 
-Apprentissage profond
-L’apprentissage profond correspond à un sous ensemble des méthodes d’apprentissage automatique qui tentent, par l’apports des neurosciences, de modéliser les schémas de fonctionnement du cerveau humain. Les derniers constats réalisés dans ce domaine, semblent démontrer que le cerveau possède divers niveaux de traitement de l’information . 
-En effet, dans le cadre des méthodes « standard » d’apprentissage évoquées dans la partie précédente, la dimension de « couches » de traitement n’est pas intégrée. Les approches par apprentissage simple proposent une architecture en trois couches, dont l’une des couches est allouée à la corrélation entre nos données d’entrée et de sortie. Par opposition, les approches par apprentissage profond proposant des structures en n couches, avec $n \in \pmb{\mathbb{N}}$ et $n>1$. 
-Ce choix d’architecture permet l’autodétermination de structures de caractéristiques complexes, définies par une combinaison non linéaire de caractéristiques plus simples. La  Figure 30 met en évidence un cas plus simple de résolution par apprentissage pour appréhender cette notion. 
- 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\linewidth]{contents/chapter_3/resources/dnn_understanding.png}
-    \caption{Exemple simplifié d'une structure d’apprentissage profond. Ce modèle se compose de deux couches intermédiaires cachées : la première couche extrait des caractéristiques linéaires simples, tandis que la seconde couche par combinaison à la première couche conduit à une extraction de caractéristiques plus complexes.}
-    \label{fig:dnn_understanding}
-\end{figure}
-
-Ces solutions ont le désavantage de nécessiter des quantités de données non négligeables ainsi qu’une puissance de calcul, ou a contrario du temps, supérieur aux techniques d’apprentissage « simples ».
-Plusieurs travaux ont été menés dans le domaine de la dermatologie pour permettre de déterminer la pertinence de ces méthodes. Nous retiendrons des thématiques autour de la reconnaissance du mélanome [24][25] largement abordé, ainsi que des travaux autour de la classification des lésions de natures diverses [26]. Ce dernier utilise un procédé de transfert de connaissance entre un réseau préalablement entrainé moins spécifique, et un nouveau réseau spécifique au problème de classification des lésions, dans le but de réduire le temps et les ressources nécessaires à l’entrainement du nouveau réseau.
-Apprentissage par transfert
-L’apprentissage par transfert est une discipline connexe à l’apprentissage profond défini comme « faisant référence à la situation où ce qui a été appris dans un contexte […] est exploité pour améliorer la généralisation dans une autre contexte » [27]. Cette discipline s’inscrit dans le champ de « l’adaptation de domaine », définie comme le transfert des connaissances d’un domaine $D_S$, défini par l’hypothèse $h: X_S \rightarrow Y_S$, vers un domaine cible $D_T$ afin de satisfaire $h: X_T \rightarrow Y_T$.
-Ces solutions permettent de réduire les difficultés liées à la grande quantité de ressources de calcul, de temps, mais également de données mobilisées nécessaires à un entrainement depuis sa base. Le modèle d’apprentissage attendu est alors initialement plus performant, croît plus efficacement et plus performant qu’un apprentissage spécifique (Figure 31).
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\linewidth]{contents/chapter_3/resources/learning_curves.png}
-    \caption{ Attentes liées à un apprentissage par transfert en opposition à un apprentissage classique.}
-    \label{fig:learning_curves}
-\end{figure}
-
-Néanmoins, cette solution n’est envisageable que lorsque l’apprentissage, réalisé lors de la première tâche, généralise suffisamment le phénomène observé. Ainsi, il est d’usage courant de ne spécifier lors du transfert que la couche finale de classification du réseau, les premières couches n’étant employé comme extracteur général de caractéristiques. Toutefois, la littérature s’accorde sur une possible spécialisation des couches de classification et hautes moins génériques (Figure 32).
-   
-
-\subsection{Apprentissage non supervisée}
+\subsection{Apprentissage non-supervisée}
 L’apprentissage non supervisé ou « descriptif » est une seconde approche d’apprentissage dans laquelle l’ordinateur tente de « découvrir » en autonomie, des corrélations au sein de jeux de données. Ces approches émergent de problématiques diverses, telles que :
 \begin{itemize}
-    \item Réduire le coût, ou temps humain nécessaire, d’obtention de données labellisées, c’est-à-dire pour lesquelles le couple de données d’entrée et de sortie attendue est connu.
+    \item Réduire le coût, ou temps humain nécessaire, d’obtention de données étiquetées, c’est-à-dire pour lesquelles le couple de données d’entrée et de sortie attendue est connu.
     \item Découvrir les diverses relations pouvant exister au sein d’un amas de données. En effet, un label n’est qu’un échantillonnage de l’information primaire, et ne permet pas d’obtenir les relations pouvant régir des modèles complexes.
     \item Explorer de nouvelles relations de type « cause – effet », en réaction à la masse de données produites par les objets connectés. 
 \end{itemize}\par
 
-	
-
-
 Plusieurs applications existent, telles que :
-	Le regroupement par classes, des algorithmes comme les k-moyennes tentent de minimiser la différence d’énergie entre les points d’un même groupe.
-	La réduction de dimensions sur des données à grande complexité, par projection de ces dernières sur des espaces à dimension réduite. On souhaite par ce procédé garder l’information essentielle au processus décisionnel.
-	La découverte de relations au sein de l’information, et des relations les plus robustes entre variables et dépendances.
+\begin{itemize}
+	\item Le regroupement par classes, des algorithmes comme les k-moyennes tentent de minimiser la différence d’énergie entre les points d’un même groupe.
+	\item La réduction de dimensions sur des données à grande complexité, par projection de ces dernières sur des espaces à dimension réduite. On souhaite par ce procédé garder l’information essentielle au processus décisionnel.
+	\item La découverte de relations au sein de l’information, et des relations les plus robustes entre variables et dépendances.
+\end{itemize}\par
  
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\linewidth]{contents/chapter_3/resources/unsupervised.pdf}
+    \includegraphics[width=0.8\linewidth]{contents/chapter_3/resources/scheme_unsupervised.pdf}
     \caption{Les données fournies ne sont pas associées à un label attendu. Nous demandons à la machine de découvrir des groupes de données (exemple avec 2 groupes et 3 groupes).}
-    \label{fig:unsupervised}
+    \label{fig:scheme_unsupervised}
 \end{figure}
 
-Cette partie a pour but d’aborder les techniques en dehors des deux précédentes catégories. Il peut s’agir de techniques hybrides ou n’appartenant pas de manière significative aux deux précédentes classes. 
+Ce principe a été également utilisé dans le but de réduire la dimension des données d'entraînement avant l'apprentissage supervisé. Cette technique porte le nom de sacs de mots ou "Bag-of-words" initialement prévue pour l'analyse de texte~\cite{Zhang2010} et utilisé dans des domaines tels que l'analyse d'image de la peau~\cite{Situ2008}.\par
 
-\subsection{Autres}
-\subsubsection{Apprentissage semi supervisé}
-Ces techniques tentent de combiner les deux principes précédents. Il est généralement difficile d’obtenir des données en suffisance correctement labellisées. D’une part, cela requiert le travail d’un opérateur sur ces données afin d’y associer les annotations adéquates. D’autre part, un grand nombre de données implique un possible biais humain dû à des erreurs sur ces annotations (manque d’attention, mauvaise interprétation de la donnée, …).
-Les données labellisées permettent de définir des groupes spécifiques au sein de ces données, tandis que les données non labellisées, en plus grande quantité, permettent d’affiner les limites des groupes préalablement détectés (Figure 34). Différentes techniques existent, basées sur des critères tels que la densité de l’information labellisé et non labellisé [28], pouvant s’apparenter à une forme de clustering.
+\subsection{Apprentissage semi-supervisé}
+Ces techniques tentent de combiner les deux principes précédents. Il est généralement difficile d’obtenir des données étiquetée en suffisance. D’une part, cela requiert le travail d’un opérateur sur ces données afin d’y associer les annotations adéquates. D’autre part, un grand nombre de données implique un possible biais humain dû à des erreurs sur ces annotations (manque d’attention, mauvaise interprétation de la donnée, …).\par
+
+Par ce principe, les données étiquetées permettent de définir l'appartenance à des groupes des données, tandis que les données non étiquetées, permettent d’affiner les limites des groupes préalablement détectés (voir la \Cref{fig:scheme_semi_supervised}). Différentes techniques existent, basées sur des critères tels que la densité de l’information étiquetées et non étiquetées~\cite{chapelle2005}.\par
  
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{contents/chapter_3/resources/semi_supervised.pdf}
-    \caption{A gauche, une classification obtenue à partir de deux données labellisées, à droite ces mêmes données avec l’ajout de données non labellisés. Ces nouvelles données sont alors attribuées à l’une ou l’autre des classes.}
-    \label{fig:semi_supervised}
+    \caption{A gauche, une classification obtenue à partir de deux données étiquetées, à droite ces mêmes données avec l’ajout de données non étiquetées. Ces nouvelles données sont alors attribuées à l’une ou l’autre des classes.}
+    \label{fig:scheme_semi_supervised}
 \end{figure}
 
-\subsubsection{Détection d'anomalies}
-Cette technique est particulièrement propice aux données représentant majoritairement les cas définis comme « normaux », et pour lesquels nous souhaitons détecter les cas « aberrants ». En 1980, Douglas Hawkins apporte la définition d’une valeur aberrante comme « Une observation qui s’écarte tellement des autres observations, qu’elle éveille le soupçon d’avoir été généré par un mécanisme différent ». Diverses méthodes existent, dont l’une des plus utilisées se base sur une distribution gaussienne, excluant les valeurs qualifiées d’extrême déterminée par un seuil $\varepsilon$ (Figure 35). Gaussian mixture model.
-  
+\clearpage
+
+\section{Apprentissage profond}
+L’apprentissage profond correspond à un sous ensemble des méthodes d’apprentissage automatique qui tentent, par l’apports des neurosciences, de modéliser les schémas de fonctionnement du cerveau humain. Les derniers constats réalisés dans ce domaine, semblent démontrer que le cerveau possède divers niveaux de traitement de l’information . 
+En effet, dans le cadre des méthodes « standard » d’apprentissage évoquées dans la partie précédente, la dimension de « couches » de traitement n’est pas intégrée. Les approches par apprentissage simple proposent une architecture en trois couches, dont l’une des couches est allouée à la corrélation entre nos données d’entrée et de sortie. Par opposition, les approches par apprentissage profond proposant des structures en n couches, avec $n \in \pmb{\mathbb{N}}$ et $n>1$.\par 
+
+Ce choix d’architecture permet l’autodétermination de structures de caractéristiques complexes, définies par une combinaison non linéaire de caractéristiques plus simples. La \Cref{fig:scheme_dnn_understanding} met en évidence un cas plus simple de résolution par apprentissage pour appréhender cette notion. \par
+ 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\linewidth]{contents/chapter_3/resources/anomaly_detection.png}
-    \caption{Exemple sur des données arbitraires. Un seuil $\varepsilon$ (en bleu) est déterminé à partir des moyennes et écart type des données.}
-    \label{fig:anomaly_detection}
+    \includegraphics[width=\linewidth]{contents/chapter_3/resources/scheme_dnn_understanding.png}
+    \caption{Exemple simplifié d'une structure d’apprentissage profond. Ce modèle se compose de deux couches intermédiaires cachées : la première couche extrait des caractéristiques linéaires simples, tandis que la seconde couche par combinaison à la première couche conduit à une extraction de caractéristiques plus complexes.}
+    \label{fig:scheme_dnn_understanding}
 \end{figure}
 
-\section{Réglages et évaluation}
-Cette partie se concentre sur des problématiques pouvant engendrer un biais lors de la génération de modèle par ces approches d’apprentissage. Nous tenterons de voir ces problèmes indépendamment et comment y remédier.
+Ces solutions ont le désavantage de nécessiter des quantités de données non négligeables ainsi qu’une puissance de calcul, ou a contrario du temps, supérieur aux techniques d’apprentissage « simples ».
+Plusieurs travaux ont été menés dans le domaine de la dermatologie pour permettre de déterminer la pertinence de ces méthodes. Nous retiendrons des thématiques autour de la reconnaissance du mélanome [24][25] largement abordé, ainsi que des travaux autour de la classification des lésions de natures diverses [26]. Ce dernier utilise un procédé de transfert de connaissance entre un réseau préalablement entraîné moins spécifique, et un nouveau réseau spécifique au problème de classification des lésions, dans le but de réduire le temps et les ressources nécessaires à l’entraînement du nouveau réseau.
+Apprentissage par transfert
+L’apprentissage par transfert est une discipline connexe à l’apprentissage profond défini comme « faisant référence à la situation où ce qui a été appris dans un contexte […] est exploité pour améliorer la généralisation dans une autre contexte » [27]. Cette discipline s’inscrit dans le champ de « l’adaptation de domaine », définie comme le transfert des connaissances d’un domaine $D_S$, défini par l’hypothèse $h: X_S \rightarrow Y_S$, vers un domaine cible $D_T$ afin de satisfaire $h: X_T \rightarrow Y_T$.
+Ces solutions permettent de réduire les difficultés liées à la grande quantité de ressources de calcul, de temps, mais également de données mobilisées nécessaires à un entraînement depuis sa base. Le modèle d’apprentissage attendu est alors initialement plus performant, croît plus efficacement et plus performant qu’un apprentissage spécifique  (\Cref{fig:learning_curves}).
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{contents/chapter_3/resources/example_learning_curves.pdf}
+    \caption{ Attentes liées à un apprentissage par transfert en opposition à un apprentissage classique.}
+    \label{fig:learning_curves}
+\end{figure}
+
+Néanmoins, cette solution n’est envisageable que lorsque l’apprentissage, réalisé lors de la première tâche, généralise suffisamment le phénomène observé. Ainsi, il est d’usage courant de ne spécifier lors du transfert que la couche finale de classification du réseau, les premières couches n’étant employé comme extracteur général de caractéristiques. Toutefois, la littérature s’accorde sur une possible spécialisation des couches de classification et hautes moins génériques.
+\subsection{Réseaux de neurones profonds}
+\subsection{Réseaux neuronaux de convolutions}
+
+\clearpage
+
+\section{Réglages et évaluation de modèles prédictifs}
+Cette partie se concentre sur des problématiques de biais lors de l'apprentissage et de l'évaluation de modèle. Nous tenterons de présenter rapidement le phénomène et les risques associées, puis nous proposerons des solutions permettant de s'affranchir d ces biais durant l'évaluation des modèles.\par
+
+\subsection{Généralisation de modèles}
+\label{subsec:generalized_models}
+A l'aide de couples d'entrée/sortie préalablement possédée, nous allons tenter d’apprendre une relation capable de \textbf{généraliser} et d’estimer de nouvelles sorties sur de nouvelles données. Il est pour cela nécessaire de parvenir à isoler l'information responsable de ce cheminement, plus ou moins séparable, en cause souvent la qualité de :
+\begin{inlinerate}
+    \item l'hypothèse formulée, c'est à dire si la relation qui lie l'observation et sa conséquence est directe et vraie dans toutes circonstance,
+    \item l'information possédée, c'est à dire si l'information est juste pour répondre à la problématique cible (qualité de l'observation, rapport signal sur bruit, etc.),
+    \item \ldots.
+\end{inlinerate}\par 
+
+Ce problème, évoqué dans la littérature porte le nom de « dilemme biais / variance » , dans lequel le biais représente le manque de relation pertinente entre données d’entrées et de sorties et où la variance représente l’influence du modèle au petites fluctuations souvent issues de bruit. Ces termes sont intrinsèquement liés aux problématiques respectives de \textbf{sous-apprentissage} et \textbf{sur-apprentissage}. La \Cref{fig:example_underfit_overfit} reprend de manière visuelle ces problématiques, et les exprimes selon un jeu d’entraînement et de test. A noter que le sur-apprentissage peux être limité par l’utilisation de termes de régularisation, de schéma de validation de modèle adaptés ou l’utilisation d’ensembles de donnés suffisantes.\par
+ 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\linewidth]{contents/chapter_3/resources/example_underfit_overfit.pdf}
+    \caption{Exemple de dilemme Biais/Variance. A gauche, un cas de sous-apprentissage, ce modèle est une sous approximation du phénomène observé. A droite, un cas de sur-apprentissage, le modèle ne généralise pas suffisamment le phénomène observé.}
+    \label{fig:example_underfit_overfit}
+\end{figure}
 
 \subsection{Choix de métriques}
-Les métriques sont une part de nos problématiques lors de la mise en place de modèle d’apprentissage. Ces métriques permettent de répondre à deux questions, d’une part « Quel modèle choisir ? » en mettant à notre disposition un critère de comparaison et d’autre part, « Quelle est l’efficacité obtenue ? » en nous permettant d’évaluer la pertinence du modèle retenu.
-L’un des premiers outils à disposition est la matrice de confusion (Figure 36), permettant de mettre en avant la performance des prédictions. La matrice diagonale fait figurer les prédictions correctement réalisées par notre modèle, tandis que les éléments restants nous renseignent sur les mauvaises prédictions. Cette matrice fait ainsi ressortir 4 valeurs :
-	Les vrais positifs, les éléments de la classe positive détectés comme positif.
-	Les vrais négatifs, les éléments de la classe négative détectés comme négatif.
-	Les faux positifs, les éléments de la classe négative détectés comme positifs.
-	Les faux négatifs, les éléments de la classe positive détectés comme négatifs.
+\label{subsec:metrics}
+Le choix des métriques sont une part importante de nos problématiques lors de la mise en place de modèles d’apprentissage. En effet, il va permettre d'une part de déterminer la sélection d'un modèle parmi un ensemble de modèles et va permettre de retenir des performances attendues de ce dernier par exemple dans le monde réel.\par
+
+L’un des principaux outils à disposition afin d'évaluer la performance est la matrice de confusion, schématisé sur la \Cref{fig:scheme_confusion_matrix}). Elle de faire correspondre les classes réelles et prédites : la diagonale de cette matrice fait figurer les prédictions correctement réalisées par notre modèle, tandis que les éléments restants nous renseignent sur les prédictions erronées. Dans une situation à deux classes ou \textit{binaire}, cette matrice fait ainsi ressortir quatre valeurs :
+\begin{itemize}
+	\item Les \textbf{vrais positifs}, les éléments de la classe positive détectés comme positif,
+	\item Les \textbf{vrais négatifs}, les éléments de la classe négative détectés comme négatif,
+	\item Les \textbf{faux positifs}, les éléments de la classe négative détectés comme positifs,
+	\item Les \textbf{faux négatifs}, les éléments de la classe positive détectés comme négatifs.
+\end{itemize}\par
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\linewidth]{contents/chapter_3/resources/confusion_matrix.pdf}
-    \caption{Schéma représentatif d’une matrice de confusion binaire, avec une classe dite positive et une classe dite négative.}
-    \label{fig:chapter_3:confusion_matrix}
+    \includegraphics[width=0.6\linewidth]{contents/chapter_3/resources/scheme_confusion_matrix.pdf}
+    \caption{Schéma représentatif d’une matrice de confusion, qui met en avant une situation binaire.}
+    \label{fig:scheme_confusion_matrix}
 \end{figure}
 
-Pour répondre à cette problématique, diverses métriques seront à envisager selon la problématique à laquelle nous tenterons de répondre. Ainsi, dans une classification binaire les critères de sensibilité et spécificité seront à considérer, tel que souvent employé dans le domaine. La moyenne fait également partie des critères extrait, mais il est néanmoins important de considérer les cas de non balancement des données pouvant fortement influencer ce paramètre (Équation 1)[29]. 
+Bien que déjà réduite, l'information de cette matrice est encore très riche et difficile à utiliser comme critère de sélection. Pour cela, diverses métriques éprouvés seront à envisager selon la problématique à laquelle nous tenterons de répondre. Parmi les plus courant d'entre eux, les critères de précision, sensibilité ou encore spécificité sont pléthore dans la littérature mais ont tendance à ne capter qu'une partie du problème. Par exemple, la sensibilité est un critère très important en médecine ou détection de fraude, mais ne qualifie en rien la spécificité du modèle. De même, la moyenne fait également partie des critères extrait dans le domaine de l'intelligence artificielle, mais peux également manquer de sens en cas de non balancement de l'information~\cite{Guo2008} ou même ne pas mettre en avant un important gouffre entre spécificité et sensibilité. Ces métriques sont détaillés dans l'\Cref{eq:metrics_basics}.\par
 
 \begin{equation} 
-    \label{eq:chapter_3:Metrics}
+    \label{eq:metrics_basics}
     \begin{split}
-    &Sensibilité=  TP/(TP+FP) \\	
-    &Moyenne=(TP+TN)/(TP+TN+FP+FN) \\
-    &Spécificité=  TN/(TN+FN) \\
-    &Précision=TP/(TP+FP)
+    Sensibilit\acute{e} &= VP/(VP+FP) \\	
+    Sp\acute{e}cificit\acute{e} &=  VN/(VN+FN) \\
+    Pr\acute{e}cision &= VP/(VP+FP) \\
+    Moyenne &= (VP+VN)/(VP+VN+FP+FN)
     \end{split}
 \end{equation}
 
-Il peut être préférable de privilégier des métriques plus robustes, dans le cadre de données non balancées. Dans ces cas, les sources s’accordent à l’utilisation de métriques tels que le F-Score, associant conjointement sensibilité et précision (principe de la moyenne harmonique, voir Équation 2), ou d’aire sous la courbe (AUC), associant sensibilité ainsi que spécificité et intégrant une indépendance vis-à-vis de seuils de classification (Figure 37).\par
-
+ Dans ce cas, il peut être préférable de privilégier des métriques plus robustes, dans le cadre de données non balancées. La plupart des méthodes s’accordent à l’utilisation de métriques tels que le F-Score, associant conjointement sensibilité et précision, par principe de la moyenne harmonique~\cite{Guo2008} (voir l'\Cref{eq:metrics_fscore}).\par
+ 
 \begin{equation} 
-    FScore=(1+\beta²)*(Précision*Sensibilité)/((\beta^2*Précision )+Sensibilité)
-    \label{eq:FScore}
+    {F-Score}=(1+\beta^2)*(Pr\acute{e}cision*Sensibilit\acute{e})/((\beta^2*Pr\acute{e}cision)+Sensibilit\acute{e})
+    \label{eq:metrics_fscore}
 \end{equation}
-
-
-Bien entendu, les scores dépendront du caractère souhaité pour notre classifieur, en minimisant la sensibilité ou spécificité dans le cadre du FScore par exemple. Ce que l’indépendance de l’AUC ne permet pas.\par
  
+Un autre métrique permettant de se prémunir de ces effets de non balancement de l'information et celui de l'\gls{auc} et découlant de la courbe \gls{roc}, dont le principe est résumé sur le schéma \Cref{fig:scheme_roc_curve}). La courbe \gls{roc} est tracée à partir des informations de spécificité / sensibilité et par variation d'une valeur seuil appliqué au modèle de prédiction, tandis que l'\gls{auc} correspond à l'intégration de l'aire de cette courbe. Ainsi, l'\gls{auc} est robuste au non balancement de données mais ses valeurs son optimiste sur des modèles de prédiction dont la variation du seuil est homogène vis à vis des résultats.\par
+
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\linewidth]{contents/chapter_3/resources/roc_curve.pdf}
-    \caption{Courbe ROC (Receiver Operating Characteristic) et AUC.}
-    \label{fig:roc_curve}
+    \includegraphics[width=0.6\linewidth]{contents/chapter_3/resources/scheme_roc_curve.pdf}
+    \caption{Schéma de courbe \gls{roc} en orange et \gls{auc} en gris.}
+    \label{fig:scheme_roc_curve}
 \end{figure}
 
-\subsection{Équilibrage de données}
-Nous regroupons au travers de ce terme l’ensemble des problématiques relatives à notre jeu de données et à la représentation de ses classes. Dans le cas de pathologie de la peau, cela peut se caractériser par un jeu de données composé de 100 éléments dont 20\% d’entre elles se réfèrent à des patients atteints de mélanomes et le reste à des patients sains. Nous constatons dans ce cas un déséquilibre entre les classes de ce jeu de données, qu’il nous faudra prendre en compte. Un tel jeu de données peut être qualifié de « non balancés », la répartition de ses classes n’étant pas égale en proportions.
-En effet, certains algorithmes de prédictions peuvent être biaisés, comme par exemple « l’algorithme des plus proches voisins » qui se composera de zones de forte densité privilégiant les données présentes en masse (exemple Figure 37). Un autre biais est également présent lors de l’extraction de métriques pour juger de la pertinence d’un modèle. En effet, dans le cas d’un classifieur qui prédirait constamment « sain », nous obtiendrons un score de 80\% de précision sur notre jeu de données précédent.
+D'autres alternatives moins biaisé ont également été formulées~\cite{Sokolova2006}, néanmoins le F-Score et l'\gls{auc} sont couramment utilisé au sein des articles clinique et constituerons une des bases de notre travail.\par
+
+\subsection{Réglages des hyperparamètres}
+\label{subsec:hyperparameter}
+Avant d’entrer plus en profondeur dans le sujet, il est nécessaire de revenir au terme « d’hyperparamètres ». Il caractérise les paramètres d'un processus d'apprentissage automatique dont le réglage doit être effectué avant le processus d’apprentissage, et dont le réglage dépendra des données à traiter mais ne pourra souvent être déterminé par la simple observation de celle-ci. Le réglage de ces hyperparamètres est ainsi difficile à appréhender et sera à refaire en fonction de chaque situation rencontrée.\par
+
+L’une des premières techniques permettant ce réglage consiste à définir une « grille » de ces hyperparamètres, contenant pour chacun leurs possible variations~\cite{Liu2006}. Il s'agit de la méthode la plus équitable puisqu'elle consiste à évaluer chaque combinaisons, par comparaison des performances finales (voir la \Cref{fig:example_hyperparameter_selection} - Gauche). Néanmoins, elle possède deux limitations majeures, dont :
+\begin{itemize}
+    \item Son \textbf{temps de calcul}, qui va croître de manière exponentielle en fonction du nombre d'hyperparamètres à valider,
+    \item Sa \textbf{précision}, qui va dépendre du pas choisi pour chacun des paramètres.
+\end{itemize}\par
+
+La seconde technique consiste à définir un « espace » de recherche dont la dilatation de chaque hyperparamètre sera choisie, ainsi qu'un nombre d'évaluation à réaliser pour déterminer la meilleure combinaison possible. Ce nombre d'évaluation est ensuite réalisé sous forme de tirage aléatoire, effectué à l'intérieur de cet espace de recherche défini~\cite{bergstra2012} (voir la \Cref{fig:example_hyperparameter_selection} - Droite). Cette méthode possède l'avantage d'être prévisible en terme de temps puisque le nombre de combinaisons évaluées est défini au préalable et quelque soit les proportions de l'espace. Néanmoins, cette méthode possède également des inconvénients comme la représentation des tirages au sein de l'espace défini.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{contents/chapter_3/resources/example_hyperparameter_selection.pdf}
+    \caption{Exemple de recherche sur deux hyperparamètres $X_1$ et $X_2$. A gauche, une recherche sous forme de grille rigide, dans laquelle chaque combinaison sera évaluée. A droite, une recherche aléatoire de ces hyperparamètres.}
+    \label{fig:example_hyperparameter_selection}
+\end{figure}
+
+\subsection{Méthodes d'évaluation}
+Nous avons évoqué divers éléments permettant l'ajustement des modèles, voir la \Cref{subsec:hyperparameter}, et la mesure de performance, voir la \Cref{subsec:metrics}. Il est nécessaire d'orchestrer cet ensemble afin d'obtenir la meilleure attente possible d'un modèle de prédiction, tout en conservant une mesure permettant de renseigner sur la fiabilité de ce modèle et de ses prédictions futures dans des situations où la vérité terrain ne sera pas connue. En effet, l'évaluation d'un modèle de prédiction sur des données identiques à celles utilisées constitue un biais, par l'utilisation de connaissance à posteriori. De même, l'ajustement des hyperparamètres rentre dans cette catégorie de l'entraînement, et l'évaluation ne peut se faire sur des données ayant servi à les déterminer. Par ailleurs, une telle évaluation permet de détecter les problèmes de sous-apprentissage et sur-apprentissage évoqués en \Cref{subsec:generalized_models}.\par
+
+La méthode \textbf{holdout} est la plus simple d'entre elle et consiste à diviser l’échantillon de données en deux sous-ensembles respectivement d'entraînement et de test. Il est important lors de cette étape de vérifier que les données présentes dans chacun de ces sous-ensembles soient représentatives de chaque classe présente dans la problématique. Les données spécifiées pour le test restent ainsi non utilisées jusqu'à leur confrontation au modèle définitif qui sera alors évalué par ces dernières. Le principal inconvénient de cette méthode est que seule une partie du jeu de donnée sert d'évaluation à la méthode développée. Néanmoins, cette méthode est rapide à exécuter puisqu'elle ne nécessite l'entraînement que d'un modèle. Cette méthode est schématisée sur la \label{fig:scheme_holdout_cv}, partie gauche.\par
+
+La méthode de \textbf{validation croisée} permet d'étendre la méthode précédente à l'ensemble du jeu de données et d'obtenir un score moins biaisé. Pour cela, le jeu de données est subdivisé ainsi en \textbf{$k$ échantillons}, servant à tour de rôle de jeu de test, le reste de ces données étant réservé à l'entraînement. Nous obtenons ainsi $k$ modèles de prédictions et autant de score d'évaluation qui se résumerons à une unique valeur par application d'une fonction de moyenne. Le principal inconvénient de cette méthode est son de réalisation puisqu'elle nécessite l'entraînement d'autant de modèles que d'échantillons. Cette méthode est schématisée sur la \label{fig:scheme_holdout_cv}, partie droite.\par
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{contents/chapter_3/resources/scheme_holdout_cv.pdf}
+    \caption{Schéma des principes des deux approches majeures d'évaluation de modèles. A gauche, la méthode de « holdout » ; A droite, la méthode de validation croisée.}
+    \label{fig:scheme_holdout_cv}
+\end{figure}
+
+Dans ce travail, nous nous intéresserons à la technique de validation croisée ainsi qu'à la valeur moyenne renvoyée par celle-ci. Afin de rendre l'information plus complète, nous renverrons également la valeur de déviation standard à partir des évaluations réalisé sur les divers échantillons, utilisée comme mesure de stabilité au sein de travaux statistiques~\cite{Kim2009}. La plupart des travaux employant la validation croisée emploie une valeur $k$ de 5, le choix de réduire cette valeur à 4 nous semble judicieux afin de réduire le temps de calcul tout en conservant une information cohérente.\par
+
+Par ces deux méthodes nous répondons à la problématique de l'évaluation, mais n'apportons pas de solution quant au choix des hyperparamètres. En effet, utiliser un schéma de validation croisée pour régler et évaluer les modèles conduirait inévitablement à surestimer les performances du modèle~\cite{Tsamardinos2014}. Ce type de démarche reviendrait à ajuster au mieux une courbe à un nuage de points tout en affirmant que ces même données correspondent à des données inconnues. L'une des solutions a ce problème est l'utilisation d'un double schéma de validation, dont l'un des plus fonctionnels actuellement est celui de la validation croisée imbriquée~\cite{Cawley2010}. Le principe de cette méthode est schématisé sur la ~\Cref{fig:scheme_hyperparameter_process}, dans laquelle nous retrouvons :
+\begin{itemize}
+    \item une boucle \textbf{externe}, permettant d'évaluer un modèle à partir de données de \textbf{test},
+    \item une boucle \textbf{interne}, permettant de valider un modèle et ses réglages à partir de données de \textbf{validation}.
+\end{itemize}\par
   
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\linewidth]{contents/chapter_3/resources/unbalanced.pdf}
-    \caption{Illustration du problème de données non balancées sur l’algorithme KNN. La densité des données bleu étant supérieure, des prédictions à la frontière de nos deux classes favorisent la classe bleue.}
-    \label{fig:unbalanced}
+    \includegraphics[width=\linewidth]{contents/chapter_3/resources/scheme_hyperparameter_process.pdf}
+    \caption{Schéma de la validation croisée imbriquée assurant le choix de la meilleur combinaison d'hyperparamètres et assurant une évaluation robuste des performances du modèle.}
+    \label{fig:scheme_hyperparameter_process}
 \end{figure}
 
-Plusieurs méthodes existent dans la littérature, pour permettre de rétablir l’équilibre entre les différentes classes. Nous pouvons citer les deux principaux :
-	Le sur-échantillonnage, c’est-à-dire que nous gonflons les classes sous représentatives de manière à égaliser la population de la classe majoritaire (en créant de nouveaux éléments artificiels par exemple).
-	Le sous-échantillonnage, c’est-à-dire que nous réduisons la population de l’ensemble des classes à celle de la classe minoritaire.
- 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\linewidth]{contents/chapter_3/resources/balancement_strategies.pdf}
-    \caption{Représentation de deux principales catégories de stratégie de balancement des données. Le suréchantillonnage tente d’augmenter la taille du jeu de données faible tandis que le sous échantillonnage tend à réduire la classe majoritaire. }
-    \label{fig:balancement_strategies}
-\end{figure}
-
-\subsection{Vers une généralisation de modèle}
-Pour assimiler cette problématique, il est nécessaire de bien comprendre le cheminement de ce type d’approche. En effet, à l’aide de couples de données entrée-sortie (données d’entrainement), nous allons tenter d’apprendre une relation / un modèle capable d’estimer de nouvelles sorties sur de nouvelles données (différentes de celles d’entrainement). 
-L’information traitées peut être ainsi plus ou moins aisément séparable, en cause souvent la qualité de(s) l’hypothèse(s) posée(s), du bruit, … L’objectif est de produire un modèle capable :
-	De généraliser, et d’être à même de traiter de nouveaux cas 
-	D’être spécifique, et de comprendre l’information traitée.
-Ce problème, évoqué dans la littérature porte le nom de « Dilemme biais / variance » , dans lequel le biais représente le manque de relation pertinente entre données d’entrées et de sorties et où la variance représente l’influence du modèle au petites fluctuations souvent issues de bruit. Ces termes sont intrinsèquement liés aux problématiques respectives de sous apprentissage et sur apprentissage. La Figure 39 reprend de manière visuelle ces problématiques, et les exprime selon un jeu d’entrainement et de test. A noter que le surapprentissage peux être limité par l’utilisation de termes de régularisation, de schéma de validation de modèle adaptés ou l’utilisation d’ensembles de donnés suffisantes. 
- 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\linewidth]{contents/chapter_3/resources/underfit_overfit.pdf}
-    \caption{Exemple de dilemme Biais/Variance. L’exemple de gauche représente un cas de sous apprentissage / biais, ce modèle est une sous approximation du phénomène observé. A contrario, l’exemple de droite représente un cas de sur apprentissage / variance, le modèle ne généralise pas suffisamment le phénomène observé. Source : Inspirée OpenClassroom }
-    \label{fig:underfit_overfit}
-\end{figure}
-
-\subsection{Évaluation de modèles}
-L’élaboration d’un algorithme de prédiction ne se résume pas à sa construction. En effet, il est important d’obtenir un indice permettant de renseigner sur la fiabilité de ce modèle et de ses prédictions futures dans des situations où la vérité terrain ne sera pas connue. L’un des mécanismes les plus simples (holdout method) consiste à diviser l’échantillon de données en deux sous-ensembles, dont les ratios représentatifs de chaque classe seront équivalents pour la classification. L’un des ensembles sert d’entrainement tandis que le second de test (Figure 40). Les données restent ainsi non utilisées jusqu’au moment de la validation, où les prédictions sur le jeu de test sont confrontées à leur réalité terrain. Ces données de test doivent être représentatives des données futures que traitera le modèle afin que cette métrique soit pertinente.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\linewidth]{contents/chapter_3/resources/holdout.pdf}
-    \caption{Principe de la méthode « holdout ».}
-    \label{fig:holdout}
-\end{figure}
-
-Afin de d’établir un score plus pertinent, il est de coutume de procéder à une validation croisée de notre modèle. Le jeu de données est subdivisé ainsi en k blocs, servant à tour de rôle de jeu d’évaluation et le reste d’entrainement. Nous obtenons ainsi k scores, que nous utiliserons pour déterminer le score final par moyenne de ceux-ci (Figure 41).
- 
- \begin{figure}[H]
-    \centering
-    \includegraphics[width=\linewidth]{contents/chapter_3/resources/cross_validation.pdf}
-    \caption{Principe de l’évaluation par validation croisée.}
-    \label{fig:cross_validation}
-\end{figure}
-
-\subsection{Réglages Hyper paramètres}
-Avant d’entrer plus en profondeur dans le sujet, il est nécessaire de revenir au terme « d’hyper paramètres ». Ce terme caractérise les paramètres dont le réglage s’effectue avant le processus d’apprentissage, tandis que les autres paramètres découlerons de l’entrainement.
-Le paramétrage de ces paramètres est le plus souvent difficile à appréhender, et dépendra fortement de la situation rencontrée. Il est donc nécessaire de procéder à leur réglage par comparaison entre différentes valeurs. L’une des techniques courantes consiste à définir une « grille » (cube, hypercube, … selon le nombre de paramètres) contenant une variation de ces valeurs selon un axe. Nous tenterons d’extraire la combinaison de paramètres capables de fournir les meilleurs résultats comme dans la Figure 42.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\linewidth]{contents/chapter_3/resources/hyperparameter_selection.png}
-    \caption{Exemple de grille de recherche d’hyperparamètres. L’influence de chaque paramètre est ainsi mesurée au travers de cette grille, avec h1 et h2 deux hyperparamètres.}
-    \label{fig:hyperparameter_selection}
-\end{figure}
-
-Malheureusement, la modification de ces paramètres et le choix des meilleurs d’entre eux, conduit à un phénomène de surestimation des performances du modèle généré par une « procédure de comparaison multiple » [30], si nous n’employons pas certaines précautions. De plus, cet ajustement peut conduire à des situations de sur-apprentissage, les paramètres tentant de corréler au mieux aux données disponibles. Il est donc nécessaire de procéder à une évaluation rigoureuse des performances du modèle choisi, c’est-à-dire en restant objectif vis-à-vis de l’observation réalisée (ne pas procéder à des réglages supplémentaires à parti de cette étape). Différentes approches existent, avec pour la simple une validation croisée dans un schéma de type « holdout » (Figure 43), et pout la plus fonctionnel un schéma imbriqué de validation croisée pour la sélection des hyperparamètres et l’estimation du modèle.
-  
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\linewidth]{contents/chapter_3/resources/hyperparameter_process.pdf}
-    \caption{Modèle de validation type pour la sélection d’hyperparamètre.}
-    \label{fig:hyperparameter_process}
-\end{figure}
+\clearpage
 
 \section{Fusion d’informations}
 Dernier aspect de notre sujet, la fusion d’informations se définie comme l’action de "combiner des informations issues de plusieurs sources afin d’améliorer la prise de décision" ~\cite{Bloch2003}. Cette fusion se retrouve dans de nombreux domaines d'applications dont celui de la santé ou encore de la biométrie, et peux être considéré comme un moyen d'augmenter la fiabilité de systèmes. L'intérêt croissant pour ce domaine correspond, entre autre, à une réponse de l'augmentation et de la diversification du nombre de capteurs présent. L'ouvrage de Bloch~\cite{Bloch2003} justifie la fusion d'information, par différentes notions auxquelles sont soumises chaque capteurs, dont:
@@ -329,6 +308,54 @@ Enfin, la fusion à \textbf{haut niveau} s'exerce après les mécanismes de pris
 \begin{inlinerate}
 \item la \textbf{sélection dynamique de modèle} de prédiction dans lequel l'objectif est de définir le modèle pertinent,
 \item et la \textbf{fusion de modèles} de prédiction dans lequel le but est d'obtenir une décision globale tenant compte des différentes décisions.
-\end{inlinerate}
+\end{inlinerate}\par
 
-Plus particulièrement, dans le cadre de problématique binaire, la fusion de modèle comporte deux niveaux conceptuels de décisions basées sur le type d'information mise à disposition par ces modèles. D'une part, au plus haut niveau : la fusion appliquée au \textbf{niveau décisionnel}. Seule les décisions issues de chaque modèle sont alors considérées selon diverses stratégies: le vote à la majorité ou encore la pondération des votes en sont deux représentants. D'autre part, au plus bas niveau : la fusion appliquée aux scores~\cite{Kittler1998}. Dans le cadre de problématique à plusieurs classes, nous pouvons évoquer une troisième prise de décision au niveau du rang, c'est à dire en considérant la position de chaque classe prédite issue des divers modèles.
+Plus particulièrement, dans le cadre de problématique binaire, la fusion de modèle comporte deux niveaux conceptuels de décisions basées sur le type d'information mise à disposition par ces modèles. D'une part, au plus haut niveau : la fusion appliquée au \textbf{niveau décisionnel}. Seule les décisions issues de chaque modèle sont alors considérées selon diverses stratégies: le vote à la majorité ou encore la pondération des votes en sont deux représentants. D'autre part, au plus bas niveau : la fusion appliquée aux scores~\cite{Kittler1998}. Dans le cadre de problématique à plusieurs classes, nous pouvons évoquer une troisième prise de décision au niveau du rang, c'est à dire en considérant la position de chaque classe prédite issue des divers modèles.\par
+
+
+% Ce terme caractérise, dans le cadre de ce travail, les approches d’intelligence artificielle n’appartenant pas au cadre de l’apprentissage automatique. Il s’agit d’approches dont la succession de règles, ou des traitements pas à pas, est définie par un humain. Cette démarche fait suite aux travaux de Turing, décrivant que tout problème peut se résoudre par une suite d’étapes successives \cite{Turing1937}. L’ordinateur ne cherchera pas à comprendre la relation entre les données d’entrée et attendues en sortie, mais appliquera les divers traitements qui lui ont été demandés.\par
+
+
+
+% Ces solutions proposent ainsi des règles statiques et nécessitent une révision de toute ou partie du processus lorsque les données d’entrées sont vouées à varier. De plus, ces approches peuvent être dépassées en cas d’une grande diversité des données d’entrée.\par
+ 
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=\linewidth]{contents/chapter_3/resources/classic_pipeline.pdf}
+%     \caption{Schématisation d’une approche par algorithme.}
+%     \label{fig:standard_process}
+% \end{figure}\par
+
+% La littérature traitant de « la détection de lésions de la peau » est assez peu développée pour ces approches « algorithmiques » \cite{Moss1989}. Les approches par apprentissage, dont nous allons aborder les grandes lignes dans la section suivante, ont grandement contribué au développement de cette thématique dans la littérature scientifique.\par   
+
+% \subsubsection{Détection d'anomalies}
+% Cette technique est particulièrement propice aux données représentant majoritairement les cas définis comme « normaux », et pour lesquels nous souhaitons détecter les cas « aberrants ». En 1980, Douglas Hawkins apporte la définition d’une valeur aberrante comme « Une observation qui s’écarte tellement des autres observations, qu’elle éveille le soupçon d’avoir été généré par un mécanisme différent ». Diverses méthodes existent, dont l’une des plus utilisées se base sur une distribution gaussienne, excluant les valeurs qualifiées d’extrême déterminée par un seuil $\varepsilon$ (Figure 35). Gaussian mixture model.
+  
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=\linewidth]{contents/chapter_3/resources/anomaly_detection.png}
+%     \caption{Exemple sur des données arbitraires. Un seuil $\varepsilon$ (en bleu) est déterminé à partir des moyennes et écart type des données.}
+%     \label{fig:anomaly_detection}
+% \end{figure}
+
+% \subsection{Équilibrage de données}
+% Nous regroupons au travers de ce terme l’ensemble des problématiques relatives à notre jeu de données et à la représentation de ses classes. Dans le cas de pathologie de la peau, cela peut se caractériser par un jeu de données composé de 100 éléments dont 20\% d’entre elles se réfèrent à des patients atteints de mélanomes et le reste à des patients sains. Nous constatons dans ce cas un déséquilibre entre les classes de ce jeu de données, qu’il nous faudra prendre en compte. Un tel jeu de données peut être qualifié de « non balancés », la répartition de ses classes n’étant pas égale en proportions.
+% En effet, certains algorithmes de prédictions peuvent être biaisés, comme par exemple « l’algorithme des plus proches voisins » qui se composera de zones de forte densité privilégiant les données présentes en masse (exemple Figure 37). Un autre biais est également présent lors de l’extraction de métriques pour juger de la pertinence d’un modèle. En effet, dans le cas d’un classifieur qui prédirait constamment « sain », nous obtiendrons un score de 80\% de précision sur notre jeu de données précédent.
+  
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=\linewidth]{contents/chapter_3/resources/unbalanced.pdf}
+%     \caption{Illustration du problème de données non balancées sur l’algorithme KNN. La densité des données bleu étant supérieure, des prédictions à la frontière de nos deux classes favorisent la classe bleue.}
+%     \label{fig:unbalanced}
+% \end{figure}
+
+% Plusieurs méthodes existent dans la littérature, pour permettre de rétablir l’équilibre entre les différentes classes. Nous pouvons citer les deux principaux :
+% 	Le sur-échantillonnage, c’est-à-dire que nous gonflons les classes sous représentatives de manière à égaliser la population de la classe majoritaire (en créant de nouveaux éléments artificiels par exemple).
+% 	Le sous-échantillonnage, c’est-à-dire que nous réduisons la population de l’ensemble des classes à celle de la classe minoritaire.
+ 
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=\linewidth]{contents/chapter_3/resources/example_balancement_strategies.pdf}
+%     \caption{Représentation de deux principales catégories de stratégie de balancement des données. Le suréchantillonnage tente d’augmenter la taille du jeu de données faible tandis que le sous échantillonnage tend à réduire la classe majoritaire. }
+%     \label{fig:example_balancement_strategies}
+% \end{figure}

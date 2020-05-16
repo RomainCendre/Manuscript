@@ -15,27 +15,6 @@
 \newcommand{\phdtodo}[2][green]{\iftoggle{todolist}{\todo[inline, color=#1!40]{#2}}{}}
 \newcommand{\phdmissingfig}[2]{\missingfigure{#1}}
 
-%% ----------------------------------------------------------------
-%% --- change font
-%%
-%% --- float with adjusting left / right margins using
-%% \begin{figure}[t]
-%%  \centering
-%%  \addtolength{\leftskip}{-3cm}
-%%  \addtolength{\rightskip}{-3cm}
-%%  % figure content
-%% \end{figure}
-%%
-%% --- custom ("pro") arrays with \toprule, \midrule, \cmidrule and \bottomrule
-%% ----------------------------------------------------------------
-\renewcommand{\familydefault}{\rmdefault}
-\makeatletter
-\newcommand*{\centerfloat}{%
-  \parindent \z@
-  \leftskip \z@ \@plus 1fil \@minus \textwidth
-  \rightskip\leftskip
-  \parfillskip \z@skip}
-\makeatother
 
 \usepackage{subcaption}
 \usepackage{wrapfig}
@@ -43,38 +22,83 @@
 \usepackage{multirow, makecell}
 \usepackage{array,booktabs}
 
-% - Use column specifier R/C/L{size} when declaring array to fix column size with
-% - specified alignment
-\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
-\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
-\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
-
-%% ----------------------------------------------------------------
-%% --- Glossary and acronyms handling
-%% - Entries loading from file.tex (don't specify the .tex extension in file below)
-%% - load acronyms definitions with \loadglsentries[\acronymtype]{file}
-%% - load main glossary entries with \loadglsentries[main]{file}
-%%
-%% - Multi-lingual acronyms declared with :
-%% \newacronym[frshort=IdO, % french acronym
-%%            frlong=Internet des Objets] % french description
-%%            {iot}
-%%            {IoT} % english acronym
-%%            {Internet of Things} % english description
-%% Note that frlong entry is not mandatory, but frshort is.
-%%
-%% Use standard \gls command for english acronym,
-%% \acrlongfr{iot} or \acrshortfr{iot} for english one.
-%%
-%% - Add glossaries in manuscrit.tex after definitions list with
-%% \printglossary[type=\acronymtype,style=listfracr]
-%% \printglossary
-%%
-%% Refer to glossary package for more infos (e.g makeglossaries command,
-%% xindy command, etc)
 %% ----------------------------------------------------------------
 \usepackage[xindy,acronym,toc,shortcuts]{glossaries}
 \usepackage[xindy]{imakeidx}
+
+%% ----------------------------------------------------------------
+%% --- Configure hyperlinks, minitoc, epigraph
+%% ----------------------------------------------------------------
+\usepackage{xcolor}
+
+\usepackage{minitoc}
+\usepackage{epigraph}
+
+% Include the listings-package for code listings
+\usepackage{algpseudocode}
+\usepackage{algorithm}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{csquotes}
+
+\usepackage{amsmath}
+\usepackage{bibentry}
+\usepackage{cleveref}
+\usepackage[inline]{enumitem}
+\usepackage{siunitx}
+\usepackage{subcaption}
+% \usepackage{fancyhdr}
+% \pagestyle{fancy}
+
+% \renewcommand{\headrulewidth}{0pt} 
+% \fancyhead[LE, LO] {Page \thepage}
+% \fancyhead[RE, RO] {Question \the\QuestionNumber}
+
+%%%%%%%%%%%%%%% Parameters
+% Custom hyperlinks
+\hypersetup{
+  colorlinks,
+  linkcolor={red!80!black},
+  citecolor={blue!70!black},
+  urlcolor={blue!50!black},
+}
+
+% Length of epigraph
+\setlength{\epigraphwidth}{0.7\textwidth}
+
+% Depth of minitoc of 2
+\setcounter{minitocdepth}{2}
+
+% Custom list
+\newlist{inlinerate}{enumerate*}{1}
+\setlist[inlinerate]{label=(\roman*)}
+
+% Custom unit and range
+\sisetup{range-phrase=--}
+\DeclareSIUnit\px{px}
+
+\nobibliography*
+
+% Custom chapter
+\newcommand\unchapter[1]{%
+  \chapter*{#1}%
+  \chaptermark{#1} 
+  \addcontentsline{toc}{chapter}{#1}
+  \mtcaddchapter}
+  
+% Custom title for mini toc contents
+\renewcommand{\mtctitle}{Sommaire}
+
+% Custom caption
+\DeclareCaptionLabelSeparator{colon}{ : }
+
+% - Use column specifier R/C/L{size} when declaring array to fix column size
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+  
+%%%%%%%%%%%%%%% Special macros
 \makeglossaries
 \makeindex
 
@@ -213,44 +237,72 @@
     \glspostdescription\space ##2}%
 }
 
+% -- define fancy quotes
+\definecolor{quotemark}{gray}{0.7}
+\makeatletter
+\def\fquote{%
+    \@ifnextchar[{\fquote@i}{\fquote@i[]}%]
+           }%
+\def\fquote@i[#1]{%
+    \def\tempa{#1}%
+    \@ifnextchar[{\fquote@ii}{\fquote@ii[]}%]
+                 }%
+\def\fquote@ii[#1]{%
+    \def\tempb{#1}%
+    \@ifnextchar[{\fquote@iii}{\fquote@iii[]}%]
+                      }%
+\def\fquote@iii[#1]{%
+    \def\tempc{#1}%
+    \vspace{1em}%
+    \noindent%
+    \begin{list}{}{%
+         \setlength{\leftmargin}{0.55\textwidth}%
+         \setlength{\rightmargin}{0.01\textwidth}%
+                  }%
+         \item[]%
+         \begin{picture}(0,0)%
+         \put(-15,-5){\makebox(0,0){\scalebox{3}{\textcolor{quotemark}{``}}}}%
+         \end{picture}%
+         \begingroup\itshape}%
+ %%%%********************************************************************
+ \def\endfquote{%
+ \endgroup\par%
+ \makebox[0pt][l]{%
+ \hspace{0.4\textwidth}%
+ \begin{picture}(0,0)(0,0)% 
+	 \put(15,15){\makebox(0,0){%
+	 \scalebox{3}{\color{quotemark}''}}}%
+ \end{picture}}%
+ \ifx\tempa\empty%
+ \else%
+    \ifx\tempc\empty%  
+       \hfill\rule{100pt}{0.5pt}\\\mbox{}\hfill\tempa,\ \emph{\tempb}%
+   \else%		
+       \hfill\rule{100pt}{0.5pt}\\\mbox{}\hfill\tempa,\ \emph{\tempb},\ \tempc%
+   \fi\fi\par%
+   \vspace{0.5em}%
+ \end{list}%
+ }%
+\makeatother
+
 %% ----------------------------------------------------------------
-%% --- Configure hyperlinks, minitoc, epigraph
+%% --- change font
+%%
+%% --- float with adjusting left / right margins using
+%% \begin{figure}[t]
+%%  \centering
+%%  \addtolength{\leftskip}{-3cm}
+%%  \addtolength{\rightskip}{-3cm}
+%%  % figure content
+%% \end{figure}
+%%
+%% --- custom ("pro") arrays with \toprule, \midrule, \cmidrule and \bottomrule
 %% ----------------------------------------------------------------
-\usepackage{xcolor}
-\hypersetup{
-  colorlinks,
-  linkcolor={red!80!black},
-  citecolor={blue!70!black},
-  urlcolor={blue!50!black},
-}
-
-\usepackage{minitoc}
-\setcounter{minitocdepth}{2}
-
-\usepackage{epigraph}
-\setlength{\epigraphwidth}{0.7\textwidth}
-
-% Include the listings-package for code listings
-\usepackage{algpseudocode}
-\usepackage{algorithm}
-%\usepackage{listings}
-
-\usepackage[T1]{fontenc}
-\usepackage[utf8]{inputenc}
-\usepackage{csquotes}
-
-\usepackage{amsmath}
-\usepackage{bibentry}
-\usepackage{cleveref}
-\usepackage[inline]{enumitem}
-\usepackage{siunitx}
-\usepackage{subcaption}
-
-% Parameters
-\newlist{inlinerate}{enumerate*}{1}
-\setlist[inlinerate]{label=(\roman*)}
-
-\sisetup{range-phrase=--}
-\DeclareSIUnit\px{px}
-
-\nobibliography*
+\renewcommand{\familydefault}{\rmdefault}
+\makeatletter
+\newcommand*{\centerfloat}{%
+  \parindent \z@
+  \leftskip \z@ \@plus 1fil \@minus \textwidth
+  \rightskip\leftskip
+  \parfillskip \z@skip}
+\makeatother
