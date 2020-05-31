@@ -9,7 +9,14 @@ Comme
 
 \section{Calibration de modèles}
 \section{Fusion de décisions}
+% Mil & Majority vote\cite{Sudharshan2019}
 \section{Approche faiblement supervisée}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{contents/chapter_6/resources/scheme_patient_decision.pdf}
+    \caption{Schéma de représentation du système complet pour la prise de décision patient supervisée.}
+    \label{fig:scheme_patient_decision}
+\end{figure}\par
 \section{Résultat patient}
 % This part relates to different ways to achieve classification at the patient-level based on the same two categories: “malignant”, as the positive class, and “benign”. With this assumption, a patient should be considered “malignant” if at least one image is considered to be “malignant”. Additionally, this part needs to consider the varying number of samples per patient (as a reminder, the number of instances per patient can vary between 2 and 833 images).\par
 % In order to achieve this, the best combination of the feature extraction method and the classification model from \Cref{sec:image_decision} was used. The classification model provided two types of information for each image: the score was based on prediction probabilities and the decision (i.e., the class that achieved the best probability). In both cases, due to the varying number of images per patient, the information needs to be transformed into constant-size matrices to make a decision for existing and for new patients. At the score level, the structure was composed of patients, images, and scores of classes and transformed into a new matrix of size P*C, where P is the number of patients and C is the number of classes. A dynamic threshold was then used to adjust the positive class that maximizes the chosen metric. Multiple strategies can be used to achieve this:

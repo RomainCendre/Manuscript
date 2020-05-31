@@ -48,12 +48,6 @@
 \usepackage[inline]{enumitem}
 \usepackage{siunitx}
 \usepackage{subcaption}
-% \usepackage{fancyhdr}
-% \pagestyle{fancy}
-
-% \renewcommand{\headrulewidth}{0pt} 
-% \fancyhead[LE, LO] {Page \thepage}
-% \fancyhead[RE, RO] {Question \the\QuestionNumber}
 
 %%%%%%%%%%%%%%% Parameters
 % Custom hyperlinks
@@ -97,8 +91,23 @@
 \newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 \newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 \newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
-  
-%%%%%%%%%%%%%%% Special macros
+
+%% ----------------------------------------------------------------
+%% --- change font
+%% ----------------------------------------------------------------
+\renewcommand{\familydefault}{\rmdefault}
+\makeatletter
+\newcommand*{\centerfloat}{%
+  \parindent \z@
+  \leftskip \z@ \@plus 1fil \@minus \textwidth
+  \rightskip\leftskip
+  \parfillskip \z@skip}
+\makeatother
+
+
+%% ----------------------------------------------------------------
+%% --- change Glossaries
+%% ----------------------------------------------------------------
 \makeglossaries
 \makeindex
 
@@ -115,45 +124,45 @@
 
 % -- adding keys for multilingual acronyms
 % -- french name and french acronym
-\glsaddkey{frshort}
+\glsaddkey{altshort}
 {}% default value
-{\glsentryfrshort}
-{\Glsentryfrshort}
-{\acrfrshort}
-{\Acrfrshort}
-{\ACRfrshort}
+{\glsentryaltshort}
+{\Glsentryaltshort}
+{\acraltshort}
+{\Acraltshort}
+{\ACRaltshort}
 
-\glsaddkey{frlong}
+\glsaddkey{altlong}
 {}
-{\glsentryfrlong}
-{\Glsentryfrlong}
-{\acrfrlong}
-{\Acrfrlong}
-{\ACRfrlong}
+{\glsentryaltlong}
+{\Glsentryaltlong}
+{\acraltlong}
+{\Acraltlong}
+{\ACRaltlong}
 
 % -- test if new keys are present in entry
-\newcommand*{\glsifhasfrshort}[3]{%
-  \ifcsempty{glo@#1@frshort}{#3}{#2}%
+\newcommand*{\glsifhasaltshort}[3]{%
+  \ifcsempty{glo@#1@altshort}{#3}{#2}%
 }
 
-\newcommand*{\glsifhasfrlong}[3]{%
-  \ifcsempty{glo@#1@frlong}{#3}{#2}%
+\newcommand*{\glsifhasaltlong}[3]{%
+  \ifcsempty{glo@#1@altlong}{#3}{#2}%
 }
 
-\newcommand*{\glsifhasfr}[3]{%
-  \glsifhasfrshort{#1}{#2}{\glsifhasfrlong{#1}{#2}{#3}}
+\newcommand*{\glsifhasalt}[3]{%
+  \glsifhasaltshort{#1}{#2}{\glsifhasaltlong{#1}{#2}{#3}}
 }
 
-\newcommand*{\acrshortfr}[1]{%
-  \glsifhasfrshort{#1}{\acrfrshort{#1}}{\acrshort{#1}}%
+\newcommand*{\acrshortalt}[1]{%
+  \glsifhasaltshort{#1}{\acraltshort{#1}}{\acrshort{#1}}%
 }
 
-\newcommand*{\acrlongfr}[1]{%
-  \glsifhasfrlong{#1}{\acrfrlong{#1}}{\acrlong{#1}}%
+\newcommand*{\acrlongalt}[1]{%
+  \glsifhasaltlong{#1}{\acraltlong{#1}}{\acrlong{#1}}%
 }
 
 % -- define new acronym style
-\newacronymstyle{fracr}
+\newacronymstyle{altacr}
 {%
   \GlsUseAcrEntryDispStyle{long-short}%
 }%
@@ -162,13 +171,13 @@
   % Singular, no case change:
   \GlsUseAcrStyleDefs{long-short}%
   \renewcommand*{\genacrfullformat}[2]{%
-    \glsifhasfr{##1}%
+    \glsifhasalt{##1}%
     {%
       \glsentrylong{##1}##2,%
       \space\firstacronymfont{\glsentryshort{##1}}\space%
-      (\textit{fr : \glsifhasfrlong{##1}%
-        {\glsentryfrlong{##1}##2\glsifhasfrshort{##1}{, \space}{}}{}%
-        \glsifhasfrshort{##1}{\glsentryfrshort{##1}}{}})%
+      (\textit{alt. : \glsifhasaltlong{##1}%
+        {\glsentryaltlong{##1}##2\glsifhasaltshort{##1}{, \space}{}}{}%
+        \glsifhasaltshort{##1}{\glsentryaltshort{##1}}{}})%
     }%
     {%
       \glsentrylong{##1}##2,
@@ -177,13 +186,13 @@
   }%
   % Singular, first letter upper case
   \renewcommand*{\Genacrfullformat}[2]{%
-    \glsifhasfr{##1}%
+    \glsifhasalt{##1}%
     {%
       \Glsentrylong{##1}##2,
       \space\firstacronymfont{\glsentryshort{##1}}\space
-      (\textit{fr : \glsifhasfrlong{##1}%
-        {\glsentryfrlong{##1}##2\glsifhasfrshort{##1}{, \space}{}}{}%
-        \glsifhasfrshort{##1}{\glsentryfrshort{##1}}{}})%
+      (\textit{alt. : \glsifhasaltlong{##1}%
+        {\glsentryaltlong{##1}##2\glsifhasaltshort{##1}{, \space}{}}{}%
+        \glsifhasaltshort{##1}{\glsentryaltshort{##1}}{}})%
     }%
     {%
       \Glsentrylong{##1}##2,
@@ -192,13 +201,13 @@
   }%
   % Plural, no case change:
   \renewcommand*{\genplacrfullformat}[2]{%
-    \glsifhasfr{##1}%
+    \glsifhasalt{##1}%
     {%
       \glsentrylongpl{##1}##2,
       \space\firstacronymfont{\glsentryshortpl{##1}}\space,
-      (\textit{fr : \glsifhasfrlong{##1}%
-        {\glsentryfrlong{##1}##2\glsifhasfrshort{##1}{, \space}{}}{}%
-        \glsifhasfrshort{##1}{\glsentryfrshort{##1}}{}})%
+      (\textit{alt. : \glsifhasaltlong{##1}%
+        {\glsentryaltlong{##1}##2\glsifhasaltshort{##1}{, \space}{}}{}%
+        \glsifhasaltshort{##1}{\glsentryaltshort{##1}}{}})%
     }%
     {%
       \glsentrylongpl{##1}##2,
@@ -207,13 +216,13 @@
   }%
   % Plural, first letter upper case:
   \renewcommand*{\Genplacrfullformat}[2]{%
-    \glsifhasfr{##1}%
+    \glsifhasalt{##1}%
     {%
       \Glsentrylongpl{##1}##2,
       \space\firstacronymfont{\glsentryshortpl{##1}}\space,
-      (\textit{fr : \glsifhasfrlong{##1}%
-        {\glsentryfrlong{##1}##2\glsifhasfrshort{##1}{, \space}{}}{}%
-        \glsifhasfrshort{##1}{\glsentryfrshort{##1}}{}})%
+      (\textit{alt : \glsifhasaltlong{##1}%
+        {\glsentryaltlong{##1}##2\glsifhasaltshort{##1}{, \space}{}}{}%
+        \glsifhasaltshort{##1}{\glsentryaltshort{##1}}{}})%
     }%
     {%
       \Glsentrylongpl{##1}##2,
@@ -222,27 +231,29 @@
   }%
 }
 
-\setacronymstyle{fracr}
+\setacronymstyle{altacr}
 
-\newglossarystyle{listfracr}{%
+\newglossarystyle{listaltacr}{%
   \setglossarystyle{list}%
   \renewcommand*{\glossentry}[2]{%
   \item[\glsentryitem{##1}%
     \glstarget{##1}{\glossentryname{##1}}]
     \glossentrydesc{##1}%
-    \glsifhasfrlong{##1}%
-      {\space(\textit{fr : \glsentryfrlong{##1}}\glsifhasfrshort{##1}{,\space}{)}}%
-      {\glsifhasfrshort{##1}{\space(\textit{fr : }}{}}%
-    \glsifhasfrshort{##1}{\textit{\glsentryfrshort{##1}})}{}%
+    \glsifhasaltlong{##1}%
+      {\space(\textit{alt. : \glsentryaltlong{##1}}\glsifhasaltshort{##1}{,\space}{)}}%
+      {\glsifhasaltshort{##1}{\space(\textit{alt. : }}{}}%
+    \glsifhasaltshort{##1}{\textit{\glsentryaltshort{##1}})}{}%
     \glspostdescription\space ##2}%
 }
 
-% -- define fancy quotes
+%% ----------------------------------------------------------------
+%% --- change fancy quotes
+%% ----------------------------------------------------------------
 \definecolor{quotemark}{gray}{0.7}
 \makeatletter
 \def\fquote{%
     \@ifnextchar[{\fquote@i}{\fquote@i[]}%]
-           }%
+          }%
 \def\fquote@i[#1]{%
     \def\tempa{#1}%
     \@ifnextchar[{\fquote@ii}{\fquote@ii[]}%]
@@ -276,33 +287,11 @@
  \ifx\tempa\empty%
  \else%
     \ifx\tempc\empty%  
-       \hfill\rule{100pt}{0.5pt}\\\mbox{}\hfill\tempa,\ \emph{\tempb}%
-   \else%		
-       \hfill\rule{100pt}{0.5pt}\\\mbox{}\hfill\tempa,\ \emph{\tempb},\ \tempc%
-   \fi\fi\par%
-   \vspace{0.5em}%
+      \hfill\rule{100pt}{0.5pt}\\\mbox{}\hfill\tempa,\ \emph{\tempb}%
+  \else%		
+      \hfill\rule{100pt}{0.5pt}\\\mbox{}\hfill\tempa,\ \emph{\tempb},\ \tempc%
+  \fi\fi\par%
+  \vspace{0.5em}%
  \end{list}%
  }%
-\makeatother
-
-%% ----------------------------------------------------------------
-%% --- change font
-%%
-%% --- float with adjusting left / right margins using
-%% \begin{figure}[t]
-%%  \centering
-%%  \addtolength{\leftskip}{-3cm}
-%%  \addtolength{\rightskip}{-3cm}
-%%  % figure content
-%% \end{figure}
-%%
-%% --- custom ("pro") arrays with \toprule, \midrule, \cmidrule and \bottomrule
-%% ----------------------------------------------------------------
-\renewcommand{\familydefault}{\rmdefault}
-\makeatletter
-\newcommand*{\centerfloat}{%
-  \parindent \z@
-  \leftskip \z@ \@plus 1fil \@minus \textwidth
-  \rightskip\leftskip
-  \parfillskip \z@skip}
 \makeatother

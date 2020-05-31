@@ -1,3 +1,6 @@
+\renewcommand{\thechapter}{\arabic{chapter}}
+\setcounter{chapter}{4}
+
 \chapter{Diagnostic de l'image}
 \label{chap:chapter_4}
 \chapterintro
@@ -17,7 +20,7 @@ cette problématique n'a été abordé que par quelques articles~\cite{Halimi201
     \item et enfin la séparation des tissus malins, bénins et sains (problématique à 3 classes).
 \end{inlinerate}\par
 
-Afin de traiter ces problématiques, nous aborderons ces cas à l'aide de mécaniques liées à l'apprentissage supervisé, que nous déroulerons lors de prochains paragraphes. En effet, ces mécaniques ont largement été employé et démontrée fonctionnelles dans des problèmes similaires de classification d'images médicales. Dans un premier temps, nous décrirons le processus par apprentissage automatique ( voir \Cref{fig:scheme_macro_pipeline} - en haut): nous décrirons bloc par bloc les traitements proposés de l'extraction de caractéristique à l'étape de classification. Dans un second temps, nous décririons le processus d'apprentissage profond ( voir \Cref{fig:scheme_macro_pipeline} - en bas): nous traiterons de l'augmentation des données et proposerons une méthodologie d'entraînement. Enfin, nous terminerons par une descriptions des résultats obtenus, tenterons d'expliquer ces derniers, et déterminerons les choix les plus cohérents pour la suite.\par
+Afin de traiter ces problématiques, nous aborderons ces cas à l'aide de mécaniques liées à l'apprentissage supervisé, que nous déroulerons lors de prochains paragraphes. En effet, ces mécaniques ont largement été employé et démontrée fonctionnelles dans des problèmes similaires de classification d'images médicales. Dans un premier temps, nous décrirons le processus par apprentissage automatique (voir \Cref{fig:scheme_macro_pipeline} - en haut): nous décrirons bloc par bloc les traitements proposés de l'extraction de caractéristique à l'étape de classification. Dans un second temps, nous décririons le processus d'apprentissage profond (voir \Cref{fig:scheme_macro_pipeline} - en bas): nous traiterons de l'augmentation des données et proposerons une méthodologie d'entraînement. Enfin, nous terminerons par une descriptions des résultats obtenus, tenterons d'expliquer ces derniers, et déterminerons les choix les plus cohérents pour la suite.\par
 
 \begin{figure}[H]
 \centering
@@ -65,12 +68,12 @@ Les descripteurs de premier ordre s'appliquent ainsi aux valeurs d'intensité ou
     \centering
     \begin{tabular}{ll}
         \toprule
-        \textbf{Mesure}             & \textbf{Formule}                                                              \\ \hline
-        Moyenne                     & $\overline{x} = {1 \over n} \sum_{i=1}^n{x_i}$                                \\   
-        Variance                    & $\overline{x} = \frac{1}{n}\sum_{i=1}^n x_i$                                  \\ 
-        Entropie                    & \\
-        Kurtosis (Courbure)         & \\
-        Asymétrie                   & $\gamma_1 = \mathbb{E} \left[ \left( \frac{X - \mu}{\sigma} \right)^3 \right]$\\  
+        \textbf{Mesure}             & \textbf{Formule}                                                  \\ \hline
+        Moyenne                     & $\overline{x} = \frac{1}{n}\sum_{i=1}^n x_i$                      \\   
+        Variance                    & $V = \frac{1}{n}\sum_{i=1}^n \left(x_i - \overline{x}\right)^2$   \\ 
+        Entropie                    & $E = -\sum_{i=1}^n {\mathrm{P}(x_i) \log_b \mathrm{P}(x_i)}$\\
+        Kurtosis                    & $k=\frac{r \sum_{i=1}^{n}\left(x_{i}-\bar{x}\right)^{4}}{\left(\sum_{i=1}^{n}\left(x_{i}-\bar{x}\right)^{2}\right)^{2}}-3$\\
+        Asymétrie                   & $a = \mathbb{E} \left[ \left( \frac{X - \mu}{\sigma} \right)^3 \right]$\\  
         \bottomrule
     \end{tabular}
     \caption{Liste de différentes mesures obtenues à partir du premier ordre.}
@@ -111,21 +114,21 @@ De plus, afin de rendre les caractéristiques d'Haralick plus robuste aux rotati
     \centering
     \begin{tabular}{ll}
         \toprule
-        \textbf{Nom}                & \textbf{Formule}                                                                              \\ \hline
+        \textbf{Mesure}             & \textbf{Formule}                                                                              \\ \hline
         Angular Second Moment       & $ \sum_i\sum_jp(i,j)^2$                                                                       \\
-        Contrast                    & $\sum_{k=0}^{N_g-1} k^2 p_{x-y}(k)$                                                           \\
-        Correlation                 & $\frac{\Large{\sum_{i=1}^{N_g}\sum_{j=1}^{N_g}} (ij)p(i,j) - \mu_x\mu_y}{\sigma_x\sigma_y}$   \\
+        Contraste                   & $\sum_{k=0}^{N_g-1} k^2 p_{x-y}(k)$                                                           \\
+        Corrélation                 & $\frac{\Large{\sum_{i=1}^{N_g}\sum_{j=1}^{N_g}} (ij)p(i,j) - \mu_x\mu_y}{\sigma_x\sigma_y}$   \\
         Sum of Squares: Variance    & $\sum_{i=1}^{N_g}\sum_{j=1}^{N_g} (i - \mu)^2 p(i,j)$                                         \\
         Inverse Difference Moment   & $\sum_{i=1}^{N_g}\sum_{j=1}^{N_g} \frac{1}{1 + (i - j)^2} p(i,j)$                             \\     
-        Sum Average                 & $\sum_{i=2}^{2N_g} i p_{x+y}(i)$                                                              \\    
+        Somme Average                 & $\sum_{i=2}^{2N_g} i p_{x+y}(i)$                                                              \\    
         Sum Variance                & $\sum_{i=2}^{2N_g} (i - f_8)^2 p_{x+y}(i)$                                                    \\    
         Sum Entropy                 & $\sum_{i=2}^{2N_g} (i - f_8)^2 p_{x+y}(i)$                                                    \\    
-        Entropy                     & $-\sum_{i=1}^{N_g}\sum_{j=1}^{N_g} p(i,j) \log(p(i,j))$                                       \\    
+        Entropie                     & $-\sum_{i=1}^{N_g}\sum_{j=1}^{N_g} p(i,j) \log(p(i,j))$                                       \\    
         Difference Variance         & ${\rm variance \ of ~} p_{x-y}$                                                               \\    
         Difference Entropy          & $-\sum_{i=0}^{N_g-1} p_{x-y}(i) \log(p_{x-y}(i))$                                             \\
-        Measure of Correlation 1    & $\frac{f_9 - HXY1}{\max(HX,HY)}$                                                              \\  
-        Measure of Correlation 2    & $[1 - \exp(-2(HXY2 - f_9))]^{1/2}$                                                            \\ 
-        Maximal Correlation Coefficient    & $({\rm second \ largest \ eigenvalue \ of ~} Q)^{1/2}$ $\sum_k \frac{p(i,k)p(j,k)}{p_x(i)p_y(k)}$ \\ 
+        Mesure de Corrélation 1             & $\frac{f_9 - HXY1}{\max(HX,HY)}$                                                              \\  
+        Mesure de Corrélation 2             & $[1 - \exp(-2(HXY2 - f_9))]^{1/2}$                                                            \\ 
+        Coefficient de Corrélation Maximal  & $({\rm second \ largest \ eigenvalue \ of ~} Q)^{1/2}$ $\sum_k \frac{p(i,k)p(j,k)}{p_x(i)p_y(k)}$ \\ 
         \bottomrule
     \end{tabular}
     \caption{Liste des des différentes mesures proposé par Robert Haralick applicable aux \gls{glcm}.}
@@ -238,7 +241,7 @@ Ainsi, nous réaliserons plusieurs expériences sur base de descripteurs manuels
         \toprule
         \textbf{Méthode}                        & \textbf{Nombre}   \\ \hline
         Fourier                                 & 10/20/30          \\ \hline
-        Ondelettes                              & XX                \\ \hline
+        Ondelettes de Haar                      & 39(13$\times$3)   \\ \hline
         Wiltgen~\cite{Wiltgen2008} - Fourier    & 38(22+16)         \\ \hline
         Wiltgen~\cite{Wiltgen2008} - Ondelettes & 39(13$\times$3)   \\ \hline
         Halimi~\cite{Halimi2017a} - Ondelettes  & 24(12$\times$2)   \\
@@ -302,40 +305,62 @@ Bien que la plupart des travaux médicaux s'oriente vers l'architecture Inceptio
     \caption{Nombre de caractéristiques extraites par type d'architecture de \gls{cnn}.}
     \label{tab:number_features_transferlearning}
 \end{table}\par
- 
+
+\clearpage
+
 \subsection{Analyse préliminaire des méthodes d'extraction}
+Cette analyse préliminaire de l'information a pour but de montrer l'impact des méthodes d'extraction de caractéristiques précédemment citées sur le jeu de données en notre possession. Nous nous pencherons d'une part sur l'observation de deux images typiques de tissus malin et bénin par l'application des transformations et d'autre part, nous tenterons d'étudier la capacité de séparation de chacune des méthodes précédente sur l'ensemble des images.\par
+
+Tout d'abord, il est intéressant de constater en général, la présence de motif plus lisses et moins contrastés au sein des images bénignes que des images malignes. L'application de \gls{glcm} de premier ordre sur nos images typiques est visible sur la \Cref{fig:example_glcm}. Il est possible d'observer une uniformité de cette information quelques soit la direction observée, allant dans le sens de l'utilisation de la moyenne sur les caractéristiques proposé par Haralick~\cite{Wiltgen2008}. Enfin, cette transformation montre une certaine cohérence des transitions présente dans les images avec des valeurs présente en majorité sur la diagonale. Néanmoins, ce phénomène semble plus intense sur l'image bénigne, traduisant des transition plus douces que sur l'image maligne.\par
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{contents/chapter_4/resources/example_glcm.pdf}
-    \caption{Exemple d'extraction de \gls{glcm} de second ordre sur deux images typique. En haut, un cas d'image bénigne; En bas, une image pathologique typique de \gls{lm}.}
+    \caption{Exemple d'extraction de \gls{glcm} de second ordre sur deux images typique. En haut, un cas d'image bénigne ; En bas, une image pathologique typique de \gls{lm}.}
     \label{fig:example_glcm}
 \end{figure}\par
 
+La \Cref{fig:example_fft} met en application la transformée de Fourier centrée sur ces deux même images. L'observation du module de cette transformation permet de constater une information plus présente en intensité sur les basses fréquences que sur les hautes fréquences de l'image bénigne, là où sur l'image maligne cette information au centre forme une tâche plus diffuse. En revanche, au premier abord la direction ne semble pas apporter d'information pertinente comme suggéré par l'article de Wiltgen~\cite{Wiltgen2008}.\par
+
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\linewidth]{contents/chapter_4/resources/example_fft.pdf}
-    \caption{Exemple de transformée de Fourier appliquée à deux images typiques, représentation selon le module et la phase. En haut, un cas d'image bénigne; En bas, une image pathologique typique de \gls{lm}.}
+    \includegraphics[width=0.8\linewidth]{contents/chapter_4/resources/example_fft.pdf}
+    \caption{Exemple de transformée de Fourier centrée appliquée à deux images typiques, représentation selon le module et la phase. En haut, un cas d'image bénigne ; En bas, une image pathologique typique de \gls{lm}.}
     \label{fig:example_fft}
+\end{figure}\par
+
+Enfin, nous terminons l'étude de ces deux exemples par l'application de décomposition en ondelettes. La \Cref{fig:example_wavelet_db4} reflète cette décomposition d'ondelettes de Daubechies tandis que la \Cref{fig:example_wavelet_haar} nous donne un aperçu de cette même méthode par ondelettes de Haar. Nous pouvons constater que les ondelettes de Haar semble plus propice à isoler les zones de fortes transition que celle de Daubechies. Néanmoins, pour ces deux types d'ondelettes, les décomposition de l'image bénigne semble plus homogènes que celle de l'image maligne. De même, l'extraction des hautes fréquence sur l'axe vertical et horizontal semble plus adapté que l'extraction combiné de ces deux axes pour l'image maligne.\par
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{contents/chapter_4/resources/example_wavelet_db4.pdf}
+    \caption{Exemple de transformée en ondelettes (Daubechies) appliquée à deux images typiques, à 2, 3 puis 4 niveaux. En haut, un cas d'image bénigne ; En bas, une image pathologique typique de \gls{lm}.}
+    \label{fig:example_wavelet_db4}
 \end{figure}\par
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\linewidth]{contents/chapter_4/resources/example_wavelet.pdf}
-    \caption{Exemple de transformée en ondelettes (Daubechies) appliquée à deux images typiques, à 2, 3 puis 4 niveaux. En haut, un cas d'image bénigne; En bas, une image pathologique typique de \gls{lm}.}
-    \label{fig:example_wavelet}
+    \includegraphics[width=\linewidth]{contents/chapter_4/resources/example_wavelet_haar.pdf}
+    \caption{Exemple de transformée en ondelettes (Haar) appliquée à deux images typiques, à 2, 3 puis 4 niveaux. En haut, un cas d'image bénigne ; En bas, une image pathologique typique de \gls{lm}.}
+    \label{fig:example_wavelet_haar}
 \end{figure}\par
+
+Dans le but d'évaluer la séparation des classes, nous nous aiderons de l'\gls{pca}. En effet, malgré l'extraction de caractéristiques les données en notre possession contiennent un grand nombre de dimensions, rendant le problème difficile à analyser visuellement. De nombreuses techniques de réduction de l'information permettant une meilleure visualisation sont proposé dans la littérature, comme par exemple le T-SNE~\cite{Maaten2008} mais dans le principal inconvénient réside dans le nombre de degrés de liberté proposés. Néanmoins, l'\gls{pca} est une technique communément acceptée à cette fin~\cite{Himberg2001} et possède l'avantage de ne pas être dépendante de ce type de paramètres. Nous faisons également figurer la variance propre à ces deux axes, et pour chaque classes leur centre et leur dispersion sur la base de l'écart type.\par
+
+Ainsi, la \Cref{fig:visualisation_spatial} met évidence cette technique pour l'ensemble des méthode d'extraction spatiales. Le premier constat concernant la variance expliquée est que ces deux axes semblent à même de fournir l'intégralité de la variance. Les données extraites à l'aide des techniques d'extraction de premier ordre ne semblent pas optimum
+La séparation des diverses données ne semble pas optimum comme nous pouvons le constater sur \Cref{fig:visualisation_spatial}. En effet, les centroids et leur dispersion semble assez similaire, notemment pour les données bénines et malignes.\par
 
 \begin{figure}[H]
     \centering
     \begin{subfigure}{.5\textwidth}
-      \includegraphics[width=\textwidth]{contents/chapter_4/resources/visualisation_spatial_first.png}
+      \includegraphics[width=\textwidth]{contents/chapter_4/resources/visualisation_spatial_FirstOrder.png}
     \end{subfigure}
     
     \begin{subfigure}{.45\textwidth}
-      \includegraphics[width=\textwidth]{contents/chapter_4/resources/visualisation_spatial_haralick.png}
+      \includegraphics[width=\textwidth]{contents/chapter_4/resources/visualisation_spatial_Haralick.png}
     \end{subfigure}
     \begin{subfigure}{.45\textwidth}
-      \includegraphics[width=\textwidth]{contents/chapter_4/resources/visualisation_spatial_haralickmean.png}
+      \includegraphics[width=\textwidth]{contents/chapter_4/resources/visualisation_spatial_HaralickMean.png}
     \end{subfigure}
     
     \begin{subfigure}{.45\textwidth}
@@ -348,6 +373,9 @@ Bien que la plupart des travaux médicaux s'oriente vers l'architecture Inceptio
     \caption{Visualisation des caractéristiques obtenues par techniques d'extraction spatiales et projection \gls{pca} sur les deux premières composantes.}
     \label{fig:visualisation_spatial}
 \end{figure}\par
+
+Les variances expliquée des techniques sur base d'extraction fréquentielle semble également bein représentées, cmprise entre 97 et 99\% sur les deux premiers axes, exepté pour la méthode d'Halimi (63\%). Comme pour les méthodes spatiales, la séparation  des classes bénignes et malignes semble la plus ardue.
+La séparation des diverses données ne semble pas optimum comme nous pouvons le constater sur \Cref{fig:visualisation_spatial}. En effet, les centroids et leur dispersion semble assez similaire, notemment pour les données bénines et malignes.\par
 
 \begin{figure}[H]
     \centering
@@ -362,17 +390,17 @@ Bien que la plupart des travaux médicaux s'oriente vers l'architecture Inceptio
       \includegraphics[width=\textwidth]{contents/chapter_4/resources/visualisation_frequency_Fourier30.png}
     \end{subfigure}
     \begin{subfigure}{.45\textwidth}
-      \includegraphics[width=\textwidth]{contents/chapter_4/resources/visualisation_frequency_wiltgenfourier.png}
+      \includegraphics[width=\textwidth]{contents/chapter_4/resources/visualisation_frequency_WiltgenFourier.png}
     \end{subfigure}
     
     \begin{subfigure}{.3\textwidth}
-      \includegraphics[width=\textwidth]{contents/chapter_4/resources/visualisation_frequency_dwthaar.png}
+      \includegraphics[width=\textwidth]{contents/chapter_4/resources/visualisation_frequency_DWTHaar.png}
     \end{subfigure}
     \begin{subfigure}{.3\textwidth}
-      \includegraphics[width=\textwidth]{contents/chapter_4/resources/visualisation_frequency_wiltgendwt.png}
+      \includegraphics[width=\textwidth]{contents/chapter_4/resources/visualisation_frequency_WiltgenDWT.png}
     \end{subfigure}
     \begin{subfigure}{.3\textwidth}
-      \includegraphics[width=\textwidth]{contents/chapter_4/resources/visualisation_frequency_halimidwt.png}
+      \includegraphics[width=\textwidth]{contents/chapter_4/resources/visualisation_frequency_HalimiDWT.png}
     \end{subfigure}
     
     \caption{Visualisation des caractéristiques obtenues par techniques d'extraction fréquentielles et projection \gls{pca} sur les deux premières composantes.}
@@ -382,61 +410,63 @@ Bien que la plupart des travaux médicaux s'oriente vers l'architecture Inceptio
 \begin{figure}[H]
     \centering
     \begin{subfigure}{.2\textwidth}
-      \includegraphics[width=\textwidth]{contents/chapter_4/resources/visualisation_transfer_vgg16avg.png}
+      \includegraphics[width=\textwidth]{contents/chapter_4/resources/visualisation_transfer_VGG16Avg.png}
     \end{subfigure}
     \begin{subfigure}{.2\textwidth}
-      \includegraphics[width=\textwidth]{contents/chapter_4/resources/visualisation_transfer_inceptionv3avg.png}
+      \includegraphics[width=\textwidth]{contents/chapter_4/resources/visualisation_transfer_InceptionV3Avg.png}
     \end{subfigure}
     \begin{subfigure}{.2\textwidth}
-      \includegraphics[width=\textwidth]{contents/chapter_4/resources/visualisation_transfer_resnetavg.png}
+      \includegraphics[width=\textwidth]{contents/chapter_4/resources/visualisation_transfer_ResNetAvg.png}
     \end{subfigure}
     \begin{subfigure}{.2\textwidth}
-      \includegraphics[width=\textwidth]{contents/chapter_4/resources/visualisation_transfer_inceptionresnetv2avg.png}
+      \includegraphics[width=\textwidth]{contents/chapter_4/resources/visualisation_transfer_InceptionResNetV2Avg.png}
     \end{subfigure}
     
     \begin{subfigure}{.2\textwidth}
-      \includegraphics[width=\textwidth]{contents/chapter_4/resources/visualisation_transfer_vgg16max.png}
+      \includegraphics[width=\textwidth]{contents/chapter_4/resources/visualisation_transfer_VGG16Max.png}
     \end{subfigure}
     \begin{subfigure}{.2\textwidth}
-      \includegraphics[width=\textwidth]{contents/chapter_4/resources/visualisation_transfer_inceptionv3max.png}
+      \includegraphics[width=\textwidth]{contents/chapter_4/resources/visualisation_transfer_InceptionV3Max.png}
     \end{subfigure}
     \begin{subfigure}{.2\textwidth}
-      \includegraphics[width=\textwidth]{contents/chapter_4/resources/visualisation_transfer_resnetmax.png}
+      \includegraphics[width=\textwidth]{contents/chapter_4/resources/visualisation_transfer_ResNetMax.png}
     \end{subfigure}
     \begin{subfigure}{.2\textwidth}
-      \includegraphics[width=\textwidth]{contents/chapter_4/resources/visualisation_transfer_inceptionresnetv2max.png}
+      \includegraphics[width=\textwidth]{contents/chapter_4/resources/visualisation_transfer_InceptionResNetV2Max.png}
     \end{subfigure}
     
     \caption{Visualisation des caractéristiques obtenues par techniques d'extraction basé sur des réseaux de type \gls{cnn} pré-entraînés sur la base ImageNet et projection \gls{pca} sur les deux premières composantes.}
     \label{fig:visualisation_transfer}
 \end{figure}\par
 
+\clearpage
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 %%%%%%%%%%%%%%%%% PRE TRAITEMENTS
 \section{Pré-traitements de caractéristiques}
 Cette partie dédié au pré-traitement de caractéristique se consacre à l'ensemble des transformations opérées après extraction de l'information par le biais des techniques évoquées en \Cref{chap:feature_extraction}. Nous aborderons au sein de cette section les diverses solutions à notre disposition pouvant parfaire la classification de notre problématique. En effet, de nombreuse contraintes peuvent affecter le bon déroulement de la classification:
-\begin{enumerate}
+\begin{itemize}
     \item un déséquilibre des annotations (essentiellement dans les situations à deux classes -  tissus pathologique et non pathologiques; tissus malin et tissus autres),
     \item une quantité d'informations trop importante conduisant à un sur apprentissage, situation que nous rencontrons avec l'extraction de caractéristiques par \gls{cnn},
     \item ou encore une information inconsistante.
-\end{enumerate}\par
+\end{itemize}\par
 
 Ainsi, cette partie tentera de répondre à ces questions à l'aide de différents domaines d'étude visant à corriger tout ou partie de ces éléments. Dans un premier temps, nous discuterons de la \textbf{normalisation} et son intérêt au sein de processus de classification. Dans un second temps, nous aborderons le \textbf{balancement de données} et les principales stratégies mises à disposition. Finalement, nous traiterons des techniques de \textbf{réduction de l'information} et proposerons des solutions notamment dans le cadre de l'extraction de caractéristiques par \gls{cnn}.
 
 \subsection{Normalisation de caractéristiques}
 Selon le domaine visée, la normalisation de caractéristiques peux-être l'une des étapes cruciale quand au bon déroulement du processus de classification. Un exemple proche de nos travaux, sur la classification d'image de dermatoscopie, menée par Celebi et al., est un parfait exemple de la dégradation des résultats de classification avec l'utilisation de caractéristiques brutes ~\cite{Celebi2007}. Notre investigation de la littérature à également mis en évidence que des algorithmes de classification tel que la méthode des \textbf{k plus proches voisins} sont affectés car directement basé sur un critère de distance. D'autres modèles sont communément admis comme touchés par des caractéristiques non normalisées: les \gls{svm}~\cite{Juszczak2002}, mais également les réseaux de neurones~\cite{Celebi2007} en sont de très bon exemples. De même, des méthodes de réduction de l'information, que nous traiterons lors des prochaines, peuvent être affectées par une mauvaise distribution de l'information. Par exemple, le \gls{pca} est une méthode dont l'algorithme tente de maximiser la variance pouvant être impactée négativement (voir \Cref{fig:exemple_pca_scaling}).\par
 
+Divers travaux ont ainsi été menés, afin de proposer des méthodes de normalisation à cette problématique. L'un de ces travaux propose trois méthodes de normalisation par la variance, par le maximum, et par le minimum et maximum dans le contexte de \gls{svm}~\cite{Juszczak2002}. Ces trois méthode semblent ainsi propice à réduire l'erreur de classification. Le travail mené par Celebi et al.~\cite{Celebi2007}, propose une normalisation des caractéristiques à l'aide de la "Cote Z" ou "Standard score", c'est à dire par soustraction de la moyenne au sein d'un même groupe de caractéristiques puis par division de l'écart type de ce même groupe.\par
+
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\linewidth]{contents/chapter_4/resources/example_pca_scaling.pdf}
+    \includegraphics[width=\linewidth]{contents/chapter_4/resources/example_pca_scaling.pdf}
     \caption{Exemple de l'impact de la distribution de données sur le \gls{pca} appliqué à une analyse chimique du vin en provenance de différentes région~\textsuperscript{\ref{footnote:exemple_pca_scaling}}. A gauche, le résultat issu du \gls{pca} sans normalisation préalable; A droite, la distribution après normalisation et \gls{pca}.}
     \label{fig:exemple_pca_scaling}
 \end{figure}\par
 
 \addtocounter{footnote}{1}
 \footnotetext[\thefootnote]{Source : Scikit-learn - \href{https://scikit-learn.org/stable/auto_examples/preprocessing/plot_scaling_importance.html}{"Importance of Feature Scaling"}. \label{footnote:exemple_pca_scaling}}
-
-Divers travaux ont ainsi été menés, afin de proposer des méthodes de normalisation à cette problématique. L'un de ces travaux propose trois méthodes de normalisation par la variance, par le maximum, et par le minimum et maximum dans le contexte de \gls{svm}~\cite{Juszczak2002}. Ces trois méthode semblent ainsi propice à réduire l'erreur de classification. Le travail mené par Celebi et al.~\cite{Celebi2007}, propose une normalisation des caractéristiques à l'aide de la "Cote Z" ou "Standard score", c'est à dire par soustraction de la moyenne au sein d'un même groupe de caractéristiques puis par division de l'écart type de ce même groupe.\par
 
 Afin de couvrir au mieux la problématique de la normalisation, nous traiterons cette problématique sous trois méthodes majeures:
 \begin{itemize}
@@ -451,7 +481,7 @@ Ces diverses méthode de normalisation seront évalué face à un processus n'em
     \begin{split}
     &MinMax=\frac{X-min(X)}{max(X)-min(X)}  \\
     &Standard=\frac{X-\mu{}}{\sigma}	    \\
-    &Robust=\frac{xi–Q1(x)}{Q3(x)–Q1(x)}    \\
+    &Robust=\frac{xi- Q1(x)}{Q3(x)-Q1(x)}
     \end{split}
 \end{equation}
 
@@ -472,20 +502,19 @@ Afin de corriger ces éléments, deux catégories d'approches ont été proposé
 
 En premier lieu, des approches par correction des données simples, proposes diverses solutions pour palier à ces déséquilibres de classes~\cite{Prati2009, He2009}. Une première catégories de ces méthodes consiste à \textbf{sous-échantillonner} les données jusqu'à obtenir une égalité entre les classes. Son principe le plus simple est celui du "Sous-échantillonage aléatoire" consistant à décimer de manière aléatoire les données des classes majoritaire afin d'égaler les échantillons de la classe minoritaire. A l'inverse, une autre catégorie consiste à \textbf{sur-échantillonner} les données possédées afin d'obtenir à nouveau une égalité entre classes. Le principe le plus simples est celui du "Sur-échantillonage aléatoire" consistant à dupliquer aléatoirement les échantillons des classes minoritaires afin d'égaler le nombre d'élément de la classe majoritaire. Le schéma en \Cref{fig:scheme_data_balancing} reprendre l'idée de ces deux principes.\par
 
+En second lieu, des approches par correction des données plus avancées ont été proposées. De manière non exhaustive nous proposerons l'une d'entre elle pour chaque catégories:
+\begin{itemize}
+    \item par \textbf{sous-échantillonnage}: \cite{Tomek1976}
+    \item par \textbf{sur-échantillonnage}:\cite{Chawla2002} 
+    \item par \textbf{combinaison}: SMOTE + Tomek
+\end{itemize}\par
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{contents/chapter_4/resources/scheme_data_balancing.pdf}
     \caption{Schéma des deux stratégies principales de balancement de données. A gauche, la stratégie de sous-échantillonage, dans laquelle des éléments sont aléatoirement choisis jusqu'à réduire l'ensemble des classes au nombre d'éléments de la classe minoritaire; A droite, la stratégie de sur-échantillonage, dans laquelle les éléments des classes minoritaires sont dupliqués aléatoirement. }
     \label{fig:scheme_data_balancing}
 \end{figure}\par
-
-En second lieu, des approches par correction des données plus avancées ont été proposées. De manière non exhaustive nous proposerons l'une d'entre elle pour chaque catégories:
-\begin{itemize}
-    \item par \textbf{sous-échantillonnage}: \cite{Tomek1976}
-    \item par \textbf{sur-échantillonnage}:\cite{Chawla2002} 
-    \item par \textbf{combinaison}: SMOTE + Tomek
-    \item \ldots
-\end{itemize}\par
 
 Les approches algorithmique par pondération, consiste à considérer le non balancement de l'information en pondérant l'importance de chaque échantillon lors de l'apprentissage du modèle.  
 
@@ -511,16 +540,125 @@ Dans l'optique de récapituler cette partie, les méthodes utilisées dans le bu
 \subsection{Réduction de dimensions}
 Dans le domaine de l'apprentissage automatique, la réduction de dimension est une technique qui permet de réduire l'information extraites afin de rendre un problème moins complexe. Également, elle est un moyen de se prévenir du "Fléau de la dimension", phénomène qui met en perspective d'une part la croissance exponentielle de l'ajout de nouvelles dimensions à la dilution des divers échantillons dans cet espace. Ce dilemme a pour principales conséquences d'augmenter la complexité d'un problème, la durée nécessaire à sa résolution mais également d'engendrer des risques de sur-apprentissage.\par
 
-A cette fin, deux catégories de méthodes cohabitent: d'une part les méthode de sélection de caractéristiques, qui réduise l'espace en décimant certaine dimension jugées non pertinente à la résolution du problème; d'autre part les méthode par projection ou transformation de l'espace existant qui réduisent et modifie les valeurs existantes. Notre investigation ne portera que sur cette seconde catégorie de méthodes.\par
+Les caractéristiques extraites par méthode spatiales et fréquentielles étant assez restreintes (respectivement de 14 à 56 et de 10 à 39), nous n'étudierons pas leur impact sur ces méthodes. En revanche, le nombre de caractéristiques extraite par méthode de transfert de connaissance sont importantes et varient de 512 à 2048 d'entre elles. Nous évaluerons l'impact de certaines d'entre elles sur ces cas particuliers.\par
 
-pca\par
-lda\par~\cite{Nanni2017}
+A cette fin, deux catégories de méthodes cohabitent: d'une part les méthodes de sélection de caractéristiques, qui réduise l'espace en décimant certaine dimension jugées non pertinente à la résolution du problème; d'autre part les méthode par projection ou transformation de l'espace existant qui réduisent et modifie les valeurs existantes. Notre investigation ne portera que sur cette seconde catégorie de méthodes. En effet, les méthodes par sélection de caractéristiques ne nous semble pas pertinente dans le cadre de caractéristiques auto déterminées.\par
 
+L'\gls{pca} est l'une de ces techniques, dont l'idée majeure est de retirer l'information redondante pour ne conserver que l'information de variance, supposé contenir l'information. Cette méthode cherche ainsi à identifier les axes selon lesquels la variation des données est maximisée. Il sera ensuite nécessaire de déterminer un nombre d'axes suffisant à séparer le problème (réduction du nombre de caractéristiques). Plutôt que de choisir ce nombre arbitraire, la littérature préfère retenir des seuils pertinents de cette variance, les plus communs sont 95\%, 97.5\% et 99\%.\par
+
+Le \gls{lda} est une seconde technique employé à une fin de réduction de l'information, pour laquelle nous recherchons des axes de projection qui maximisent la variance inter-groupe. Pour comparaison, la variance est le résultat de la somme de la variance intra-groupe et inter-groupe. De la même manière, nous retiendrons des seuils similaires à ceux de l'\gls{pca} soit 95\%, 97.5\% et 99\%.\par
+
+La \Cref{tab:summary_reduction_methods} permet de résumer ces méthodes et paramétrage associés que nous évaluerons.\par 
+
+\begin{table}[H]
+    \centering
+    \begin{tabular*}{0.6\linewidth}{lll}
+    \toprule
+    \textbf{Méthode}       & \textbf{Paramètre}        &   \textbf{Valeurs}     \\ \midrule
+    \gls{pca}              & Variance expliquée        &   [0.95, 0.975, 0.99]  \\ \cmidrule{2-3}
+    \gls{lda}              & Nombre de composantes     &   [0.95, 0.975, 0.99]  \\ \hline
+    \bottomrule
+    \end{tabular*}
+    \caption{Liste des méthodes de réduction employées et paramètres associés.}
+    \label{tab:summary_reduction_methods}
+\end{table}\par
 
 \section{Méthodes de prédiction}
+Afin de réaliser la prédiction nous 
+To achieve this task, an~extraction method (see \Cref{sec:features}) was applied to the~images, depending on the~currently evaluated method. The~features were then normalized based on a~standard score computation to make the~classification task more accurate and~robust~\cite{Graf2001}. This scaling was computed by subtracting the~mean and~then dividing by the~standard deviation. The~schematic outline in \Cref{fig:image_process} provides an~overview of this process.\par
+\gls{cart}/\gls{rf}/\gls{gb}
+
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{cll}
+        \toprule
+        \textbf{Modèle}                                 & \textbf{Paramètres}       & \textbf{Valeurs}                          \\ \midrule
+        \multirow{4}{*}{\gls{cart}}                     & Profondeur maximum        & [3, $\infty$]                             \\ \cmidrule{2-3} 
+                                                        & Critère de qualité        & [Gini, Entropie]                          \\ \cmidrule{2-3}   
+                                                        & Caractéristiques maximum  & [1, 2, 3, 4, 5, 6, 7, 8, 9]               \\ \cmidrule{2-3}   
+                                                        & Échantillons minimum      & [1, 2, 3, 4, 5, 6, 7, 8, 9]               \\ \midrule 
+        \multirow{4}{*}{\gls{rf}}                       & Profondeur maximum        & [3, $\infty$]                             \\ \cmidrule{2-3} 
+                                                        & Critère de qualité        & [Gini, Entropie]                          \\ \cmidrule{2-3}   
+                                                        & Caractéristiques maximum  & [1, 2, 3, 4, 5, 6, 7, 8, 9]               \\ \cmidrule{2-3}   
+                                                        & Échantillons minimum      & [1, 2, 3, 4, 5, 6, 7, 8, 9]               \\ \midrule 
+        \multirow{4}{*}{\gls{gb}}                       & Profondeur maximum        & [3, $\infty$]                             \\ \cmidrule{2-3}
+                                                        & Critère                   & [MSE, MAE]                                \\ \cmidrule{2-3} 
+                                                        & Caractéristiques maximum  & [1, 2, 3, 4, 5, 6, 7, 8, 9]               \\ \cmidrule{2-3}   
+                                                        & Échantillons minimum      & [1, 2, 3, 4, 5, 6, 7, 8, 9]               \\ \midrule 
+        \gls{svm} - Noyau linéaire                      & C                         & [0.001, 0.01, 0.1, 1, 10, 100, 1000]      \\ \midrule
+        \multirow{2}{*}{\gls{svm} - Noyau RBF}          & C                         & [0.001, 0.01, 0.1, 1, 10, 100, 1000]      \\ \cmidrule{2-3}      
+                                                        & Gamma                     & [0.001, 0.01, 0.1, 1, 10, 100, 1000]      \\ \midrule 
+        \multirow{5}{*}{\gls{mlp}}                      & Couche cachées            & [(20,), (20,20,), (20,20,20,)]            \\ \cmidrule{2-3}
+                                                        & Activation                & [Tanh, ReLu]                              \\ \cmidrule{2-3}
+                                                        & Solveur                   & [SGD, Adam]                               \\ \cmidrule{2-3}
+                                                        & Alpha                     & [0.001, 0.01, 0.1, 1, 10, 100, 1000]      \\ \cmidrule{2-3}
+                                                        & Taux d'apprentissage      & [Constant, Adaptatif]                     \\ \bottomrule 
+    \end{tabular} 
+    \label{tab:image_hyperparameters}
+    \caption{Table recensant les divers modèles de prédiction et l'ensemble des hyperparamètres qui ont permis leur évaluation.}
+\end{table}\par
+
+Finally, the~classification was performed on scaled features using different models. In the~first stage, \ac{cart} was investigated as in a~previous study in the~same data context~\cite{Wiltgen2008}. In a~second stage, this study explored alternatives of simple trees based on ensemble methods (set of models instead of a~single model) as the~\ac{cart} model tends to overfit. On the~one hand, bagging methods were investigated by the~use of \ac{rf} model~\cite{Breiman2001} and~\ac{ert}~\cite{Geurts2006} as they both tend to remove the~overfitting issues. Moreover, the~\ac{ert} model are assumed to be more robust to noise than the~\ac{rf} model. On the~other hand, the~boosting method was considered by the~use of the~\ac{gb} model~\cite{Friedman2000} as the~most common type of tree-based algorithm for most of the~recent applications. Lastly, \ac{svm} models were evaluated that are known to be suitable in multiples contexts~\cite{Smach2008a,Kose2016b}. As the~relationship between the~features and~the~expected outputs can be complex, \ac{svm} models were compared over linear and~RBF kernels.\par
+In addition, to provide the~best performance with each of these models, a~search in regard to their optimum hyperparameters was carried out (see \Cref{tab:image_hyperparameters}).\par
 
 \section{Processus et metriques}
 \section{Résultats}
+\begin{table}[]
+\begin{tabular}{lllllll}
+                         & \multicolumn{6}{c}{MinMaxScaler}                                                                                   \\
+                         & SVM Linéaire       & SVM RBF            & CART               & EXTRA              & GB        & MLP                \\
+Premier Ordre            & 0.54±0.05          & \textbf{0.55±0.02} & 0.52±0.05          & 0.54±0.05          & 0.52±0.05 & 0.53±0.05          \\
+Haralick                 & 0.60±0.07          & 0.60±0.07          & 0.58±0.08          & \textbf{0.61±0.07} & 0.57±0.07 & 0.59±0.16          \\
+Haralick moyen           & 0.60±0.07          & 0.55±0.09          & \textbf{0.60±0.05} & 0.60±0.07          & 0.58±0.07 & 0.59±0.15          \\
+Wiltgen - Spatial        & \textbf{0.62±0.07} & 0.56±0.12          & 0.60±0.05          & 0.59±0.10          & 0.58±0.08 & 0.61±0.15          \\
+Wiltgen - Spatial Etendu & \textbf{0.62±0.07} & 0.56±0.10          & 0.58±0.06          & 0.59±0.09          & 0.58±0.08 & 0.60±0.15          \\
+Fourier10                & 0.61±0.07          & 0.55±0.13          & 0.56±0.06          & 0.58±0.05          & 0.59±0.03 & \textbf{0.62±0.13} \\
+Fourier20                & 0.62±0.08          & 0.59±0.06          & 0.54±0.05          & 0.59±0.06          & 0.60±0.03 & \textbf{0.64±0.14} \\
+Fourier30                & \textbf{0.64±0.06} & 0.60±0.06          & 0.56±0.06          & 0.59±0.06          & 0.60±0.04 & 0.63±0.14          \\
+Haar                     & \textbf{0.68±0.04} & 0.63±0.08          & 0.58±0.06          & 0.64±0.05          & 0.62±0.04 & 0.65±0.05          \\
+Wiltgen Fourier          & \textbf{0.63±0.06} & 0.58±0.06          & 0.56±0.04          & 0.59±0.05          & 0.60±0.02 & 0.63±0.13          \\
+Wiltgen DB4              & \textbf{0.69±0.04} & 0.61±0.11          & 0.61±0.07          & 0.63±0.05          & 0.63±0.05 & 0.65±0.05          \\
+Halimi                   & \textbf{0.45±0.09} & 0.39±0.25          & 0.43±0.04          & 0.43±0.06          & 0.43±0.05 & 0.36±0.09         
+\end{tabular}
+\end{table}
 
+\begin{table}[]
+\begin{tabular}{lllllll}
+                         & \multicolumn{6}{c}{Robust Scaler}                                                                                  \\
+                         & SVM Linéaire       & SVM RBF            & CART               & EXTRA              & GB        & MLP                \\
+Premier Ordre            & \textbf{0.55±0.05} & \textbf{0.48±0.08} & 0.52±0.05          & 0.54±0.05          & 0.54±0.05 & 0.53±0.06          \\
+Haralick                 & \textbf{0.61±0.05} & 0.56±0.11          & 0.58±0.08          & \textbf{0.61±0.07} & 0.58±0.08 & 0.56±0.07          \\
+Haralick moyen           & \textbf{0.61±0.07} & 0.55±0.10          & \textbf{0.59±0.07} & \textbf{0.61±0.07} & 0.60±0.06 & 0.58±0.06          \\
+Wiltgen - Spatial        & \textbf{0.62±0.07} & 0.52±0.14          & 0.55±0.11          & 0.58±0.08          & 0.57±0.10 & 0.57±0.08          \\
+Wiltgen - Spatial Etendu & \textbf{0.62±0.07} & 0.53±0.15          & 0.58±0.09          & 0.60±0.07          & 0.57±0.10 & 0.60±0.07          \\
+Fourier10                & 0.61±0.06          & 0.57±0.07          & 0.56±0.10          & 0.59±0.06          & 0.58±0.04 & \textbf{0.62±0.07} \\
+Fourier20                & \textbf{0.62±0.07} & 0.60±0.07          & 0.53±0.06          & 0.58±0.06          & 0.59±0.03 & \textbf{0.62±0.14} \\
+Fourier30                & \textbf{0.63±0.07} & 0.55±0.05          & 0.57±0.10          & 0.59±0.05          & 0.60±0.03 & 0.61±0.07          \\
+Haar                     & \textbf{0.69±0.04} & 0.58±0.09          & 0.62±0.04          & 0.63±0.06          & 0.62±0.05 & 0.62±0.05          \\
+Wiltgen Fourier          & \textbf{0.62±0.07} & 0.60±0.04          & 0.53±0.08          & 0.58±0.06          & 0.58±0.02 & 0.61±0.09          \\
+Wiltgen DB4              & \textbf{0.66±0.04} & \textbf{0.66±0.04} & 0.61±0.04          & 0.64±0.05          & 0.62±0.05 & 0.63±0.05          \\
+Halimi                   & \textbf{0.44±0.05} & 0.33±0.30          & 0.42±0.06          & \textbf{0.45±0.05} & 0.44±0.11 & 0.44±0.11         
+\end{tabular}
+\end{table}
+
+\begin{table}[]
+\begin{tabular}{lllllll}
+                         & \multicolumn{6}{c}{StandardScaler}                                                                                 \\
+                         & SVM Linéaire       & SVM RBF            & CART               & EXTRA              & GB        & MLP                \\
+Premier Ordre            & \textbf{0.54±0.05} & \textbf{0.46±0.04} & 0.52±0.04          & \textbf{0.56±0.04} & 0.53±0.04 & 0.55±0.04          \\
+Haralick                 & \textbf{0.61±0.05} & 0.54±0.12          & 0.60±0.07          & \textbf{0.63±0.07} & 0.60±0.06 & 0.60±0.07          \\
+Haralick moyen           & \textbf{0.61±0.07} & 0.53±0.08          & \textbf{0.58±0.08} & \textbf{0.61±0.07} & 0.60±0.06 & 0.58±0.07          \\
+Wiltgen - Spatial        & \textbf{0.63±0.07} & 0.54±0.16          & 0.56±0.09          & 0.57±0.09          & 0.58±0.11 & 0.59±0.10          \\
+Wiltgen - Spatial Etendu & \textbf{0.63±0.07} & 0.56±0.10          & 0.59±0.06          & 0.59±0.09          & 0.57±0.11 & 0.60±0.10          \\
+Fourier10                & \textbf{0.62±0.06} & 0.55±0.07          & 0.58±0.08          & 0.59±0.05          & 0.59±0.04 & \textbf{0.60±0.06} \\
+Fourier20                & \textbf{0.63±0.06} & 0.56±0.15          & 0.54±0.05          & 0.59±0.06          & 0.59±0.02 & \textbf{0.60±0.14} \\
+Fourier30                & \textbf{0.63±0.07} & 0.57±0.06          & 0.56±0.08          & 0.59±0.05          & 0.57±0.05 & 0.60±0.05          \\
+Haar                     & \textbf{0.68±0.04} & 0.63±0.06          & 0.62±0.04          & 0.63±0.06          & 0.62±0.05 & 0.62±0.05          \\
+Wiltgen Fourier          & \textbf{0.63±0.06} & 0.54±0.15          & 0.58±0.06          & 0.60±0.05          & 0.59±0.03 & 0.58±0.09          \\
+Wiltgen DB4              & \textbf{0.67±0.04} & \textbf{0.57±0.07} & 0.58±0.06          & 0.62±0.04          & 0.63±0.05 & 0.64±0.05          \\
+Halimi                   & \textbf{0.44±0.05} & 0.33±0.30          & 0.42±0.06          & \textbf{0.45±0.06} & 0.44±0.03 & 0.42±0.11         
+\end{tabular}
+\end{table}
 
 Néanmoins, il est également a été également jugées important de l'intersection d'évènements tels que la présence de tissus caractéristiques aux abords de follicules pileux.\par
