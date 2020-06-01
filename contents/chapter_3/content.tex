@@ -78,7 +78,7 @@ Ces approches dites supervisées, se regroupent ainsi au travers de deux catégo
 Les travaux que nous mènerons dans ce manuscrit se porterons sur les méthodes de classification car le problème que nous tentons de résoudre relève de la catégorisation de données. Ainsi, nous proposons une bref échantillon de ces méthodes en détaillant leur principes de fonctionnement. En prenant appui sur l'un des travaux~\cite{Kotsiantis2007}, nous identifierons quatre catégories majeures dont :
 \begin{itemize}
     \item \textbf{Les approches logiques} qui correspondent à des approches par succession de décisions~\cite{Kotsiantis2007}. Dans cette catégorie, nous retrouverons les arbres de décision~\cite{Breiman1984} (également connu sous le terme de \gls{cart}) dont le principe peut se résumer à la construction d'un graphe, dans lequel chaque noeud sera associé à une décision caractérisé par le choix d'une caractéristique et d'un seuil~\cite{Quinlan1986}. Toute la complexité de ces approches repose sur le choix de ces caractéristiques, Ainsi, les caractéristiques sont utilisées par ordre d'importance dans la séparation du problème.
-    \item \textbf{Les approches statistiques} qui correspondent à des approches probabilistes, qui déterminent dans quelle mesure un élément fera partie d'une classe. Le \gls{mbn}~\cite{Zhang2004} est un exemple typique de ce type d'approche, dans lequel chaque caractéristique est considérée comme indépendante. La relation entre caractéristique et annotation se définie ainsi comme le produit des probabilités de chacune d'entre elle d'appartenir à la classe supposé (résumé sur l'\Cref{eq:bayesian}). Ce type de classification bayésienne peux également être étendue sous la forme de réseau~\cite{Kononenko1989}.
+    \item \textbf{Les approches statistiques} qui correspondent à des approches probabilistes, qui déterminent dans quelle mesure un élément fera partie d'une classe. Le \gls{nbm}~\cite{Zhang2004} est un exemple typique de ce type d'approche, dans lequel chaque caractéristique est considérée comme indépendante. La relation entre caractéristique et annotation se définie ainsi comme le produit des probabilités de chacune d'entre elle d'appartenir à la classe supposé (résumé sur l'\Cref{eq:bayesian}). Ce type de classification bayésienne peux également être étendue sous la forme de réseau~\cite{Kononenko1989}.
     \item \textbf{Les approches par instances} qui qualifient des méthodes consistant à une accumulation des échantillons afin d'enrichir un espace et non pas de leur interprétation menant à une forme de connaissances. La méthode la plus connue reposant sur ce principe est celle des \gls{knn}~\cite{Cover1967}, dont la théorie majeure repose sur l'appartenance d'une donnée à une classe si celle-ci est suffisamment proche par ses caractéristiques, d'échantillons pré-existant de cette dernière. Il est alors nécessaire de définir un critère de distance, le principal utilisée étant  celui de la distance euclidienne. 
     \item \textbf{Les approches par \gls{svm}}~\cite{Cortes1995} correspondent à des approches assez récentes dont le principe se résume à déterminer une frontière de séparation entre les diverses classes, qui maximise une marge suffisante permettant entre autre une meilleure tolérance au bruit. Afin de déterminer au mieux cette frontière, divers noyaux ont été établie dont le plus simple d'entre eux est \textbf{le noyau linéaire}. Nous noterons également la présence \textbf{d'un noyau de fonction de base radiale} ou \textit{Radial Basis Function} considéré comme un \textit{approximateur universel}, si les données à disposition sont suffisantes~\cite{Wang2004}.  
     \item \textbf{Les approches par ensembles} sont une catégorie qui qualifie les méthodes qui emploient un ensemble de modèles prédictifs afin de construire un unique modèle plus robuste. L'une de ces méthodes, les \gls{rf}~\cite{Breiman2001} sont une extension du principe d'arbre de décision précédemment évoqué, destiné à réduire le risque de sur-apprentissage du modèle initial. Cette méthodes réalise $N$ sélections aléatoires de d'observations, pour lequel $N$ arbres de décision seront générés. Afin de diversifier ces arbres, un mécanisme de tirages aléatoires de caractéristiques est également réalisées au niveau de chaque noeud de décision. Une autre de ces méthode, l'\gls{gb} est un mode opératoire généralement constitué par des arbres de décisions. En opposition avec les \gls{rf} où chaque arbre de décision correspond à un modèle de prédiction faible, l'\gls{gb} consiste à diminuer de manière séquentielle une fonction de coût à chaque nouvel arbre généré~\cite{Friedman2001}.
@@ -89,31 +89,32 @@ Les travaux que nous mènerons dans ce manuscrit se porterons sur les méthodes 
     \hat{y} = \underset{k \in \{1, \ldots, K\}}{\operatorname{argmax}} \ p(C_k) \displaystyle\prod_{i=1}^n p(x_i \mid C_k)
 \end{equation}
 
-Devant ces nombreuses méthodes, il devient difficile de déterminer le modèle optimal à une situation précise, notamment dans le cadre de données complexes.
-~\cite{Kotsiantis2007}
-\Cref{tab:model_comparison}
+Devant ces nombreuses méthodes, il devient difficile de déterminer de se concilier dans le choix d'un modèle optimal à une situation particulière, notamment dans le cadre de données complexes. En effet, une évaluation de manière empirique de ces diverses méthodes reste encore la meilleure solutions afin de déterminer ce modèle optimal, par contrepartie d'un temps de calcul important. Néanmoins, l'un des travaux mené sur la performance des modèles supervisés, a permis de déterminer un certain nombre de critères de comparaison entre ces diverses techniques mettant en valeur en général les avantages et inconvénients de chacun~\cite{Kotsiantis2007}.\par
+
+Pour cela, nous avons au sein de la \Cref{tab:model_comparison}, recensé la plupart des critères importants évoqué par ce travail de recherche et important à nos yeux pour la suite de travail. La performance de classification notamment, qui semble indéniable dans le champ que nous tenterons d'évaluer avec une emphase forte en terme de performances pour les \gls{svm}. La vitesse d'apprentissage à également été renseignée, bien que contraignante lors de nos essais, elle ne constituera pas un frein et reste le principal inconvénient des \gls{svm}. Enfin, ces derniers semblent adaptés en terme de tolérance à des caractéristiques non pertinentes ou redondantes, dont nous ferons l'objet dans certaines méthodes que nous proposerons.\par
+
+A la vue de ces éléments, il semble plus que nécessaire de considérer l'utilisation des \gls{svm} au sein de nos travaux. De même, il sera nécessaire de considérer l'utilisation des deux méthodes d'approches par ensemble mentionnés, les \gls{rf} et de l'\gls{gb}, pour lesquelles aucun travail comparatif généraliste n'a été trouvé. Néanmoins, une étude génomique semble plaider dans le sens des \gls{svm} et de l'\gls{gb}~\cite{Ogutu2011}. Pour finir, il sera également nécessaire de considérer les modèles de classification au sein de processus proposés au sein de travaux proche de notre thématique. Nous aborderons plus en détails ces éléments dans leur parties respectives.\par
 
 \begin{table}[H]
   \small
   \centering 
-\begin{tabular}{lcccc}
-    \toprule
-                                                                & \textbf{\gls{cart}}   & \textbf{\gls{mbn}}& \textbf{\gls{knn}}    & \textbf{\gls{svm}}\\
-    \midrule
-    \textbf{Performances de classification}                     & **                    & *                 & **                    & ****              \\
-    \midrule
-    \textbf{Vitesse d'apprentissage}                            & ***                   & ****              & ****                  & *                 \\
-    \midrule
-    \textbf{Tolérance aux caractéristiques non pertinentes}     & ***                   & **                & **                    & ****  \\
-    \midrule
-    \textbf{Tolérance aux caractéristiques redondantes}         & **                    & **                & **                    & ***               \\
-    \midrule
-    \textbf{Gestion des paramètres du modèle}                   & ***                   & *                 & ***                   & ***               \\
-    \bottomrule
+    \begin{tabular}{lcccc}
+        \toprule
+                                                                    & \textbf{\gls{cart}}   & \textbf{\gls{nbm}}& \textbf{\gls{knn}}    & \textbf{\gls{svm}}\\
+        \midrule
+        \textbf{Performances de classification}                     & **                    & *                 & **                    & ****              \\
+        \midrule
+        \textbf{Vitesse d'apprentissage}                            & ***                   & ****              & ****                  & *                 \\
+        \midrule
+        \textbf{Tolérance aux caractéristiques non pertinentes}     & ***                   & **                & **                    & ****              \\
+        \midrule
+        \textbf{Tolérance aux caractéristiques redondantes}         & **                    & **                & **                    & ***               \\
+        \bottomrule
   \end{tabular}
   \caption{Table de comparaison des méthodes d'apprentissage majeures de la littérature~\cite{Kotsiantis2007}. Ce tableau propose un système de notations allant de une (mauvaise performance) à quatre étoiles (bonne performance).}
   \label{tab:model_comparison}
 \end{table}
+\clearpage
 
 \subsection{Apprentissage non-supervisée}
 L’apprentissage non supervisé ou « descriptif » est une seconde approche d’apprentissage dans laquelle l’ordinateur tente de « découvrir » en autonomie, des corrélations au sein de jeux de données. Ces approches émergent de problématiques diverses, telles que :
@@ -144,7 +145,7 @@ Les techniques d'apprentissage semi-supervisé tentent de combiner les deux prin
 
 Ainsi, l'apprentissage semi-supervisé se base sur plusieurs hypothèses auxquelles doivent se confronter les données~\cite{Zhu2009}, dont:
 \begin{itemize}
-	\item un critère \textbf{d'homogéneité}, c'est à dire que des données proches ou d'une zone de haute densité partage les même annotations, 
+	\item un critère \textbf{d'homogénéité}, c'est à dire que des données proches ou d'une zone de haute densité partage les même annotations, 
 	\item un critère \textbf{de séparation par faible densité}, c'est à dire que s'il existe une  séparation entre plusieurs types d'annotations, celle-ci se situera dans une zone à faible densité~\cite{chapelle2005}.
 \end{itemize}
 En pratique, il est difficile de s'assurer que les données en notre possession respectent bien ces engagements. Afin de mieux visualiser ce concept, l'exemple en \Cref{fig:example_semi_supervised} démontre l'intérêt de telles approches. Ce principe permet d'éviter d'extrapoler des frontières difficilement définissables dans une situation de faible densité de l'information étiqueté.\par
