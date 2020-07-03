@@ -4,65 +4,61 @@
 \chapter{Diagnostic de l'image}
 \label{chap:chapter_4}
 \chapterintro
-Comme évoqué durant le préambule, cette partie s'intéresse au premier niveau de diagnostic, c'est à dire celui de l'image sur données \gls{rcm}. La séparation sur problématique binaire, malin et non malin, sera ainsi évaluée mais également sur trois classes avec d'une part les tissus sains, bénin et malin.\par
+Comme évoqué durant le préambule, cette partie s'intéresse au premier niveau de diagnostic de notre processus global sur la modalité \gls{rcm}. Nous traiterons en d'autres termes, de la classification des images de cette modalité. Nous nous intéresserons à leur séparation selon trois annotations : saine, bénigne ou maligne, mais également reviendrons à des considérations d'ordre médical de détection de malignité de ces images.\par
 
-Ainsi, plusieurs aspects se distinguerons dans ce chapitre dont l'extraction de caractéristiques pertinentes par méthodes manuelles et auto déterminée et l'utilisation de méthodes de classification éprouvées. Nous nous intéresserons également à l'influence de divers paramètres liés à la normalisation des caractéristiques, à la réduction de l'information dans le cadre des méthodes sur base d'apprentissage par transfert et enfin sur l'influence des données sur les résultats obtenus.\par	
+Ainsi, ce chapitre séparera plusieurs aspects dont dans un premier temps l'extraction de caractéristiques pertinentes par des méthodes manuelles mais également auto déterminées à l'aide de réseaux profond pré-entraînés, et dans un second temps la mise en oeuvre de méthodes de classification éprouvées. Afin de rendre plus riche cette partie et de compléter nos conclusions, nous nous intéresserons également à l'influence de divers paramètres liés à la normalisation des caractéristiques, à la réduction de l'information dans le contexte de méthodes à fort nombre de dimensions, et à l'influence des données sur les résultats de classification.\par	
 \newpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 %%%%%%%%%%%%%%%%% METHODOLOGIE
 \section{Méthodologie}
-La classification de la peau par méthode d'apprentissage est un problème très largement développée dans la littérature, notamment pour le mélanome. Néanmoins, dans le cadre de la détection du \gls{lm}/\gls{lmm} sur base d'images \gls{rcm},
-cette problématique n'a été abordé que par quelques articles~\cite{Halimi2017a, Halimi2017b, Wiltgen2008, Koller2011}. Nous nous intéresserons à la détection de cette pathologie au sein de la base d'image mise à disposition, et nous étudierons cette problématique selon divers angles d'approche: 
+La classification de la peau par méthode d'apprentissage est un problème très largement développé dans la littérature, notamment pour le mélanome. Néanmoins, dans le cadre plus particulier de la détection des \gls{lm} et \gls{lmm} sur base d'images \gls{rcm}, cette problématique n'a été abordé que par quelques articles~\cite{Halimi2017a, Halimi2017b, Wiltgen2008, Koller2011}. Nous nous intéresserons à la détection de cette pathologie au sein de la base d'image mise à disposition, et nous étudierons cette problématique selon divers angles d'approche : 
 \begin{inlinerate}
-    \item la séparation entre les tissus malin et le reste des tissus (problématique à 2 classes),
-    \item la séparation entre les tissus pathologiques  et les tissus qualifiés de sains (problématique à 2 classes),
-    \item et enfin la séparation des tissus malins, bénins et sains (problématique à 3 classes).
+    \item d'une part la séparation des tissus malins, bénins et sains sous forme de problématique à 3 classes,
+    \item et d'autre part, nous focaliserons sur la séparation entre les tissus malin et le reste des tissus sous forme de problématique binaire.
 \end{inlinerate}\par
 
-Afin de traiter ces problématiques, nous aborderons ces cas à l'aide de mécaniques liées à l'apprentissage supervisé, que nous déroulerons lors de prochains paragraphes. En effet, ces mécaniques ont largement été employé et démontrée fonctionnelles dans des problèmes similaires de classification d'images médicales. Dans un premier temps, nous décrirons le processus par apprentissage automatique (voir \Cref{fig:scheme_macro_pipeline} - en haut): nous décrirons bloc par bloc les traitements proposés de l'extraction de caractéristique à l'étape de classification. Dans un second temps, nous décririons le processus d'apprentissage profond (voir \Cref{fig:scheme_macro_pipeline} - en bas): nous traiterons de l'augmentation des données et proposerons une méthodologie d'entraînement. Enfin, nous terminerons par une descriptions des résultats obtenus, tenterons d'expliquer ces derniers, et déterminerons les choix les plus cohérents pour la suite.\par
+Afin de traiter ces problématiques, nous aborderons ces cas à l'aide de méthodes d'apprentissage supervisées, que nous déroulerons lors de ces prochains paragraphes. En effet, ces mécaniques sont largement explorées dans des thématiques variées du domaine de l'images médicale et également démontrées comme fonctionnelles~\cite{Litjens2017,Pathan2018}. Nous aborderons les prochains éléments selon un processus de classification classique, dans lequel nous adapterons certains des traitements en conséquence de notre problématique. Une vision macroscopique est présenté sur le schéma de la \Cref{fig:scheme_macro_image_classification}.\par
+
+Le pré-traitement des images n'est pas considéré dans ce travail, car jugé peu utile sur des images \gls{rcm} et assez peu traité dans la littérature. Nous suivrons ce processus selon trois étapes majeures :
+\begin{inlinerate}
+    \item l'extraction de caractéristiques,
+    \item le pré-traitement avant classification,
+    \item et les méthodes de classification.
+\end{inlinerate}
+Ainsi, nous consacrerons une sous-section pour chacun de ces points lors des prochaines sous-parties. Puis, nous présenterons la méthodologie propre au déroulement de ces expériences et critères d'évaluation, avant de procéder à l'analyse des résultats.\par
 
 \begin{figure}[H]
 \centering
-    \includegraphics[width=\linewidth]{contents/chapter_4/resources/scheme_macro_pipeline_machine.pdf}
-    \caption{Représentation macroscopique du processus de diagnostic image suivi dans le cadre de l'apprentissage automatique.}
-    \label{fig:scheme_macro_pipeline}
+    \includegraphics[width=\linewidth]{contents/chapter_4/resources/scheme_macro_image_classification.pdf}
+    \caption{Représentation macroscopique du processus de diagnostic image suivi dans le cadre de l'apprentissage automatique. Nous arborerons une démarche la plus compréhensive, à 3 classes - a), mais également binaire par une emphase sur les images malignes - b).}
+    \label{fig:scheme_macro_image_classification}
 \end{figure}\par
 
-Cette section se destine à présenter l'ensemble des étapes consacrée à la classification des images de \gls{rcm} selon un processus d'apprentissage automatique. Celui-ci se décompose en quatre étapes majeures:
-\begin{inlinerate}
-    \item l'extraction de caractéristiques,
-    \item le balancement des données,
-    \item le post-traitement,
-    \item et la classification
-\end{inlinerate}.
-Le pré traitement des images n'est pas considéré car jugé peu utile sur ces dernières. Ce processus sera décrit point par point lors des prochaines sous-parties.\par
 \newpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 %%%%%%%%%%%%%%%%% FEATURES
 \section{Extraction de caractéristiques}
 \label{chap:feature_extraction}
-L'étape d'extraction de caractéristiques consiste en l'obtention de valeurs dérivées à partir des données brute dans le but de quantifier un phénomène jugée pertinent pour la suite du traitement (généralement de la classification). Les éléments présentés en \Cref{chap:preamble_microscopy} portent à montrer l'importance des motifs de tissus, très variables selon:
+L'étape d'extraction de caractéristiques consiste en l'obtention de valeurs dérivées à partir des données brute dans le but de quantifier un phénomène jugée pertinent pour la suite du traitement (généralement de la classification). Les éléments présentés en \Cref{chap:preamble_microscopy} portent à montrer l'importance des motifs de tissus, dont l'apparence varie selon :
 \begin{itemize}
-    \item la profondeur d'acquisition : l'épiderme, \gls{dej} et le derme sont très différents du point des tissus,
-    \item la pathologie à identifier : les différentes lésions en notre possession sont assez différentes selon leur états bénin ou malin.
-\end{itemize}\par
+    \item \textbf{la profondeur de l'acquisition} du tissus considéré, ainsi l'épiderme, \gls{dej} et le derme sont très différents du point de vue des tissus,
+    \item \textbf{la pathologie à identifier}, les différentes lésions en notre possession sont assez différentes selon leur états bénin ou malin.
+\end{itemize}
+Les nombreux échanges menés auprès des dermatologues de notre étude clinique de référence ont également abouti sur une importance des aspects de textures au sein de leur processus cognitifs de décision vis à vis des pathologies de \gls{lm} et \gls{lmm}.\par
 
-Les nombreux échanges menés auprès des spécialistes en dermatologie ont également abouti sur une importance des aspects des textures au sein de leur processus cognitifs de décision vis à vis des pathologies de \gls{lm}/\gls{lmm}.\par
-
-Nous traiterons des techniques d'extraction de caractéristiques appliquée à notre thématique, que nous aborderons selon deux axes:
+Nous traiterons des techniques d'extraction de caractéristiques appliquées à notre thématique, que nous aborderons selon deux axes :
 \begin{inlinerate}
-    \item d'une part les techniques d'extraction de caractéristiques manuelles,
-    \item d'autre part les techniques d'extraction de caractéristiques non manuelles
-\end{inlinerate}. Ces termes ont été utilisés suite à l'apparition de réseaux de convolution profonds, afin de catégoriser ces deux types d'approches~\cite{Nanni2017}.\par
-
-L'extraction de caractéristiques est une problématique qui a été traitées sous deux aspects distincts: l'une par utilisation du domaine spatial et l'autre par utilisation du domaine fréquentiel. Ainsi, ces prochaines lignes traiterons la problématique dans cet ordre respectif.\par
+    \item d'une part les techniques d'extraction de caractéristiques manuelles ou déterminées par un humain respectivement séparées en caractéristiques \textit{spatiales} et \textit{fréquentielles},
+    \item d'autre part les techniques d'extraction de caractéristiques non manuelles.
+\end{inlinerate} 
+L'appellation "manuelle" s'est ainsi imposé suite à l'apparition de réseaux de convolution profonds, afin de distinguer ces deux types d'approches~\cite{Nanni2017}.\par
 
 \subsection{Extraction de caractéristiques manuelles spatiales}
-L'extraction sur base d'information du domaine spatial est un champs de travail assez développé présentant comme avantage d'être intuitif mais pouvant être affecté par le bruit et distorsions. Ces opérations spatiales peuvent être décrites à deux niveaux: les descripteurs de premier ordre ne prenant en compte que les valeurs d'intensités initiales et est indifférent aux information de voisinage; et les descripteurs de second ordre et plus, prenant en compte la relation d'une valeur locale et de son voisinage~\cite{Kamila2015}.\par
+L'extraction sur base d'information du domaine spatial est un champs de travail assez développé présentant comme avantage d'être intuitif mais pouvant être affecté par le bruit et autres phénomènes de dégradation de l'information. Ces opérations spatiales peuvent être décrites à deux niveaux d'interprétation, d'une part celui des valeurs brutes dont les descripteurs de premier ordre font partie mais ne fournisse aucune valeurs de cohérence spatiale et, d'autre part celui par transformation de l'information initiale dont les descripteurs de second ordre ou plus font partie. Ces dernières méthodes prennent en compte la relation d'une valeur locale à celle de son voisinage~\cite{Kamila2015}.\par
 
-Les descripteurs de premier ordre s'appliquent ainsi aux valeurs d'intensité ou à la distribution de celle-ci, sans traitement préalable. La \Cref{tab:first_order_descriptors} recense la plupart des ces mesures. Néanmoins, ces mesures tendent à ressortir des phénomènes globaux de l'image mais ne suffisent pas à elles seules à analyser  des motifs présent, mais peuvent constituer un bon complément ~\cite{Tomita1990, Srinivasan2008, Uyun2013, NyeinNyeinHlaing2015}.\par
+Les descripteurs de premier ordre s'appliquent ainsi aux valeurs d'intensité ou à la distribution de celle-ci, sans traitement préalable. La \Cref{tab:first_order_descriptors} recense la plupart de ces caractéristiques issues de la distribution des valeurs brutes. Néanmoins, ces mesures tendent à ressortir des phénomènes globaux de l'image, mais ne suffisent pas à elles seules à analyser des motifs présent~\cite{Tomita1990, Srinivasan2008, Uyun2013, NyeinNyeinHlaing2015}. Ces mesures ont notamment été utilisées comme un complément de classification~\cite{Wiltgen2008}.\par
 
 \begin{table}[H]
     \centering
@@ -70,8 +66,8 @@ Les descripteurs de premier ordre s'appliquent ainsi aux valeurs d'intensité ou
         \toprule
         \textbf{Mesure}             & \textbf{Formule}                                                  \\ \hline
         Moyenne                     & $\overline{x} = \frac{1}{n}\sum_{i=1}^n x_i$                      \\   
-        Variance                    & $V = \frac{1}{n}\sum_{i=1}^n \left(x_i - \overline{x}\right)^2$   \\ 
-        Entropie                    & $E = -\sum_{i=1}^n {\mathrm{P}(x_i) \log_b \mathrm{P}(x_i)}$\\
+        Variance                    & $v = \frac{1}{n}\sum_{i=1}^n \left(x_i - \overline{x}\right)^2$   \\ 
+        Entropie                    & $e = -\sum_{i=1}^n {\mathrm{P}(x_i) \log_b \mathrm{P}(x_i)}$\\
         Kurtosis                    & $k=\frac{r \sum_{i=1}^{n}\left(x_{i}-\bar{x}\right)^{4}}{\left(\sum_{i=1}^{n}\left(x_{i}-\bar{x}\right)^{2}\right)^{2}}-3$\\
         Asymétrie                   & $a = \mathbb{E} \left[ \left( \frac{X - \mu}{\sigma} \right)^3 \right]$\\  
         \bottomrule
@@ -80,27 +76,28 @@ Les descripteurs de premier ordre s'appliquent ainsi aux valeurs d'intensité ou
     \label{tab:first_order_descriptors}
 \end{table}\par
 
-Les descripteurs de second ordre, ou plus, utilisent l'information locale et en déduisent une relation à leur voisinage par l'utilisation généralement d'une transformation intermédiaire. Parmi ces transformation, les plus courantes sont: 
+Les descripteurs de second ordre, ou plus, utilisent l'information locale et en déduisent une relation à leur voisinage par l'utilisation d'une transformation intermédiaire. Parmi ces transformation, les plus courantes d'entre elles sont : 
 \begin{inlinerate}
     \item \gls{glcm},
     \item \gls{glrlm},
     \item et \gls{glszm}.
 \end{inlinerate} 
-L'extraction sur la base d'information du second ordre à notamment été traitée en 1973 pour de la reconnaissance d'image aérienne et satellites, par Robert Haralick~\cite{Haralick1973}. Ce travail est une extension des \gls{glcm}, dont le principe consiste en un recensement des combinaisons d'intensité présentent dans une image. Cette extraction nécessite une direction dans laquelle les combinaisons seront recherchées, en 2D ces directions sont aux nombre de quatre:
+L'extraction sur la base d'information du second ordre à notamment été traitée en 1973 pour de la reconnaissance d'image aérienne et satellites, par Robert Haralick~\cite{Haralick1973}. Ce travail est une extension des \gls{glcm}, dont le principe consiste en un recensement des combinaisons d'intensité présentent dans une image. Cette extraction nécessite une direction dans laquelle les combinaisons seront recherchées, en 2D ces directions sont aux nombre de quatre :
 \begin{inlinerate}
     \item horizontale,
     \item verticale,
-    \item et les deux diagonales opposées
-\end{inlinerate}. Le principe de fonctionnement des \gls{glcm} est schématisé en \Cref{fig:scheme_principle_GLCM} pour une extraction selon la direction horizontale. Le travail~\cite{Haralick1973} à ainsi démontré la pertinence des \gls{glcm} dans la différenciation d'images texturés, en calculant quatorze critères statistiques selon les quatre directions évoqué précédemment. La \Cref{tab:haralick_descriptors} met à disposition les diverses mesures utilisées et formules associées. Afin de réaliser ces diverses extraction de manière optimum, nous nous référé à la bibliothèque logicielle "Mahotas"~\cite{coelho2012} proposant ces diverses mesures de manière optimisée.\par
+    \item et les deux diagonales opposées.
+\end{inlinerate}
+Le principe de fonctionnement des \gls{glcm} est schématisé en \Cref{fig:scheme_principle_GLCM} pour une extraction selon la direction horizontale. Le travail~\cite{Haralick1973} à ainsi démontré la pertinence des \gls{glcm} dans la différenciation d'images texturés, en calculant selon les quatre directions évoqué précédemment, quatorze critères statistiques. Ces divers critères statistiques sont recensés sur la \Cref{tab:haralick_descriptors}, ainsi que leurs formules associées. Afin de réaliser ces diverses extraction de manière optimal, nous avons recours à la bibliothèque logicielle "Mahotas"~\cite{coelho2012}.\par
  
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\linewidth]{contents/chapter_4/resources/scheme_principle_GLCM.pdf}
-    \caption{Représentation de la création d'une matrice sur base de \gls{glcm} selon la direction horizontale.}
+    \includegraphics[width=\linewidth]{contents/chapter_4/resources/scheme_principle_GLCM.pdf}
+    \caption{Représentation de la création d'une matrice sur base de \gls{glcm} selon la direction horizontale et dont la valeur de distance de voisinage est de 1. Les flèches représente les divers relation de voisinage horizontal, et leur couleur fait référence à leur emplacement dans la matrice de \gls{glcm}.}
     \label{fig:scheme_principle_GLCM}
 \end{figure}\par
 
-L'un des travaux menée par une étude sur les lésions mélanocytaire en \gls{rcm} vont dans le sens de ces deux formes d'information~\cite{Wiltgen2008}. En effet, l'étude met en avant l'importance des douze première caractéristiques énoncés par Haralick et adjoint cinq mesure de premier ordre comme complément d'information dont :
+Les travaux menés par l'une des études sur les lésions mélanocytaire en \gls{rcm}~\cite{Wiltgen2008}, appuient ces deux catégories de mesures spatiales de l'information de texture. En effet, l'étude met en avant l'importance des douze première caractéristiques par Haralick~\cite{Haralick1973} et adjoint cinq mesure de premier ordre comme complément d'information dont :
 \begin{inlinerate}
     \item la moyenne,
     \item l'erreur quadratique moyenne,
@@ -108,7 +105,7 @@ L'un des travaux menée par une étude sur les lésions mélanocytaire en \gls{r
     \item le kurtosis (mesure d'aplatissement de la distribution),
     \item et l'entropie.
 \end{inlinerate}
-De plus, afin de rendre les caractéristiques d'Haralick plus robuste aux rotations et par la même de réduire la quantité d'information, les auteurs préconise l'utilisation d'une moyenne sur les quatre directions, dont résulte un unique vecteur de taille 1$\times$12~\cite{Wiltgen2008}.\par
+Ce même travail met également en avant que la texture des lésions de la peau n'a pas d'orientation particulière. Afin de rendre ces caractéristiques plus robuste aux rotations et, de réduire la quantité d'information extraite, ses auteurs préconisent l'utilisation d'une moyenne sur les quatre directions. Ainsi, cette manipulation permet de réduire l'information à unique vecteur de taille 1$\times$12 pour ces caractéristiques d'Haralick~\cite{Wiltgen2008}.\par
 
 \begin{table}[H]
     \centering
@@ -147,26 +144,35 @@ Les expériences menées sur base de descripteurs manuels spatiaux se décompose
         Wiltgen~\cite{Wiltgen2008} - Spatial        & 17 (12+5)         \\
         \bottomrule
     \end{tabular*}
-    \caption{Nombre de caractéristiques extraites par méthodes manuelles spatiale.}
+    \caption{Liste des méthodes spatiales évaluées dans ce chapitre et leur nombre de caractéristiques extraites associées.}
     \label{tab:number_features_spatial}
 \end{table}
 
 \subsection{Extraction de caractéristiques manuelles fréquentielles}
-L'extraction sur base d'information du domaine fréquentiel est également un champs de travail assez développé, notamment pour sa robustesse face au perturbation telle que le bruit, ainsi que la vitesse d'exécution de certaines opérations telle que le filtrage. En revanche, l'information extraites est moins évocatrice et nécessite une information spatiale initiale suffisante pour être juste~\cite{Kamila2015}. Plusieurs courants majeurs de représentation sont utilisés: 
+L'extraction sur base d'information du domaine fréquentiel est également un champs de travail assez développé, notamment pour sa robustesse face au perturbation telle que le bruit, ainsi que la vitesse d'exécution de certaines opérations telle que le filtrage. En revanche, l'information extraite est plus difficile d'interprétation et, nécessite une information spatiale suffisamment conséquente pour être juste~\cite{Kamila2015}. Ce dernier point est négligeable dans ce travail, nos données étant dotées d'une résolution spatiale suffisante de \SI{1000}{\px} $\times$ \SI{1000}{\px}.\par
+
+Plusieurs courants majeurs de représentation fréquentielles sont utilisés, dont : 
 \begin{itemize}
     \item la Transformée de Fourier~\cite{Ursani2007, Smach2008a},
     \item la Transformée en cosinus discrète~\cite{Sorwar2001},
     \item la Transformée en ondelettes~\cite{Arivazhagan2003,Hong2010},
     \item et la Transformée de Gabor~\cite{Ursani2007}.
 \end{itemize}
-Notre travail se consacrera à deux de ces approches, la transformée de Fourier et à la transformée en ondelettes, toutes deux traités sur une problématique similaire~\cite{Wiltgen2008,Halimi2017a,Halimi2017b}. Également, ces deux méthodes sont deux représentants majeures des deux grandes familles de représentation en fréquence.\par
+Notre travail se consacrera à deux de ces approches, d'une part à la transformée de Fourier et d'autre part à la transformée en ondelettes, toutes deux traités sur des problématiques de classification similaires~\cite{Wiltgen2008,Halimi2017a,Halimi2017b}. Également, ces deux méthodes sont deux représentants majeures des deux grandes familles de représentation en fréquences.\par
 
-La transformée de Fourier se résume à la décomposition d'une donnée en une somme de fréquences. Dans le cas d'une image, cette transformation donne lieu à une représentation, dans lesquelles: les basses fréquences, au centre, représentent une forme d'homogénéité au sein d'une image; tandis que les hautes fréquences, en extérieur, sont associées à de fortes transitions. Cet espace est donc approprié à la caractérisation d'image texturées, et à suscité un intérêt au milieu des années 1980~\cite{Persoon1986}. En revanche, bien que cette représentation permette de décrire parfaitement la composition fréquentielle de l'image, elle ne peut en localiser la provenance exacte~\cite{Wiltgen2008}. Différentes  mesures ont été proposés dans cet espaces afin de caractériser des textures:
+La transformée de Fourier se résume à la décomposition d'une donnée en une somme de fréquences. Dans le cas d'une image, cette transformation donne lieu à une représentation, dans laquelle : les basses fréquences, au centre, représentent une forme d'homogénéité au sein d'une image ; tandis que les hautes fréquences, en extérieur, sont associées à de fortes zone de transitions. Cette transformation conserve également l'orientation des fréquences, représentés à l'aide d'un angle formé à partir de l'origine. En revanche, bien que la transformée de Fourier permette de décrire parfaitement la composition fréquentielle de l'image, elle ne peut en localiser la provenance des fréquences~\cite{Wiltgen2008}. Cet espace reste néanmoins approprié à la caractérisation d'image texturées, et à suscité un grand intérêt au milieu des années 1980~\cite{Persoon1986}. Différentes mesures ont été proposés dans cet espaces afin de caractériser des textures :
 \begin{itemize}
     \item l'extraction d'information à partir \textbf{de cercles concentriques} réguliers~\cite{Smach2008a, Wiltgen2008} afin d'isoler l'information propre à chaque intervalle de fréquences (\Cref{fig:scheme_fourier_features} - a),
     \item l'extraction d'information à partir \textbf{de directions} en partance du centre vers l'extérieur de la transformée à angles constants ~\cite{Wiltgen2008} (\Cref{fig:scheme_fourier_features} - b).
 \end{itemize}
-Ces deux travaux préconise l'extraction d'une moyenne, voire d'une déviation standard~\cite{Smach2008a, Wiltgen2008}. La transformée de Fourier sera effectuée dans le reste de ce travail par la bibliothèque logicielle "SciPy" \cite{Virtanen2020}.\par\par
+Ces deux travaux préconisent l'extraction d'une valeur de moyenne et de la déviation standard sur différentes régions de l'espace fréquentielle afin de qualifier les phénomènes précédemment présentés~\cite{Smach2008a, Wiltgen2008}. 
+
+L'une des expériences menée par Wiltgen~\cite{Wiltgen2008} se base sur la transformée de Fourier, et extrait \textbf{38 descripteurs} du spectre de magnitude :
+\begin{itemize}
+    \item \textbf{22 descripteurs} correspondent à la moyenne calculée sur des rayons répartis de manière équidistante du centre du spectre (\Cref{fig:scheme_fourier_features} - a),
+    \item \textbf{16 descripteurs} correspondent à la moyenne calculée sur des directions à intervalles constantes (\Cref{fig:scheme_fourier_features} - b).
+\end{itemize}
+La transformée de Fourier sera effectuée dans le reste de ce travail par la bibliothèque logicielle "SciPy" \cite{Virtanen2020}.\par
 
 \begin{figure}[h]
     \begin{center}
@@ -199,88 +205,75 @@ Ces deux travaux préconise l'extraction d'une moyenne, voire d'une déviation s
     \label{fig:scheme_fourier_features}
 \end{figure}\par
 
-La transformée en ondelettes possède divers avantages dont une bonne capacité de localisation, par translation de l'ondelette mère, et la possibilité de prendre en considération plusieurs échelles d'analyse, par homothétie~\cite{Livens1997,Wiltgen2008}. Concernant le choix de l'ondelette mère, celui-ci ne semble pas affecter la qualité des caractéristiques extraites~\cite{Fatemi1996, Livens1997}. Néanmoins, l'un des auteurs préconise le choix d'ondelette symétrique ou anti-symétrique~\cite{Livens1997}. Plusieurs de nos références s'orientant vers des ondelettes de Daubechies, nous privilégierons ces dernières~\cite{Wiltgen2008,Halimi2017a}. La décomposition est ainsi réalisée à divers niveaux afin de capter plusieurs niveaux de détail. La décomposition d'un niveau se réalise en 3 étapes successives: 
+La transformée en ondelettes possède divers avantages dont une bonne capacité de localisation, par translation de l'ondelette mère, et la possibilité de prendre en considération plusieurs échelles d'analyse, par homothétie~\cite{Livens1997,Wiltgen2008}. Concernant le choix de l'ondelette mère, celui-ci ne semble pas affecter la qualité des caractéristiques extraites~\cite{Fatemi1996, Livens1997}. Néanmoins, l'un des auteurs préconise le choix d'ondelette symétrique ou anti-symétrique~\cite{Livens1997}. Plusieurs de nos références s'orientant vers des ondelettes de Daubechies ou de Haar, nous privilégierons ces dernières dans nos expériences~\cite{Wiltgen2008,Halimi2017a}. La décomposition en ondelettes sur images se réalise en 3 étapes successives : 
 \begin{inlinerate}
     \item de filtrage passe-bas et passe-haut horizontal,
     \item de filtrage passe-bas et passe-haut vertical,
-    \item puis une étape de sous-échantillonage afin de réduire limiter la quantité d'information.
-\end{inlinerate} La totalité de ce processus est schématisé en \Cref{fig:scheme_dwt}. Les mesures statistiques extraites préconisés à ces diverse échelles sont la déviation standard, l'énergie et l'entropie~\cite{Livens1997, Wiltgen2008}. La transformée en ondelettes sera effectuée dans le reste de ce travail par la bibliothèque logicielle "PyWavelets"~\cite{lee2006}.\par
+    \item puis une étape de sous-échantillonage afin de réduire la quantité d'information généré apr ces deux précédentes étapes.
+\end{inlinerate} Ce processus est trois temps est schématisé en \Cref{fig:scheme_dwt}. Nous effectuerons la transformée en ondelettes de ce travail à l'aide de la bibliothèque logicielle "PyWavelets"~\cite{lee2006}.\par
 
 \begin{figure}[H]
-\centering
-    \begin{subfigure}{.45\textwidth}
-      \centering
-      \includegraphics[width=\textwidth]{contents/chapter_4/resources/scheme_dwt.pdf}
-    \end{subfigure}
-    \vrule
-    \begin{subfigure}{.45\textwidth}
-      \centering
-      \includegraphics[width=\textwidth]{contents/chapter_4/resources/scheme_dwt_decomposition.pdf}
-    \end{subfigure}
-    \caption{Principe de la décomposition en ondelettes appliquée aux images~\cite{Livens1997}. A gauche, la décomposition est réalisée en trois temps. Un filtrage passe bas (L) et passe haut (H) sont réalisés selon la direction horizontale, puis selon la direction verticale. Enfin, un sous échantillonage de coefficient 2 est appliqué afin d'obtenir un matrice de même taille que l'image d'origine. A droite, les  deux principaux types de décomposition successives: par schéma pyramidal ou arbre dyadique, et par structure d'arbre.}
+    \centering
+    \includegraphics[width=0.7\textwidth]{contents/chapter_4/resources/scheme_dwt.pdf}
+    \caption{Principe de la décomposition en ondelettes appliquée aux images~\cite{Livens1997}. La décomposition est réalisée en trois temps. Un filtrage passe bas (L) et passe haut (H) sont réalisés selon la direction horizontale, puis selon la direction verticale. Enfin, un sous échantillonage de coefficient 2 est appliqué afin d'obtenir un matrice de même taille que l'image d'origine.}
     \label{fig:scheme_dwt}
-\end{figure}\par
+\end{figure}\par 
 
-Le premier travail réalisé par Wiltgen~\cite{Wiltgen2008} met à disposition deux méthodes d'extraction de caractéristiques à partir de transformations fréquentielles desquelles sont obtenues diverses statistiques. Dans un premier temps, une de ses méthode se base sur la transformée de Fourier, et extrait \textbf{38 descripteurs} de la magnitude du spectre:
-\begin{itemize}
-    \item \textbf{22 descripteurs} correspondent à la moyenne calculée sur des rayons répartis de manière équidistante du centre du spectre (\Cref{fig:scheme_fourier_features} - a ),
-    \item \textbf{16 descripteurs} correspondent à la moyenne calculée sur des directions à intervalles constantes (\Cref{fig:scheme_fourier_features} - b ).
-\end{itemize} Dans un second temps, ce même article propose un approche par ondelettes de Daubechies. La transformée est ainsi calculée à cinq niveau successif sous forme d'arbre diadique, et préconise l'extraction de 3 mesures statistiques (la déviation standard, l'énergie et l'entropie) par bande de fréquences pour un total de \textbf{39 descripteurs}.\par
+Ainsi, nous réaliserons plusieurs de ces expériences sur base de descripteurs en fréquence. Dans un premier temps, nous tenterons d'étudier l'efficacité des transformations de Fourier et en ondelettes (à l'aide des ondelettes mère de Daubechies et de Haar) sur la séparation des classes. Puis dans un second temps, nous reproduirons la méthode de la littérature employant une combinaison de descripteurs de l'espace de Fourier~\cite{Wiltgen2008}. La \Cref{tab:number_features_frequency} synthétise le nombre associé de caractéristiques extraites par ces diverses méthodes d'extraction fréquentielles.\par
 
-Le second travail sur lequel nous nous appuyons est une forme d'extension de la transformée en ondelettes du précédent travail~\cite{Halimi2017a}. Cette transformée est réalisée de manière diadique à quatre niveaux différents de décomposition. L'auteur y propose une extraction statistique différente des précédents travaux, reposant sur une approximation à chaque niveau de décomposition par une loi normale généralisée centrée dont la densité de probabilité $f$ est décrite par l'\Cref{eq:ggd}. Les auteurs de l'étude ne retiennent comme caractéristiques que les paramètres d'échelle $\alpha$ et de forme $\beta$.\par
-\begin{equation}
-    f(x)= \frac{\beta}{2\alpha\Gamma(1/\beta)} e^{-\left(|\frac{x}{\alpha}|\right)^\beta}
-    \label{eq:ggd}
-\end{equation}
- 
-Ainsi, nous réaliserons plusieurs expériences sur base de descripteurs manuels en fréquence. Dans un premier temps, nous tenterons d'étudier l'impact des méthodes standards. Puis dans un second temps, nous reproduirons les méthodes de la littérature proche de notre thématique et précédemment détaillés~\cite{Wiltgen2008, Halimi2017a}. La \Cref{tab:number_features_frequency} synthétise le nombre associé de caractéristiques extraites par ces diverses méthodes d'extraction fréquentielles.\par
-
-\begin{table}[h]
+\begin{table}[H]
     \centering
     \begin{tabular*}{0.6\linewidth}{l@{\extracolsep{\fill}}l}
         \toprule
         \textbf{Méthode}                        & \textbf{Nombre}   \\ \hline
         Fourier                                 & 10/20/30          \\ \hline
-        Ondelettes de Haar                      & 39(13$\times$3)   \\ \hline
-        Wiltgen~\cite{Wiltgen2008} - Fourier    & 38(22+16)         \\ \hline
-        Wiltgen~\cite{Wiltgen2008} - Ondelettes & 39(13$\times$3)   \\ \hline
-        Halimi~\cite{Halimi2017a} - Ondelettes  & 24(12$\times$2)   \\
+        Ondelettes de Daubechies                & 12                \\ \hline
+        Ondelettes de Haar                      & 12                \\ \hline
+        Wiltgen~\cite{Wiltgen2008} - Fourier    & 38(22+16)         \\
         \bottomrule
     \end{tabular*}
-    \caption{Nombre de caractéristiques extraites par méthode spatiale.}
+    \caption{Liste des méthodes fréquentielles évaluées dans ce chapitre et leur nombre de caractéristiques extraites associées.}
     \label{tab:number_features_frequency}
 \end{table}\par
 
 \subsection{Technique d'apprentissage par transfert de connaissances}
-Les techniques d'apprentissage par transfert de connaissances sont un champs d'application relativement récent en comparaison des techniques d'apprentissage automatique. Le principe est la réutilisation de connaissances précédemment acquises dans le but de résoudre de nouveau problèmes plus rapidement, voir plus efficacement. Pour cela, ce champs vise à  proposer des moyens d'extraire les connaissances d'une ou plusieurs tâches sources, et de les appliquer à une tâche cible~\cite{QiangYang2010}.\par
-Haar ~\cite{Ghazali2007}
-Le récent engouement pour les \gls{cnn} et la complexité des architectures actuelle pour le traitement des images à accentué les recherches en ce sens. En effet, les techniques d'apprentissage par transfert de connaissance sont une réponse efficace à de nombreuses problématiques autour de l'entraînement des \gls{cnn}, comme: 
+Les techniques d'apprentissage par transfert de connaissances sont un champs d'application relativement récent des techniques d'apprentissage automatique. Le principe est de réutiliser des connaissances précédemment acquises, dans le but de résoudre de nouveau problèmes plus rapidement voire plus efficacement. Pour cela, ce champs vise à proposer des techniques permettant la transposition de connaissance d'une ou plusieurs tâches sources à une tâche cible~\cite{QiangYang2010}.\par
+
+Le phénomène conjoint d'engouement pour les \gls{cnn} et la complexité des architectures récentes pour le traitement des images à accentué les recherches en ce sens. En effet, les techniques d'apprentissage par transfert de connaissance sont une réponse efficace à de nombreuses problématiques autour de l'entraînement des \gls{cnn}, comme : 
 \begin{itemize}
-    \item ses \textbf{contraintes de données}: notamment de données annotées, structurées et disponible publiquement,
-    \item sa \textbf{complexité}: comprenant l'exécution parfois multiple de l'entraînement si celui-ci ne converge pas mais également le réglage de certains paramètres de ces réseaux,
-    \item et ses \textbf{contraintes matérielles}: la puissance nécessaire à l'entraînement de tels réseaux.
+    \item les \textbf{contraintes de suffisance de données}, notamment de données convenablement structurées et annotées disponible publiquement,
+    \item le \textbf{complexité de l'entraînement}, comprenant le réglage des divers paramètres de ces réseaux (augmentations des données, fonction d'optimisation, \ldots),
+    \item et les \textbf{contraintes matérielles nécessaires}, regroupant les aspects matériels dédiés au support de l'entraînement de ces architectures.
 \end{itemize}\par
 
-Certains domaines d'application ont vu apparaître de nombreuses base de données publique, contribuant à résoudre partiellement la contrainte liée aux données. C'est le cas de différentes bases dont: 
+Certains domaines d'application ont vu apparaître de nombreuses base de données publique, contribuant à résoudre partiellement la contrainte liée aux données. Ces bases ont également pour objectif de permettre de mesurer les performances de système de traitement de l'image, nous retrouvons notamment : 
 \begin{inlinerate}
-    \item MNIST pour la reconnaissance chiffres~\cite{lecun2010},
-    \item CIFAR10/CIFAR100 pour la reconnaissance d'objets sur des miniatures~\cite{Krizhevsky}, 
-    \item ou plus récemment ImageNet pour la reconnaissance d'objets sur des images~\cite{Deng2008}. 
-\end{inlinerate}
-La base ImageNet est par ailleurs l'une des plus sollicités pour entraîner et évaluer les architecture de \gls{cnn} actuelles, car elle propose de nombreuses images de qualité suffisante (plus de 14 millions d'images sont dénombrées) et des annotations variées (1000 classes différentes sont proposées). Néanmoins, selon certaines études le nombre d'images nécessaires à l'entraînement de ces réseaux serait sur-dimensionné~\cite{huh2016}. Parallèlement à la mise à disposition de ces bases de données, sont également ouvert publiquement des challenges visant à démontrer l'efficacité de chaînes de traitement pour gérer ces dites données. De nombreuses avancées sont proposées et réalisées sur la base ImageNet à d'architecture de \gls{cnn}, également mise à disposition de la communauté. Parmi ces réseaux nous pouvons citer de manière exhaustive: AlexNet~\cite{Krizhevsky2012}, GoogLeNet~\cite{Szegedy2015}, VGG-16~\cite{Simonyan2014}, Inception-V3~\cite{Szegedy2016}, ResNet~\cite{He2016} et Inception-ResNet~\cite{Szegedy2017}, avec respectivement comme précisions 0.54, 0.68, 0.71, 0.76, 0.78, and 0.80 sur la base ImageNet~\cite{Canziani2016}.\par
+    \item la \textbf{base MNIST}, pour mesurer l'aptitude de systèmes dédiés à la reconnaissance de chiffres manuscrit~\cite{lecun2010},
+    \item les \textbf{bases CIFAR10 et CIFAR100}, permettant l'évaluation de systèmes de reconnaissance d'objets sur des image miniatures~\cite{Krizhevsky}, 
+    \item et plus récemment, la \textbf{base ImageNet} pour la reconnaissance d'objets sur des images de taille communes~\cite{Deng2008}. 
+\end{inlinerate}\par
 
-Néanmoins, la mise à disposition de la communauté de base de données massives, et de codes permettant de reproduire les expériences menées sur la plupart des architectures actuelles ne permettent pas de répondre à la problématique des contraintes matérielles. C'est donc particulièrement le partage de modèles de \gls{cnn} pré-entraînés, couplé aux principes d'apprentissage par transfert de connaissances qui ont suscité l'intérêt de nombreux papiers de recherche, notamment appliqué à de l'imagerie médicale~\cite{Litjens2017}. La grandes majorité des modèles mis à disposition par la communauté sont le résultat d'un entraînement à partir de la base ImageNet.\par
+Actuellement, la base ImageNet est l'une des plus sollicités pour entraîner et évaluer les architecture de \gls{cnn} actuelles. Outre leurs tailles, cette base propose des niveaux d'annotations variées, dont 1000 classes sont proposées. De plus, une très grande diversité d'échantillons est mise à disposition pour chaque classe pour un total de plus de 14 millions d'images. Selon certaines études, ce nombre d'images reste néanmoins sur-dimensionné vis-à-vis du nombre d'éléments nécessaire à l'entraînement de ces réseaux~\cite{Huh2016}.\par
+
+Parallèlement à ce phénomène de mise à disposition de bases de données, sont ouvert publiquement des challenges visant à démontrer l'efficacité de chaînes de traitement pour gérer ces données. De nombreuses avancées ont été réalisées sur la base ImageNet, à l'aide d'architectures de \gls{cnn} régulièrement dévoilés et mise à disposition de la communauté. Parmi ces réseaux nous pouvons citer de manière exhaustive les réseaux AlexNet~\cite{Krizhevsky2012}, GoogLeNet~\cite{Szegedy2015}, VGG~\cite{Simonyan2014}, Inception-V3~\cite{Szegedy2016}, ResNet~\cite{He2016} et Inception-ResNet~\cite{Szegedy2017}, avec respectivement comme précisions 0,54, 0,68, 0,71, 0,76, 0,78, and 0,80 sur la base ImageNet~\cite{Canziani2016}.\par
+
+Néanmoins, la mise à disposition de la communauté de ces base de données massives et de ces architectures ne permettent de lever les deux verrous liées au contraintes d'entraînement et matérielles de ces réseaux. C'est donc particulièrement le partage de modèles de \gls{cnn} pré-entraînés, couplé aux principes d'apprentissage par transfert de connaissances, qui ont suscités l'intérêt de nombreux travaux dont certains appliqué à de l'imagerie médicale~\cite{Litjens2017}. Ainsi, la majeures partie de ces réseaux pré-entraîné sont obtenus à l'aide de la base ImageNet, bien qu'aucune justification formelle n'ait été fournie à ce propos~\cite{Huh2016}.\par
  
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{contents/chapter_4/resources/scheme_transfer_learning.pdf}
-    \caption{Schéma représentant l'apprentissage par transfert par \gls{cnn}. Le réseau est entraîné sur des données sources, généralement plus complètes. Puis, les paramètres de la partie liée à l'extraction de caractéristiques sont conservés et réemployé au sein d'une nouvelle problématique cible.}
+    \caption{Schéma représentant l'apprentissage par transfert par \gls{cnn}. Le réseau est entraîné sur des données et annotations d'une problématique \textit{source}. Puis, les paramètres de la partie liée à l'extraction de caractéristiques sont conservés et réemployé au sein d'une nouvelle problématique \textit{cible}.}
     \label{fig:scheme_transfer_learning}
 \end{figure}\par
 
-Au sein de cette partie, nous nous focaliserons sur l'un des deux principes d'apprentissage par transfert de connaissances à savoir l'extraction de caractéristiques, schématisé en \Cref{fig:scheme_transfer_learning}. Le principe consiste à retirer les couches responsable de la classification, et à ne conserver que les couches responsable de l'extraction de l'information caractéristique. Ces couches sont ensuite figées, et combinées à de nouvelles couches ou à des modèles de classification~\cite{Litjens2017}.\par 
+L'apprentissage par transfert sur \gls{cnn} se décompose en deux procédés majeurs : 
+\begin{inlinerate}
+    \item d'une part l'extraction de caractéristiques moins coûteuse en ressources matérielles et temps,
+    \item et d'autre part le réglage fin qui nécessite à l'inverse plus de temps et de ressources matérielles. 
+\end{inlinerate}
+Au sein de cette partie, nous nous focaliserons sur l'extraction de caractéristiques, schématisé en \Cref{fig:scheme_transfer_learning}, afin de limiter les contraintes d'apprentissage. Le principe consiste dans un premier temps à retirer les couches responsable de la classification du problème cible, puisque spécifiques au problème initial. Ces couches sont généralement des couches dites totalement connectées, qui vont pondérer l'importance des zones d'activation jusqu'au classes respectives. Dans un second temps, les couches responsable de l'extraction de caractéristiques sont conservées puis figées, en partant du postulat que ces caractéristiques sont suffisamment variées et adaptées à d'autres problématiques du traitement d'image. Enfin, ces couche sont combinées à de nouvelles couches totalement connectées ou à des modèles de classification~\cite{Litjens2017}.\par 
 
-Afin de traiter cette information, il sera généralement acquis de transiter l'information par une étape de "Flatten" (littéralement "Applatissement") transformant l'information d'un format  de matrice 3D à un vecteur 1D (voir \Cref{fig:scheme_global_pooling}). Néanmoins, l'une des problématique importante concerne la dimension importante de ces caractéristiques extraites, souvent dépendante sur les derniers réseaux de la taille des données sources. En effet, la sortie sera souvent dépendante de la résolution spatiale des données d'entrée, réduite entre autre par les différentes couches convolutionnelles dont les caractéristiques varient d'une architecture considérée à une autre (soit une résolution de 1000$\times$1000 sur nos données). Pour palier à ce nombre de données, des couches dites de "global pooling" ont été introduite dans la littérature consistant à réduire l'information spatiale d'une carte d'activation à une unique valeur (voir \Cref{fig:scheme_global_pooling}). Les principales fonctions mises à disposition sont la fonction maximum et moyenne, donnant respectivement lieu à des couches de "Global Maximum Pooling" et "Global Average Pooling". D'autres fonction sont également développée, mais la littérature s'accordera à favoriser légèrement les couches de "Global Maximum Pooling"~\cite{christlein2019}.\par
+A cette fin, une première stratégie consiste à aplatir l'information des couches d'extraction par une étape de "Flatten" (littéralement "Applatissement"), transformant celle-ci d'un format de matrice 3D à un vecteur 1D (voir \Cref{fig:scheme_global_pooling} - Gauche). Néanmoins, l'une des problématique résultante concerne la dimension spatiale souvent importante de ces caractéristiques extraites. En effet, la dimension spatiale de ces ces données sera réduite par les couches convolutionelles selon leurs paramètres dépendants de l'architecture choisie. Ainsi, les paramètres de décalage, de pas ou encore de taille du noyau de convolution sont autant de paramètre qui affecterons la dimension spatiale de sortie. Pour palier à cette information conséquente, des couches dites de "Global pooling" ont été introduites dans la littérature, et consistent à réduire l'information spatiale d'une carte d'activation à une unique valeur (voir \Cref{fig:scheme_global_pooling} - Droite). Les principales fonctions mises à disposition sont la fonction maximum et moyenne, donnant respectivement lieu à des couches de "Global Maximum Pooling" et "Global Average Pooling". D'autres fonction sont également développée, mais la littérature s'accordera à préférer l'utilisation des couches de "Global Maximum Pooling"~\cite{christlein2019}.\par
 
 \begin{figure}[H]
     \centering
@@ -289,24 +282,26 @@ Afin de traiter cette information, il sera généralement acquis de transiter l'
     \label{fig:scheme_global_pooling}
 \end{figure}\par
 
-Bien que la plupart des travaux médicaux s'oriente vers l'architecture Inception-V3, aucune raison n'a démontré l'efficacité de cette architecture particulière au sein d'applications médicales. L'une des hypothèses majeure étant la disponibilité de l'architecture et de modèle pré entraînés aisément mis à disposition par la plupart des librairies de \gls{cnn}~\cite{Litjens2017}. Les différentes expériences que nous mènerons sur l'apprentissage par transfert se focaliserons sur des architectures relativement récente pré entraîné sur la base d'image ImageNet et proposé par la bibliothèque "Keras Applications"~\cite{chollet2015a}. Afin de traiter les images dans leur intégralité, nous ne nous baserons que sur des réseaux dont les couches d'extraction de caractéristiques sont purement convolutionnelles et donc indépendante de la taille de l'entrée. Ainsi, nous ne conserverons que quatre d'entre elles: VGG-16, Inception-V3, ResNet et Inception-ResNet. L'ensemble des réseaux employés et nombre de paramètres extraits associés sont résumés au sein de la \Cref{tab:number_features_transferlearning}. Finalement, la manipulation des \ac{cnn} est réalisée à haut niveau grâce à la bibliothèque logicielle "Keras"~\cite{chollet2015} et sera couplée à la bibliothèque de bas niveau "Tensorflow"~\cite{tensorflow2015}.\par
+Bien que la plupart des travaux médicaux s'oriente vers l'architecture Inception-V3, son efficacité n'a pas été formellement démontrée au sein des applications médicales. La principale raison la plus probable expliquant le choix de cette architecture est la mise à disposition de ses modèles pré-entraînés par la plupart des librairies de \gls{cnn}~\cite{Litjens2017}. Les différentes expériences que nous mènerons sur l'apprentissage par transfert se focaliserons sur des architectures relativement récente pré-entraîné sur la base d'image ImageNet et proposé par la bibliothèque "Keras Applications"~\cite{chollet2015a}. Afin de traiter les images dans leur intégralité, nous ne nous baserons que sur des réseaux dont les couches d'extraction de caractéristiques sont purement convolutionnelles et donc indépendante de la taille de l'entrée. Ainsi, nous ne conserverons que quelques architecture de \gls{cnn} représentatives des avancés dans le domaine durant la dernière décennie, dont VGG-16, Inception-V3, ResNet et Inception-ResNet. L'ensemble des réseaux employés et nombre de paramètres extraits associés sont résumés au sein de la \Cref{tab:number_features_transferlearning}. Finalement, la manipulation des \ac{cnn} est réalisée à haut niveau grâce à la bibliothèque logicielle "Keras"~\cite{chollet2015} et sera couplée à la bibliothèque de bas niveau "Tensorflow"~\cite{tensorflow2015}.\par
 
 \begin{table}[H]
     \centering
-    \begin{tabular*}{0.6\linewidth}{l@{\extracolsep{\fill}}l}
+    \begin{tabular*}{0.6\linewidth}{l@{\extracolsep{\fill}}ll}
     \toprule
-    \textbf{Architecture}        & \textbf{Nombre}          \\ \hline
-    VGG-16                       & 512                      \\ \hline
-    Inception-V3                 & 2048                     \\ \hline
-    ResNet                       & 2048                     \\ \hline 
-    Inception-ResNet             & 1536                     \\
+    \textbf{Architecture}               & Global Pooling   & \textbf{Nombre}    \\ \hline
+    \multirow{2}{*}{VGG-16}             & Maximum          & 512                \\ \cline{2-3}
+                                        & Moyenne          & 512                \\ \hline
+    \multirow{2}{*}{Inception-V3}       & Maximum          & 2048               \\ \cline{2-3}
+                                        & Moyenne          & 2048               \\ \hline
+    \multirow{2}{*}{ResNet}             & Maximum          & 2048               \\ \cline{2-3}
+                                        & Moyenne          & 2048               \\ \hline
+    \multirow{2}{*}{Inception-ResNet}   & Maximum          & 1536               \\ \cline{2-3}
+                                        & Moyenne          & 1536               \\
     \bottomrule
     \end{tabular*}
-    \caption{Nombre de caractéristiques extraites par type d'architecture de \gls{cnn}.}
+    \caption{Liste des architecture de \gls{cnn} employés dans ce chapitre et leur nombre de caractéristiques extraites associées.}
     \label{tab:number_features_transferlearning}
 \end{table}\par
-
-\clearpage
 
 \subsection{Analyse préliminaire des méthodes d'extraction}
 Cette analyse préliminaire de l'information a pour but de montrer l'impact des méthodes d'extraction de caractéristiques précédemment citées sur le jeu de données en notre possession. Nous nous pencherons d'une part sur l'observation de deux images typiques de tissus malin et bénin par l'application des transformations et d'autre part, nous tenterons d'étudier la capacité de séparation de chacune des méthodes précédente sur l'ensemble des images.\par
@@ -348,26 +343,22 @@ Enfin, nous terminons l'étude de ces deux exemples par l'application de décomp
 Dans le but d'évaluer la séparation des classes, nous nous aiderons de l'\gls{pca}. En effet, malgré l'extraction de caractéristiques les données en notre possession contiennent un grand nombre de dimensions, rendant le problème difficile à analyser visuellement. De nombreuses techniques de réduction de l'information permettant une meilleure visualisation sont proposé dans la littérature, comme par exemple le T-SNE~\cite{Maaten2008} mais dans le principal inconvénient réside dans le nombre de degrés de liberté proposés. Néanmoins, l'\gls{pca} est une technique communément acceptée à cette fin~\cite{Himberg2001} et possède l'avantage de ne pas être dépendante de ce type de paramètres. Nous faisons également figurer la variance propre à ces deux axes, et pour chaque classes leur centre et leur dispersion sur la base de l'écart type.\par
 
 Ainsi, la \Cref{fig:visualisation_spatial} met évidence cette technique pour l'ensemble des méthode d'extraction spatiales. Le premier constat concernant la variance expliquée est que ces deux axes semblent à même de fournir l'intégralité de la variance. Les données extraites à l'aide des techniques d'extraction de premier ordre ne semblent pas optimum
-La séparation des diverses données ne semble pas optimum comme nous pouvons le constater sur \Cref{fig:visualisation_spatial}. En effet, les centroids et leur dispersion semble assez similaire, notemment pour les données bénines et malignes.\par
+La séparation des diverses données ne semble pas optimum comme nous pouvons le constater sur \Cref{fig:visualisation_spatial}. En effet, les centres de masses et leur dispersion semble assez similaire, notamment pour les données bénignes et malignes.\par
 
 \begin{figure}[H]
     \centering
-    \begin{subfigure}{.5\textwidth}
+    \begin{subfigure}{.45\textwidth}
       \includegraphics[width=\textwidth]{contents/chapter_4/resources/visualisation_spatial_FirstOrder.png}
     \end{subfigure}
-    
     \begin{subfigure}{.45\textwidth}
       \includegraphics[width=\textwidth]{contents/chapter_4/resources/visualisation_spatial_Haralick.png}
     \end{subfigure}
+    
     \begin{subfigure}{.45\textwidth}
       \includegraphics[width=\textwidth]{contents/chapter_4/resources/visualisation_spatial_HaralickMean.png}
     \end{subfigure}
-    
     \begin{subfigure}{.45\textwidth}
-      \includegraphics[width=\textwidth]{contents/chapter_4/resources/visualisation_spatial_Wiltgen.png}
-    \end{subfigure}
-    \begin{subfigure}{.45\textwidth}
-      \includegraphics[width=\textwidth]{contents/chapter_4/resources/visualisation_spatial_WiltgenAll.png}
+      \includegraphics[width=\textwidth]{contents/chapter_4/resources/visualisation_spatial_WiltgenSpatial.png}
     \end{subfigure}
     
     \caption{Visualisation des caractéristiques obtenues par techniques d'extraction spatiales et projection \gls{pca} sur les deux premières composantes.}
@@ -375,7 +366,7 @@ La séparation des diverses données ne semble pas optimum comme nous pouvons le
 \end{figure}\par
 
 Les variances expliquée des techniques sur base d'extraction fréquentielle semble également bein représentées, cmprise entre 97 et 99\% sur les deux premiers axes, exepté pour la méthode d'Halimi (63\%). Comme pour les méthodes spatiales, la séparation  des classes bénignes et malignes semble la plus ardue.
-La séparation des diverses données ne semble pas optimum comme nous pouvons le constater sur \Cref{fig:visualisation_spatial}. En effet, les centroids et leur dispersion semble assez similaire, notemment pour les données bénines et malignes.\par
+La séparation des diverses données ne semble pas optimum comme nous pouvons le constater sur \Cref{fig:visualisation_spatial}. En effet, les centroids et leur dispersion semble assez similaire, notamment pour les données bénines et malignes.\par
 
 \begin{figure}[H]
     \centering
@@ -393,14 +384,11 @@ La séparation des diverses données ne semble pas optimum comme nous pouvons le
       \includegraphics[width=\textwidth]{contents/chapter_4/resources/visualisation_frequency_WiltgenFourier.png}
     \end{subfigure}
     
-    \begin{subfigure}{.3\textwidth}
-      \includegraphics[width=\textwidth]{contents/chapter_4/resources/visualisation_frequency_DWTHaar.png}
-    \end{subfigure}
-    \begin{subfigure}{.3\textwidth}
-      \includegraphics[width=\textwidth]{contents/chapter_4/resources/visualisation_frequency_WiltgenDWT.png}
-    \end{subfigure}
-    \begin{subfigure}{.3\textwidth}
-      \includegraphics[width=\textwidth]{contents/chapter_4/resources/visualisation_frequency_HalimiDWT.png}
+    \begin{subfigure}{.45\textwidth}
+      \includegraphics[width=\textwidth]{contents/chapter_4/resources/visualisation_frequency_Haar.png}
+    \end{subfigure}    
+    \begin{subfigure}{.45\textwidth}
+      \includegraphics[width=\textwidth]{contents/chapter_4/resources/visualisation_frequency_Daubechies.png}
     \end{subfigure}
     
     \caption{Visualisation des caractéristiques obtenues par techniques d'extraction fréquentielles et projection \gls{pca} sur les deux premières composantes.}
@@ -409,30 +397,32 @@ La séparation des diverses données ne semble pas optimum comme nous pouvons le
 
 \begin{figure}[H]
     \centering
-    \begin{subfigure}{.2\textwidth}
+    \begin{subfigure}{.45\textwidth}
       \includegraphics[width=\textwidth]{contents/chapter_4/resources/visualisation_transfer_VGG16Avg.png}
     \end{subfigure}
-    \begin{subfigure}{.2\textwidth}
-      \includegraphics[width=\textwidth]{contents/chapter_4/resources/visualisation_transfer_InceptionV3Avg.png}
-    \end{subfigure}
-    \begin{subfigure}{.2\textwidth}
-      \includegraphics[width=\textwidth]{contents/chapter_4/resources/visualisation_transfer_ResNetAvg.png}
-    \end{subfigure}
-    \begin{subfigure}{.2\textwidth}
-      \includegraphics[width=\textwidth]{contents/chapter_4/resources/visualisation_transfer_InceptionResNetV2Avg.png}
-    \end{subfigure}
-    
-    \begin{subfigure}{.2\textwidth}
+    \begin{subfigure}{.45\textwidth}
       \includegraphics[width=\textwidth]{contents/chapter_4/resources/visualisation_transfer_VGG16Max.png}
     \end{subfigure}
-    \begin{subfigure}{.2\textwidth}
+    
+    \begin{subfigure}{.45\textwidth}
+      \includegraphics[width=\textwidth]{contents/chapter_4/resources/visualisation_transfer_InceptionV3Avg.png}
+    \end{subfigure}
+    \begin{subfigure}{.45\textwidth}
       \includegraphics[width=\textwidth]{contents/chapter_4/resources/visualisation_transfer_InceptionV3Max.png}
     \end{subfigure}
-    \begin{subfigure}{.2\textwidth}
+    
+    \begin{subfigure}{.45\textwidth}
+      \includegraphics[width=\textwidth]{contents/chapter_4/resources/visualisation_transfer_ResNetAvg.png}
+    \end{subfigure}
+    \begin{subfigure}{.45\textwidth}
       \includegraphics[width=\textwidth]{contents/chapter_4/resources/visualisation_transfer_ResNetMax.png}
     \end{subfigure}
-    \begin{subfigure}{.2\textwidth}
-      \includegraphics[width=\textwidth]{contents/chapter_4/resources/visualisation_transfer_InceptionResNetV2Max.png}
+    
+    \begin{subfigure}{.45\textwidth}
+      \includegraphics[width=\textwidth]{contents/chapter_4/resources/visualisation_transfer_InceptionResNetAvg.png}
+    \end{subfigure}
+    \begin{subfigure}{.45\textwidth}
+      \includegraphics[width=\textwidth]{contents/chapter_4/resources/visualisation_transfer_InceptionResNetMax.png}
     \end{subfigure}
     
     \caption{Visualisation des caractéristiques obtenues par techniques d'extraction basé sur des réseaux de type \gls{cnn} pré-entraînés sur la base ImageNet et projection \gls{pca} sur les deux premières composantes.}
@@ -441,108 +431,25 @@ La séparation des diverses données ne semble pas optimum comme nous pouvons le
 
 \clearpage
 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 %%%%%%%%%%%%%%%%% PRE TRAITEMENTS
 \section{Pré-traitements de caractéristiques}
-Cette partie dédié au pré-traitement de caractéristique se consacre à l'ensemble des transformations opérées après extraction de l'information par le biais des techniques évoquées en \Cref{chap:feature_extraction}. Nous aborderons au sein de cette section les diverses solutions à notre disposition pouvant parfaire la classification de notre problématique. En effet, de nombreuse contraintes peuvent affecter le bon déroulement de la classification:
+Cette partie dédié au pré-traitement de caractéristiques, se consacre à l'ensemble des transformations opérées après extraction de l'information par le biais des techniques évoquées en \Cref{chap:feature_extraction}. Nous aborderons au sein de cette section les diverses solutions à notre disposition pouvant parfaire la classification de notre problématique. En effet, de nombreuse contraintes peuvent affecter le bon déroulement de la classification :
 \begin{itemize}
-    \item un déséquilibre des annotations (essentiellement dans les situations à deux classes -  tissus pathologique et non pathologiques; tissus malin et tissus autres),
-    \item une quantité d'informations trop importante conduisant à un sur apprentissage, situation que nous rencontrons avec l'extraction de caractéristiques par \gls{cnn},
-    \item ou encore une information inconsistante.
+    \item un déséquilibre au sein des annotations des divers types de tissus a séparé bien que celui-ci ait été minimisée,
+    \item un nombre de caractéristiques trop important conduisant à du sur-apprentissage ou des difficultés à séparer le problème (voir l'extraction de caractéristiques par \gls{cnn}),
+    \item ou encore une information non consistante.
 \end{itemize}\par
 
-Ainsi, cette partie tentera de répondre à ces questions à l'aide de différents domaines d'étude visant à corriger tout ou partie de ces éléments. Dans un premier temps, nous discuterons de la \textbf{normalisation} et son intérêt au sein de processus de classification. Dans un second temps, nous aborderons le \textbf{balancement de données} et les principales stratégies mises à disposition. Finalement, nous traiterons des techniques de \textbf{réduction de l'information} et proposerons des solutions notamment dans le cadre de l'extraction de caractéristiques par \gls{cnn}.
-
-\subsection{Normalisation de caractéristiques}
-Selon le domaine visée, la normalisation de caractéristiques peux-être l'une des étapes cruciale quand au bon déroulement du processus de classification. Un exemple proche de nos travaux, sur la classification d'image de dermatoscopie, menée par Celebi et al., est un parfait exemple de la dégradation des résultats de classification avec l'utilisation de caractéristiques brutes ~\cite{Celebi2007}. Notre investigation de la littérature à également mis en évidence que des algorithmes de classification tel que la méthode des \textbf{k plus proches voisins} sont affectés car directement basé sur un critère de distance. D'autres modèles sont communément admis comme touchés par des caractéristiques non normalisées: les \gls{svm}~\cite{Juszczak2002}, mais également les réseaux de neurones~\cite{Celebi2007} en sont de très bon exemples. De même, des méthodes de réduction de l'information, que nous traiterons lors des prochaines, peuvent être affectées par une mauvaise distribution de l'information. Par exemple, le \gls{pca} est une méthode dont l'algorithme tente de maximiser la variance pouvant être impactée négativement (voir \Cref{fig:exemple_pca_scaling}).\par
-
-Divers travaux ont ainsi été menés, afin de proposer des méthodes de normalisation à cette problématique. L'un de ces travaux propose trois méthodes de normalisation par la variance, par le maximum, et par le minimum et maximum dans le contexte de \gls{svm}~\cite{Juszczak2002}. Ces trois méthode semblent ainsi propice à réduire l'erreur de classification. Le travail mené par Celebi et al.~\cite{Celebi2007}, propose une normalisation des caractéristiques à l'aide de la "Cote Z" ou "Standard score", c'est à dire par soustraction de la moyenne au sein d'un même groupe de caractéristiques puis par division de l'écart type de ce même groupe.\par
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\linewidth]{contents/chapter_4/resources/example_pca_scaling.pdf}
-    \caption{Exemple de l'impact de la distribution de données sur le \gls{pca} appliqué à une analyse chimique du vin en provenance de différentes région~\textsuperscript{\ref{footnote:exemple_pca_scaling}}. A gauche, le résultat issu du \gls{pca} sans normalisation préalable; A droite, la distribution après normalisation et \gls{pca}.}
-    \label{fig:exemple_pca_scaling}
-\end{figure}\par
-
-\addtocounter{footnote}{1}
-\footnotetext[\thefootnote]{Source : Scikit-learn - \href{https://scikit-learn.org/stable/auto_examples/preprocessing/plot_scaling_importance.html}{"Importance of Feature Scaling"}. \label{footnote:exemple_pca_scaling}}
-
-Afin de couvrir au mieux la problématique de la normalisation, nous traiterons cette problématique sous trois méthodes majeures:
-\begin{itemize}
-    \item l'utilisation de la normalisation "Min-Max"~\cite{Juszczak2002},
-    \item l'utilisation de la normalisation "Standard"~\cite{Celebi2007}, 
-    \item et l'utilisation de la normalisation "Robust". 
-\end{itemize}
-Ces diverses méthode de normalisation seront évalué face à un processus n'employant aucune d'entre elles, nous servant ainsi de méthode de comparaison. De plus ces méthodes seront réalisées en amont du processus de pré traitement afin de couvrir également les méthodes de réduction de l'information pouvant être affectées. L'\Cref{eq:scaling_methods} couvre les diverses équations listé précédemment.\par
-
-\begin{equation} 
-    \label{eq:scaling_methods}
-    \begin{split}
-    &MinMax=\frac{X-min(X)}{max(X)-min(X)}  \\
-    &Standard=\frac{X-\mu{}}{\sigma}	    \\
-    &Robust=\frac{xi- Q1(x)}{Q3(x)-Q1(x)}
-    \end{split}
-\end{equation}
-
-\subsection{Balancement de caractéristiques}
-L'une des problématiques associés de manière récurrente aux problématiques d'apprentissage sur des données réelles, en opposition avec des données provenant de modèle génératifs par exemple, est celle de la répartition homogène des annotations. Ces déséquilibres pouvant survenir au sein des annotations sont qualifié sous le terme anglais de "class imbalancement"~\cite{Prati2009, He2009}.\par
-
-Cette problématique est récurrente à de nombreux domaines d'applications, mais touche essentiellement les domaines où la tâche visée correspond à la détection d'événements isolés au sein d'une population, comme par exemple: 
-\begin{inlinerate}
-    \item les comportements déviants (fraude bancaire~\cite{Phua2004}),
-    \item le respect de critère de qualité (vérification de pièces industrielles~\cite{Wu2018}),
-    \item ou encore dans notre domaine d'anormalités clinique (cancers ou d'autres pathologies cliniques~\cite{Celebi2007}),
-    \item \ldots
-\end{inlinerate}\par
-
-Certains choix peuvent permettre de limiter l'impact d'un déséquilibre d'annotations. Ainsi, la sélection d'un métrique adéquate peux permettre de limiter la dépendance au données: la substitution de la précision par des mesures telles que l'\gls{auc}~\cite{Celebi2007} ou le f1-score sont des solutions pertinentes dans de telles situations. Néanmoins, la plupart des modèles de classification échouerons à classifier convenablement les données dans des situations de fort déséquilibres. Ces modèles préférerons prédire constamment la classe majoritaire, pour minimiser le coût de l'erreur~\cite{Huang2013}. Dans le cadre de modèles basés sur des arbres de décision, la stratégie générale propose de déterminer les critères majeurs de séparation par partitionnement successif des données. Ce partitionnement conduit inéluctablement à un affaiblissement des classes minoritaires~\cite{He2009}.\par 
-
-Afin de corriger ces éléments, deux catégories d'approches ont été proposées pour solutionner ce déséquilibre~\cite{Huang2013}. Les approches par corrections de donnée procède par augmentation ou décimations de ces dernières afin de rééquilibré les annotations. Les approches algorithmiques consistent à pondérer la valeur des annotations afin de prendre en considération le déséquilibre d'information~\cite{Ting2002,He2009,Thai2010}.\par
-
-En premier lieu, des approches par correction des données simples, proposes diverses solutions pour palier à ces déséquilibres de classes~\cite{Prati2009, He2009}. Une première catégories de ces méthodes consiste à \textbf{sous-échantillonner} les données jusqu'à obtenir une égalité entre les classes. Son principe le plus simple est celui du "Sous-échantillonage aléatoire" consistant à décimer de manière aléatoire les données des classes majoritaire afin d'égaler les échantillons de la classe minoritaire. A l'inverse, une autre catégorie consiste à \textbf{sur-échantillonner} les données possédées afin d'obtenir à nouveau une égalité entre classes. Le principe le plus simples est celui du "Sur-échantillonage aléatoire" consistant à dupliquer aléatoirement les échantillons des classes minoritaires afin d'égaler le nombre d'élément de la classe majoritaire. Le schéma en \Cref{fig:scheme_data_balancing} reprendre l'idée de ces deux principes.\par
-
-En second lieu, des approches par correction des données plus avancées ont été proposées. De manière non exhaustive nous proposerons l'une d'entre elle pour chaque catégories:
-\begin{itemize}
-    \item par \textbf{sous-échantillonnage}: \cite{Tomek1976}
-    \item par \textbf{sur-échantillonnage}:\cite{Chawla2002} 
-    \item par \textbf{combinaison}: SMOTE + Tomek
-\end{itemize}\par
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\linewidth]{contents/chapter_4/resources/scheme_data_balancing.pdf}
-    \caption{Schéma des deux stratégies principales de balancement de données. A gauche, la stratégie de sous-échantillonage, dans laquelle des éléments sont aléatoirement choisis jusqu'à réduire l'ensemble des classes au nombre d'éléments de la classe minoritaire; A droite, la stratégie de sur-échantillonage, dans laquelle les éléments des classes minoritaires sont dupliqués aléatoirement. }
-    \label{fig:scheme_data_balancing}
-\end{figure}\par
-
-Les approches algorithmique par pondération, consiste à considérer le non balancement de l'information en pondérant l'importance de chaque échantillon lors de l'apprentissage du modèle.  
-
-Dans l'optique de récapituler cette partie, les méthodes utilisées dans le but de corriger le déséquilibre des données sont référencée dans la \Cref{tab:summary_balancement_methods}. Afin de traiter au mieux cette tâche, la balancement de données par ses différentes stratégies évoquée sera réalisé avec l'aide de la librairie logicielle "Imbalanced-learn"~\cite{Lemaitre2017}. La correction par algorithme, plus précisément pondération, sera réalisé avec l'aide de la bibliothèque "Scikit-learn"~\cite{pedregosa2011}.\par
-
-\begin{table}[H]
-    \centering
-    \begin{tabular*}{0.6\linewidth}{l@{\extracolsep{\fill}}l}
-    \toprule
-    \textbf{Catégorie}                  & \textbf{Méthode}                  \\ \hline
-    \multirow{2}{*}{Sous-échantillonage}& Sous-échantillonage aléatoire     \\ \cline{2-2}
-                                        & Tomek Link                        \\ \hline
-    \multirow{2}{*}{Sur-échantillonage} & Sur-échantillonage aléatoire      \\ \cline{2-2}
-                                        & SMOTE                             \\ \hline
-    Combinaison                         & SMOTE + Tomek                     \\ \hline 
-    Algorithme                          & Pondération                       \\
-    \bottomrule
-    \end{tabular*}
-    \caption{Liste des diverses méthodes de balancement mises en oeuvre pour corriger les déséquilibre de données.}
-    \label{tab:summary_balancement_methods}
-\end{table}\par
+Ainsi, cette partie tentera de répondre à ces questions à l'aide de différents domaines d'étude visant à corriger tout ou partie de ces éléments et nous les aborderons d'un point de vue logique en terme de processus de classification. Ainsi et dans un premier temps, nous discuterons de la \textbf{normalisation} des caractéristiques et de son intérêt au sein de processus de classification. Dans un second temps, nous traiterons des techniques de \textbf{réduction de l'information} et proposerons des solutions notamment dans le cadre de l'extraction de caractéristiques par \gls{cnn}. Finalement, nous aborderons le \textbf{balancement de données} et les principales stratégies mises à disposition.
 
 \subsection{Réduction de dimensions}
-Dans le domaine de l'apprentissage automatique, la réduction de dimension est une technique qui permet de réduire l'information extraites afin de rendre un problème moins complexe. Également, elle est un moyen de se prévenir du "Fléau de la dimension", phénomène qui met en perspective d'une part la croissance exponentielle de l'ajout de nouvelles dimensions à la dilution des divers échantillons dans cet espace. Ce dilemme a pour principales conséquences d'augmenter la complexité d'un problème, la durée nécessaire à sa résolution mais également d'engendrer des risques de sur-apprentissage.\par
+Dans le domaine de l'apprentissage automatique, la réduction de dimension est une technique qui permet de diminuer le nombre de dimensions afin de rendre un problème moins complexe, tout en conservant une information suffisante à la résolution du problème. Également, elle est un moyen de se prévenir du "Fléau de la dimension", phénomène qui met en perspective d'une part la croissance exponentielle de l'ajout de nouvelles dimensions à la dilution des divers échantillons dans cet espace. Ce dilemme a pour principales conséquences d'augmenter la complexité d'un problème, la durée nécessaire à sa résolution mais également d'engendrer des risques de sur-apprentissage.\par
 
-Les caractéristiques extraites par méthode spatiales et fréquentielles étant assez restreintes (respectivement de 14 à 56 et de 10 à 39), nous n'étudierons pas leur impact sur ces méthodes. En revanche, le nombre de caractéristiques extraite par méthode de transfert de connaissance sont importantes et varient de 512 à 2048 d'entre elles. Nous évaluerons l'impact de certaines d'entre elles sur ces cas particuliers.\par
+Les caractéristiques extraites par méthode spatiales et fréquentielles étant assez restreintes (respectivement de 14 à 56 variables et, de 10 à 39 variables), nous n'étudierons pas leur impact sur ces méthodes. En revanche, le nombre des caractéristiques extraite par méthode de transfert de connaissance est important et varient de 512 à 2048 variables. Nous évaluerons l'impact de certaines d'entre elles sur ces cas particuliers.\par
 
-A cette fin, deux catégories de méthodes cohabitent: d'une part les méthodes de sélection de caractéristiques, qui réduise l'espace en décimant certaine dimension jugées non pertinente à la résolution du problème; d'autre part les méthode par projection ou transformation de l'espace existant qui réduisent et modifie les valeurs existantes. Notre investigation ne portera que sur cette seconde catégorie de méthodes. En effet, les méthodes par sélection de caractéristiques ne nous semble pas pertinente dans le cadre de caractéristiques auto déterminées.\par
+A cette fin, deux catégories de méthodes cohabitent : d'une part les méthodes de sélection de caractéristiques, qui réduise l'espace en décimant certaine dimension jugées non pertinente à la résolution du problème ; d'autre part les méthodes par projection ou transformation de l'espace existant qui réduisent et modifient les valeurs existantes. Dans la mesure où nous emploierons cette techniques dans le cadre de l'apprentissage par transfert de connaissance, notre investigation ne portera que sur cette seconde catégorie de méthodes. En effet, les méthodes par sélection de caractéristiques ne nous semble pas pertinente dans le cadre de caractéristiques auto déterminées par des réseaux profonds.\par
 
 L'\gls{pca} est l'une de ces techniques, dont l'idée majeure est de retirer l'information redondante pour ne conserver que l'information de variance, supposé contenir l'information. Cette méthode cherche ainsi à identifier les axes selon lesquels la variation des données est maximisée. Il sera ensuite nécessaire de déterminer un nombre d'axes suffisant à séparer le problème (réduction du nombre de caractéristiques). Plutôt que de choisir ce nombre arbitraire, la littérature préfère retenir des seuils pertinents de cette variance, les plus communs sont 95\%, 97.5\% et 99\%.\par
 
@@ -554,26 +461,94 @@ La \Cref{tab:summary_reduction_methods} permet de résumer ces méthodes et para
     \centering
     \begin{tabular*}{0.6\linewidth}{lll}
     \toprule
-    \textbf{Méthode}       & \textbf{Paramètre}        &   \textbf{Valeurs}     \\ \midrule
-    \gls{pca}              & Variance expliquée        &   [0.95, 0.975, 0.99]  \\ \cmidrule{2-3}
-    \gls{lda}              & Nombre de composantes     &   [0.95, 0.975, 0.99]  \\ \hline
+    \textbf{Méthode}       & \textbf{Paramètre}                 & \textbf{Valeurs}                      \\ \midrule
+    \gls{pca}              & \multirow{2}{*}{Variance expliquée}& \multirow{2}{*}{[0.95, 0.975, 0.99]}  \\ \cline{1-1}
+    \gls{lda}              &                                    &                                       \\ 
     \bottomrule
     \end{tabular*}
-    \caption{Liste des méthodes de réduction employées et paramètres associés.}
+    \caption{Liste des méthodes de réduction employées et leurs paramètres associés.}
     \label{tab:summary_reduction_methods}
 \end{table}\par
 
-\section{Méthodes de prédiction}
-Afin de réaliser la prédiction nous 
-To achieve this task, an~extraction method (see \Cref{sec:features}) was applied to the~images, depending on the~currently evaluated method. The~features were then normalized based on a~standard score computation to make the~classification task more accurate and~robust~\cite{Graf2001}. This scaling was computed by subtracting the~mean and~then dividing by the~standard deviation. The~schematic outline in \Cref{fig:image_process} provides an~overview of this process.\par
-\gls{cart}/\gls{rf}/\gls{gb}
+\subsection{Normalisation de caractéristiques}
+\label{subsec:features_normalisation}
+Selon le domaine d'étude visée, la normalisation de caractéristiques peux-être l'une des étapes cruciales quand au bon déroulement de ce processus de classification. Notre recherche a été amenée à considérer cet aspect suite à la dégradation des résultats d'un travail proche de notre thématique portant sur la classification d'image de dermatoscopie~\cite{Celebi2007}.\par
 
+Il est communément admis que des méthodes tels que les \gls{knn} dont le principe repose sur des critères de distances, peuvent être fortement affectés par des caractéristiques non normalisées. Pour d'autres méthodes de classification, cette normalisation des caractéristiques fait davantage appel à un bon sens vis à vis de leur principe de fonctionnement. Nous noterons le retour de certains travaux sur la dégradation des performances sur les \gls{svm}~\cite{Juszczak2002} mais également les réseaux de neurones~\cite{Celebi2007}.\par
+
+Diverses méthodes ont ainsi été proposées afin de remédier à ces défauts de distribution de l'information. L'un de ces travaux propose de réduire l'erreur de classification de modèles \gls{svm} par l'apport de normalisations tenant compte de la variance, du maximum ou encore conjointement du minimum et du maximum~\cite{Juszczak2002}. Le travail mené par Celebi~\cite{Celebi2007} propose une normalisation des caractéristiques à l'aide de la "Cote Z" ou "Standard score", c'est à dire par soustraction de la moyenne au sein d'un même groupe de caractéristiques puis par division de l'écart type de ce même groupe.\par
+
+Afin de couvrir au mieux cette problématique de la normalisation, nous l'aborderons à l'aide des deux méthodes majeure de ces deux précédentes études, dont l'\Cref{eq:scaling_methods} reprend les expressions sous forme mathématique. Ainsi, nous envisagerons l'utilisation de :
+\begin{itemize}
+    \item la normalisation par "Mininimum et Maximum"~\cite{Juszczak2002},
+    \item et de la normalisation "Standard" ou "Cote Z"~\cite{Celebi2007}.
+\end{itemize}\par
+
+\begin{equation} 
+    \label{eq:scaling_methods}
+    \begin{split}
+    &MinMax=\frac{X-min(X)}{max(X)-min(X)}  \\
+    &Standard=\frac{X-\mu{}}{\sigma}	    
+    \end{split}
+\end{equation}
+
+\subsection{Balancement de données}
+L'une des problématiques associé de manière récurrente à l'apprentissage sur des données réelles est celle de la répartition homogène des annotations, en opposition aux domaines impliquant des données synthétiques pouvant provenir de modèle génératifs par exemple. Ces déséquilibres d'annotations sont qualifiés sous le terme anglophone de "class imbalancement"~\cite{Prati2009, He2009}.\par
+
+Ces déséquilibres sont propres à de nombreux domaines d'applications, mais touchent essentiellement des champs d'activités dans lesquels la tâche visée correspond à la détection d'événements isolés au sein d'une population, comme par exemple : 
+\begin{inlinerate}
+    \item les comportements déviants (fraude bancaire~\cite{Phua2004}),
+    \item le respect de critère de qualité (vérification de pièces industrielles~\cite{Wu2018}),
+    \item ou encore d'anormalités clinique (cancers ou d'autres pathologies cliniques~\cite{Celebi2007}).
+\end{inlinerate}\par
+
+Certains choix peuvent permettre de limiter l'impact d'un déséquilibre d'annotations. Ainsi, la sélection d'un métrique adéquate peux permettre de limiter la dépendance au données : la substitution de la précision par des mesures telles que l'\gls{auc}~\cite{Celebi2007} ou le f1-score sont des solutions pertinentes dans de telles situations. Néanmoins, la plupart des modèles de classification échouerons à classifier convenablement les données dans des situations de fort déséquilibres. Ces modèles préférerons prédire constamment la classe majoritaire, pour minimiser le coût de l'erreur~\cite{Huang2013}. Dans le cadre de modèles basés sur des arbres de décision, la stratégie générale propose de déterminer les critères majeurs de séparation par partitionnement successif des données. Ce partitionnement conduit inéluctablement à un affaiblissement des classes minoritaires~\cite{He2009}. Deux catégories d'approches coexistent pour solutionner ces déséquilibres~\cite{Huang2013}, d'une part les approches   par augmentation ou décimations des diverses catégories d'annotation, et d'autres part les approches algorithmiques consistent à pondérer la valeur des annotations afin de prendre en considération le déséquilibre de l'information~\cite{Ting2002,He2009,Thai2010}.\par
+
+En premier lieu, des approches par correction des données simples, proposes diverses solutions pour palier à ces déséquilibres de classes~\cite{Prati2009, He2009}. Une première catégories de ces méthodes consiste à \textbf{sous-échantillonner} les données jusqu'à obtenir une égalité entre les classes. Son principe le plus simple est celui du "Sous-échantillonage aléatoire" consistant à décimer de manière aléatoire les données des classes majoritaire afin d'égaler les échantillons de la classe minoritaire. A l'inverse, une autre catégorie consiste à \textbf{sur-échantillonner} les données possédées afin d'obtenir à nouveau une égalité entre classes. Le principe le plus simples est celui du "Sur-échantillonage aléatoire" consistant à dupliquer aléatoirement les échantillons des classes minoritaires afin d'égaler le nombre d'élément de la classe majoritaire. Le schéma en \Cref{fig:scheme_data_balancing} reprendre l'idée de ces deux principes.\par
+
+En second lieu, des approches par correction des données plus avancées ont été proposées. De manière non exhaustive nous proposerons l'une d'entre elle pour chaque catégories:
+\begin{itemize}
+    \item par \textbf{sous-échantillonnage} : \cite{Tomek1976}
+    \item par \textbf{sur-échantillonnage} :\cite{Chawla2002} 
+    \item par \textbf{combinaison} : SMOTE + Tomek
+\end{itemize}\par
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{contents/chapter_4/resources/scheme_data_balancing.pdf}
+    \caption{Schéma des deux stratégies principales de balancement de données. A gauche, la stratégie de sous-échantillonage, dans laquelle des éléments sont aléatoirement choisis jusqu'à réduire l'ensemble des classes au nombre d'éléments de la classe minoritaire; A droite, la stratégie de sur-échantillonage, dans laquelle les éléments des classes minoritaires sont dupliqués aléatoirement. }
+    \label{fig:scheme_data_balancing}
+\end{figure}\par
+
+En opposition à ces approches dédiées, les approches par pondération des échantillons consiste à gérer le déséquilibre des annotations en appliquant des poids d'importance différente selon la provenance échantillon lors de l'apprentissage du modèle. Nous considérerons ce choix par défaut, puisqu'il permet de contrer de manière assez intuitive ces
+
+Dans l'optique de récapituler cette partie, les méthodes utilisées dans le but de corriger le déséquilibre des données sont référencée dans la \Cref{tab:summary_balancement_methods}. Afin de traiter au mieux cette tâche, la balancement de données par ses différentes stratégies évoquée sera réalisé avec l'aide de la librairie logicielle "Imbalanced-learn"~\cite{Lemaitre2017}. La correction par algorithme, plus précisément pondération, sera réalisé avec l'aide de la bibliothèque "Scikit-learn"~\cite{pedregosa2011}.\par
+
+\begin{table}[H]
+    \centering
+    \begin{tabular*}{0.6\linewidth}{l@{\extracolsep{\fill}}l}
+    \toprule
+    \textbf{Catégorie}                  & \textbf{Méthode}                  \\ \hline
+    Sous-échantillonage                 & Sous-échantillonage aléatoire     \\ \hline
+    Sur-échantillonage                  & Sur-échantillonage aléatoire      \\ \hline
+    Combinaison                         & SMOTE + Tomek                     \\
+    \end{tabular*}
+    \caption{Liste des diverses méthodes de balancement mises en oeuvre pour corriger les déséquilibre de données.}
+    \label{tab:summary_balancement_methods}
+\end{table}\par
+
+\section{Méthodes de prédiction}
+Afin d'oeuvrer à la séparation des échantillons en notre possession sur la base de leurs caractéristiques, nous aurons recours à divers modèles de classification, dont nous évaluerons les performances de classification. En effet, bien que les avantages et inconvénients de la plupart d'entre eux aient été évoqués au sein de la \Cref{sec:models_settings}, nous n'avons pas de contraintes de rapidité lors de la phase d'apprentissage ou de prédiction. Seules les performances de classifications seront mesurées dans ce travail.\par
+
+Dans un premier temps, nous évaluerons nos données à l'aide de \gls{cart} dont l'utilité a été démontré par l'un de nos travaux de référence ~\cite{Wiltgen2008}. Néanmoins, ces modèles tendent au sur-apprentissage dans des contextes où les dimensions sont nombreuses, ainsi nous évaluerons de manière complémentaires les \gls{rf}~\cite{Breiman2001} et les \gls{gb} plus aptes à gérer cet aspect. Dans un second temps, nous envisageons la piste des \gls{svm} très utilisés dans de nombreux contextes de problématique de classification~\cite{Smach2008a}, mais également de classification de lésion de la peau~\cite{Celebi2007}. Enfin, lié aux avancées dans l'apprentissage profond, nous envisagerons la piste des \gls{mlp} afin de d'évaluer notre problématique de manière non linéaire.\par
+
+Afin d'évaluer au mieux chacun de ces modèles, nous affinerons les hyperparamètres majeurs de chacun de ces modèles. Il sera bien entendu nécessaire de faire des compromis dans le choix de ces valeurs, et opterons pour celles les plus couramment utilisées. L'ensemble des modèles de classification et de leurs hyperparamètres et valeurs associés sont recensés sur la \Cref{tab:image_hyperparameters}.\par
 
 \begin{table}[H]
     \centering
     \begin{tabular}{cll}
         \toprule
-        \textbf{Modèle}                                 & \textbf{Paramètres}       & \textbf{Valeurs}                          \\ \midrule
+        \textbf{Modèle}                                 & \textbf{Hyperparamètres}  & \textbf{Valeurs}                          \\ \midrule
         \multirow{4}{*}{\gls{cart}}                     & Profondeur maximum        & [3, $\infty$]                             \\ \cmidrule{2-3} 
                                                         & Critère de qualité        & [Gini, Entropie]                          \\ \cmidrule{2-3}   
                                                         & Caractéristiques maximum  & [1, 2, 3, 4, 5, 6, 7, 8, 9]               \\ \cmidrule{2-3}   
@@ -587,7 +562,7 @@ To achieve this task, an~extraction method (see \Cref{sec:features}) was applied
                                                         & Caractéristiques maximum  & [1, 2, 3, 4, 5, 6, 7, 8, 9]               \\ \cmidrule{2-3}   
                                                         & Échantillons minimum      & [1, 2, 3, 4, 5, 6, 7, 8, 9]               \\ \midrule 
         \gls{svm} - Noyau linéaire                      & C                         & [0.001, 0.01, 0.1, 1, 10, 100, 1000]      \\ \midrule
-        \multirow{2}{*}{\gls{svm} - Noyau RBF}          & C                         & [0.001, 0.01, 0.1, 1, 10, 100, 1000]      \\ \cmidrule{2-3}      
+        \multirow{2}{*}{\gls{svm} - Noyau RBF}          & C                         & [0.001, 0.01, 0.1, 1, 10, 100, 1000]      \\ \cmidrule{2-3}   
                                                         & Gamma                     & [0.001, 0.01, 0.1, 1, 10, 100, 1000]      \\ \midrule 
         \multirow{5}{*}{\gls{mlp}}                      & Couche cachées            & [(20,), (20,20,), (20,20,20,)]            \\ \cmidrule{2-3}
                                                         & Activation                & [Tanh, ReLu]                              \\ \cmidrule{2-3}
@@ -596,69 +571,69 @@ To achieve this task, an~extraction method (see \Cref{sec:features}) was applied
                                                         & Taux d'apprentissage      & [Constant, Adaptatif]                     \\ \bottomrule 
     \end{tabular} 
     \label{tab:image_hyperparameters}
-    \caption{Table recensant les divers modèles de prédiction et l'ensemble des hyperparamètres qui ont permis leur évaluation.}
+    \caption{Table qui recense l'ensemble des modèles de classification utilisés afin de réaliser la séparation en 3 classes. Sont également renseignés les hyperparamètres propres à ces modèles et les combinaisons de valeurs choisies pour réaliser ces tests.}
 \end{table}\par
 
-Finally, the~classification was performed on scaled features using different models. In the~first stage, \ac{cart} was investigated as in a~previous study in the~same data context~\cite{Wiltgen2008}. In a~second stage, this study explored alternatives of simple trees based on ensemble methods (set of models instead of a~single model) as the~\ac{cart} model tends to overfit. On the~one hand, bagging methods were investigated by the~use of \ac{rf} model~\cite{Breiman2001} and~\ac{ert}~\cite{Geurts2006} as they both tend to remove the~overfitting issues. Moreover, the~\ac{ert} model are assumed to be more robust to noise than the~\ac{rf} model. On the~other hand, the~boosting method was considered by the~use of the~\ac{gb} model~\cite{Friedman2000} as the~most common type of tree-based algorithm for most of the~recent applications. Lastly, \ac{svm} models were evaluated that are known to be suitable in multiples contexts~\cite{Smach2008a,Kose2016b}. As the~relationship between the~features and~the~expected outputs can be complex, \ac{svm} models were compared over linear and~RBF kernels.\par
-In addition, to provide the~best performance with each of these models, a~search in regard to their optimum hyperparameters was carried out (see \Cref{tab:image_hyperparameters}).\par
+\section{Processus et métriques}
+Pour réaliser l'évaluation, nous emploierons une validation croisée imbriquée déjà discuté sur le \Cref{sec:models_settings}. Le choix de cette structure de validation a été déterminé car moins sujet au biais~\cite{Cawley2010}. Nous opterons pour des valeurs de quatre lots pour l'évaluation et de deux lots pour la validation, arbitrairement choisies mais représentant un bon compromis vis à vis de nos expériences. Ces répartition sous forme de lot de nos données est visible sur la \Cref{fig:visualisation_folds}.\par
 
-\section{Processus et metriques}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\linewidth]{contents/chapter_4/resources/visualisation_folds.png}
+    \caption{Visualisation des divers lots d'évaluation utilisés pour l'évaluation des processus de classification.}
+    \label{fig:visualisation_folds}
+\end{figure}\par
+
+Afin de régler les hyperparamètres et d'évaluer les performances des divers modèles, nous opterons pour un métrique de type f1-score également discuté durant le \Cref{sec:models_settings}. En effet, ce métrique est robuste face à des déséquilibres d'annotations, et représente conjointement la précision et le rappel. Son expression est binaire, il sera ainsi calculé pour chaque classe dont nous pondérerons la valeur par le ratio du nombre de d'échantillons disponibles pour chacune d'entre elles.\par
+
+Ces expériences seront menés en plusieurs étapes successives, et nous débuterons par l'évaluation de l'ensemble des méthodes d'extraction de caractéristiques conjointement à la normalisation de l'information. Aucun de ces tests ne sera mené sur les caractéristiques brutes, les modèles ne convergeant pas dans un temps raisonnable. Dans une seconde phase, nous mesurerons l'impact de la réduction de dimension sur les techniques de transfert de connaissance avant de procéder à leur classification. Contrairement aux recommandations de la librairie~\textsuperscript{\ref{footnote:exemple_pca_scaling}}, nous opterons pour un schéma de type réduction de l'information puis de normalisation de caractéristiques avant classification. En effet, les caractéristiques issues de réseaux convolutionnels possèdent une distribution consistantes, et n'affecte pas de manière significative les techniques de réduction de dimensions, comme présentée sur la \Cref{fig:visualisation_scaling_reduction}. Pour finir, nous
+terminerons par l'influence des techniques de balancement de données évoquées.\par
+
+\addtocounter{footnote}{1}
+\footnotetext[\thefootnote]{Source : Scikit-learn - \href{https://scikit-learn.org/stable/auto_examples/preprocessing/plot_scaling_importance.html}{"Importance of Feature Scaling"}. \label{footnote:exemple_pca_scaling}}
+ 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{contents/chapter_4/resources/visualisation_scaling_PCA.pdf}
+    \includegraphics[width=\linewidth]{contents/chapter_4/resources/visualisation_scaling_LDA.pdf}
+    \caption{Visualisation de l'influence de la réduction des dimensions appliquée au deux premières composantes principales, sur un échantillon constitué arbitrairement de 500 éléments de nos données. En haut, technique de réduction basée sur le \gls{pca} ; En bas, technique de réduction basée sur le \gls{lda}. A gauche, un processus procédant à la réduction puis à la normalisation ; A droite, un processus procédant à la normalisation puis à la réduction.}
+    \label{fig:visualisation_scaling_reduction}
+\end{figure}\par
+
+% \begin{figure}[H]
+%     \centering
+%     \begin{subfigure}{.45\textwidth}
+%       \includegraphics[width=\textwidth]{contents/chapter_4/resources/visualisation_spatial_FirstOrder.png}
+%     \end{subfigure}
+%     \begin{subfigure}{.45\textwidth}
+%       \includegraphics[width=\textwidth]{contents/chapter_4/resources/visualisation_spatial_Haralick.png}
+%     \end{subfigure}
+    
+%     \begin{subfigure}{.45\textwidth}
+%       \includegraphics[width=\textwidth]{contents/chapter_4/resources/visualisation_spatial_HaralickMean.png}
+%     \end{subfigure}
+%     \begin{subfigure}{.45\textwidth}
+%       \includegraphics[width=\textwidth]{contents/chapter_4/resources/visualisation_spatial_WiltgenSpatial.png}
+%     \end{subfigure}
+    
+%     \caption{Visualisation des caractéristiques obtenues par techniques d'extraction spatiales et projection \gls{pca} sur les deux premières composantes.}
+%     \label{fig:visualisation_spatial}
+% \end{figure}\par
+
 \section{Résultats}
-\begin{table}[]
-\begin{tabular}{lllllll}
-                         & \multicolumn{6}{c}{MinMaxScaler}                                                                                   \\
-                         & SVM Linéaire       & SVM RBF            & CART               & EXTRA              & GB        & MLP                \\
-Premier Ordre            & 0.54±0.05          & \textbf{0.55±0.02} & 0.52±0.05          & 0.54±0.05          & 0.52±0.05 & 0.53±0.05          \\
-Haralick                 & 0.60±0.07          & 0.60±0.07          & 0.58±0.08          & \textbf{0.61±0.07} & 0.57±0.07 & 0.59±0.16          \\
-Haralick moyen           & 0.60±0.07          & 0.55±0.09          & \textbf{0.60±0.05} & 0.60±0.07          & 0.58±0.07 & 0.59±0.15          \\
-Wiltgen - Spatial        & \textbf{0.62±0.07} & 0.56±0.12          & 0.60±0.05          & 0.59±0.10          & 0.58±0.08 & 0.61±0.15          \\
-Wiltgen - Spatial Etendu & \textbf{0.62±0.07} & 0.56±0.10          & 0.58±0.06          & 0.59±0.09          & 0.58±0.08 & 0.60±0.15          \\
-Fourier10                & 0.61±0.07          & 0.55±0.13          & 0.56±0.06          & 0.58±0.05          & 0.59±0.03 & \textbf{0.62±0.13} \\
-Fourier20                & 0.62±0.08          & 0.59±0.06          & 0.54±0.05          & 0.59±0.06          & 0.60±0.03 & \textbf{0.64±0.14} \\
-Fourier30                & \textbf{0.64±0.06} & 0.60±0.06          & 0.56±0.06          & 0.59±0.06          & 0.60±0.04 & 0.63±0.14          \\
-Haar                     & \textbf{0.68±0.04} & 0.63±0.08          & 0.58±0.06          & 0.64±0.05          & 0.62±0.04 & 0.65±0.05          \\
-Wiltgen Fourier          & \textbf{0.63±0.06} & 0.58±0.06          & 0.56±0.04          & 0.59±0.05          & 0.60±0.02 & 0.63±0.13          \\
-Wiltgen DB4              & \textbf{0.69±0.04} & 0.61±0.11          & 0.61±0.07          & 0.63±0.05          & 0.63±0.05 & 0.65±0.05          \\
-Halimi                   & \textbf{0.45±0.09} & 0.39±0.25          & 0.43±0.04          & 0.43±0.06          & 0.43±0.05 & 0.36±0.09         
-\end{tabular}
-\end{table}
 
-\begin{table}[]
-\begin{tabular}{lllllll}
-                         & \multicolumn{6}{c}{Robust Scaler}                                                                                  \\
-                         & SVM Linéaire       & SVM RBF            & CART               & EXTRA              & GB        & MLP                \\
-Premier Ordre            & \textbf{0.55±0.05} & \textbf{0.48±0.08} & 0.52±0.05          & 0.54±0.05          & 0.54±0.05 & 0.53±0.06          \\
-Haralick                 & \textbf{0.61±0.05} & 0.56±0.11          & 0.58±0.08          & \textbf{0.61±0.07} & 0.58±0.08 & 0.56±0.07          \\
-Haralick moyen           & \textbf{0.61±0.07} & 0.55±0.10          & \textbf{0.59±0.07} & \textbf{0.61±0.07} & 0.60±0.06 & 0.58±0.06          \\
-Wiltgen - Spatial        & \textbf{0.62±0.07} & 0.52±0.14          & 0.55±0.11          & 0.58±0.08          & 0.57±0.10 & 0.57±0.08          \\
-Wiltgen - Spatial Etendu & \textbf{0.62±0.07} & 0.53±0.15          & 0.58±0.09          & 0.60±0.07          & 0.57±0.10 & 0.60±0.07          \\
-Fourier10                & 0.61±0.06          & 0.57±0.07          & 0.56±0.10          & 0.59±0.06          & 0.58±0.04 & \textbf{0.62±0.07} \\
-Fourier20                & \textbf{0.62±0.07} & 0.60±0.07          & 0.53±0.06          & 0.58±0.06          & 0.59±0.03 & \textbf{0.62±0.14} \\
-Fourier30                & \textbf{0.63±0.07} & 0.55±0.05          & 0.57±0.10          & 0.59±0.05          & 0.60±0.03 & 0.61±0.07          \\
-Haar                     & \textbf{0.69±0.04} & 0.58±0.09          & 0.62±0.04          & 0.63±0.06          & 0.62±0.05 & 0.62±0.05          \\
-Wiltgen Fourier          & \textbf{0.62±0.07} & 0.60±0.04          & 0.53±0.08          & 0.58±0.06          & 0.58±0.02 & 0.61±0.09          \\
-Wiltgen DB4              & \textbf{0.66±0.04} & \textbf{0.66±0.04} & 0.61±0.04          & 0.64±0.05          & 0.62±0.05 & 0.63±0.05          \\
-Halimi                   & \textbf{0.44±0.05} & 0.33±0.30          & 0.42±0.06          & \textbf{0.45±0.05} & 0.44±0.11 & 0.44±0.11         
-\end{tabular}
-\end{table}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{contents/chapter_4/resources/results_image_classification_mms.pdf}
+    \caption{Résultat de classification issue de la normalisation par Minimum/Maximum.}
+    \label{fig:results_image_classification_mms}
+\end{figure}\par
 
-\begin{table}[]
-\begin{tabular}{lllllll}
-                         & \multicolumn{6}{c}{StandardScaler}                                                                                 \\
-                         & SVM Linéaire       & SVM RBF            & CART               & EXTRA              & GB        & MLP                \\
-Premier Ordre            & \textbf{0.54±0.05} & \textbf{0.46±0.04} & 0.52±0.04          & \textbf{0.56±0.04} & 0.53±0.04 & 0.55±0.04          \\
-Haralick                 & \textbf{0.61±0.05} & 0.54±0.12          & 0.60±0.07          & \textbf{0.63±0.07} & 0.60±0.06 & 0.60±0.07          \\
-Haralick moyen           & \textbf{0.61±0.07} & 0.53±0.08          & \textbf{0.58±0.08} & \textbf{0.61±0.07} & 0.60±0.06 & 0.58±0.07          \\
-Wiltgen - Spatial        & \textbf{0.63±0.07} & 0.54±0.16          & 0.56±0.09          & 0.57±0.09          & 0.58±0.11 & 0.59±0.10          \\
-Wiltgen - Spatial Etendu & \textbf{0.63±0.07} & 0.56±0.10          & 0.59±0.06          & 0.59±0.09          & 0.57±0.11 & 0.60±0.10          \\
-Fourier10                & \textbf{0.62±0.06} & 0.55±0.07          & 0.58±0.08          & 0.59±0.05          & 0.59±0.04 & \textbf{0.60±0.06} \\
-Fourier20                & \textbf{0.63±0.06} & 0.56±0.15          & 0.54±0.05          & 0.59±0.06          & 0.59±0.02 & \textbf{0.60±0.14} \\
-Fourier30                & \textbf{0.63±0.07} & 0.57±0.06          & 0.56±0.08          & 0.59±0.05          & 0.57±0.05 & 0.60±0.05          \\
-Haar                     & \textbf{0.68±0.04} & 0.63±0.06          & 0.62±0.04          & 0.63±0.06          & 0.62±0.05 & 0.62±0.05          \\
-Wiltgen Fourier          & \textbf{0.63±0.06} & 0.54±0.15          & 0.58±0.06          & 0.60±0.05          & 0.59±0.03 & 0.58±0.09          \\
-Wiltgen DB4              & \textbf{0.67±0.04} & \textbf{0.57±0.07} & 0.58±0.06          & 0.62±0.04          & 0.63±0.05 & 0.64±0.05          \\
-Halimi                   & \textbf{0.44±0.05} & 0.33±0.30          & 0.42±0.06          & \textbf{0.45±0.06} & 0.44±0.03 & 0.42±0.11         
-\end{tabular}
-\end{table}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{contents/chapter_4/resources/results_image_classification_ss.pdf}
+    \caption{Résultat de classification issue de la normalisation par score standard, par la moyenne et la déviation standard.}
+    \label{fig:results_image_classification_ss}
+\end{figure}\par
 
 Néanmoins, il est également a été également jugées important de l'intersection d'évènements tels que la présence de tissus caractéristiques aux abords de follicules pileux.\par

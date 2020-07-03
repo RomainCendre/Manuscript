@@ -46,10 +46,12 @@
 \usepackage{bibentry}
 \usepackage{cleveref}
 \usepackage[inline]{enumitem}
+\usepackage{lscape}
 \usepackage{siunitx}
 \usepackage{subcaption}
 
 %%%%%%%%%%%%%%% Parameters
+
 % Custom hyperlinks
 \hypersetup{
   colorlinks,
@@ -295,3 +297,9 @@
  \end{list}%
  }%
 \makeatother
+
+%% ----------------------------------------------------------------
+%% --- change language of cref
+%% ----------------------------------------------------------------
+\crefname{chapter}{chapitre}{chapitres}
+\Crefname{chapter}{Chapitre}{Chapitres}

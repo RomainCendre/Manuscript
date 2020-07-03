@@ -1,24 +1,59 @@
 \chapter{Amélioration du diagnostic image}
 \label{chap:chapter_5}
 \chapterintro
-Lors de la précédente partie nous avons présenté des schéma de classification adapté aux données de \gls{rcm}, au sein de schéma "classique" qui traitent l'information comme donnée unique.\par
+Lors du précédent chapitre, nous avons tenté d'apporter une première réponse à la classification des images \gls{rcm} contenant du tissu sain, bénin ou encore malin. Nous nous sommes intéressé aux méthodes permettant de caractériser au mieux les aspects de texture de ces images par l'extraction de caractéristiques pertinentes, et nous avons employé des mécanismes permettant d'exploiter au mieux ces caractéristiques.\par
 
-Ce second chapitre dédié aux approches \gls{rcm} nous permettra de mettre en avant divers schéma de classification autres.\par
+Dans ce chapitre, nous nous emploirons à améliorer la qualité du diagnostic sur les images en explorant de nouveaux schémas d'extraction de caractéristiques. Ainsi, nous pencherons sur des pistes utilisant la multi-résolution et le principe de fenêtre glissante. Nous envisagerons également des solution de type \gls{cnn} de bout en bout et procéderons à du réglages fin de ces derniers.\par
 
 \newpage
 
 \section{Méthodologie}
-Lors du précédent chapitre nous avons pu déterminer un certain nombre de pistes permettant de traiter au mieux\par
+Lors du précédent chapitre, nous avons proposé diverses approches dans une philosophie de classification de l'image dans son intégralité pour permettre la séparation des éléments sain, bénin et malin. Cette approche suppose que l'information extraite est suffisante pour permettre ce diagnostic. Néanmoins, une même image \gls{rcm} peux comporter divers types de tissus, des trois classes précédemment évoquées.\par
 
-Afin de tenter de résoudre cette problématique, nous nous intéresserons à une continuité des méthodes précédentes par approche de classification "classique", puis nous aborderons le problème à l'aide d'approche d'apprentissage profond de bout en bout.\par
+Dans ce nouveau chapitre dédié à l'amélioration du diagnostic de l'image, nous exploiterons les conclusions du précèdent chapitre quand à l'extraction de textures, mais nous envisagerons trois types d'approches. Nous débuterons par la présentation de méthodes par multiples échelles, en supposant que l'information comporte plusieurs niveaux d'interprétations pouvant être capté par une méthode de classification. Dans un second temps, nous tenterons de capter l'information localement en employant un principe de fenêtres glissantes. Enfin, nous étendrons ces approches locales par l'utilisation de réseaux de neurones profond, ajusté de bout en bout sur notre problème de classification à trois classes.\par
 
-\section{Approche par apprentissage automatique}
-A l'aide cette partie nous étendrons les méthodes précédentes dans le but d'améliorer la précision du diagnostic. Nous nous sommes pour cela inspiré de deux principaux mode d'approches: une approche par multiple résolution que nous détaillerons dans une première sous partie et une approche par prédiction locales que nous énoncerons dans une seconde sous partie.\par
+\section{Approche par échelles multiples}
+Comme évoqué précédemment, les traitements réalisés jusqu'à lors ne permettent qu'une compréhension globale et non à plusieurs niveau, pouvant limiter nos résultats si nous supposons une compréhension à diverses échelles. Cette perspective à multiples échelles à été employée à différentes fins dans la littérature, de tâche de segmentations par exemple~\cite{Santos2012}, à des tâches de classification~\cite{Alsaih2016} ou encore de détection d'objets et d'actions~\cite{Pedersoli2011}. Nous scinderons cette section en deux parties respectives, avec d'une part l'application de ce principe à la décomposition en ondelettes et d'autres part l'application de ce principe à des techniques d'extraction spatiales.\par 
 
-\subsection{Approche par multiples échelles}
-L'un des constats concernant les données \gls{rcm} en notre possession est que cette information est relativement régulière. En effet, les spécialistes ont pour l'acquisition de ces données conservée des paramètres similaires, y compris sur la provenance et la taille des acquisitions. Ainsi, les données sont homogènes d'un point de vue spatial.\par
+\subsection{Décomposition en ondelettes à multiples échelles}
+Notre première approche par multiples échelle se portera sur la décomposition en ondelettes. En effet, ce principe \cite{Carvalho2004}
+Dans un second temps, ce même article propose un approche par ondelettes de Daubechies. La transformée est ainsi calculée à cinq niveau successif sous forme d'arbre diadique, et préconise l'extraction de 3 mesures statistiques (la déviation standard, l'énergie et l'entropie) par bande de fréquences pour un total de \textbf{39 descripteurs}.\par
+ 
+% La décomposition d'un niveau se réalise en 3 étapes successives: 
+% \begin{inlinerate}
+%     \item de filtrage passe-bas et passe-haut horizontal,
+%     \item de filtrage passe-bas et passe-haut vertical,
+%     \item puis une étape de sous-échantillonage afin de réduire limiter la quantité d'information.
+% \end{inlinerate} La totalité de ce processus est schématisé en \Cref{fig:scheme_dwt}. Les mesures statistiques extraites préconisés à ces diverse échelles sont la déviation standard, l'énergie et l'entropie~\cite{Livens1997, Wiltgen2008}. La transformée en ondelettes sera effectuée dans le reste de ce travail par la bibliothèque logicielle "PyWavelets"~\cite{lee2006}
 
-Néanmoins, les traitements réalisés jusqu'à lors ne permettent pas une compréhension à divers niveaux, si nous supposons divers échelles. Divers travaux ont été menés pour qualifier une texture à diverses échelles, c'est notamment le cas avec la décomposition en ondelette~\cite{}. Cette perspective à différentes fins, de tâche de segmentations par exemple ~\cite{Santos2012}, à des tâches de classification~\cite{Alsaih2016} ou encore de détection d'objets et d'actions plus récemment~\cite{Pedersoli2011}.\par 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{contents/chapter_5/resources/scheme_dwt_decomposition.pdf}
+    \caption{Les deux principaux types de décomposition successives: par schéma pyramidal ou arbre dyadique, et par structure d'arbre.}
+    \label{fig:scheme_dwt_decomposition}
+\end{figure}\par
+
+Le second travail sur lequel nous nous appuyons est une forme d'extension de la transformée en ondelettes du précédent travail~\cite{Halimi2017a}. Cette transformée est réalisée de manière diadique à quatre niveaux différents de décomposition. L'auteur y propose une extraction statistique différente des précédents travaux, reposant sur une approximation à chaque niveau de décomposition par une loi normale généralisée centrée dont la densité de probabilité $f$ est décrite par l'\Cref{eq:ggd}. Les auteurs de l'étude ne retiennent comme caractéristiques que les paramètres d'échelle $\alpha$ et de forme $\beta$.\par
+\begin{equation}
+    f(x)= \frac{\beta}{2\alpha\Gamma(1/\beta)} e^{-\left(|\frac{x}{\alpha}|\right)^\beta}
+    \label{eq:ggd}
+\end{equation}
+
+\begin{table}[h]
+    \centering
+    \begin{tabular*}{0.6\linewidth}{l@{\extracolsep{\fill}}l}
+        \toprule
+        \textbf{Méthode}                        & \textbf{Nombre}   \\ \hline
+        Wiltgen~\cite{Wiltgen2008} - Ondelettes & 39(13$\times$3)   \\ \hline
+        Halimi~\cite{Halimi2017a} - Ondelettes  & 24(12$\times$2)   \\
+        \bottomrule
+    \end{tabular*}
+    \caption{Nombre de caractéristiques extraites par méthode spatiale.}
+    \label{tab:number_features}
+\end{table}\par
+
+\subsection{Approche par échelles multiples}
+
 
 A cette fin, divers travaux se sont orientées afin de permettre une classification d'images médicale sur base d'extraction multi-échelle~\cite{Alsaih2016,Tzalavra2016}. Nous intéresserons essentiellement à ceux-ci dans cette partie. Nous avions lors du précédent chapitre, cité le travail de Wiltgen, qui semble le travail le plus proche en terme de multi échelle appliqué à des images ~\gls{rcm} de dermatologie~\cite{Wiltgen2008}.\par
 
@@ -31,6 +66,9 @@ Ainsi, nous mettrons en oeuvre deux processus multi échelle dans ce chapitre. L
     \label{fig:scheme_multiscale_features}
 \end{figure}\par
 
+
+
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{contents/chapter_5/resources/scheme_multiscale_decision.pdf}
@@ -38,7 +76,8 @@ Ainsi, nous mettrons en oeuvre deux processus multi échelle dans ce chapitre. L
     \label{fig:scheme_multiscale_decision}
 \end{figure}\par
 
-\subsection{Approche par fenêtre glissante}
+
+\section{Approche par fenêtre glissante}
 Ces types d'approches ont été récemment utilisées à but de détection spatiale d'objet par l'utilisation de méthode d'apprentissage profond. A des fins médicales, ces approches ont permis la détection sur des images \gls{mri} du ventricule gauche~\cite{Helwan2017}.\par
 
 Ces approches peuvent être également utilisées dans un contexte de classification lorsque la donnée comporte de l'information non directement liée aux annotations finales comme pour de la détection de cancer sur images histologiques par exemple~\cite{Hou2016,Alqudah2019}.\par
@@ -53,7 +92,7 @@ Afin de mettre en oeuvre le schéma de détection à basse échelle, nous appliq
     \centering
     \includegraphics[width=\linewidth]{contents/chapter_5/resources/scheme_sliding_features.pdf}
     \caption{Schéma de représentation du système multi-échelles, sur base d'extractions et de classification à chaque échelle respective et par agrégation des décisions.}
-    \label{fig:scheme_multiscale_decision}
+    \label{fig:scheme_sliding_features}
 \end{figure}\par
 
 \begin{table}[H]
