@@ -1,9 +1,9 @@
 \chapter{Données et littérature}
 \label{chap:chapter_31}
 \chapterintro
-Après avoir présenté les trois domaines impliqués dans ce travail, nous allons procéder à la présentation des données qui nous ont servie de base à la réalisation de ces travaux, ainsi que les méthodes clinique et d'aide au diagnostic de la littérature.\par
+Après avoir présenté les trois domaines impliqués dans ce travail, nous allons procéder à la présentation des données qui nous ont servi de base à la réalisation de ces travaux, ainsi que les méthodes cliniques et d'aide au diagnostic de la littérature.\par
 
-Dans un premier temps, nous traiterons de la "matière" utilisée afin de mener cette recherche dans la \Cref{sec:clinical_data}. En effet, l'ensemble de ce travail prend appui sur une base de données mise à disposition initialement pour la réalisation d'une étude clinique menée sur la pertinence de la dermoscopie et de la \gls{rcm} en milieu clinique~\cite{Cinotti2018}. Nous débuterons par une présentation de l'étude clinique en décrivant les conditions d'inclusions des patients, les dispositifs d'acquisition et le protocole d'évaluation des experts et nous aborderons des aspects de structuration de la base nécessaire à son utilisation dans le reste de ce document.\par
+Dans un premier temps, nous traiterons de la "matière" utilisée afin de mener cette recherche dans la \Cref{sec:clinical_data}. En effet, l'ensemble de ce travail prend appui sur une base de données mise à disposition initialement pour la réalisation d'une étude clinique menée sur la pertinence de la dermoscopie et de la \gls{rcm} en milieu clinique~\cite{Cinotti2018}. Nous débuterons par une présentation de l'étude clinique en décrivant les conditions d'inclusions des patients, les dispositifs d'acquisition et le protocole d'évaluation des experts et nous aborderons ces aspects de structuration de la base nécessaire à son utilisation dans le reste de ce document.\par
 
 Dans un second temps et dernier temps, nous procéderons d'une part à un état de l'art clinique des méthodes proposées par la littérature au sein de la \Cref{sec:clinical_methods} et uniquement sur les trois modalités en notre possession, et d'autre part procéderons à un état de l'art similaire consacré cette fois ci aux méthodes d'aide au diagnostic en \Cref{sec:cad_methods} pour les même modalités.\par
 \newpage
@@ -16,7 +16,7 @@ Cette base de données compile des lésions faciales possédant les critères su
 \begin{itemize}
     \item les images proviennent de patients inclus entre les années 2011 et 2015, dont les données ont exclusivement été acquises au \gls{chuse},
     \item les données sont disponibles pour chaque patient sous 3 formes que sont la photographie clinique, la dermoscopie et la \gls{rcm} (multimodales),
-    \item les lésions considérées cette base sont celles dont le diagnostic différentiel, c'est à dire par élimination méthodique des causes (voir
+    \item les lésions considérées dans cette base sont celles dont le diagnostic différentiel, c'est à dire par élimination méthodique des causes (voir
     \Cref{subsec:lentigo}), était fortement controversé et supposé comme étant un \gls{lm} ou \gls{lmm}.
 \end{itemize}\par
 
@@ -33,7 +33,7 @@ En terme de composition, la base regroupe 201 patients répartis entre 96 femmes
     \label{fig:statistics_age_sex}
 \end{figure}\par
 
-Les acquisitions ont été à chaque fois réalisée par l'un des 3 experts investigateurs de l'étude clinique~\cite{Cinotti2018}. Tout cas de collisions de tumeurs au sein d'un même groupe a été exclu de cette étude. En ce qui concerne la modalité de dermatoscopie, les données ont été produites à l'aide d'une caméra PowerShot® G7~\textsuperscript{\ref{footnote:device_powershot}} couplée au dispositif proposé par Fotofinder~\textsuperscript{\ref{footnote:device_fotofinder}}. Pour ce qui est de la modalité de \gls{rcm}, les données proviennent d'un VivaScope 3000®~\textsuperscript{\ref{footnote:device_mavig}}. En revanche, aucune information liée à l'acquisition des données de photographie clinique n'a été mentionnée.\par
+Les acquisitions ont été à chaque fois réalisée par l'un des 3 experts investigateurs de l'étude clinique~\cite{Cinotti2018}. Tout cas de collisions de tumeurs au sein d'un même groupe a été exclu de cette étude. En ce qui concerne la modalité de dermoscopie, les données ont été produites à l'aide d'une caméra PowerShot® G7~\textsuperscript{\ref{footnote:device_powershot}} couplée au dispositif proposé par Fotofinder~\textsuperscript{\ref{footnote:device_fotofinder}}. Pour ce qui est de la modalité de \gls{rcm}, les données proviennent d'un VivaScope 3000®~\textsuperscript{\ref{footnote:device_mavig}}. En revanche, aucune information liée à l'acquisition des données de photographie clinique n'a été mentionnée.\par
 
 L'intérêt de ces trois modalités est grand dans le contexte de la dermatologie puisqu'elles représentent le processus "classique" de prise en charge clinique, de la modalité la moins onéreuse avec la \textbf{photographie clinique} mais également la moins précise, à des modalités plus onéreuses, également plus riche en information, avec la \textbf{\gls{rcm}}. Ainsi, chaque modalité permet au praticien de réduire la zone d'incertitude chez un patient souffrant d'une pathologie de la peau.
 
@@ -65,9 +65,9 @@ Ces experts ont évalué la gravité pour chaque cas clinique présenté selon l
     \item une seconde journée d'évaluation ne comprenant que les images de \gls{rcm},
     \item et une dernière journée d'évaluation sur l'ensemble de la base d'images.
 \end{inlinerate}
-Par ailleurs, les cas cliniques ont été présentés dans un ordre différents entre chaque journée d'évaluation afin d'éviter des biais liés à l'activité précédente des experts.\par
+Par ailleurs, les cas cliniques ont été présentés dans un ordre différent entre chaque journée d'évaluation afin d'éviter des biais liés à l'activité précédente des experts.\par
 
-La base d'images utilisée pour cette évaluation nous été remise, et ses données sensibles ont été anonymisée afin de ne pas pouvoir ré-identifier les patients. La structure de cette base peux-être appréhendée sur la \Cref{fig:db_structure} - Gauche, et se compose :
+La base d'images utilisée pour cette évaluation nous été remise, et ses données sensibles ont été anonymisée afin de ne pas pouvoir ré-identifier les patients. La structure de cette base peut être appréhendée sur la \Cref{fig:db_structure} - Gauche, et se compose :
 \begin{itemize}
     \item d'un \textbf{tableau de lésions}, sous forme de fichier \gls{csv} et contenant :
     \begin{itemize}
@@ -77,7 +77,7 @@ La base d'images utilisée pour cette évaluation nous été remise, et ses donn
     \item d'un \textbf{répertoire d'images} comprenant les des divers cas clinique recensés dans l'étude sous divers formats image.
 \end{itemize}\par
 
-Afin d'exploiter au mieux cette base, quelques modifications ont été apportées. D'une part, la diversité des formats images est un frein quand à la gestion de ces données et nous avons opté pour un format matriciel sans perte de type bitmap. D'autre part, la structure de la base dans l'état ne permettait pas l'utilisation d'annotations au niveau des images ou supplémentaires à d'autres niveaux. Afin de rendre plus dynamique cette partie, nous avons opté pour une structure reprenant le tableau des lésions initial, lié à des répertoires associés à chaque lésion. Ce procédé est ainsi répété de manière récursive, chaque dossier de lésion se compose lui même de tableaux d'annotations propre au type d'annotations stockées. Par ailleurs, certains apports d'informations ont été réalisés pour permettre un bon déroulement de la suite de notre travail, tel que l'appartenance à un patient afin de ne pas proposer des données d'un même patient lors de l'entraînement et du test. La \Cref{fig:db_structure} - Droite synthétise la structure de cette base après modification.\par
+Afin d'exploiter au mieux cette base, quelques modifications ont été apportées. D'une part, la diversité des formats images est un frein quant à la gestion de ces données et nous avons opté pour un format matriciel sans perte de type bitmap. D'autre part, la structure de la base dans l'état ne permettait pas l'utilisation d'annotations au niveau des images ou supplémentaires à d'autres niveaux. Afin de rendre plus dynamique cette partie, nous avons opté pour une structure reprenant le tableau des lésions initial, lié à des répertoires associés à chaque lésion. Ce procédé est ainsi répété de manière récursive, chaque dossier de lésion se compose lui même de tableaux d'annotations propre au type d'annotations stockées. Par ailleurs, certains apports d'informations ont été réalisés pour permettre un bon déroulement de la suite de notre travail, tel que l'appartenance à un patient afin de ne pas proposer des données d'un même patient lors de l'entraînement et du test. La \Cref{fig:db_structure} - Droite synthétise la structure de cette base après modification.\par
 
 \begin{figure}[H]
 \centering
@@ -101,7 +101,7 @@ Pour permettre l'identification de pathologie en dermatologie plus routinière, 
     \item de \textbf{liste}: de critères positifs et négatifs, correspondant à des caractéristiques rédhibitoires ou non, et amenant à un score final. Ce score variera selon la pathologie considérée et permettra d'en déduire une décision à prendre. L'un des exemple dans le cadre de lésions pigmentées est celui de MacKie en 1986~\cite{mackie1986}. Ces critères ont été révisés et se destinent néanmoins à un public expert. 
 \end{itemize}\par
 
-Ces démarches "algorithmiques" de diagnostic, ainsi nommés, se sont progressivement étendues à d'autre pathologies et dispositifs d'analyse médicaux. Ils permettent de se référer à des critères essentiels en cas de doute. Le \gls{rcm} n'est pas exempt de ces démarches simplifiées, notamment pour la démarche du \gls{lm} avec les travaux de Pellacani et Guitera~\cite{Pellacani2007, Guitera2010}. Ces deux travaux proposent sous forme de table de critères ceux jugés positifs et négatifs, dont la \Cref{tab:rcm_algorithm_lentigo} donne un aperçu de la production de ces articles. Leur étude comptabilise 81 cas de \gls{lm} et 203 lésions bénignes, sur lesquels un seuil de score de 2 à été jugé comme pertinent en regard de l'étude statistique menée. Celui-ci à permis de détecter avec 85\% de sensibilité et 76\% de spécificité les \gls{lm}.\par
+Ces démarches "algorithmiques" de diagnostic, ainsi nommées, se sont progressivement étendues à d'autre pathologies et dispositifs d'analyse médicaux. Ils permettent de se référer à des critères essentiels en cas de doute. Le \gls{rcm} n'est pas exempt de ces démarches simplifiées, notamment pour le diagnostic du \gls{lm} avec les travaux de Pellacani et Guitera~\cite{Pellacani2007, Guitera2010}. Ces deux travaux proposent sous forme de table de critères ceux jugés positifs et négatifs, dont la \Cref{tab:rcm_algorithm_lentigo} donne un aperçu de la production de ces articles. Leur étude comptabilise 81 cas de \gls{lm} et 203 lésions bénignes, sur lesquels un seuil de score de 2 a été jugé comme pertinent au regard de l'étude statistique menée. Celui-ci a permis de détecter avec 85\% de sensibilité et 76\% de spécificité les \gls{lm}.\par
 
 \begin{table}[H]
 \centering
@@ -120,7 +120,7 @@ Ces démarches "algorithmiques" de diagnostic, ainsi nommés, se sont progressiv
 \label{tab:rcm_algorithm_lentigo}
 \end{table}\par
  
-Ainsi, une caractéristique a été déterminée lorsque comme pertinente par leurs auteurs~\cite{Pellacani2007, Guitera2010} lorsque celle-ci s'exprimait de manière plus significative dans l'un des deux groupes pathologique (\gls{lm} ou bénin). L'un de ces travaux~\cite{Guitera2010} procède à une analyse de ces caractéristiques par profondeur croissante, dont nous listons quelques uns des éléments majeurs :
+Ainsi, une caractéristique a été déterminée comme pertinente par leurs auteurs~\cite{Pellacani2007, Guitera2010} lorsque celle-ci s'exprimait de manière plus significative dans l'un des deux groupes pathologique (\gls{lm} ou bénin). L'un de ces travaux~\cite{Guitera2010} procède à une analyse de ces caractéristiques par profondeur croissante de la peau, dont nous listons quelques uns des éléments majeurs :
 \begin{itemize}
     \item au niveau de \textbf{l'épiderme}, les auteurs ont constaté que les pathologies de \gls{lm} comportent un désordre des cellules de l'épiderme (56\% des lésions \gls{lm} contre 18\% des lésions bénignes). Également, une infiltration pagétoïde a été reportée dans la plupart des cas de \gls{lm} (75\% des lésions \gls{lm} contre 28\% des lésions bénignes). En opposition, un épiderme homogène, caractérisé part des motif en nids d'abeille, ont été constatés dans 92\% des cas bénins \Cref{fig:example_rcm_pattern_1}.
     \item au niveau de la \textbf{\gls{dej}}, les auteurs ont constaté que les papilles non démarquée étaient observées dans la majorité des \gls{lm} (68\% \gls{lm} and in 17\% des cas bénins) \Cref{fig:example_rcm_pattern_2}.
@@ -130,7 +130,7 @@ Ainsi, une caractéristique a été déterminée lorsque comme pertinente par le
 \begin{figure}[H]
     \begin{center}
         \includegraphics[width=0.9\linewidth]{contents/chapter_3_1/resources/example_rcm_pattern_1.pdf}
-        \caption{Cas de données cliniques \gls{rcm} en provenance de l'épiderme par Guitera~\cite{Guitera2010}. En a) et b), exemples de motifs en large nids d'abeille (\textit{broadened honeycomb pattern}), respectivement d'un kératose séborrhéique et de peau normale ; en c), exemples de motifs de pavés atypiques (\textit{atypical cobblestone pattern}) issue d'un \gls{lm} ; en d), exemples de \textit{large pagetoid} cellules propre au \gls{lmm}. Repère : barre = \SI{50}{\micro\metre}.}
+        \caption{Cas de données cliniques \gls{rcm} en provenance de l'épiderme par Guitera~\cite{Guitera2010}. En a) et b), exemples de motifs en large nids d'abeille (\textit{broadened honeycomb pattern}), respectivement d'un kératose séborrhéique et de peau normale ; en c), exemples de motifs de pavés atypiques (\textit{atypical cobblestone pattern}) issus d'un \gls{lm} ; en d), exemples de \textit{large pagetoid} cellules propre au \gls{lmm}. Repère : barre = \SI{50}{\micro\metre}.}
         \label{fig:example_rcm_pattern_1}
     \end{center} 
 \end{figure}\par
@@ -151,7 +151,7 @@ Ainsi, une caractéristique a été déterminée lorsque comme pertinente par le
     \end{center} 
 \end{figure}\par
 
-Dans l'étude menée par Cinotti~\cite{Cinotti2018}, les auteurs investigateurs ont demandés d'évaluer certaines caractéristiques récurrentes de la littérature. Parmi lesquelles :
+Dans l'étude menée par Cinotti et al.~\cite{Cinotti2018}, les auteurs investigateurs ont demandé d'évaluer certaines caractéristiques récurrentes de la littérature, parmi lesquelles :
 \begin{itemize}
     \item la présence de grandes cellules pagétoïdes arrondies, présentes dans 37\% des \gls{lm} et seulement 5\% des pathologies bénignes,
     \item la présence de grandes cellules dendritiques dans l'épiderme, présentes dans 81\% des \gls{lm} contre 13\% des pathologies bénignes,

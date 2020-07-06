@@ -18,13 +18,6 @@ Comme évoqué précédemment, les traitements réalisés jusqu'à lors ne perme
 \subsection{Décomposition en ondelettes à multiples échelles}
 Notre première approche par multiples échelle se portera sur la décomposition en ondelettes. En effet, ce principe \cite{Carvalho2004}
 Dans un second temps, ce même article propose un approche par ondelettes de Daubechies. La transformée est ainsi calculée à cinq niveau successif sous forme d'arbre diadique, et préconise l'extraction de 3 mesures statistiques (la déviation standard, l'énergie et l'entropie) par bande de fréquences pour un total de \textbf{39 descripteurs}.\par
- 
-% La décomposition d'un niveau se réalise en 3 étapes successives: 
-% \begin{inlinerate}
-%     \item de filtrage passe-bas et passe-haut horizontal,
-%     \item de filtrage passe-bas et passe-haut vertical,
-%     \item puis une étape de sous-échantillonage afin de réduire limiter la quantité d'information.
-% \end{inlinerate} La totalité de ce processus est schématisé en \Cref{fig:scheme_dwt}. Les mesures statistiques extraites préconisés à ces diverse échelles sont la déviation standard, l'énergie et l'entropie~\cite{Livens1997, Wiltgen2008}. La transformée en ondelettes sera effectuée dans le reste de ce travail par la bibliothèque logicielle "PyWavelets"~\cite{lee2006}
 
 \begin{figure}[H]
     \centering
@@ -66,16 +59,12 @@ Ainsi, nous mettrons en oeuvre deux processus multi échelle dans ce chapitre. L
     \label{fig:scheme_multiscale_features}
 \end{figure}\par
 
-
-
-
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{contents/chapter_5/resources/scheme_multiscale_decision.pdf}
     \caption{Schéma de représentation du système multi-échelles, sur base d'extractions et de classification à chaque échelle respective et par agrégation des décisions.}
     \label{fig:scheme_multiscale_decision}
 \end{figure}\par
-
 
 \section{Approche par fenêtre glissante}
 Ces types d'approches ont été récemment utilisées à but de détection spatiale d'objet par l'utilisation de méthode d'apprentissage profond. A des fins médicales, ces approches ont permis la détection sur des images \gls{mri} du ventricule gauche~\cite{Helwan2017}.\par
