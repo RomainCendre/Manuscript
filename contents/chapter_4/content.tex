@@ -342,7 +342,7 @@ Enfin, nous terminons l'étude de ces deux exemples par l'application de décomp
 
 Dans le but d'évaluer la séparation des classes, nous nous aiderons de l'\gls{pca}. En effet, malgré l'extraction de caractéristiques les données en notre possession contiennent un grand nombre de dimensions, rendant le problème difficile à analyser visuellement. De nombreuses techniques de réduction de l'information permettant une meilleure visualisation sont proposé dans la littérature, comme par exemple le T-SNE~\cite{Maaten2008} mais dont le principal inconvénient réside dans le nombre de degrés de liberté proposés. Néanmoins, l'\gls{pca} est une technique communément acceptée à cette fin~\cite{Himberg2001} et possède l'avantage de ne pas être dépendante de ce type de paramètres. Nous faisons également figurer la variance propre à ces deux axes, et pour chaque classes leur centre et leur dispersion sur la base de l'écart type.\par
 
-Ainsi, la \Cref{fig:visualisation_spatial} met en évidence cette technique pour l'ensemble des méthode d'extraction spatiales. Le premier constat concernant la variance expliquée est que ces deux axes semblent à même de fournir l'intégralité de la variance. Les données extraites à l'aide des techniques d'extraction de premier ordre ne semblent pas optimaux comme nous pouvons le constater sur \Cref{fig:visualisation_spatial}. En effet, les centres de masses et leur dispersion semble assez similaire, notamment pour les données bénignes et malignes.\par
+Ainsi, la \Cref{fig:visualisation_spatial} met en évidence cette technique pour l'ensemble des méthodes d'extraction spatiales. Le premier constat concernant la variance expliquée est que ces deux axes semblent à même de fournir l'intégralité de la variance. Les données extraites à l'aide des techniques d'extraction de premier ordre ne semblent pas optimaux comme nous pouvons le constater sur \Cref{fig:visualisation_spatial}. En effet, les centres de masses et leur dispersion semble assez similaire, notamment pour les données bénignes et malignes. De plus, la séparation des classes ne semble pas marqué dans ces divers schémas d'extraction, et les classes de données vont jusqu'à se chevaucher pour les classes bénignes et saines pour les méthodes employant les caractéristiques d'Haralick. Par ailleurs, la distribution des méthodes employant ces caractéristiques d'Haralick semble similaire, suscitant de faibles différences entre elles.\par
 
 \begin{figure}[H]
     \centering
@@ -364,8 +364,7 @@ Ainsi, la \Cref{fig:visualisation_spatial} met en évidence cette technique pour
     \label{fig:visualisation_spatial}
 \end{figure}\par
 
-Les variances expliquées des techniques sur la base d'extraction fréquentielle semble également bien représentées, comprises entre 97 et 99\% sur les deux premiers axes, excepté pour la méthode d'Halimi (63\%). Comme pour les méthodes spatiales, la séparation  des classes bénignes et malignes semble la plus ardue.
-La séparation des diverses données ne semble pas optimal comme nous pouvons le constater sur \Cref{fig:visualisation_spatial}. En effet, les centroids et leur dispersion semble assez similaire, notamment pour les données bénignes et malignes.\par
+La \Cref{fig:visualisation_frequency} permet de mettre en évidence la distribution des données extraites par les méthodes d'extraction fréquentielle. Ainsi, les méthodes basées sur l'extraction de caractéristiques de Fourier semblent posséder une distribution similaire quelque soit le nombre de caractéristiques extraites. De plus, la méthode de Fourier proposé par Wiltgen~\cite{Wiltgen2008}, proposant d'extraire des caractéristiques selon diverses directions, ne semble pas influer cette distribution. Du point de vue des méthodes basées sur le principe d'ondelettes, la séparation des données semblent être davantage marquée, et l'impact de l'ondelette mère ne semble pas influer sur la distribution des données et des classes. Pour l'ensemble de ces méthodes, les deux premières composantes de l'\gls{pca} semblent suffisantes à exprimer la quasi intégralité de la variance.\par
 
 \begin{figure}[H]
     \centering
@@ -393,6 +392,8 @@ La séparation des diverses données ne semble pas optimal comme nous pouvons le
     \caption{Visualisation des caractéristiques obtenues par techniques d'extraction fréquentielles et projection \gls{pca} sur les deux premières composantes.}
     \label{fig:visualisation_frequency}
 \end{figure}\par
+
+Pour finir, la \Cref{fig:visualisation_transfer} recense les projections par \gls{pca} de l'ensemble des méthodes d'extraction basée sur des architecture de \gls{cnn} pre entrainées, catégorisées sous le terme de transfert par apprentissage. Une différence notable est à remarquer entre les architectures utilisant une couche de global pooling moyen et celle utilisant une couche de global pooling maximum. En effet, la séparation entre classes est marquée de manière plus importante lorsque qu'une couche de global pooling moyen est employé. En addition, cette séparation semble être plus prononcée sur les architectures InceptionV3 et ResNet. Enfin, nous pouvons noter par ces méthodes, que la variance exprimée sur les deux premières composantes n'est que de 20\% à 40\%. Ce dernier constat s'explique par la grande quantité d'information initialement proposé par ces architecture, soit entre 512 et 2048 caractéristiques extraites en comparaison des dizaine d'entre elles extraites par les méthodes manuelles.\par
 
 \begin{figure}[H]
     \centering
@@ -459,11 +460,11 @@ La \Cref{tab:summary_reduction_methods} permet de résumer ces méthodes et para
 \begin{table}[H]
     \centering
     \begin{tabular*}{0.6\linewidth}{lll}
-    \toprule
-    \textbf{Méthode}       & \textbf{Paramètre}                 & \textbf{Valeurs}                      \\ \midrule
-    \gls{pca}              & \multirow{2}{*}{Variance expliquée}& \multirow{2}{*}{[0.95, 0.975, 0.99]}  \\ \cline{1-1}
-    \gls{lda}              &                                    &                                       \\ 
-    \bottomrule
+        \toprule
+        \textbf{Méthode}       & \textbf{Paramètre}                 & \textbf{Valeurs}                      \\ \midrule
+        \gls{pca}              & \multirow{2}{*}{Variance expliquée}& \multirow{2}{*}{[0.95, 0.975, 0.99]}  \\ \cline{1-1}
+        \gls{lda}              &                                    &                                       \\ 
+        \bottomrule
     \end{tabular*}
     \caption{Liste des méthodes de réduction employées et leurs paramètres associés.}
     \label{tab:summary_reduction_methods}
@@ -507,9 +508,9 @@ En premier lieu, des approches par correction des données simples, proposes div
 
 En second lieu, des approches par correction des données plus avancées ont été proposées. De manière non exhaustive nous proposerons l'une d'entre elle pour chaque catégories :
 \begin{itemize}
-    \item par \textbf{sous-échantillonnage} : \cite{Tomek1976}
-    \item par \textbf{sur-échantillonnage} : \cite{Chawla2002} 
-    \item par \textbf{combinaison} : SMOTE + Tomek
+    \item par \textbf{sous-échantillonnage} : cette catégorie consiste à décimer le nombre d'échantillons à celle de la classe minoritaire. Nous considérerons une décimation des échantillon aléatoire pour cette catégorie.
+    \item par \textbf{sur-échantillonnage} : cette catégorie consiste à augmenter les éléments des classes minoritaires. Nous considérerons une duplication aléatoire de ces éléments.
+    \item par \textbf{combinaison} : cette catégorie consiste à mêler des méthodes propres aux deux précédentes catégorie. L'utilisation de méthode \gls{smote}~\cite{Chawla2002}  est alors réalisé dans un premier temps pour générer de manière synthétique de nouveaux éléments, puis la méthode \gls{tl}~\cite{Tomek1976} ou \gls{enn} est utilisée pour enlever les incohérences des éléments originaux ou synthétiques.
 \end{itemize}\par
 
 \begin{figure}[H]
@@ -526,11 +527,13 @@ Dans l'optique de récapituler cette partie, les méthodes utilisées dans le bu
 \begin{table}[H]
     \centering
     \begin{tabular*}{0.6\linewidth}{l@{\extracolsep{\fill}}l}
-    \toprule
-    \textbf{Catégorie}                  & \textbf{Méthode}                  \\ \hline
-    Sous-échantillonage                 & Sous-échantillonage aléatoire     \\ \hline
-    Sur-échantillonage                  & Sur-échantillonage aléatoire      \\ \hline
-    Combinaison                         & SMOTE + Tomek                     \\
+        \toprule
+        \textbf{Catégorie}                  & \textbf{Méthode}      \\ \hline
+        Sous-échantillonage                 & Aléatoire             \\ \hline
+        Sur-échantillonage                  & Aléatoire             \\ \hline
+        \multirow{2}{*}{Combinaison}        & SMOTE + Tomek         \\ \cline{2-2}
+                                            & SMOTE + EN            \\
+        \bottomrule
     \end{tabular*}
     \caption{Liste des diverses méthodes de balancement mises en oeuvre pour corriger les déséquilibre de données.}
     \label{tab:summary_balancement_methods}
@@ -538,10 +541,6 @@ Dans l'optique de récapituler cette partie, les méthodes utilisées dans le bu
 
 \section{Méthodes de prédiction}
 Afin d'oeuvrer à la séparation des échantillons en notre possession sur la base de leurs caractéristiques, nous aurons recours à divers modèles de classification, dont nous évaluerons les performances de classification. En effet, bien que les avantages et inconvénients de la plupart d'entre eux aient été évoqués au sein de la \Cref{sec:models_settings}, nous n'avons pas de contraintes de rapidité lors de la phase d'apprentissage ou de prédiction. Seules les performances de classifications seront mesurées dans ce travail.\par
-
-Dans un premier temps, nous évaluerons nos données à l'aide de \gls{cart} dont l'utilité a été démontré par l'un de nos travaux de référence ~\cite{Wiltgen2008}. Néanmoins, ces modèles tendent au sur-apprentissage dans des contextes où les dimensions sont nombreuses, ainsi nous évaluerons de manière complémentaires les \gls{rf}~\cite{Breiman2001} et les \gls{gb} plus aptes à gérer cet aspect. Dans un second temps, nous envisageons la piste des \gls{svm} très utilisés dans de nombreux contextes de problématique de classification~\cite{Smach2008a}, mais également de classification de lésion de la peau~\cite{Celebi2007}. Enfin, lié aux avancées dans l'apprentissage profond, nous envisagerons la piste des \gls{mlp} afin de d'évaluer notre problématique de manière non linéaire.\par
-
-Afin d'évaluer au mieux chacun de ces modèles, nous affinerons les hyperparamètres majeurs de chacun de ces modèles. Il sera bien entendu nécessaire de faire des compromis dans le choix de ces valeurs, et opterons pour celles les plus couramment utilisées. L'ensemble des modèles de classification et de leurs hyperparamètres et valeurs associés sont recensés sur la \Cref{tab:image_hyperparameters}.\par
 
 \begin{table}[H]
     \centering
@@ -569,16 +568,20 @@ Afin d'évaluer au mieux chacun de ces modèles, nous affinerons les hyperparam�
                                                         & Alpha                     & [0.001, 0.01, 0.1, 1, 10, 100, 1000]      \\ \cmidrule{2-3}
                                                         & Taux d'apprentissage      & [Constant, Adaptatif]                     \\ \bottomrule 
     \end{tabular} 
-    \label{tab:image_hyperparameters}
-    \caption{Table qui recense l'ensemble des modèles de classification utilisés afin de réaliser la séparation en 3 classes. Sont également renseignés les hyperparamètres propres à ces modèles et les combinaisons de valeurs choisies pour réaliser ces tests.}
+    \caption{Table recensant l'ensemble des modèles de classification et leurs hyperparamètres évalués lors des expériences que nous mènerons.}
+    \label{tab:image_classification_models_hyperparameters}
 \end{table}\par
+
+Dans un premier temps, nous évaluerons nos données à l'aide de \gls{cart} dont l'utilité a été démontré par l'un de nos travaux de référence ~\cite{Wiltgen2008}. Néanmoins, ces modèles tendent au sur-apprentissage dans des contextes où les dimensions sont nombreuses, ainsi nous évaluerons de manière complémentaires les \gls{rf}~\cite{Breiman2001} et les \gls{gb} plus aptes à gérer cet aspect. Dans un second temps, nous envisageons les modèles \gls{svm} employés dans de nombreux contextes de classification~\cite{Smach2008a}, mais également de classification de lésion de la peau~\cite{Celebi2007}. Enfin, nous envisagerons la piste des \gls{mlp} afin de d'évaluer notre problématique de manière non linéaire.\par
+
+Afin d'évaluer au mieux chacun de ces modèles, nous affinerons les hyperparamètres majeurs de chacun de ces modèles. Il sera bien entendu nécessaire de faire des compromis dans le choix de ces valeurs, et opterons pour celles les plus couramment utilisées. L'ensemble des modèles de classification et de leurs hyperparamètres et valeurs associés sont recensés sur la \Cref{tab:image_classification_models_hyperparameters}.\par
 
 \section{Processus et métriques}
 Pour réaliser l'évaluation, nous emploierons une validation croisée imbriquée déjà discuté sur le \Cref{sec:models_settings}. Le choix de cette structure de validation a été déterminé car moins sujet au biais~\cite{Cawley2010}. Nous opterons pour des valeurs de quatre lots pour l'évaluation et de deux lots pour la validation, arbitrairement choisies mais représentant un bon compromis vis à vis de nos expériences. Ces répartitions sous forme de lot de nos données est visible sur la \Cref{fig:visualisation_folds}.\par
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\linewidth]{contents/chapter_4/resources/visualisation_folds.png}
+    \includegraphics[width=0.7\linewidth]{contents/chapter_4/resources/visualisation_folds.png}
     \caption{Visualisation des divers lots d'évaluation utilisés pour l'évaluation des processus de classification.}
     \label{fig:visualisation_folds}
 \end{figure}\par
@@ -606,7 +609,7 @@ Les choix que nous réaliseront entre ces diverses étapes se baseront sur les r
 
 \clearpage
 
-\section{Résultats et discussions}
+\section{Résultats}
 Les premières expérimentations menées sur les techniques d'extraction de caractéristiques associés au techniques de normalisation nous permettent d'isoler celles d'entre elles jugées comme les plus pertinentes. Dans un premier temps du point de vue des techniques d'extraction spatial, nous obtenons un score maximal pour les caractéristiques proposé par Haralick non moyennés de 0,64 associés un écart-type de 0,07. Ce score est maximisé par l'utilisation par l'utilisation conjointe d'un modèle \gls{svm} avec noyau RBF et d'une normalisation par Minimum/Maximum. Dans un second temps du point de vue des techniques fréquentielles, le score de classification à trois classes est rendu maximal par l'utilisation de l'extraction en ondelettes de Daubechies par l'obtention d'un score de 0,67 associé à un écart type de 0,06. Ce score est maximisé par l'utilisation par l'utilisation conjointe d'un modèle \gls{svm} avec noyau linéaire ou RBF et d'une normalisation par Minimum/Maximum ou Standard. Enfin, par l'utilisation de diverses architectures de \gls{cnn}, nous parvenons à obtenir un score de de 0,77 associé à un écart type de 0,04 sur l'architecture ResNet combinée à une couche de pooling moyen. Ce score est maximisé à l'aide d'une modèle \gls{svm} avec noyau linéaire et de la normalisation Minimum/Maximum. L'ensemble des résultats liées à cette première expérience sont visibles sur la \Cref{fig:results_image_classification} et sont détaillés en annexe.\par
 
 \begin{figure}[H]
@@ -641,30 +644,65 @@ Le second volet de ces expérimentations vise a mesurer l'impact de la réductio
     \label{fig:results_image_classification_reduction}
 \end{figure}\par
 
-La dernière partie de notre expérimentation vise à étudier l'impact de l'équilibrage des données sur la qualité des résultats de classification. Pour cela, les méthodes les plus performantes précédemment évoquées sont employées à cet usage. Ainsi, sur l'ensemble des méthodes évaluées la combinaison ResNet\par
+La dernière partie de notre expérimentation vise à étudier l'impact de l'équilibrage des données sur la qualité des résultats de classification. Pour cela, les méthodes les plus performantes précédemment évoquées sont employées à cet usage. Ainsi, sur l'ensemble des méthodes évaluées la méthode par transfert, qui pour rappel emploie une architecture ResNet avec un global pooling moyen et une normalisation Minimum/Maximum associée à un modèle \gls{svm} linéaire, atteint un score à trois classe de 0,77 et un écart type de 0,04. Ce score est obtenu avec l'utilisation d'une pondération dans le but de compenser le déséquilibre de données.\par
 
 \begin{table}[H]
-\begin{tabular}{lllllll}
-                            & Sans stratégie& Pondération        & RandomOS  & SE  & SMOTEEN   & SMOTETomek \\
-Haralick                    & 0.55±0.15     & 0.61±0.09          & 0.54±0.15 & 0.58±0.11 & 0.60±0.09 & 0.56±0.16  \\
-Daubechies                  & 0.59±0.13     & 0.67±0.06          & 0.55±0.21 & 0.58±0.17 & 0.61±0.12 & 0.64±0.10  \\
-\rowcolor[HTML]{E7E6E6} 
-ResNet - Moyenne            & 0.71±0.08     & \textbf{0.77±0.04} & 0.74±0.07 & 0.72±0.05 & 0.74±0.05 & 0.74±0.05  \\
-PCA 0.99 - ResNet - Moyenne & 0.71±0.09     & 0.76±0.03          & 0.74±0.06 & 0.73±0.04 & 0.73±0.04 & 0.73±0.06 
-\end{tabular}
+    \begin{tabular}{lllllll}
+        \toprule
+                    & Aucune    & Pond.             & Sur-éch. & Sous-éch. & SMOTE+ENN & SMOTE+Tomek\\ \hline
+        Spatial     & 0.55±0.15 & 0.61±0.09         & 0.54±0.15& 0.58±0.11 & 0.60±0.09 & 0.56±0.16  \\
+        Fréquentiel & 0.59±0.13 & 0.67±0.06         & 0.55±0.21& 0.58±0.17 & 0.61±0.12 & 0.64±0.10  \\
+        \rowcolor[HTML]{E7E6E6}
+        Transfert   & 0.71±0.08 & \textbf{0.77±0.04}& 0.74±0.07& 0.72±0.05 & 0.74±0.05 & 0.74±0.05  \\
+        Réduction   & 0.71±0.09 & 0.76±0.03         & 0.74±0.06& 0.73±0.04 & 0.73±0.04 & 0.73±0.06  \\
+        \bottomrule
+    \end{tabular}
+    \caption{Résultats à trois classes issus de l'expérience mêlant les méthodes les plus performantes associée aux méthodes de balancement de données évoquées.}
+    \label{tab:results_balancement_multi}
 \end{table}\par
+
+Du point de vue de la séparation des tissus malins du reste des tissus, la méthode basée sur l'apprentissage par transfert par l'utilisation d'une architecture ResNet avec un global pooling moyen et une normalisation Minimum/Maximum associée à un modèle \gls{svm} linéaire, reste la plus performante avec un score de 0,82 et un très faible écart-type de 0,01.\par
 
 \begin{table}[H]
-\begin{tabular}{lllllll}
-                            & \multicolumn{6}{c}{Malignant}                                                     \\
-                            & Sans stratégie& Pondération       & RandomOS  & RandomUS  & SMOTEEN   & SMOTETomek \\
-Haralick                    & 0.65±0.11     & 0.63±0.07         & 0.64±0.10 & 0.64±0.08 & 0.63±0.09 & 0.59±0.27  \\
-Daubechies                  & 0.70±0.09     & 0.68±0.03         & 0.66±0.09 & 0.66±0.09 & 0.61±0.22 & 0.66±0.09  \\
-\rowcolor[HTML]{E7E6E6} 
-ResNet - Moyenne            & 0.81±0.04     & \textbf{0.82±0.02}& 0.81±0.03 & 0.79±0.01 & 0.80±0.02 & 0.82±0.03  \\
-PCA 0.99 - ResNet - Moyenne & 0.81±0.03     & 0.81±0.01         & 0.81±0.03 & 0.79±0.03 & 0.80±0.01 & 0.81±0.03 
-\end{tabular}
+    \begin{tabular}{lllllll}
+        \toprule
+                    & Aucune    & Pond.             & Sur-éch.  & Sous-éch. & SMOTE+ENN & SMOTE+Tomek\\ \hline
+        Spatial     & 0.65±0.11 & 0.63±0.07         & 0.64±0.10 & 0.64±0.08 & 0.63±0.09 & 0.59±0.27  \\
+        Fréquentiel & 0.70±0.09 & 0.68±0.03         & 0.66±0.09 & 0.66±0.09 & 0.61±0.22 & 0.66±0.09  \\
+        \rowcolor[HTML]{E7E6E6} 
+        Transfert   & 0.81±0.04 & \textbf{0.82±0.02}& 0.81±0.03 & 0.79±0.01 & 0.80±0.02 & 0.82±0.03  \\
+        Réduction   & 0.81±0.03 & 0.81±0.01         & 0.81±0.03 & 0.79±0.03 & 0.80±0.01 & 0.81±0.03  \\
+        \bottomrule 
+    \end{tabular}
+    \caption{Résultats de la détection de tissus malin issus de l'expérience mêlant les méthodes les plus performantes associée aux méthodes de balancement de données évoquées.}
+    \label{tab:results_balancement_malignant}
 \end{table}\par
 
+Enfin, une les courbes \gls{roc} nous permettent d'appréhender les performances de prédiction de ce système. Ainsi, les performances propre à l'ensemble de la base d'images annotés sont homogènes par cette technique avec des scores \gls{auc} compris entre 0,87 et 0,90. Néanmoins, une analyse \gls{roc} des lésions \gls{lm} et \gls{lmm} permet de mettre en avant des performances moins homogènes entre les diverses classes pouvant montrer des difficultés de cette techniques à séparer les tissus de ces lésions, les score \gls{auc} variant entre 0,79 et 0,92. Ces éléments sont visibles sur la \Cref{fig:results_image_classification_roc}.\par
 
-Néanmoins, il est également a été également jugées important de l'intersection d'évènements tels que la présence de tissus caractéristiques aux abords de follicules pileux.\par
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{contents/chapter_4/resources/results_image_classification_roc.pdf}
+    \caption{Courbes \gls{roc} et scores \gls{auc} associés aux courbes. A gauche, courbes associées à l'ensemble des lésions d'étude ; A droite, courbes associées aux seules cas pathologiques de \gls{lm}/\gls{lmm}.}
+    \label{fig:results_image_classification_roc}
+\end{figure}\par
+
+\section{Discussion}
+A la suite des précédents résultats, il nous est possible dans un premier temps de formuler divers constats suite à la mise en pratique des diverses méthodes d'extraction de caractéristiques. La première d'entre elle sur les caractéristiques spatiales, met en avant l'utilité de la méthode d'Haralick sur ces données de \gls{rcm}, mais pour lesquelles l'ajout de mesures de premier ordre ne semble pas ou peu impacter le résultat. La seconde d'entre elle concerne les caractéristiques fréquentielles, et sur l'utilité de l'extraction en ondelettes comparée aux caractéristiques extraites à l'aide de l'espace de Fourier sur ces même données. Nous avons également montré une faible influence de l'ondelette mère, bien que celle de Daubechies soit pertinente sur nos données. Enfin, la proposition de méthode employant des architectures de \gls{cnn} pour l'extraction de caractéristiques a été la plus pertinente d'entre toute, notamment par l'utilisation de couche de global pooling moyen. Sur l'ensemble des architectures évalués, ResNet semble être celle allant de le sens de notre problématique que nous développerons par la suite.\par
+
+En ce qui concerne les modèles de classification employés, nous pouvons constater que le modèle \gls{svm} à noyau linéaire a été le plus pertinent dans la plupart des expériences menées lors de ce chapitre. Le modèle \gls{svm} à noyau RBF a été essentiellement pertinent à l'aide d'une normalisation par Minimum/Maximum, sa performance et stabilité chutant de manière drastique lorsque les caractéristiques sont nombreuses, comme avec les méthodes par transfert de connaissance. Du côté des méthodes basées sur les arbres de décisions, ces techniques ont été globalement peu influencées par les méthodes de normalisation. Comme attendu, les \gls{cart} ont été performant dans la plupart des situations, exceptée celles par transfert de connaissances dans lesquelles le nombre de caractéristiques est trop important. A cette fin, les techniques de \gls{rf} et \gls{gb} ont été particulièrement adaptées, les \gls{gb} étant légèrement moins stables que les \gls{rf}. Pour finir cette analyse des modèles, l'utilisation de \gls{mlp} dans le but d'observer l'effet de la non linéarité semble ne pas avoir aidé à améliorer la classification.\par
+
+Afin de compenser le nombre élevé des caractéristiques extraites par les \gls{cnn}, des techniques de réduction ont été mise en oeuvre afin de palier ce problème. Leur utilisation aura réduit les performances globale du système mais également la stabilité en augmentant l'écart-type sensiblement. Néanmoins, des performances non négligeables ont été obtenues dans une configuration utilisant ResNet et l'\gls{pca} avec une variance expliquée de 99\%, avec moins d'un quart des caractéristiques. La variance expliquée obtenue par \gls{pca} est visible sur la \Cref{fig:results_image_classification_pca_variance}.\par
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{contents/chapter_4/resources/results_image_classification_pca_variance.pdf}
+    \caption{Analyse de la variance expliquée cumulée par l'application de l'\gls{pca}. Une variance cumulée de 95\% peux être obtenue à l'aide de 45 caractéristiques tandis qu'une variance cumulée de 99,5\% peux être obtenue à l'aide de 433 caractéristiques.}
+    \label{fig:results_image_classification_pca_variance}
+\end{figure}\par
+
+La dernière méthode mise en oeuvre pour optimiser les performances de classification des images concerne le balancement des annotations. Nous avons initialement favorisé la pondération, proposant une correction des non balancement à moindre frais, mais sans certitude sur sa pertinence. Sur les diverses méthodes évaluées lors de ces expériences, la pondération à permis l'obtention des meilleurs résultats avec un coup de mise en place faible sur nos données.\par
+
+En conclusion, ce premier chapitre expérimental aura permis de mettre au point un processus permettant de traiter les données \gls{rcm}. Nous avons pu ainsi accomplir une classification avec un \fscore{} de 0,77 et un écart-type de 0,04 pour 3 classes et 0,82 et un écart-type de 0,02 pour la classification d'éléments malins. De plus ce processus aura permis l'obtention d'une \gls{auc} de 0,90 sur l'ensemble des images malignes et de 0,85 sur les images malignes d'origine \gls{lm}/\gls{lmm}.\par
+
+Néanmoins, notre proposition de technique ne prend en compte que la caractérisation des tissus des images. Une amélioration possible de ces expériences pourrait prendre en compte l'intersection d'évènements tels que la présence de tissus caractéristiques et la présence de follicules pileux conjointement.\par
