@@ -8,13 +8,13 @@ Dans ce chapitre, nous nous emploierons à améliorer la qualité du diagnostic 
 \newpage
 
 \section{Méthodologie}
-Lors du précédent chapitre, nous avons proposé diverses approches dans une philosophie de classification de l'image dans son intégralité pour permettre la séparation des éléments sain, bénin et malin. Cette approche suppose que l'information extraite par ces méthodes est suffisante pour permettre un diagnostic selon ces trois catégories de tissus. Cette hypothèse est partiellement juste puisqu'une même image \gls{rcm} peux comporter divers types de tissus, des trois classes précédemment évoquées, comme visible sur la \Cref{fig:scheme_annotations_hierarchy}.\par
+Lors du précédent chapitre, nous avons proposé diverses approches dans une philosophie de classification de l'image dans son intégralité pour permettre la séparation des éléments sain, bénin et malin. Cette approche suppose que l'information extraite par ces méthodes est suffisante pour permettre un diagnostic selon ces trois catégories de tissus. Cette hypothèse est partiellement juste puisqu'une même image \gls{rcm} peux comporter divers types de tissus, des trois classes précédemment évoquées, comme visible sur la \Cref{fig:scheme_image_improvement_annotations_hierarchy}.\par
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\textwidth]{contents/chapter_5/resources/scheme_annotations_hierarchy.pdf}
+    \includegraphics[width=0.7\textwidth]{contents/chapter_5/resources/scheme_image_improvement_annotations_hierarchy.pdf}
     \caption{Relation hiérarchiques entre les annotations. Les images malignes peuvent ainsi contenir des tissus bénin et sain ; Les images bénignes peuvent contenir des tissus sains ; Les images saines ne contiennent que des tissus sains.}
-    \label{fig:scheme_annotations_hierarchy}
+    \label{fig:scheme_image_improvement_annotations_hierarchy}
 \end{figure}\par
 
 Dans ce nouveau chapitre dédié à l'amélioration du diagnostic de l'image, nous exploiterons d'une part les conclusions du précèdent chapitre quant aux procédés de classification en privilégiant l'utilisation de \gls{svm} à noyau linéaire et d'autre part aux méthodes permettant l'extraction de l'information de texture. Ainsi, nous nous référerons aux méthodes suivantes :
@@ -24,7 +24,7 @@ Dans ce nouveau chapitre dédié à l'amélioration du diagnostic de l'image, no
     \item pour la \textbf{catégorie de méthodes de transfert de connaissances}, nous utiliserons l'architecture ResNet.
 \end{itemize}\par
 
-Nous envisagerons de manière complémentaire des schémas alternatifs afin d'extraire une information suffisante à la séparation de nos données. Nous débuterons par la présentation de méthodes par multiples échelles, en supposant que l'information comporte plusieurs niveaux d'interprétations pouvant être capté par une méthode de classification. Dans un second temps, nous tenterons de capter l'information localement en employant un principe de fenêtres glissantes et de prédiction associées. Enfin, nous étendrons ces approches locales par l'utilisation de réseaux de \gls{cnn}, ajusté de bout en bout sur notre problème de classification à trois classes.\par
+Nous envisagerons de manière complémentaire des schémas alternatifs afin d'extraire une information suffisante à la séparation de nos données. Nous débuterons par la présentation de méthodes par multiples échelles, en supposant que l'information comporte plusieurs niveaux d'interprétations pouvant être capté par une méthode de classification. Dans un second temps, nous tenterons de capter l'information localement en employant un principe de fenêtre glissante et de prédiction associées. Enfin, nous étendrons ces approches locales par l'utilisation de réseaux de \gls{cnn}, ajusté de bout en bout sur notre problème de classification à trois classes.\par
 \clearpage
 
 \section{Approche par échelles multiples}
@@ -39,37 +39,37 @@ C'est ainsi que des hypothèses de compréhensions de l'image à multiples éche
 \end{inlinerate} En termes d'images ~\gls{rcm} appliquée au domaine de la dermatologie, le travail de Wiltgen et al~\cite{Wiltgen2008} semble le plus proche et propose en autre le traitement de ces données par échelle multiples. Ainsi, nous scinderons cette section en deux parties respectives, avec d'une part l'application de ce principe à la décomposition en ondelettes et d'autres part l'application de ce principe à des techniques d'extraction spatiales.\par 
 
 \subsection{Décomposition en ondelettes à échelles multiples}
-Notre première approche par échelles multiples se portera sur la décomposition en ondelettes. En effet, ce principe a été démontré comme judicieux dans de nombreux domaines impliquant l'analyse d'images~\cite{Carvalho2004}. La décomposition peut ainsi être réalisé sous la forme d'un schéma dit diadique ou bien pyramidal. Ces deux mode sont schématisés sur la \Cref{fig:scheme_dwt_decomposition}. L'un de nos articles de référence préconise l'utilisation du schéma de décomposition diadique pour l'extraction de caractéristiques de texture sur images \gls{rcm}~\cite{Wiltgen2008}. Pour cela, cet article se focalise sur l'utilisation d'une ondelette mère de Daubechies et emploie la transformée en ondelette à cinq niveaux successifs sous forme d'arbre diadique. Les mesures associées à chaque bande de fréquences de la transformée sont les même que dans le \Cref{chap:chapter_4} et se base sur l'extraction de la déviation standard, l'énergie et l'entropie pour un total de \textbf{39 descripteurs}. Suite aux résultats obtenus lors du \Cref{chap:chapter_4}, nous évaluerons également ce procédé selon l'ondelette mère de Haar.\par
+Notre première approche par échelles multiples se portera sur la décomposition en ondelettes. En effet, ce principe a été démontré comme judicieux dans de nombreux domaines impliquant l'analyse d'images~\cite{Carvalho2004}. La décomposition peut ainsi être réalisé sous la forme d'un schéma dit diadique ou bien pyramidal. Ces deux mode sont schématisés sur la \Cref{fig:scheme_image_improvement_dwt_decomposition}. L'un de nos articles de référence préconise l'utilisation du schéma de décomposition diadique pour l'extraction de caractéristiques de texture sur images \gls{rcm}~\cite{Wiltgen2008}. Pour cela, cet article se focalise sur l'utilisation d'une ondelette mère de Daubechies et emploie la transformée en ondelette à cinq niveaux successifs sous forme d'arbre diadique. Les mesures associées à chaque bande de fréquences de la transformée sont les même que dans le \Cref{chap:chapter_4} et se base sur l'extraction de la déviation standard, l'énergie et l'entropie pour un total de \textbf{39 descripteurs}. Suite aux résultats obtenus lors du \Cref{chap:chapter_4}, nous évaluerons également ce procédé selon l'ondelette mère de Haar.\par
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{contents/chapter_5/resources/scheme_dwt_decomposition.pdf}
+    \includegraphics[width=\textwidth]{contents/chapter_5/resources/scheme_image_improvement_dwt_decomposition.pdf}
     \caption{Schématisation deux principaux types de décomposition successives par ondelettes. En a), schéma de décomposition multi-échelle en ondelettes dit \textbf{diadique} ; En b), schéma de décomposition multi-échelle en ondelettes dit \textbf{pyramidal}.}
-    \label{fig:scheme_dwt_decomposition}
+    \label{fig:scheme_image_improvement_dwt_decomposition}
 \end{figure}\par
 
-Le second travail sur base de décomposition en ondelettes sur lequel nous nous appuyons est une extension de la transformée en ondelettes du précédent travail~\cite{Halimi2017a}. Ainsi, ce travail reprend la précédente décomposition selon un schéma diadique, et modifie le nombre de niveaux de décomposition (quatre niveaux au lieu des cinq initialement prévu par Wiltgen et al.). Selon ce même travail, une loi normale généralisée centrée, dont la densité de probabilité $f$ est décrite par l'\Cref{eq:ggd}, est ajustée à la distribution de valeurs de chaque niveau de décomposition. Enfin, les auteurs de l'étude ne retiennent comme caractéristiques que les paramètres d'échelle $\alpha$ et de forme $\beta$ de cette loi normale généralisée pour un total de 24 caractéristiques.\par
+Le second travail sur base de décomposition en ondelettes sur lequel nous nous appuyons est une extension de la transformée en ondelettes du précédent travail~\cite{Halimi2017a}. Ainsi, ce travail reprend la précédente décomposition selon un schéma diadique, et modifie le nombre de niveaux de décomposition (quatre niveaux au lieu des cinq initialement prévu par Wiltgen et al.). Selon ce même travail, une loi normale généralisée centrée, dont la densité de probabilité $f$ est décrite par l'\Cref{eq:image_improvement_ggd}, est ajustée à la distribution de valeurs de chaque niveau de décomposition. Enfin, les auteurs de l'étude ne retiennent comme caractéristiques que les paramètres d'échelle $\alpha$ et de forme $\beta$ de cette loi normale généralisée pour un total de 24 caractéristiques.\par
 
 \begin{equation}
     f(x)= \frac{\beta}{2\alpha\Gamma(1/\beta)} e^{-\left(|\frac{x}{\alpha}|\right)^\beta}
-    \label{eq:ggd}
+    \label{eq:image_improvement_ggd}
 \end{equation}
 
-Afin de gérer ces diverses caractéristiques, nous nous emploierons à l'utilisation d'un modèle de type \gls{svm} linéaire, démontré empiriquement efficace pour la classification de données fréquentielles dans ce contexte lors du \Cref{chap:chapter_4}. Les hyperparamètres que nous utiliserons pour validations sont présentés sur la \Cref{tab:image_improvement_multiscale_frequency}.\par
+Afin de gérer ces diverses caractéristiques, nous nous emploierons à l'utilisation d'un modèle de type \gls{svm} linéaire, démontré empiriquement efficace pour la classification de données fréquentielles dans ce contexte lors du \Cref{chap:chapter_4}. Les hyperparamètres que nous utiliserons pour validations sont présentés sur la \Cref{tab:parameters_image_improvement_multiscale_frequency}.\par
 
 \begin{table}[H]
     \centering
-    \begin{tabular}{cll}
+    \begin{tabular}{lll}
         \toprule
         \textbf{Modèle}                                 & \textbf{Hyperparamètres}  & \textbf{Valeurs}                          \\ \midrule
         \gls{svm} - Noyau linéaire                      & C                         & [0.001, 0.01, 0.1, 1, 10, 100, 1000]      \\ 
         \bottomrule 
     \end{tabular} 
     \caption{Table reprenant le modèle et les hyperparamètres du modèle de classification employé pour la prédiction sur les caractéristiques fréquentielles par échelles multiples.}
-    \label{tab:image_improvement_multiscale_frequency}
+    \label{tab:parameters_image_improvement_multiscale_frequency}
 \end{table}\par
 
-Nous effectuerons la transformée en ondelettes et la décomposition à échelles multiples de ce travail à l'aide de la bibliothèque logicielle "PyWavelets"~\cite{lee2006}. Quant aux opérations d'ajustement de la loi généralisée nous nous appuierons sur la bibliothèque logicielle "SciPy"~\cite{Virtanen2020}. L'ensemble de nos expérimentations basées sur la décomposition en ondelettes à échelle multiples sont recensées sur la \Cref{tab:wavelet_multiscale_nb_features} ainsi que leurs nombres de caractéristiques associées.\par
+Nous effectuerons la transformée en ondelettes et la décomposition à échelles multiples de ce travail à l'aide de la bibliothèque logicielle "PyWavelets"~\cite{lee2006}. Quant aux opérations d'ajustement de la loi généralisée nous nous appuierons sur la bibliothèque logicielle "SciPy"~\cite{Virtanen2020}. L'ensemble de nos expérimentations basées sur la décomposition en ondelettes à échelle multiples sont recensées sur la \Cref{tab:wavelet_image_improvement_multiscale_nb_features} ainsi que leurs nombres de caractéristiques associées.\par
 
 \begin{table}[h]
     \centering
@@ -82,48 +82,48 @@ Nous effectuerons la transformée en ondelettes et la décomposition à échelle
         \bottomrule
     \end{tabular}
     \caption{Listes des méthodes sur base de décomposition par échelles multiples en ondelettes et leur nombre de caractéristiques extraites associées.}
-    \label{tab:wavelet_multiscale_nb_features}
+    \label{tab:wavelet_image_improvement_multiscale_nb_features}
 \end{table}\par
 
 \subsection{Approche par échelles multiples}
 Lors de la précédente sous-section, nous avons abordé les approches à échelle multiples sur base d'extraction en ondelettes. Toujours dans cette optique d'approche par échelle multiples, divers travaux se sont orientées afin de permettre une classification d'images médicale sur base d'extraction de caractéristiques spatiales~\cite{Alsaih2016,Tzalavra2016}. Les prochains étapes s'inspireront de ces travaux mais également des conclusions apportées par le \Cref{chap:chapter_4} sur l'extraction de caractéristiques spatiales et par transfert de connaissances. Ainsi, nous mettrons en œuvre deux processus par échelle multiples dans ce chapitre présentés lors des prochains paragraphes.\par
 
-La première approche utilisée se base sur une approche de type fusion de caractéristiques avant l'étape de classification, telle qu'employé dans des travaux à but similaire~\cite{Pedersoli2011,Alsaih2016}. Afin de permettre l'agrégation des caractéristiques, nous emploierons un modèle \gls{svm} de type linéaire démontré efficace de manière empirique au sein du \Cref{chap:chapter_4} et robuste dans des contextes à forte dimensions. Les paramètres du modèle sont recensé sur la \Cref{tab:image_improvement_models_multiscale_spatial} et le principe de cette approche est schématisé au travers de la \Cref{fig:scheme_multiscale_features}.\par
+La première approche utilisée se base sur une approche de type fusion de caractéristiques avant l'étape de classification, telle qu'employé dans des travaux à but similaire~\cite{Pedersoli2011,Alsaih2016}. Afin de permettre l'agrégation des caractéristiques, nous emploierons un modèle \gls{svm} de type linéaire démontré efficace de manière empirique au sein du \Cref{chap:chapter_4} et robuste dans des contextes à forte dimensions. Les paramètres du modèle sont recensé sur la \Cref{tab:parameters_image_improvement_models_multiscale_spatial} et le principe de cette approche est schématisé au travers de la \Cref{fig:scheme_image_improvement_multiscale_features}.\par
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\linewidth]{contents/chapter_5/resources/scheme_multiscale_features.pdf}
+    \includegraphics[width=\linewidth]{contents/chapter_5/resources/scheme_image_improvement_multiscale_features.pdf}
     \caption{Schéma de représentation du système par échelles multiple, sur la base d'une extraction à diverses échelles puis par l'agrégation des caractéristiques avant la procédure de classification.}
-    \label{fig:scheme_multiscale_features}
+    \label{fig:scheme_image_improvement_multiscale_features}
 \end{figure}\par
 
-La seconde approche à échelles multiples correspond à un schéma en deux temps. En effet, nous considérerons dans cette seconde hypothèse la spécialisation de modèles de prédiction à des échelles précises. Nous emploierons à chacune de ces échelles, un modèle de type \gls{svm} linéaire pour les raisons évoquées précédemment, dont les hyperparamètres sont recensés en \Cref{tab:image_improvement_models_multiscale_spatial}. Pour cela, une étape d'entraînement de ces modèles sera réalisée en amont à l'aide de données d'entraînement accompagné par une étape de fusion des prédictions. Concernant la fusion de ces prédictions, le choix d'un vote à la majorité~\cite{Kam1994,Lam1997} a été évalué sur : 
+La seconde approche à échelles multiples correspond à un schéma en deux temps. En effet, nous considérerons dans cette seconde hypothèse la spécialisation de modèles de prédiction à des échelles précises. Nous emploierons à chacune de ces échelles, un modèle de type \gls{svm} linéaire pour les raisons évoquées précédemment, dont les hyperparamètres sont recensés en \Cref{tab:parameters_image_improvement_models_multiscale_spatial}. Pour cela, une étape d'entraînement de ces modèles sera réalisée en amont à l'aide de données d'entraînement accompagné par une étape de fusion des prédictions. Concernant la fusion de ces prédictions, le choix d'un vote à la majorité~\cite{Kam1994,Lam1997} a été évalué sur : 
 \begin{inlinerate}
     \item les \textbf{décisions}, défini par l'ensemble $\mathbf{N}$,
     \item mais également sur les \textbf{scores}, défini par l'ensemble $\mathbf{R}$.
 \end{inlinerate}
-Il est à noter que ces schémas d'agrégation ne nécessitent aucune phase d'apprentissage. Afin de mettre en œuvre l'approche par scores, dans un premier temps, nous arborerons un schéma de type fonction de moyenne associé à la classe répertoriant le score le plus élevé. Ce schéma permet de notifier d'une tendance globale d'une classe par rapport aux autres. Dans un second temps, nous avons réalisé une approche de type fonction de maximum et détection de la classe recueillant le plus grand score. En effet, dans ce second schéma, nous optons pour une vision de la classe ayant recueilli la plus grande confiance. Le schéma global de cette expérience est présenté sur la \Cref{fig:scheme_multiscale_decision}.\par
+Il est à noter que ces schémas d'agrégation ne nécessitent aucune phase d'apprentissage. Afin de mettre en œuvre l'approche par scores, dans un premier temps, nous arborerons un schéma de type fonction de moyenne associé à la classe répertoriant le score le plus élevé. Ce schéma permet de notifier d'une tendance globale d'une classe par rapport aux autres. Dans un second temps, nous avons réalisé une approche de type fonction de maximum et détection de la classe recueillant le plus grand score. En effet, dans ce second schéma, nous optons pour une vision de la classe ayant recueilli la plus grande confiance. Le schéma global de cette expérience est présenté sur la \Cref{fig:scheme_image_improvement_multiscale_decision}.\par
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\linewidth]{contents/chapter_5/resources/scheme_multiscale_decision.pdf}
+    \includegraphics[width=\linewidth]{contents/chapter_5/resources/scheme_image_improvement_multiscale_decision.pdf}
     \caption{Schéma de représentation du système par échelles multiples, sur la base d'extraction d'extractions et de prédictions à diverses échelles et par agrégation de ces décisions.}
-    \label{fig:scheme_multiscale_decision}
+    \label{fig:scheme_image_improvement_multiscale_decision}
 \end{figure}\par
 
 \begin{table}[H]
     \centering
-    \begin{tabular}{cll}
+    \begin{tabular}{lll}
         \toprule
         \textbf{Modèle}                                 & \textbf{Hyperparamètres}  & \textbf{Valeurs}                          \\ \midrule
         \gls{svm} - Noyau linéaire                      & C                         & [0.001, 0.01, 0.1, 1, 10, 100, 1000]      \\ 
         \bottomrule 
     \end{tabular} 
     \caption{Table recensant les paramètres du modèle de classification employé pour réaliser la prédiction par échelles multiples sur caractéristiques spatiales ou par transfert de connaissances. Ce modèle et hyperparamètres sont employés pour la classification par échelle mais également pour l'agrégation des multiples échelles.}
-    \label{tab:image_improvement_models_multiscale_spatial}
+    \label{tab:parameters_image_improvement_models_multiscale_spatial}
 \end{table}\par
 
-Ainsi, nous mènerons les diverses expériences de cette sous-section à l'aide des modes d'extraction précédemment étudié dans le \Cref{chap:chapter_4}. Nous emploierons dans un premier temps les caractéristiques d'Haralick~\cite{Haralick1973} extraites au nombre de 56 par image. Puis dans un second temps, le transfert de connaissances par l'utilisation de l'architecture de \gls{cnn} ResNett~\cite{He2016} pré-entrainé sur la base ImageNet~\cite{Canziani2016}, permettant l'extraction de 2048 d'entre elles par image. L'ensemble des expériences menées est recensé sur la \Cref{tab:spatial_transfer_multiscale_nb_features}.\par
+Ainsi, nous mènerons les diverses expériences de cette sous-section à l'aide des modes d'extraction précédemment étudié dans le \Cref{chap:chapter_4}. Nous emploierons dans un premier temps les caractéristiques d'Haralick~\cite{Haralick1973} extraites au nombre de 56 par image. Puis dans un second temps, le transfert de connaissances par l'utilisation de l'architecture de \gls{cnn} ResNett~\cite{He2016} pré-entrainé sur la base ImageNet~\cite{Canziani2016}, permettant l'extraction de 2048 d'entre elles par image. L'ensemble des expériences menées est recensé sur la \Cref{tab:parameters_spatial_transfer_multiscale_nb_features}.\par
 
 \begin{table}[H]
     \centering
@@ -137,14 +137,14 @@ Ainsi, nous mènerons les diverses expériences de cette sous-section à l'aide 
         \bottomrule
     \end{tabular}
     \caption{Listes des méthodes sur base de décomposition par échelles multiples et leur nombre de caractéristiques extraites associées.}
-    \label{tab:spatial_transfer_multiscale_nb_features}
+    \label{tab:parameters_spatial_transfer_multiscale_nb_features}
 \end{table}\par
 
 
 \section{Approche par fenêtre glissante}
 Les hypothèses formulées lors du \Cref{chap:chapter_4} ne permettaient qu'une compréhension globale de l'image. Lors de la section précédente, nous avons évoqué des schémas par échelles multiples permettant une compréhension à divers niveaux. Cette nouvelle section va s'orienter vers une compréhension des données à basse échelle, en supposant qu'il existe un niveau de détail pour lesquels les tissus peuvent être caractérisés avec suffisamment de précision.\par
 
-Ce type d'approche est souvent qualifié d'approche par fenêtres glissante ou par miniatures (termes anglais de \textit{patchs}). Néanmoins le premier terme permet de visualiser le principe de fonctionnement consistant à balayer un espace de plus grande dimension par une fenêtre de dimension inférieure. Cette technique a permis des avancées pour de diverses applications, dont : 
+Ce type d'approche est souvent qualifié d'approche par fenêtre glissante ou par miniatures (termes anglais de \textit{patchs}). Néanmoins le premier terme permet de visualiser le principe de fonctionnement consistant à balayer un espace de plus grande dimension par une fenêtre de dimension inférieure. Cette technique a permis des avancées pour de diverses applications, dont : 
 \begin{itemize}
     \item de la détection et localisation d'objets sur des images naturelles~\cite{Harzallah2009} ou encore de détection de cancer et de parties anatomiques sur image de radiologie~\cite{Helwan2017}, par motivation d'obtenir l'emplacement précis de certaines informations,
     \item de la détection d'anomalies sur des images histologiques mais encore de la classification de données conséquentes~\cite{Hou2016,Alqudah2019,Wei2019}, motivées par la contrainte matérielle impliqué par la taille de ces images ou par manque d'annotations,
@@ -157,28 +157,28 @@ Ce travail se distingue des travaux de Hou et al.~\cite{Hou2016} ou encore de Al
 
 \begin{table}[H]
     \centering
-    \begin{tabular}{cll}
+    \begin{tabular}{lll}
         \toprule
         \textbf{Modèle}                                 & \textbf{Hyperparamètres}  & \textbf{Valeurs}                          \\ \midrule
         \gls{svm} - Noyau linéaire                      & C                         & [0.001, 0.01, 0.1, 1, 10, 100, 1000]      \\ 
         \bottomrule 
     \end{tabular} 
     \caption{Table reprenant le modèle et les hyperparamètres du modèle de classification employé pour la détection à basse échelle des tissus dans le processus de fenêtre glissante.}
-    \label{tab:sliding_window_models}
+    \label{tab:parameters_image_improvement_sliding_window_models}
 \end{table}\par
 
 Dans le but de mettre en oeuvre le schéma de détection à basse échelle, nous appliquerons les techniques jugées les plus pertinentes du chapitre précédent, à savoir : 
 \begin{inlinerate}
     \item la méthode d'Haralick, comme représentant des méthodes spatiales,
     \item la méthode en ondelette de Daubechies, comme représentant des méthodes fréquentielles,
-    \item et enfin une extraction selon l'architecture ResNet, comme représentant des méthodes par transfert de connaissances.
-\end{inlinerate}. La détection à basse échelle sera réalisée à l'aide d'un modèle \gls{svm} linéaire, jugée le plus pertinent lors du \Cref{chap:chapter_4}, dont les paramètres sont listés en \Cref{tab:sliding_window_models}.\par
+    \item et enfin une extraction selon l'architecture ResNet-50, comme représentant des méthodes par transfert de connaissances.
+\end{inlinerate}. La détection à basse échelle sera réalisée à l'aide d'un modèle \gls{svm} linéaire, jugée le plus pertinent lors du \Cref{chap:chapter_4}, dont les paramètres sont listés en \Cref{tab:parameters_image_improvement_sliding_window_models}.\par
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\linewidth]{contents/chapter_5/resources/scheme_sliding_features.pdf}
+    \includegraphics[width=\linewidth]{contents/chapter_5/resources/scheme_image_improvement_sliding_features.pdf}
     \caption{Schéma de représentation du système de prédiction par fenêtre glissante. Ce schéma en deux temps propose de prédire sur une multitude de sous parties de l'image originale puis de fusionner les diverses prédictions afin de fournir une prédiction globale à la donnée originale.}
-    \label{fig:scheme_sliding_features}
+    \label{fig:scheme_image_improvement_sliding_features}
 \end{figure}\par
 
 Afin de gérer les prédictions obtenues au niveau de la fenêtre glissante, plusieurs stratégies sont envisagées sur les décisions et les scores. Ainsi, nous considérerons plusieurs approches, dont :
@@ -191,13 +191,13 @@ Afin de gérer les prédictions obtenues au niveau de la fenêtre glissante, plu
     \item   une approche au niveau des \textbf{scores}, défini par l'ensemble $\mathbf{R}$. Cette approche aboutie à un vecteur de taille s$\times$n où s correspond au nombre de scores de classes extrait et n correspond au nombre d'éléments extrait dans l'image. Deux méthodes ont été définies, dont : 
             \begin{itemize}
                 \item par seuil \textbf{dynamique}, nous procédons dans un premier temps à une réduction de l'information à l'aide d'une fonction maximum, nous permettant de réduire celui-ci à vecteur de taille 1$\times$s focalisé sur la confiance maximum en chaque classe. Dans un second temps, des seuils optimaux représentant la confiance minimale nécessaire sont déterminé sur ces scores, combiné là encore à un système hiérarchique privilégiant les classes prioritaires.
-                \item par \textbf{classification}, le vecteur de scores est alors considéré comme un vecteur de caractéristiques fourni en entrée d'un modèle \gls{svm} linéaire, dont les hyperparamètres considérés sont ceux de la \Cref{tab:sliding_window_models}.
+                \item par \textbf{classification}, le vecteur de scores est alors considéré comme un vecteur de caractéristiques fourni en entrée d'un modèle \gls{svm} linéaire, dont les hyperparamètres considérés sont ceux de la \Cref{tab:parameters_image_improvement_sliding_window_models}.
             \end{itemize}
 \end{itemize}\par
 
 Nous n'envisagerons pas de scénario portant sur l'extraction de caractéristiques à l'aide la fenêtre de classification, c'est à dire sans l'étape de prédiction locale à chaque fenêtre, puis à la fusion de ces caractéristiques la dimension des données généré par une telle approche étant trop conséquente.\par
  
-Nous emploierons pour cela un schéma de classification comme sur la \Cref{fig:scheme_sliding_features}. De plus, n'ayant pas de critères de tailles optimum, nous feront varier ces paramètres afin d'étudier leur impact sur la classification. ces paramètres sont visible sur la \Cref{tab:sliding_window_parameters}.\par
+Nous emploierons pour cela un schéma de classification comme sur la \Cref{fig:scheme_image_improvement_sliding_features}. De plus, n'ayant pas de critères de tailles optimum, nous feront varier ces paramètres afin d'étudier leur impact sur la classification. ces paramètres sont visible sur la \Cref{tab:parameters_image_improvement_sliding_window_parameters}.\par
 
 \begin{table}[H]
     \centering
@@ -213,7 +213,7 @@ Nous emploierons pour cela un schéma de classification comme sur la \Cref{fig:s
         \bottomrule
     \end{tabular*}
     \caption{Ensemble des paramètres d'expérimentations menées par l'approche de type fenêtre glissante. Nous mesurerons ainsi l'impact de la résolution spatiale limité aux valeurs de 250$\times$250e t 500$\times$500, mais également du chevauchement sur des valeurs de 0\%, 25\% et 50\%.}
-    \label{tab:sliding_window_parameters}
+    \label{tab:parameters_image_improvement_sliding_window_parameters}
 \end{table}\par
 
 \section{Réglage fin de réseaux de convolution}
@@ -233,15 +233,11 @@ Afin de procéder à ce réglage fin, il est nécessaire de déterminer une arch
 
 Lors du \Cref{chap:chapter_4} nous avons comparé les résultats des principales architectures de \gls{cnn} pre-éntrainés sur la base ImageNet, par application du principe d'apprentissage par transfert. Cette expérience nous a permis de déterminer de manière empirique que l'architecture de \gls{cnn} ResNet-50~\cite{He2016} est la plus adaptée en association à une couche de Global Pooling moyen. Ainsi, nous supposons que l'utilisation de l'architecture ResNet-50 et d'une couche de Global Pooling basé sur la moyenne, et couplé au principe du réglage fin est en mesure de spécialiser le réseau à la problématique de lésion de la peau sur images \gls{rcm}, et d'améliorer in fine ses performances.\par
 
-Afin de procéder à la classification nous activation
+Suivant ce constat, nous procédons à l'initialisation d'une architecture ResNet-50 et employons les poids issus d'un entraînement sur la base ImageNet. Dans un premier temps, nous retirons la dernière couche totalement connectée de ce réseau sur base d'une activation \textit{softmax}, prévue pour supporter les 1000 classes de la base d'ImageNet. Dans un second temps, nous ajoutons une nouvelle couche totalement connectée de trois classes sur base d'une activation \textit{softmax} afin de supporter les annotations saines, bénignes et malignes. La fonction de coût est autre aspect que nous avons tenté de mener à bien dans ce travail. Dans la mesure où nous tentons de résoudre une problématique à plusieurs classes, nous utilisons un fonction de coût de type entropie-croisée également employée lors de travaux équivalents~\cite{Barbu2018,Park2019}.\par
 
-Batch size / epoch / activation / learning rate
+En termes de paramètres, nous limitons la taille des lots à 8 (\textit{batch size}) pour des limitations matérielles, une taille plus conséquente permettrais une meilleur stabilité de la convergence de ce dernier. Le nombres d'itérations (\textit{epochs}) est limité à 15 par procédure d'entraînement que nous réalisons. En effet, lors de nos tests nos observations ont permis de déterminer que la fonction de coût stagnait au-delà de cette valeur. Enfin, nous emploierons une combinaison de l'optimisation \textit{adam} et de \textit{gradient stochastic} à faible taux d'apprentissage tel que suggéré par de précédent travaux~\cite{Barbu2018,Park2019}.\par
 
-La fonction de coût est autre aspect que nous avons tenté de mener à bien dans ce travail.
-~\cite{Park2019}
-~\cite{Barbu2018}
-
-Pour finir sur ces aspects de mise en oeuvre, nous précisons que l'ensemble de ces éléments ont été réalisées à haut niveau à l'aide de la bibliothèque logicielle "Keras"~\cite{chollet2015} compléméntairement à la bibliothèque de bas niveau "Tensorflow"~\cite{tensorflow2015}.\par
+Pour finir sur ces aspects de mise en oeuvre, nous précisons que l'ensemble de ces éléments ont été réalisées à haut niveau à l'aide de la bibliothèque logicielle "Keras"~\cite{chollet2015} en association à la bibliothèque de bas niveau "Tensorflow"~\cite{tensorflow2015}.\par
 
 \subsection{Augmentation de données}
 L'augmentation de données est une technique qui permet de corriger de manière artificielle le nombre d'exemples d'une base de données par application de transformations aux données d'origine~\cite{Wong2016,Taylor2018}. Ce type de méthode peut permettre de corriger un non-balancement des annotations, mais est essentiellement employé dans le but d'enrichir le nombre d'exemples disponible en aidant le réseau à focaliser sur des éléments essentiels à ceux-ci. Cela permet d'éviter qu'un réseau ne se focalise sur des éléments non essentiels à la tâche visée.\par
@@ -255,7 +251,7 @@ Nous envisageons dans cette sous-section cette technique comme le moyen d'enrich
 
 Nous parlerons dans cette partie d'augmentation de données au sens de traitements appliqués au données d'entrées et non de création d'échantillons virtuels à partir de l'espace des caractéristiques pour corriger les problèmes de balancements~\cite{Wong2016}. Ainsi, nous considérerons l'augmentation de données comme une technique permettant de contrer le sur-apprentissage dans ce travail.\par
 
-Ainsi, l'ensemble des paramètres appliqués à ces opérations sont décrit sur la \Cref{tab:image_improvement_data_augmentation}. Ces transformations sont appliquées aléatoirement et à la volée durant l'étape d'entraînement. Nous nous appuierons à cette fin sur le module d'augmentation de données de la bibliothèque logicielle "Keras"~\cite{chollet2015}.\par
+Ainsi, l'ensemble des paramètres appliqués à ces opérations sont décrit sur la \Cref{tab:parameters_image_improvement_data_augmentation}. Ces transformations sont appliquées aléatoirement et à la volée durant l'étape d'entraînement. Nous nous appuierons à cette fin sur le module d'augmentation de données de la bibliothèque logicielle "Keras"~\cite{chollet2015}.\par
 
 \begin{table}[H]
     \centering
@@ -265,12 +261,12 @@ Ainsi, l'ensemble des paramètres appliqués à ces opérations sont décrit sur
         Rotation (en degrés)                    & [0 à 45]              \\ 
         Translation Horizontale (en pourcentage)& [0 à 20]              \\ 
         Translation Verticale (en pourcentage)  & [0 à 20]              \\  
-        Symétrie Horizontale                    & [Désactivée,Activée]  \\  
-        Symétrie Verticale                      & [Désactivée,Activée]  \\ 
+        Symétrie Horizontale                    & [Désactivée, Activée]  \\  
+        Symétrie Verticale                      & [Désactivée, Activée]  \\ 
         \bottomrule 
     \end{tabular} 
     \caption{Table recensant les paramètres de transformation appliqué aux données images de manière aléatoire lors de l'entraînement.}
-    \label{tab:image_improvement_data_augmentation}
+    \label{tab:parameters_image_improvement_data_augmentation}
 \end{table}\par
 
 \subsection{Programme d'apprentissage}
@@ -282,12 +278,13 @@ En complément de cette technique, nous optons lors de la première phase de l'e
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\linewidth]{contents/chapter_5/resources/scheme_image_fine_tune.pdf}
+    \includegraphics[width=\linewidth]{contents/chapter_5/resources/scheme_image_improvement_image_fine_tune.pdf}
     \caption{Schéma de représentation du processus de réglage fin utilisé dans ce travail. Celui-ci se décompose d'une étape d'initialisation dans le but de substituer les couches de classification par de nouvelles, puis un pré-entraînement permet d'initialiser les poids avant de procéder à l'entraînement.}
     \label{fig:scheme_image_fine_tune}
 \end{figure}\par
 
 \section{Analyse des résultats}
+Dans cette section, nous suivrons paragraphe par paragraphes la démarche méthodologique présentée un peu plus haut et débuterons par les résultats issus de la méthode \textbf{par résolutions multiples}. Dans cette première approche, nous avons pu obtenir un \fscore optimal à trois classes de 0,63$\pm$0,06 par l'utilisation par l'utilisation des caractéristiques proposé par Haralick et de la fusion de caractéristiques, et un \fscore de 0,67$\pm$0,07 par l'utilisation de ces même caractéristiques associées à la fusion des scores à l'aide de la méthode Moyenne+Maximum. Concernant les méthodes sur extraction en ondelettes, la proposition de Wiltgen et al.\cite{Wiltgen2008} employant une décomposition diadique à cinq échelles à recueilli les meilleurs valeurs, achevant un \fscore de 0,66$\pm$0,06 à trois classes et de 0,71$\pm$0,06 pour la détection d'images malignes. Enfin, le \fscore par échelle multiple est maximisé avec l'aide des caractéristiques par transfert de connaissance issues de l'architecture ResNet, nous permettant l'obtention d'un \fscore de 0,76$\pm$0,06 à trois classes et un score de 0,83$\pm$0,02 pour la détection de tissus malins. Les résultats de l'expérimentation menée sur la résolution multiple sont visible sur la \Cref{tab:results_image_improvement_multiresolution}.\par
 
 \begin{table}[H]
     \centering
@@ -309,69 +306,71 @@ En complément de cette technique, nous optons lors de la première phase de l'e
                                     & Scores - \gls{svm} Linéaire& 0.72±0.04        & 0.79±0.03         \\
         \bottomrule
     \end{tabular}
-    \label{tab:image_improvement_multiresolution}
-    \caption{Résultats issus du processus de classification basé sur la classification multi-échelles.}
+    \caption{Résultats issus du processus de classification basé sur la classification multi-échelles exprimés à l'aide du \fscore.}
+    \vspace{-1em}
+    \label{tab:results_image_improvement_multiresolution}
 \end{table}
 
+Ce second paragraphe dédié aux résultats va nous permettre d'approfondir les performances de l'approche \textbf{par fenêtre glissante}. Dans un premier temps, l'étude va se porter sur les résultats obtenus à partir\textbf{ d'une taille de fenêtre de 250$\times$250 pixels}. Par cette approche, une extraction de caractéristiques spatiales basée sur les descripteurs proposé par Haralick permet d'atteindre sur la base d'imagettes un \fscore de 0,67±0,10 à trois classes et de 0,41±0,13 à deux classes. Ainsi, nous obtenons sur les images en taille réelle un \fscore de 0,62±0,02 à trois classes et de 0,68±0,05 sur la détection d'éléments malin. Ce score est maximisé par l'utilisation d'une combinaison de seuil dynamique sur les décisions sans chevauchements des images. La méthode des ondelettes de Daubechies appliquée aux imagettes permet l'obtention d'un \fscore de 0,67±0,10 à trois classes et de 0,41±0,13 pour de la détection d'élément malins. Lors de leur utilisation sur des images réelles, le \fscore est de 0,61±0,07 à trois classes et de 0,68±0,06 sur la détection des éléments malins par l'utilisation conjointe d'un chevauchement de 50\% associé à une prise de décision sur les scores à l'aide d'un modèle \gls{svm} à noyau linéaire. Pour finir sur cette taille de fenêtre, les résultats ont été maximisé lors de l'utilisation du transfert de connaissance à l'aide l'architecture ResNet-50, avec pour \fscore sur les imagettes 0,91$\pm$0,02 à trois classes et 0,82$\pm$0,02 pour la détection d'éléments malins. Malgré ce haut score obtenu sur les imagettes, le \fscore est de 0.78$\pm$0.03 à trois classes et de 0.82$\pm$0.02 pour la détection des éléments malins avec une assez bonne stabilité du processus vis-à-vis des données. Ce score est maximisé à l'aide d'un chevauchement de 50\% et d'une prise de décision sur les scores à l'aide d'un modèle \gls{svm} à noyau linéaire. Dans un second temps, l'analyse par fenêtre glissante à l'aide d'une fenêtre moins précise, \textbf{de 500$\times$500 pixels}, semble dégrader les résultats. Les résultats sur des imagettes 500$\times$500 pixels de sont constants avec ceux obtenus sur des imagettes de 250$\times$250 pixels. En termes d'extraction spatiale, le \fscore est réduit à 0,60$\pm$0,06 à trois classes et à 0,65$\pm$0,09 pour la problématique de détection des éléments malins. Ces résultats chutent dramatiquement sur la méthode d'extraction en ondelettes, malgré des résultats de prédiction convenables sur les imagettes. Le \fscore maximum est obtenus sur la méthode de fusion des score combinant maximum et seuil dynamique, avec pour résultat 0.55$\pm$0.07 à trois classes et 0.67$\pm$0.13 à deux classes. Pour finir, les résultats obtenus par transfert de connaissance ne sont que peu impactées, évoluant vers des valeurs de \fscore de 0,78$\pm$0,02 à trois classes et de 0,81$\pm$0,04 pour la détection d'images malignes. L'ensemble de ces résultats par principe de fenêtre glissante ont été reporté sur la \Cref{tab:results_image_improvement_sliding_window}.\par
 
 \begin{landscape}
-
-\begin{table}[H]
+\begin{table}[]
     \centering
-    \begin{tabular}{cclllllll}
+    \begin{tabular}{lllllllll}
 		\toprule
-		\multirow{2}{*}{Taille}     & \multirow{2}{*}{Superposition}    & \multirow{2}{*}{Mode}     & \multicolumn{2}{c}{Spatial}       & \multicolumn{2}{c}{Fréquence}     & \multicolumn{2}{c}{Transfert}         \\
+		\multirow{2}{*}{Taille}     & \multirow{2}{*}{Chevauchement}    & \multirow{2}{*}{Mode}     & \multicolumn{2}{c}{Spatial}       & \multicolumn{2}{c}{Fréquence}     & \multicolumn{2}{c}{Transfert}         \\
 		                            &                                   &                           & 3 Classes         & Malin         & 3 Classes         & Malin         & 3 Classes         & Malin             \\ \midrule
-		250                         & Aucune                            & Patch                     & 0.67±0.10         & 0.41±0.13     & 0.72±0.07         & 0.44±0.10     & \textbf{0.91±0.02}& \textbf{0.82±0.03}\\ \midrule
-		\multirow{12}{*}{250}       & \multirow{4}{*}{0}                & D\_ALO                    & 0.52±0.02         & 0.67±0.04     & 0.44±0.06         & 0.65±0.05     & 0.58±0.04         & 0.71±0.05         \\ 
-							        &                                   & D\_DYN                    & 0.62±0.02         & 0.68±0.05     & 0.57±0.06         & 0.67±0.04     & 0.75±0.02         & 0.80±0.03         \\
-							        &                                   & S\_MAX\_DYN               & 0.54±0.02         & 0.63±0.04     & 0.50±0.08         & 0.66±0.05     & 0.70±0.03         & 0.76±0.02         \\
-							        &                                   & S\_SVC                    & 0.60±0.05         & 0.66±0.04     & 0.59±0.08         & 0.65±0.07     & 0.78±0.03         & 0.81±0.03         \\ \cline{2-9}
-							        & \multirow{4}{*}{25}               & D\_ALO                    & 0.49±0.10         & 0.67±0.10     & 0.41±0.10         & 0.65±0.10     & 0.53±0.05         & 0.70±0.09         \\
-							        &                                   & D\_DYN                    & 0.62±0.07         & 0.68±0.11     & 0.58±0.08         & 0.66±0.09     & 0.75±0.03         & 0.80±0.04         \\
-							        &                                   & S\_MAX\_DYN               & 0.52±0.03         & 0.59±0.06     & 0.49±0.08         & 0.66±0.10     & 0.72±0.04         & 0.78±0.03         \\
-							        &                                   & S\_SVC                    & 0.62±0.06         & 0.71±0.06     & 0.57±0.10         & 0.66±0.08     & 0.78±0.03         & 0.81±0.03         \\ \cline{2-9}
-							        & \multirow{4}{*}{50}               & D\_ALO                    & 0.46±0.11         & 0.66±0.08     & 0.39±0.12         & 0.64±0.08     & 0.49±0.10         & 0.68±0.08         \\
-							        &                                   & D\_DYN                    & 0.62±0.03         & 0.68±0.07     & 0.59±0.10         & 0.67±0.08     & 0.75±0.03         & 0.80±0.03         \\
-							        &                                   & S\_MAX\_DYN               & 0.52±0.06         & 0.63±0.07     & 0.49±0.10         & 0.65±0.07     & 0.72±0.03         & 0.80±0.01         \\ 
-		                            &                                   & S\_SVC                    & 0.61±0.08         & 0.69±0.08     & 0.61±0.07         & 0.68±0.06     & \textbf{0.78±0.03}& \textbf{0.82±0.02}\\ \midrule
-		500                         & Aucune                            & Patch                     & 0.67±0.08         & 0.40±0.10     & 0.70±0.06         & 0.50±0.08     & \textbf{0.90±0.02}& \textbf{0.80±0.02}\\ \midrule
-		\multirow{12}{*}{500}       & \multirow{4}{*}{0}                & D\_ALO                    & 0.58±0.08         & 0.63±0.05     & 0.23±0.11         & 0.00±0.00     & 0.74±0.05         & 0.76±0.05         \\
-							        &                                   & D\_DYN                    & 0.59±0.04         & 0.63±0.05     & 0.28±0.05         & 0.63±0.05     & 0.72±0.05         & 0.76±0.05         \\
-							        &                                   & S\_MAX\_DYN               & 0.50±0.05         & 0.56±0.15     & 0.53±0.08         & 0.66±0.04     & 0.70±0.03         & 0.78±0.04         \\
-							        &                                   & S\_SVC                    & 0.59±0.08         & 0.67±0.07     & 0.36±0.04         & 0.55±0.17     & 0.69±0.13         & 0.74±0.08         \\ \cline{2-9}
-							        & \multirow{4}{*}{25}               & D\_ALO                    & 0.55±0.08         & 0.64±0.07     & 0.23±0.11         & 0.00±0.00     & 0.77±0.05         & 0.80±0.04         \\
-							        &                                   & D\_DYN                    & 0.55±0.10         & 0.63±0.05     & 0.28±0.05         & 0.63±0.05     & 0.76±0.04         & 0.80±0.04         \\
-							        &                                   & S\_MAX\_DYN               & 0.53±0.03         & 0.55±0.09     & 0.54±0.07         & 0.67±0.05     & 0.73±0.03         & 0.80±0.04         \\
-							        &                                   & S\_SVC                    & 0.58±0.07         & 0.67±0.06     & 0.37±0.04         & 0.55±0.18     & 0.77±0.05         & 0.81±0.04         \\ \cline{2-9}
-							        & \multirow{4}{*}{50}               & D\_ALO                    & 0.57±0.08         & 0.67±0.11     & 0.23±0.07         & 0.00±0.00     & 0.77±0.03         & 0.81±0.05         \\
-							        &                                   & D\_DYN                    & 0.58±0.07         & 0.67±0.11     & 0.28±0.12         & 0.63±0.12     & 0.76±0.03         & 0.80±0.05         \\
-							        &                                   & S\_MAX\_DYN               & 0.52±0.05         & 0.55±0.06     & 0.55±0.07         & 0.67±0.13     & 0.73±0.04         & 0.80±0.05         \\
-		                            &                                   & S\_SVC                    & 0.60±0.06         & 0.65±0.09     & 0.34±0.05         & 0.39±0.23     & \textbf{0.78±0.02}& \textbf{0.81±0.04}\\
+		250                         & Aucune                            & Imagettes                 & 0.67±0.10         & 0.41±0.13     & 0.72±0.07         & 0.44±0.10     & \textbf{0.91±0.02}& \textbf{0.82±0.03}\\ \midrule
+		\multirow{12}{*}{250}       & \multirow{4}{*}{0}                & Décision - Priorité                    & 0.52±0.02         & 0.67±0.04     & 0.44±0.06         & 0.65±0.05     & 0.58±0.04         & 0.71±0.05         \\ 
+							        &                                   & Décision - Dynamique                    & 0.62±0.02         & 0.68±0.05     & 0.57±0.06         & 0.67±0.04     & 0.75±0.02         & 0.80±0.03         \\
+							        &                                   & Score - Dynamique               & 0.54±0.02         & 0.63±0.04     & 0.50±0.08         & 0.66±0.05     & 0.70±0.03         & 0.76±0.02         \\
+							        &                                   & Score - Classification                    & 0.60±0.05         & 0.66±0.04     & 0.59±0.08         & 0.65±0.07     & 0.78±0.03         & 0.81±0.03         \\ \cline{2-9}
+							        & \multirow{4}{*}{25}               & Décision - Priorité                    & 0.49±0.10         & 0.67±0.10     & 0.41±0.10         & 0.65±0.10     & 0.53±0.05         & 0.70±0.09         \\
+							        &                                   & Décision - Dynamique                    & 0.62±0.07         & 0.68±0.11     & 0.58±0.08         & 0.66±0.09     & 0.75±0.03         & 0.80±0.04         \\
+							        &                                   & Score - Dynamique               & 0.52±0.03         & 0.59±0.06     & 0.49±0.08         & 0.66±0.10     & 0.72±0.04         & 0.78±0.03         \\
+							        &                                   & Score - Classification                    & 0.62±0.06         & 0.71±0.06     & 0.57±0.10         & 0.66±0.08     & 0.78±0.03         & 0.81±0.03         \\ \cline{2-9}
+							        & \multirow{4}{*}{50}               & Décision - Priorité                    & 0.46±0.11         & 0.66±0.08     & 0.39±0.12         & 0.64±0.08     & 0.49±0.10         & 0.68±0.08         \\
+							        &                                   & Décision - Dynamique                    & 0.62±0.03         & 0.68±0.07     & 0.59±0.10         & 0.67±0.08     & 0.75±0.03         & 0.80±0.03         \\
+							        &                                   & Score - Dynamique               & 0.52±0.06         & 0.63±0.07     & 0.49±0.10         & 0.65±0.07     & 0.72±0.03         & 0.80±0.01         \\ 
+		                            &                                   & Score - Classification                    & 0.61±0.08         & 0.69±0.08     & 0.61±0.07         & 0.68±0.06     & \textbf{0.78±0.03}& \textbf{0.82±0.02}\\ \midrule
+		500                         & Aucune                            & Imagettes                 & 0.67±0.08         & 0.40±0.10     & 0.70±0.06         & 0.50±0.08     & \textbf{0.90±0.02}& \textbf{0.80±0.02}\\ \midrule
+		\multirow{12}{*}{500}       & \multirow{4}{*}{0}                & Décision - Priorité                    & 0.58±0.08         & 0.63±0.05     & 0.23±0.11         & 0.00±0.00     & 0.74±0.05         & 0.76±0.05         \\
+							        &                                   & Décision - Dynamique                    & 0.59±0.04         & 0.63±0.05     & 0.28±0.05         & 0.63±0.05     & 0.72±0.05         & 0.76±0.05         \\
+							        &                                   & Score - Dynamique               & 0.50±0.05         & 0.56±0.15     & 0.53±0.08         & 0.66±0.04     & 0.70±0.03         & 0.78±0.04         \\
+							        &                                   & Score - Classification                    & 0.59±0.08         & 0.67±0.07     & 0.36±0.04         & 0.55±0.17     & 0.69±0.13         & 0.74±0.08         \\ \cline{2-9}
+							        & \multirow{4}{*}{25}               & Décision - Priorité                    & 0.55±0.08         & 0.64±0.07     & 0.23±0.11         & 0.00±0.00     & 0.77±0.05         & 0.80±0.04         \\
+							        &                                   & Décision - Dynamique                    & 0.55±0.10         & 0.63±0.05     & 0.28±0.05         & 0.63±0.05     & 0.76±0.04         & 0.80±0.04         \\
+							        &                                   & Score - Dynamique               & 0.53±0.03         & 0.55±0.09     & 0.54±0.07         & 0.67±0.05     & 0.73±0.03         & 0.80±0.04         \\
+							        &                                   & Score - Classification                    & 0.58±0.07         & 0.67±0.06     & 0.37±0.04         & 0.55±0.18     & 0.77±0.05         & 0.81±0.04         \\ \cline{2-9}
+							        & \multirow{4}{*}{50}               & Décision - Priorité                    & 0.57±0.08         & 0.67±0.11     & 0.23±0.07         & 0.00±0.00     & 0.77±0.03         & 0.81±0.05         \\
+							        &                                   & Décision - Dynamique                    & 0.58±0.07         & 0.67±0.11     & 0.28±0.12         & 0.63±0.12     & 0.76±0.03         & 0.80±0.05         \\
+							        &                                   & Score - Dynamique               & 0.52±0.05         & 0.55±0.06     & 0.55±0.07         & 0.67±0.13     & 0.73±0.04         & 0.80±0.05         \\
+		                            &                                   & Score - Classification                    & 0.60±0.06         & 0.65±0.09     & 0.34±0.05         & 0.39±0.23     & \textbf{0.78±0.02}& \textbf{0.81±0.04}\\
 		\bottomrule
     \end{tabular}
-    \label{tab:image_improvement_sliding_window}
-    \caption{Résultats issus du processus de classification basé sur les fenêtres glissantes. La première partie reprend les résultats obtenu à l'aide d'un classifieur et d'une fenêtre glissante d'une taille de 250 par 250 pixels ; La seconde partie  reprend les résultats obtenu à l'aide d'un classifieur et d'une fenêtre glissante d'une taille de 500 par 500 pixels.}
+    \caption{Résultats issus du processus de classification basé sur le principe de fenêtre glissante exprimés à l'aide du \fscore. La première partie de ce tableau reprend les résultats obtenu à l'aide d'une fenêtre glissante de taille de 250$\times$250 pixels tandis que la seconde partie se concentre sur les résultats d'une fenêtre glissante de taille de 500$\times$500 pixels.}
+    \label{tab:results_image_improvement_sliding_window}
 \end{table}
-
 \end{landscape}
+
+La présentation des résultats de réglage fin constitue l'essence de ce troisième paragraphe. Pour cela, nous avons évalué dans un premier temps la mise en place d'un processus de réglage fin simple, pour lequel les meilleures performances ont été obtenues par la combinaison de l'architecture ResNet-50 et d'une couche de Global Pooling sur la base d'une fonction de moyenne. Cette méthode permet l'obtention d'un \fscore lors de la prédiction sur les données de test de 0,56$\pm$0,05 sur 3 classes et nettement supérieure de 0,78$\pm$0,05. Dans un second temps, nous avons réalisé l'évaluation du réglage fin conjointement associé à un programme d'apprentissage sur l'architecture ResNet-50 et d'une couche de Global Pooling sur la base d'une fonction de moyenne. Les résultats de cette méthode sont dégradés par rapport à la version simple par réglage fin, recueillant un \fscore de 0,51$\pm$0,07 sur 3 classes et de 0,67$\pm$0,05 lors d'une prédiction des éléments malins. L'ensemble de ces résultats est disponible sur la \Cref{tab:parameters_image_improvement_fine}.\par
 
 \begin{table}[H]
     \centering
     \begin{tabular}{llll}
         \toprule
-        Catégorie                   & Pooling           & 3 Classes         & Malin             \\ \midrule
-        \multirow{2}{*}{Réglage fin}& Fonction moyenne  & 0.44±0.05         & 0.69±0.06         \\
-                                    & Fonction maximum  & \textbf{0.56±0.05}& \textbf{0.78±0.05}\\
-        Réglage fin + Programme     & Fonction maximum  & 0.51±0.07         & 0.67±0.05         \\
+        Catégorie                               & Global Pooling    & 3 Classes         & Malin             \\ \midrule
+        \multirow{2}{*}{Réglage fin}            & Fonction maximum  & 0.44±0.05         & 0.69±0.06         \\
+                                                & Fonction moyenne  & \textbf{0.56±0.05}& \textbf{0.78±0.05}\\ \midrule
+        Réglage fin + Programme d'apprentissage & Fonction moyenne  & 0.51±0.07         & 0.67±0.05         \\
         \bottomrule
     \end{tabular}
     
-    \label{tab:image_improvement_fine}
-    \caption{Résultats issus du processus de classification basé sur les \gls{cnn} par réglages fin et programme d'apprentissage.}
+    \caption{Résultats issus du processus de classification basé sur les \gls{cnn} par réglages fin et programme d'apprentissage exprimés à l'aide du \fscore.}
+    \label{tab:parameters_image_improvement_fine}
 \end{table}
 
-Nous finirons cette section dédiée aux résultats par la proposition d'extensions aux principes de fenêtre glissante mais aussi de réglage fin de \gls{cnn}. En effet, ces deux techniques possèdent par leur nature la capacité de localiser précisément l'origine d'une information. Dans le cadre des fenêtres glissantes, c'est de manière directe que ce principe permet de remonter l'emplacement d'une décision, nous proposons ainsi deux modes de visualisation l'un basé sur les décisions en utilisant un code couleur propre à chacune ou sur les scores en utilisant l'intensité de la transparence comme indicateur dans la confiance de la prédiction. Ces deux propositions sont visibles sur la \Cref{fig:exemple_image_improvement_well} et la \Cref{fig:exemple_image_improvement_misclassified}. Ainsi, une taille de fenêtre glissante la plus fine permettra par cette technique d'obtenir une information visuelle de meilleure qualité, dualité que nous pouvons observer entre les tailles de 250$\times$250 et 500$\times$500.\par
+Nous finirons cette section dédiée aux résultats par la proposition d'extensions aux principes de fenêtre glissante mais aussi de réglage fin de \gls{cnn}. En effet, ces deux techniques possèdent par leur nature la capacité de localiser précisément l'origine d'une information. Dans le cadre de l'approche par fenêtre glissante, c'est de manière directe que ce principe permet de remonter l'emplacement d'une décision, nous proposons ainsi deux modes de visualisation l'un basé sur les décisions en utilisant un code couleur propre à chacune ou sur les scores en utilisant l'intensité de la transparence comme indicateur dans la confiance de la prédiction. Ces deux propositions sont visibles sur la \Cref{fig:exemple_image_improvement_well}. Ainsi, une taille de fenêtre glissante la plus fine permettra par cette technique d'obtenir une information visuelle de meilleure qualité, dualité que nous pouvons observer entre les tailles de 250$\times$250 et 500$\times$500.\par
 
 \begin{figure}[H]
     \centering
@@ -380,18 +379,41 @@ Nous finirons cette section dédiée aux résultats par la proposition d'extensi
     \label{fig:exemple_image_improvement_well}
 \end{figure}\par
 
+Le second et dernier principe de visualisation que nous présenterons pour finir cette section dédiée aux résultats se base sur les \gls{cnn} en exploitant le principe même de la convolution. De nombreux travaux se sont portés sur la résolution de la boîte noire que représentent les \gls{cnn} et propose une compréhension des décisions issues de \gls{cnn}, avec la mise en évidence des filtres de convolution auto déterminées~\cite{Zeiler2014} ou encore la mise en lumière des zones responsables de l'activation d'une classe par le principe des \gls{cam}~\cite{Zhou2015}. Ce principe est présenté sur le schéma présent sur la \Cref{fig:scheme_image_improvement_cam} et, consiste à pondérer le résultat de la dernière couche convolutive par les poids issus de la décision d'une classe. Ces recherches sur les \gls{cam} ont abouties à divers travaux de détections sur images naturelles dont résultent YOLO~\cite{Redmon2016} ou encore SSD~\cite{Liu2016}. Suite à ces divers travaux, diverses applications ont vues le jour sur de l'imagerie médicale afin de fournir une visualisation~\cite{jia2017} mais également des zones clés de diagnostic~\cite{Park2019}.\par 
+
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\linewidth]{contents/chapter_5/resources/exemple_image_improvement_well.pdf}
-    \caption{Exemple d'image incorrectement classifiées à l'aide du principe de fenêtre glissante. A gauche, résultats issus d'une fenêtre de classification de 250 par 250 pixels ; A droite, résultats issu d'une fenêtre de classification de 500 par 500 pixels.}
-    \label{fig:exemple_image_improvement_misclassified}
+    \includegraphics[width=\linewidth]{contents/chapter_5/resources/scheme_image_improvement_cam.pdf}
+    \caption{Schéma d'explication du principe de \gls{cam} employé à but de segmentation des images \gls{rcm} en notre possession. Le réseau est ajusté à notre problématique, puis nous employons la ou les couches de classification dans le but d'obtenir les zones responsables de la décision par pondération des poids de chaque noeud de la classe considérée.}
+    \label{fig:scheme_image_improvement_cam}
 \end{figure}\par
 
+Dans ce dernier aspect de notre travail nous reprenons la méthode des \gls{cam} combiné à l'application d'un seuil sur ces valeurs, permettant de définir un masque de segmentation de la zone d'intérêt. Le seuil a été défini de manière arbitraire à une valeur de 85\% du rang entre la valeur minimum et maximum issue des \gls{cam}. Par une telle valeur, nous sommes en mesure d'obtenir les divers résultats de segmentation présentés sur la \Cref{fig:example_image_improvement_ft}. Sur cette figure, nous représentons des exemples de tissus malins correctement détecté par la méthode, mais également non pertinent sur la partie basse de cette même figure. Les intérêts de cette méthode sont multiples, puisque le principe de \gls{cam} permet par le seul passage d'une image de revenir aux zones d'activations à partir d'une tâche initiale de classification. De plus nous ne dépendons pas de paramètres tel que la taille ou le chevauchement comme cela peux être le cas pour le principe de fenêtre glissante.\par
 
-~\cite{jia2017}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\linewidth]{contents/chapter_5/resources/exemple_image_improvement_activation_maps.pdf}
-    \caption{Exemple d'image .}
-    \label{fig:exemple_image_improvement_activation_maps}
+    \begin{subfigure}{.45\textwidth}
+      \includegraphics[width=\textwidth]{contents/chapter_5/resources/example_image_improvement_ft_well_1.png}
+    \end{subfigure}
+    \begin{subfigure}{.45\textwidth}
+      \includegraphics[width=\textwidth]{contents/chapter_5/resources/example_image_improvement_ft_well_2.png}
+    \end{subfigure}
+    
+    \begin{subfigure}{.45\textwidth}
+      \includegraphics[width=\textwidth]{contents/chapter_5/resources/example_image_improvement_ft_misclassified_1.png}
+    \end{subfigure}
+    \begin{subfigure}{.45\textwidth}
+      \includegraphics[width=\textwidth]{contents/chapter_5/resources/example_image_improvement_ft_misclassified_2.png}
+    \end{subfigure}
+    
+    \caption{Exemples de l'extraction de zones d'activations par principe de \gls{cam}, avec application d'un seuil arbitraire à 85\% du minimum/maximum. En haut, exemples d'images malignes correctement gérées par ce principe ; En bas, exemples d'images malignes partiellement segmentée ou incorrectement gérées par ce principe.}
+    \label{fig:example_image_improvement_ft}
 \end{figure}\par
+\clearpage
+
+\section{Discussion}
+Dans cette section dédiée à la discussion, nous commenterons les précédents résultats obtenus. En premier lieu, les résultats issus de la méthode par échelles multiples par ondelettes sont sensiblement identiques à ceux présentés lors du \Cref{chap:chapter_4} à trois classes. Une amélioration significative des performances sur la détection d'élément malin est à noter par la méthode en ondelettes de Wiltgen et al., permettant l'obtention d'un \fscore de 0.71$\pm$0.06, initialement à 0.68$\pm$0.03. L'utilisation de l'ondelette mère de Haar par cette technique ne dégrade que très peu les résultats à deux et trois classes. En revanche, la méthode proposée par Halimi et al. n'a pas été concluante, proche de l'aléatoire sur nos données. Des diverses méthodes que nous avons proposé pour l'utilisation de caractéristiques spatiales et par transfert de connaissance, seule la fusion de caractéristiques s'est réellement avérée fonctionnelle. Cette technique à recueilli par l'utilisation du transfert de connaissances un \fscore de 0,76$\pm$0,06 à trois classes et de 0,83$\pm$0,02 pour la détection d'éléments malins.\par
+
+En second lieu, une approche par fenêtre glissante a été employée afin d'améliorer la qualité des résultats. Par cette approche, la classification à trois classes obtenues par les diverses techniques d'extraction n'a pas ou peu été améliorée. Sur la détection d'éléments malins, seule la technique employant les descripteurs proposés par Haralick semble avoir recueilli de meilleurs résultats, voyant passer ceux-ci de valeurs de \fscore 0.68$\pm$0.03 à 0.71$\pm$0.06. D'une part, des deux méthodes employant un principe de prédiction sur les décisions, la proposition de méthode sur la base de seuil dynamique semble comme espéré la plus judicieuse, mais risque de délaisser certains cas cliniques selon la tolérance de ce seuil. D'autres part, des deux méthodes employant un principe de prédiction sur les scores, la proposition de méthode utilisant un modèle \gls{svm} linéaire semble la plus adaptée. Néanmoins, cette méthode risque néanmoins de favoriser par une pondération plus grande certaines positions de la fenêtre glissante, tandis que la méthode sur seuil dynamique est invariante à cette position. Concernant les hypothèses de la fenêtre glissante, l'une d'entre elles avait été formulée sur le rôle important de la taille de fenêtre dans cette approche, et la tendance des résultats semble meilleure à l'aide d’une fenêtre de taille restreinte de 250$\times$250 mais ces résultats de ne sont pas significatifs. Une autre hypothèse supposait l'importance d'un chevauchement des acquisitions en provenance de la fenêtre glissante, et également la tendance des résultats semble plus optimiste sans chevauchement, cependant là encore ces résultats ne sont pas significatifs. Les résultats de cette expérience sont maximisés par l'utilisation de transfert de connaissance avec l'architecture ResNet-50, dans le cadre d'un chevauchement de 50\% mais là encore les résultats ne sont pas suffisamment significatifs pour affirmer l'utilité de ce chevauchement. En addition, nous avons pu montrer qu'il était possible d'obtenir assez facilement de revenir aux décisions à basse échelle par l'utilisation d'un code de couleur ou par transparence. Ce type d'approche pourrait permettre d'expliquer les décisions du système prédicatif et d'aiguiller le spécialiste vers les zones les plus importantes. Il convient néanmoins de solutionner les performances de prédiction de ce système.\par 
+
+Enfin, nous terminons cette discussion par l'étude des résultats lié au réglages fin dont les expériences ont été réalisées en deux temps, avec un simple réglage fin puis la réalisation d'un programme d'apprentissage à l'aide des vignettes en notre possession. A notre surprise les résultats ont été fortement impacté dans les deux cas, avec un \fscore par apprentissage par transfert initialement sur ResNet-50 de 0.77$\pm$0.04 à trois classes et 0.82$\pm$0.02 à deux classes : par réglages fin ces résultats descendent à des valeurs de 0.77$\pm$0.04 à trois classes et 0.82$\pm$0.02 à deux classes ; par programme d'apprentissage ces valeurs ne sont plus que de 0.51$\pm$0.07 à trois classes et 0.67$\pm$0.05. Nous supposons un fort sur-apprentissage de ce réseau malgré l'augmentation de données, en effet les diverses phases d'apprentissage réalisées ont accomplies un \fscore compris entre 0.90 et 0.97 sur les données d'entraînement. L'un des aspects qui nous conduit à persévérer en ce sens est l'apport du principe des \gls{cam} permettant l'obtention de cartes des zones d'activation indépendamment du choix d'une taille ou d'un chevauchement (contrairement à la fenêtre glissante) en un seul passage dans le réseau de l'image. Néanmoins à ce stade, de nombreuses de ces cartes d'activation sont incorrectes et nous supposons les faibles performances de notre apprentissage responsable de ces erreurs.\par
