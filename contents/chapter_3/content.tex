@@ -1,4 +1,4 @@
-\chapter{Intelligence artificielle et compléments}
+\chapter{Intelligence artificielle et notion complémentaires}
 \label{chap:chapter_3}
 \chapterintro
 Lors du précédent chapitre, nous avons abordé les interactions entre la peau et la lumière, ainsi que les dispositifs majeurs permettant l'acquisition d'informations de la peau. Dans la continuité de cette partie nous avons présenté l'étude clinique de référence et les données associées.\par
@@ -12,12 +12,12 @@ Cette nouvelle partie nous permet de dérouler un peu plus notre plan, en aborda
 
 \section{Généralités sur l'intelligence artificielle}
 \label{sec:artificial_intelligence}
-La notion \textbf{d’\gls{ai}} est assez souvent contestée, mais se définit plus généralement comme étant « L’ensemble de théories et de techniques mises en œuvre en vue de réaliser des machines capables de simuler l'intelligence humaine »~\textsuperscript{\ref{footnote:ia_larousse}}. Ainsi, dans cette définition, ces techniques ne se limitent pas à la reproduction du comportement interactif social humain souvent représenté dans les médias. La mise en pratique sous forme informatique de mécanismes dédié à de la prise de décision à partir de données ou encore, la retranscription du raisonnement d'un expert font partie de cette définition.\par
+La notion \textbf{d’\gls{ai}} est assez souvent contestée, mais se définit plus généralement comme étant « L’ensemble de théories et de techniques mises en œuvre en vue de réaliser des machines capables de simuler l'intelligence humaine »~\textsuperscript{\ref{footnote:ia_larousse}}. Ainsi, dans cette définition, ces techniques ne se limitent pas à la reproduction du comportement interactif social humain souvent représenté dans les médias. La mise en pratique sous forme informatique de mécanismes dédiés à de la prise de décision à partir de données ou encore, la retranscription du raisonnement d'un expert fait partie de cette définition.\par
 
-Une vision plus complète de ce terme consiste a décomposer l'\gls{ai} en une discipline composée de sous domaines possédant chacun leurs spécificités, comme schématisé sur la \Cref{fig:scheme_overview_ia}. Ainsi, le terme \textbf{d'apprentissage automatique} ou de "Machine Learning" caractérise un premier sous champ de l'\gls{ai} et sera employé pour qualifier l'utilisation de mécanismes statistiques dans le but de générer des règles, à partir de données d'apprentissage. Ces données, souvent complexes, il sera souvent nécessaire de laisser l'humain intervenir pour extraire l'information pertinente à l'accomplissement de la tâche souhaitée. Enfin, le terme \textbf{d'apprentissage profond} ou de "Deep Learning" va désigner un sous champ de l'apprentissage automatique, dans lequel des couches de prises de décision vont permettre d'augmenter la complexité des relations entre les données d'entrée et les tâches.\par
+Une vision plus complète de ce terme consiste a décomposer l'\gls{ai} en une discipline organisée en sous domaines possédant chacun leurs spécificités, comme schématisé sur la \Cref{fig:scheme_overview_ia}. Ainsi, le terme \textbf{d'apprentissage automatique} ou de "Machine Learning" caractérise un premier sous champ de l'\gls{ai} et est employé pour qualifier l'utilisation de mécanismes statistiques dans le but de générer des règles, à partir de données d'apprentissage. Ces données étant souvent complexes, il est souvent nécessaire de laisser l'humain intervenir pour extraire l'information pertinente à l'accomplissement de la tâche souhaitée. Enfin, le terme \textbf{d'apprentissage profond} ou de "Deep Learning" désigne un sous champ de l'apprentissage automatique, dans lequel des couches de prises de décision vont permettre d'augmenter la complexité des relations entre les données d'entrée et les tâches.\par
 
 \addtocounter{footnote}{1}
-\footnotetext[\thefootnote]{Source : Encyclopédie Larousse. \label{footnote:ia_larousse}}
+\footnotetext[\thefootnote]{Source~: Encyclopédie Larousse. \label{footnote:ia_larousse}}
 
 \begin{figure}[H]
     \centering
@@ -30,18 +30,18 @@ Cette partie a pour vocation d’amener à la compréhension générale des cour
 
 \section{Approches par apprentissage}
 \label{sec:machine_learning}
-Ce courant a été « évoqué » en 1948 par Alan Turing, son idée était de proposer des « machine à apprendre susceptibles de construire elles-mêmes leurs propres codes » \cite{Turing1950}. En 1959, Arthur Samuel formule une première définition des approches par apprentissage comme étant un « domaine d’étude dans lequel nous donnons à l’ordinateur la possibilité d’apprendre sans avoir été explicitement programmé ».\par 
+Ce courant a été « évoqué » en 1948 par Alan Turing ; son idée était de proposer des « machine à apprendre susceptibles de construire elles-mêmes leurs propres codes » \cite{Turing1950}. En 1959, Arthur Samuel formule une première définition des approches par apprentissage comme étant un « domaine d’étude dans lequel nous donnons à l’ordinateur la possibilité d’apprendre sans avoir été explicitement programmé ».\par 
 
 Les approches par apprentissage automatique peuvent être résumées aux techniques permettant à un système informatique d’adapter son analyse et son comportement en fonction de ses données d’entrée. Une définition plus formelle et récente de ce domaine proposée par Tom Michael Mitchell est qu’un « programme informatique apprend d’une expérience E, en adéquation avec des tâches T et une mesure de performance P, si sa performance sur les tâches T, mesurée par P, s’améliore avec l’expérience E ».\par
 
-Nous pouvons distinguer deux grandes sous catégories au sein des courants d’apprentissage, synthétisé dans la \Cref{fig:scheme_machine_learning}, dont : 
+Nous pouvons distinguer deux grandes sous catégories au sein des courants d’apprentissage, synthétisé dans la \Cref{fig:scheme_machine_learning}, dont~: 
 \begin{itemize}
     \item L'apprentissage \textbf{supervisé} correspond aux techniques visant à faire correspondre les données d'entrée avec des sorties de valeurs discrètes (on parle aussi de classification) ou continues (on parle alors de régression),
     \item L'apprentissage \textbf{non-supervisé} correspond à des approches exploratoires, dans lesquelles l'ordinateur tente d'identifier des corrélations au sein des données (désigné par le terme de clustering),
     \item L'apprentissage \textbf{semi-supervisé}~\cite{Murphy2012} reprend les précédentes théories afin d'exploiter au mieux l'ensemble des données à disposition et de mieux discerner le problème.
 \end{itemize}
 
-Nous présenterons plus en détail chacune de ces catégories au seins des sous parties qui suivront.
+Nous présenterons plus en détail chacune de ces catégories au sein des sous parties qui suivent.
  
  \begin{figure}[H]
     \centering 
@@ -56,10 +56,9 @@ L’apprentissage supervisé ou « prédictif » consiste à déterminer la rela
 
 Cette approche implique l’utilisation d’une base d’apprentissage, définie comme « un ensemble de couples entrée-sortie » noté $\{(x_1,y_1 ),\ldots,(x_n,y_n )\}$ avec $n \in N$. Ainsi, l’humain tente d'apporter une signification à ces données sous forme d'annotations (ou étiquettes) pour lesquelles la machine devra être en mesure de trouver la relation existante.\par
 
-Dans le but d'achever cette tâche, nous supposons qu'une observation possède suffisamment de variables discriminante permettant l'identification des annotations. Ce problème à été défini comme 
-L’algorithme tente de répondre au problème $y=f(x)$, où $f$ est notre fonction inconnue correspondant au phénomène observé, par une fonction d’approche $g$ appelée fonction de prédiction tel que $y=g(x)$, avec $x=\{x_1,x_2,\ldots,x_n\}$ un vecteur de caractéristiques possédant suffisamment d'information~\cite{foulds2010}.\par 
+Dans le but d'achever cette tâche, nous supposons qu'une observation possède suffisamment de variables discriminantes permettant l'identification des annotations. Ce problème à été défini comme un algorithme qui tente de répondre au problème $y=f(x)$, où $f$ est notre fonction inconnue correspondant au phénomène observé, par une fonction d’approche $g$ appelée fonction de prédiction tel que $y=g(x)$, avec $x=\{x_1,x_2,\ldots,x_n\}$ un vecteur de caractéristiques possédant suffisamment d'information~\cite{foulds2010}.\par 
 
-Cet apprentissage, schématisé sur la \Cref{fig:scheme_supervised_classification}, se découpe en deux processus distincts :
+Cet apprentissage, schématisé sur la \Cref{fig:scheme_supervised_classification}, se découpe en deux processus distincts~:
 \begin{itemize}
     \item \textbf{l’apprentissage} ou entraînement, qui consiste à approcher la fonction $f$ par une fonction d’approche $g$ compte tenu de données étiquetées,
     \item \textbf{la prédiction} ou inférence, qui consiste à prédire sur de nouvelles données à partir de $g$ tel que $g(x') = y'$.
@@ -68,23 +67,23 @@ Cet apprentissage, schématisé sur la \Cref{fig:scheme_supervised_classificatio
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\linewidth]{contents/chapter_3/resources/scheme_supervised_classification.pdf}
-    \caption{Schéma de l’approche dite supervisée. La phase d'entraînement va permettre de déterminer les relations entre données et attentes, sur des données connues dites d'apprentissages. La phase de prédiction réutilisera les relation déterminées lors de la phase d'entraînement. }
+    \caption{Schéma de l’approche dite supervisée. La phase d'entraînement permet de déterminer les relations entre données et attentes, sur des données connues dites d'apprentissage. La phase de prédiction réutilise les relation déterminées lors de la phase d'entraînement. }
     \label{fig:scheme_supervised_classification}
 \end{figure}
 
-Ces approches dites supervisées, se regroupent ainsi au travers de deux catégories majeures :
+Ces approches dites supervisées, se regroupent ainsi au travers de deux catégories majeures~:
 \begin{itemize}
     \item La \textbf{classification}, c'est à dire la prédiction de valeurs discrètes, soit l’ensemble des entiers relatifs noté $\pmb{\mathbb{Z}}$. Sont également utilisés les compléments de \textit{classification binaire} lorsque le problème formulé ne comporte que deux classes, et de \textit{classification multi-classes} lorsque la situation nécessite de prédire $N$ classes avec $N$ > 2.
     \item La \textbf{régression}, c'est à dire la prédiction de valeurs continues, soit l’ensemble des nombres réels noté $\pmb{\mathbb{R}}$.
 \end{itemize}\par
 
-Les travaux que nous mènerons dans ce manuscrit porteront sur les méthodes de classification car le problème que nous tentons de résoudre relève de la catégorisation de données. Ainsi, nous proposons une bref échantillon de ces méthodes en détaillant leur principes de fonctionnement. En prenant appui sur l'un des travaux~\cite{Kotsiantis2007}, nous identifierons cinq catégories majeures dont :
+Les travaux que nous menons dans ce manuscrit portent sur les méthodes de classification car le problème que nous tentons de résoudre relève de la catégorisation de données. Ainsi, nous proposons un bref échantillon de ces méthodes en détaillant leur principe respectif de fonctionnement. En prenant appui sur l'un des travaux~\cite{Kotsiantis2007}, nous avons identifié cinq catégories majeures dont~:
 \begin{itemize}
-    \item \textbf{Les approches logiques} qui correspondent à des approches par succession de décisions~\cite{Kotsiantis2007}. Dans cette catégorie, nous retrouverons les arbres de décision~\cite{Breiman1984} (également connu sous le terme de \gls{cart}) dont le principe peut se résumer à la construction d'un graphe, dans lequel chaque noeud sera associé à une décision caractérisé par le choix d'une caractéristique et d'un seuil~\cite{Quinlan1986}. Toute la complexité de ces approches repose sur le choix de ces caractéristiques, Ainsi, les caractéristiques sont utilisées par ordre d'importance dans la séparation du problème.
-    \item \textbf{Les approches statistiques} qui correspondent à des approches probabilistes, qui déterminent dans quelle mesure un élément fera partie d'une classe. Le \gls{nbm}~\cite{Zhang2004} est un exemple typique de ce type d'approche, dans lequel chaque caractéristique est considérée comme indépendante. La relation entre caractéristique et annotation se définie ainsi comme le produit des probabilités de chacune d'entre elle d'appartenir à la classe supposé (résumé sur l'\Cref{eq:bayesian}). Ce type de classification bayésienne peux également être étendue sous la forme de réseau~\cite{Kononenko1989}.
-    \item \textbf{Les approches par instances} qui qualifient des méthodes consistant à une accumulation des échantillons afin d'enrichir un espace et non pas de leur interprétation menant à une forme de connaissances. La méthode la plus connue reposant sur ce principe est celle des \gls{knn}~\cite{Cover1967}, dont la théorie majeure repose sur l'appartenance d'une donnée à une classe si celle-ci est suffisamment proche par ses caractéristiques, d'échantillons pré-existant de cette dernière. Il est alors nécessaire de définir un critère de distance, le principal utilisée étant  celui de la distance euclidienne. 
-    \item \textbf{Les approches par \gls{svm}}~\cite{Cortes1995} correspondent à des approches assez récentes dont le principe se résume à déterminer une frontière de séparation entre les diverses classes, qui maximise une marge suffisante permettant entre autre une meilleure tolérance au bruit. Afin de déterminer au mieux cette frontière, divers noyaux ont été établie dont le plus simple d'entre eux est \textbf{le noyau linéaire}. Nous noterons également la présence \textbf{d'un noyau de fonction de base radiale} ou \textit{Radial Basis Function} considéré comme un \textit{approximateur universel}, si les données à disposition sont suffisantes~\cite{Wang2004}.  
-    \item \textbf{Les approches par ensembles} sont une catégorie qui qualifie les méthodes qui emploient un ensemble de modèles prédictifs afin de construire un unique modèle plus robuste. L'une de ces méthodes, les \gls{rf}~\cite{Breiman2001} sont une extension du principe d'arbre de décision précédemment évoqué, destiné à réduire le risque de sur-apprentissage du modèle initial. Cette méthodes réalise $N$ sélections aléatoires de d'observations, pour lequel $N$ arbres de décision seront générés. Afin de diversifier ces arbres, un mécanisme de tirages aléatoires de caractéristiques est également réalisées au niveau de chaque noeud de décision. Une autre de ces méthode, l'\gls{gb} est un mode opératoire généralement constitué par des arbres de décisions. En opposition avec les \gls{rf} où chaque arbre de décision correspond à un modèle de prédiction faible, l'\gls{gb} consiste à diminuer de manière séquentielle une fonction de coût à chaque nouvel arbre généré~\cite{Friedman2001}.
+    \item \textbf{Les approches logiques} qui correspondent à des approches par succession de décisions~\cite{Kotsiantis2007}. Dans cette catégorie, nous retrouvons les arbres de décision~\cite{Breiman1984} (également connu sous le terme de \gls{cart}) dont le principe peut se résumer à la construction d'un graphe, dans lequel chaque noeud est associé à une décision caractérisée par le choix d'une caractéristique et d'un seuil~\cite{Quinlan1986}. Toute la complexité de ces approches repose sur le choix de ces caractéristiques, Ainsi, les caractéristiques sont utilisées par ordre d'importance dans la séparation du problème.
+    \item \textbf{Les approches statistiques} qui correspondent à des approches probabilistes, qui déterminent dans quelle mesure un élément fait partie d'une classe. Le \gls{nbm}~\cite{Zhang2004} est un exemple typique de ce type d'approche, dans lequel chaque caractéristique est considérée comme indépendante. La relation entre caractéristique et annotation se définit ainsi comme le produit des probabilités de chacune d'entre elles d'appartenir à la classe supposée (voir l'\Cref{eq:bayesian}). Ce type de classification bayésienne peut également être étendue sous la forme de réseau~\cite{Kononenko1989}.
+    \item \textbf{Les approches par instances} qui qualifient des méthodes consistant à une accumulation des échantillons afin d'enrichir un espace et non pas de leur interprétation menant à une forme de connaissances. La méthode la plus connue reposant sur ce principe est celle des \gls{knn}~\cite{Cover1967}, dont la théorie majeure repose sur l'appartenance d'une donnée à une classe si celle-ci est suffisamment proche par ses caractéristiques, d'échantillons pré-existants de cette dernière. Il est alors nécessaire de définir un critère de distance, le principal utilisé étant celui de la distance euclidienne. 
+    \item \textbf{Les approches par \gls{svm}}~\cite{Cortes1995} correspondent à des approches assez récentes dont le principe se résume à déterminer une frontière de séparation entre les diverses classes, qui maximise une marge suffisante permettant entre autres une meilleure tolérance au bruit. Afin de déterminer au mieux cette frontière, divers noyaux ont été établis dont le plus simple d'entre eux est \textbf{le noyau linéaire}. Nous noterons également la présence \textbf{d'un noyau de fonction de base radiale} ou \textit{Radial Basis Function} considéré comme un \textit{approximateur universel}, si les données à disposition sont suffisantes~\cite{Wang2004}.
+    \item \textbf{Les approches par ensembles} sont une catégorie qui qualifie les méthodes qui emploient un ensemble de modèles prédictifs afin de construire un unique modèle plus robuste. L'une de ces méthodes, les \gls{rf}~\cite{Breiman2001} sont une extension du principe d'arbre de décision précédemment évoqué, destiné à réduire le risque de sur-apprentissage du modèle initial. Cette méthode réalise $N$ sélections aléatoires d'observations, pour lequel $N$ arbres de décision sont générés. Afin de diversifier ces arbres, un mécanisme de tirages aléatoires de caractéristiques est également réalisé au niveau de chaque noeud de décision. Une autre de ces méthodes, l'\gls{gb} est un mode opératoire généralement constitué par des arbres de décisions. En opposition avec les \gls{rf} où chaque arbre de décision correspond à un modèle de prédiction faible, l'\gls{gb} consiste à diminuer de manière séquentielle une fonction de coût à chaque nouvel arbre généré~\cite{Friedman2001}.
 \end{itemize}\par
 
 \begin{equation} 
@@ -92,11 +91,11 @@ Les travaux que nous mènerons dans ce manuscrit porteront sur les méthodes de 
     \hat{y} = \underset{k \in \{1, \ldots, K\}}{\operatorname{argmax}} \ p(C_k) \displaystyle\prod_{i=1}^n p(x_i \mid C_k)
 \end{equation}
 
-Devant ces nombreuses méthodes, il est difficile de déterminer un modèle optimal à une situation particulière, notamment dans le cadre de données à forte complexité. En effet, une évaluation de manière empirique de ces diverses méthodes reste encore la meilleure solutions afin de déterminer ce modèle optimal, par contrepartie d'un temps de calcul important. Néanmoins, l'un des travaux mené sur la performance des modèles supervisés, a permis de déterminer un certain nombre de critères de comparaison entre ces diverses techniques mettant en valeur en général les avantages et inconvénients de chacun~\cite{Kotsiantis2007}.\par
+Devant ces nombreuses méthodes, il est difficile de déterminer un modèle optimal à une situation particulière, notamment dans le cadre de données à forte complexité. En effet, une évaluation de manière empirique de ces diverses méthodes reste encore la meilleure solution afin de déterminer ce modèle optimal, en contrepartie d'un temps de calcul important. Néanmoins, l'un des travaux menés sur la performance des modèles supervisés, a permis de déterminer un certain nombre de critères de comparaison entre ces diverses techniques mettant en valeur en général les avantages et inconvénients de chacune~\cite{Kotsiantis2007}.\par
 
-Pour cela, nous avons, au sein de la \Cref{tab:model_comparison}, recensé la plupart des critères importants évoqué par ce travail de recherche et important à nos yeux pour la suite de travail. La performance de classification notamment, qui semble indéniable dans le champ que nous tenterons d'évaluer avec une emphase forte en terme de performances pour les \gls{svm}. La vitesse d'apprentissage a également été précisée, bien que contraignante lors de nos essais, elle ne constituera pas un frein et reste le principal inconvénient des \gls{svm}. Enfin, ces derniers semblent adaptés en terme de tolérance à des caractéristiques non pertinentes ou redondantes, dont nous ferons l'objet dans certaines méthodes que nous proposerons.\par
+Pour cela, nous avons, au sein de la \Cref{tab:model_comparison}, recensé la plupart des critères importants évoqués par ce travail de recherche. La performance de classification notamment, qui semble indéniable dans le champ que nous tentons d'évaluer avec une emphase forte en termes de performances pour les \gls{svm}. La vitesse d'apprentissage a également été précisée, bien que contraignante lors de nos essais, elle ne constitue pas un frein et reste le principal inconvénient des \gls{svm}. Enfin, ces derniers sont robustes reconnus comme robuste face à des situations pouvant comporter des caractéristiques non pertinentes ou redondantes.\par
 
-A la vue de ces éléments, il semble plus que nécessaire de considérer l'utilisation des \gls{svm} au sein de nos travaux. De même, il sera nécessaire de considérer l'utilisation des deux méthodes d'approches par ensemble mentionnés, les \gls{rf} et de l'\gls{gb}, pour lesquelles aucun travail comparatif généraliste n'a été trouvé. Néanmoins, une étude génomique semble plaider dans le sens des \gls{svm} et de l'\gls{gb}~\cite{Ogutu2011}. Pour finir, il sera également nécessaire de considérer les modèles de classification au sein de processus proposés au sein de travaux proche de notre thématique. Nous aborderons plus en détails ces éléments dans leur parties respectives.\par
+A la vue de ces éléments, il semble plus que nécessaire de considérer l'utilisation des \gls{svm} au sein de nos travaux. De même, il est nécessaire de considérer l'utilisation des deux méthodes d'approches par ensemble mentionnées, les \gls{rf} et l'\gls{gb}, pour lesquelles aucun travail comparatif généraliste n'a été trouvé. Néanmoins, une étude génomique semble plaider dans le sens des \gls{svm} et de l'\gls{gb}~\cite{Ogutu2011}. Pour finir, il est également nécessaire de considérer ces modèles de classification au sein de processus proposés par des travaux proches de notre thématique. Nous abordons plus en détails ces éléments dans leur partie respective.\par
 
 \begin{table}[H]
   \small
@@ -121,14 +120,14 @@ A la vue de ces éléments, il semble plus que nécessaire de considérer l'util
 
 \subsection{Apprentissage non-supervisé}
 \label{sec:unsupervised_learning}
-L’apprentissage non supervisé ou « descriptif » est une seconde approche d’apprentissage dans laquelle l’ordinateur tente de « découvrir » en autonomie, des corrélations au sein de jeux de données. Ces approches émergent de problématiques diverses, telles que :
+L’apprentissage non supervisé ou « descriptif » est une seconde approche d’apprentissage dans laquelle l’ordinateur tente de « découvrir » en autonomie, des corrélations au sein de jeux de données. Ces approches émergent de problématiques diverses, telles que~:
 \begin{itemize}
     \item Réduire le coût, ou temps humain nécessaire, d’obtention de données étiquetées, c’est-à-dire pour lesquelles le couple de données d’entrée et de sortie attendue est connu.
     \item Découvrir les diverses relations pouvant exister au sein d’un amas de données. En effet, un label n’est qu’un échantillonnage de l’information primaire, et ne permet pas d’obtenir les relations pouvant régir des modèles complexes.
     \item Explorer de nouvelles relations de type « cause – effet », en réaction à la masse de données produites par les objets connectés. 
 \end{itemize}\par
 
-Plusieurs applications existent, telles que :
+Plusieurs applications existent, telles que~:
 \begin{itemize}
 	\item Le regroupement par classes, des algorithmes comme les k-moyennes tentent de minimiser la différence d’énergie entre les points d’un même groupe.
 	\item La réduction de dimensions sur des données à grande complexité, par projection de ces dernières sur des espaces à dimension réduite. On souhaite par ce procédé garder l’information essentielle au processus décisionnel.
@@ -142,23 +141,23 @@ Plusieurs applications existent, telles que :
     \label{fig:scheme_unsupervised}
 \end{figure}
 
-Ce principe a été également utilisé dans le but de réduire la dimension des données d'entraînement avant l'apprentissage supervisé. Cette technique porte le nom de sacs de mots ou "Bag-of-words" initialement prévue pour l'analyse de texte~\cite{Zhang2010} et utilisé dans des domaines tels que l'analyse d'image de la peau~\cite{Situ2008}.\par
+Ce principe a été également utilisé dans le but de réduire la dimension des données d'entraînement avant l'apprentissage supervisé. Cette technique porte le nom de sacs de mots ou "Bag-of-words" initialement prévue pour l'analyse de texte~\cite{Zhang2010} et utilisée dans des domaines tels que l'analyse d'image de la peau~\cite{Situ2008}.\par
 
 \subsection{Apprentissage semi-supervisé}
 \label{sec:semisupervised_learning}
-Les techniques d'apprentissage semi-supervisé tentent de combiner les deux principes précédents. Elles sont entre autre la conséquence du coût de l'annotation des données qui nécessite souvent le travail d'experts. Ainsi, il peut être difficile d'avoir accès à une vérité terrain associé aux données ou simplement être dommage de ne pas tirer partie de l'ensemble des données en notre possession. Ce dernier point est particulièrement intéressant dans le cadre de données à grande dimensions pour lesquelles \textbf{l'espace} des dimensions croît de manière exponentielle et "dilue" les échantillons (connu sous le terme de "Fléau des dimensions"~\cite{Donoho2000}).\par 
+Les techniques d'apprentissage semi-supervisé tentent de combiner les deux principes précédents. Elles sont entre autres la conséquence du coût de l'annotation des données qui nécessite souvent le travail d'experts. Ainsi, il peut être difficile d'avoir accès à une vérité terrain associée aux données ou simplement être dommage de ne pas tirer parti de l'ensemble des données en notre possession. Ce dernier point est particulièrement intéressant dans le cadre de données à grande dimensions pour lesquelles \textbf{l'espace} des dimensions croît de manière exponentielle et "dilue" les échantillons (connu sous le terme de "Fléau des dimensions"~\cite{Donoho2000}).\par 
 
-Ainsi, l'apprentissage semi-supervisé se base sur plusieurs hypothèses auxquelles doivent se confronter les données~\cite{Zhu2009}, dont:
+Ainsi, l'apprentissage semi-supervisé se base sur plusieurs hypothèses auxquelles doivent se confronter les données~\cite{Zhu2009}, dont~:
 \begin{itemize}
-	\item un critère \textbf{d'homogénéité}, c'est à dire que des données proches ou d'une zone de haute densité partagent les même annotations, 
-	\item un critère \textbf{de séparation par faible densité}, c'est à dire que s'il existe une  séparation entre plusieurs types d'annotations, celle-ci se situera dans une zone à faible densité~\cite{chapelle2005}.
+	\item un critère \textbf{d'homogénéité}, c'est à dire que des données issues d'une zone de haute densité partagent les mêmes annotations, 
+	\item un critère \textbf{de séparation par faible densité}, c'est à dire que s'il existe une  séparation entre plusieurs types d'annotations, celle-ci se situant dans une zone à faible densité~\cite{chapelle2005}.
 \end{itemize}
 En pratique, il est difficile de s'assurer que les données en notre possession respectent bien ces engagements. Afin de mieux visualiser ce concept, l'exemple en \Cref{fig:example_semi_supervised} démontre l'intérêt de telles approches. Ce principe permet d'éviter d'extrapoler des frontières difficilement définissables dans une situation de faible densité de l'information étiqueté.\par
  
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{contents/chapter_3/resources/example_semi_supervised.pdf}
-    \caption{Exemple fréquemment employé pour démontrer l'intérêt de l'apprentissage semi-supervisé du point de vue du principe de densité. A gauche, une classification obtenue à partir de deux données étiquetées; A droite, la même situation avec l’ajout de données non étiquetées.}
+    \caption{Exemple fréquemment employé pour démontrer l'intérêt de l'apprentissage semi-supervisé du point de vue du principe de densité. A gauche, une classification obtenue à partir de deux données étiquetées ; A droite, la même situation avec l’ajout de données non étiquetées.}
     \label{fig:example_semi_supervised}
 \end{figure}
 
@@ -168,17 +167,16 @@ En pratique, il est difficile de s'assurer que les données en notre possession 
 \label{sec:deep_learning}
 L’apprentissage profond correspond à un sous-ensemble de l’apprentissage automatique, encouragé par les récents apports des neurosciences sur le fonctionnement et le rôle des neurones sur la prise de décisions complexes~\cite{Quartz1997,Shrager1996}. En effet, le cerveau possède divers niveaux de traitement de l’information, ce que tente d'imiter l'apprentissage profond par l'apport de multiples couches de traitement.\par
 
-En effet, dans le cadre des méthodes « standard » d’apprentissage évoquées dans la partie précédente, la dimension de « couches » de traitement n’est pas intégrée. Les approches par apprentissage simple proposent une architecture en trois couches, dont l’une des couches est allouée à la corrélation entre nos données d’entrée et de sortie. Par opposition, les approches par apprentissage profond proposant des structures en $n$ couches, avec $n \in \pmb{\mathbb{N}}$ et $n>1$. Ces couches intermédiaires sont également qualifiées de couches cachées.\par 
+En effet, dans le cadre des méthodes « standard » d’apprentissage évoquées dans la partie précédente, la dimension de « couches » de traitement n’est pas intégrée. Les approches par apprentissage simple proposent une architecture en trois couches, dont l’une des couches est allouée à la corrélation entre les données d’entrée et de sortie. Par opposition, les approches par apprentissage profond proposant des structures en $n$ couches, avec $n \in \pmb{\mathbb{N}}$ et $n>1$. Ces couches intermédiaires sont également qualifiées de couches cachées.\par 
 
-Nous présenterons dans une première étape les \gls{ann} puis les \gls{cnn} dans un second temps et en détaillerons les principes. Enfin, nous aborderons les aspects liées au transfert de connaissances.\par
+Nous présentons dans une première étape le principe de \gls{ann} puis dans un seconde temps le principe de \gls{cnn} et détaillons leur principe respectif. Enfin, nous abordons les aspects liés au transfert de connaissances.\par
 
-\subsection{Réseaux de neurones artificiels}
-Les \gls{ann} sont des structures multicouches composées d'unités basique appelées neurones. Dans ce schéma, chaque neurone ou unité est connecté à l'ensemble des unités de la couche $N-1$ et $N+1$ et forme un "maillage".\par
+\subsection{Réseau de neurones artificiels}
+Les \gls{ann} sont des structures multicouches composées d'unités basiques appelées neurones. Dans ce schéma, chaque neurone ou unité est connecté à l'ensemble des unités de la couche $N-1$ et $N+1$ et forme un "maillage".\par
 
-Les neurones se partagent ainsi l'information de point à point de l'entrée vers la sortie, appliquant respectivement l'opération dont ils sont responsable. Cette opération  au sein d'une unité est de la forme $y = W\mathbf{x}+\mathbf{b}$ dans laquelle $W$ représente une matrice de poids qui permettra de pondérer les signaux des prédécesseur et $b$ un terme de correction appelé biais~\cite{Stephen1990}. Ainsi, les neurones en entrée d'un réseau recevront une information "brute" tandis que, les neurones situés en sortie du réseau recevront une information pré traité par les prédécesseurs. Le schéma présent sur la \Cref{fig:scheme_deep_understanding} permet de mettre en évidence un cas simple de résolution par apprentissage pour appréhender cette notion.\par
+Les neurones se partagent ainsi l'information de point à point de l'entrée vers la sortie, appliquant respectivement l'opération dont ils sont responsables. Cette opération au sein d'une unité est de la forme $y = W\mathbf{x}+\mathbf{b}$ dans laquelle $W$ représente une matrice de poids qui permettra de pondérer les signaux des prédécesseurs et $b$ un terme de correction appelé biais~\cite{Stephen1990}. Ainsi, les neurones en entrée d'un réseau reçoivent une information "brute" tandis que, les neurones situés en sortie du réseau recevront une information pré-traitée par les prédécesseurs. Le schéma présent sur la \Cref{fig:scheme_deep_understanding} permet de mettre en évidence un cas simple de résolution par apprentissage pour appréhender cette notion.\par
 
-Néanmoins, cet exemple met également en avant que ce même modèle pourrait être représentée à l'aide d'une fonction d'ordre suffisante~\cite{Bishop2006}. Ce mécanisme seul ne suffit pas à créer des réseaux exploitant les bénéfice d'un tel agencement. En effet, si une unité de ce réseau est représentée par $y = W\mathbf{x}+\mathbf{b}$, une succession de ces unités pourrait se résumer à la fonction linéaire représentée sur l'\Cref{eq:proof_linearity}~\textsuperscript{\ref{footnote:equation_andrewng}}. 
-Afin de tirer parti du potentiel de ce choix d'agencement en couches, ont été introduites des fonctions d'activation (tanh, ReLu, \ldots) qui permettent d'introduire une non-linéarité au sein des ces réseaux, permettant notamment l’autodétermination de structures de décision complexes.\par
+Néanmoins, cet exemple met également en avant que ce même modèle pourrait être représentée à l'aide d'une fonction d'ordre suffisante~\cite{Bishop2006}. Ce mécanisme seul ne suffit pas à créer des réseaux exploitant les bénéfices d'un tel agencement. En effet, si une unité de ce réseau est représentée par $y = W\mathbf{x}+\mathbf{b}$, une succession de ces unités pourrait se résumer à la fonction linéaire représentée par l'\Cref{eq:proof_linearity}~\textsuperscript{\ref{footnote:equation_andrewng}}. Afin de tirer parti du potentiel de ce choix d'agencement en couches, ont été introduites des fonctions d'activation (tanh, ReLu, \ldots) qui permettent d'introduire une non-linéarité au sein de ces réseaux, permettant notamment l’autodétermination de structures de décision complexes.\par
 
 \begin{equation} 
     \label{eq:proof_linearity}
@@ -190,30 +188,30 @@ Afin de tirer parti du potentiel de ce choix d'agencement en couches, ont été 
 \end{equation}
 \par
 
-Un très bon représentant de ces types de réseaux est le \gls{mlp} que nous utiliserons à des fins de classification. Par ailleurs, un inconvénient majeur de ces réseaux est le grand nombre d'hyperparamètres à disposition. Il est ainsi délicat de procéder au choix du nombre de neurones ou même de celui des fonctions d'activations.\par
+Un très bon représentant de ces types de réseaux est le \gls{mlp} utilisé à des fins de classification. Par ailleurs, un inconvénient majeur de ces réseaux est le grand nombre d'hyperparamètres à disposition. Il est ainsi délicat de procéder au choix du nombre de neurones ou même de celui des fonctions d'activation.\par
 
 \addtocounter{footnote}{1}
-\footnotetext[\thefootnote]{Source : Plateforme de cours en ligne \href{https://www.deeplearning.ai/}{Deep Learning AI}, démonstration par Andrew Ng. \label{footnote:equation_andrewng}}
+\footnotetext[\thefootnote]{Source~: Plateforme de cours en ligne \href{https://www.deeplearning.ai/}{Deep Learning AI}, démonstration par Andrew Ng. \label{footnote:equation_andrewng}}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{contents/chapter_3/resources/scheme_deep_understanding.pdf}
-    \caption{Exemple simplifié d'une structure d’apprentissage profond. Ce modèle se compose de deux couches intermédiaires cachées : la première couche extrait des caractéristiques linéaires simples, tandis que la seconde couche par combinaison avec la première couche conduit à une extraction de caractéristiques plus complexes. Ainsi, la première couche s'apparente à un polynôme de degré 1, tandis que seconde couche représente des fonctions de degré 2 et ainsi de suite.}
+    \caption{Exemple simplifié d'une structure d’apprentissage profond. Ce modèle se compose de deux couches intermédiaires cachées~: la première couche extrait des caractéristiques linéaires simples, tandis que la seconde couche par combinaison avec la première couche conduit à une extraction de caractéristiques plus complexes. Ainsi, la première couche s'apparente à un polynôme de degré 1, tandis que la seconde couche représente des fonctions de degré 2 et ainsi de suite.}
     \label{fig:scheme_deep_understanding}
 \end{figure}
 
-\subsection{Réseaux neuronaux de convolutions}
+\subsection{Réseau neuronal convolutif}
 \label{sec:convolutionnal_neural_network}
-Les \gls{cnn} sont une extensions des réseaux de neurones profond, essentiellement utilisé dans un but de traitement de l'image, même si d'autres applications de ce principe peuvent être réalisée, appliquée à un signal ou à un volume par exemple.\par
+Les \gls{cnn} sont une extension des réseaux de neurones profond, essentiellement utilisé dans un but de traitement de l'image, même si d'autres applications de ce principe peuvent être réalisées, appliquée à un signal ou à un volume par exemple.\par
 
-Ces \gls{cnn} sont une réponse à l'application des \gls{ann} à des problématiques impliquant des données images et des contraintes multiples qu'ils comportent. Parmi ces contraintes de l'application des \gls{ann} aux images, nous pouvons évoquer : 
+Ces \gls{cnn} sont une réponse à l'application des \gls{ann} à des problématiques impliquant des données images et des contraintes multiples qu'ils comportent. Parmi ces contraintes de l'application des \gls{ann} aux images, nous pouvons évoquer~: 
 \begin{inlinerate}
 \item les \textbf{nombreuses connexions et paramètres requis},
 \item l'\textbf{absence d'utilisation de la cohérence de l'information spatiale},
-\item et la \textbf{dépendance} du réseau à la taille des information d'entrée.
+\item et la \textbf{dépendance} du réseau à la taille des informations d'entrée.
 \end{inlinerate}\par
 
-Ainsi, ces réseaux font appel à des couches de convolution permettant de résoudre ces trois principales contraintes. D'une part la convolution permet de réduire fortement le nombre de paramètres d'entraînement, le réseaux n'est ainsi plus entièrement "connecté". Certaines optimisations récentes consistent à remplacer les filtres de convolution 2D par une succession de filtres 1D horizontaux et verticaux, proposant des résultats semblables et réduisant fortement le nombre de paramètres. D'autres part, la convolution permet d'apporter cette logique spatiale des données et cette indépendance à la taille. En effet, le réseaux n'est plus entièrement connecté et donc ne dépend plus d'une taille fixe, et peut ainsi traîter des données de tailles différentes mais qui doivent respecter une taille minimum. Le traitement des données par ces couches de convolution porte le nom de carte d'activation, maximum quand le produit de convolution est en phase.\par
+Ainsi, ces réseaux font appel à des couches de convolution permettant de résoudre ces trois principales contraintes. D'une part la convolution permet de réduire fortement le nombre de paramètres d'entraînement, le réseau n'est ainsi plus entièrement "connecté". Certaines optimisations récentes consistent à remplacer les filtres de convolution 2D par une succession de filtres 1D horizontaux et verticaux, proposant des résultats semblables et réduisant fortement le nombre de paramètres. D'autres part, la convolution permet d'apporter une logique à la dimension spatiale des données ainsi qu'une indépendance à la taille. En effet, le réseau n'est plus entièrement connecté et donc ne dépend plus d'une taille fixe, et peut ainsi traiter des données de tailles différentes mais qui doivent respecter une taille minimum. Le traitement des données par ces couches de convolution porte le nom de carte d'activation, maximum quand le produit de convolution est en phase.\par
 
 % \begin{equation} 
 %     \label{eq:convolution_integral}
@@ -226,16 +224,16 @@ Ainsi, ces réseaux font appel à des couches de convolution permettant de réso
 
 \subsection{Transfert de connaissances}
 \label{sec:transfer_learning}
-L’apprentissage par transfert est une technique connexe à l’apprentissage profond défini comme « faisant référence à la situation où ce qui a été appris dans un contexte \ldots est exploité pour améliorer la généralisation dans une autre contexte » \cite{Ngiam2011}. Cette discipline s’inscrit dans le champ de « l’adaptation de domaine », définie comme le transfert des connaissances d’un domaine $D_S$, défini par l’hypothèse $h: X_S \rightarrow Y_S$, vers un domaine cible $D_T$ afin de satisfaire $h: X_T \rightarrow Y_T$. Son champ d'application n'est pas limité au réseaux d'apprentissage profond, mais les contraintes qui leur sont associées font de ces techniques un ressources utile.\par
+L’apprentissage par transfert est une technique connexe à l’apprentissage profond défini comme « faisant référence à la situation où ce qui a été appris dans un contexte \ldots est exploité pour améliorer la généralisation dans une autre contexte » \cite{Ngiam2011}. Cette discipline s’inscrit dans le champ de « l’adaptation de domaine », définie comme le transfert des connaissances d’un domaine $D_S$, défini par l’hypothèse $h: X_S \rightarrow Y_S$, vers un domaine cible $D_T$ afin de satisfaire $h: X_T \rightarrow Y_T$. Son champ d'application n'est pas limité aux réseaux d'apprentissage profond, mais les contraintes qui leur sont associées font de ces techniques une ressources utile.\par
 
-En effet, ces solutions permettent de réduire les difficultés liées à la grande quantité de ressources de calcul, de temps, mais également de données mobilisées nécessaires à un entraînement depuis sa base. Le modèle d’apprentissage attendu est alors initialement plus performant, croît plus efficacement et plus performant qu’un apprentissage spécifique  (\Cref{fig:learning_curves}).\par
+En effet, ces solutions permettent de réduire les difficultés liées à la grande quantité de ressources de calcul, de temps, mais également de données mobilisées nécessaires à un entraînement depuis sa base. Le modèle d’apprentissage attendu est alors initialement plus performant, croît plus efficacement et est plus performant qu’un apprentissage spécifique (\Cref{fig:learning_curves}).\par
 
-Néanmoins, cette solution n’est envisageable que lorsque l’apprentissage, réalisé lors de la première tâche, généralise suffisamment le phénomène observé. Ainsi, il est d’usage courant de ne spécifier lors du transfert que la couche finale de classification du réseau, les premières couches n’étant employé comme extracteur général de caractéristiques. Toutefois, la littérature s’accorde sur une possible spécialisation des couches de classification et hautes moins génériques.\par
+Néanmoins, cette solution n’est envisageable que lorsque l’apprentissage, réalisé lors de la première tâche, généralise suffisamment le phénomène observé. Ainsi, il est d’usage courant de ne spécifier lors du transfert que la couche finale de classification du réseau, les premières couches étant employées comme extracteur général de caractéristiques. Toutefois, certaines méthodes de la littérature s’accordent sur l'entraînement conjoint des couches de classification ainsi que des couches de convolutions hautes, considérées comme moins génériques.\par
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{contents/chapter_3/resources/example_learning_curves.pdf}
-    \caption{ Attentes liées à un apprentissage par transfert en opposition à un apprentissage classique.}
+    \caption{Exemple d'attentes liées à un apprentissage par transfert en opposition à un apprentissage classique.}
     \label{fig:learning_curves}
 \end{figure}
 
@@ -243,18 +241,18 @@ Néanmoins, cette solution n’est envisageable que lorsque l’apprentissage, r
 
 \section{Paramétrage et évaluation de modèles prédictifs}
 \label{sec:models_settings}
-Cette partie se concentre sur des problématiques de biais lors de l'apprentissage et de l'évaluation de modèle. Nous tenterons de présenter rapidement le phénomène et les risques associées, puis nous proposerons des solutions permettant de s'affranchir d ces biais durant l'évaluation des modèles.\par
+Cette partie se concentre sur des problématiques de biais lors de l'apprentissage et de l'évaluation de modèles. Nous tentons de présenter rapidement le phénomène et les risques associés, puis nous proposons des solutions permettant de s'affranchir de ces biais durant l'évaluation des modèles.\par
 
 \subsection{Généralisation de modèles}
 \label{subsec:generalized_models}
-A l'aide de couples d'entrée/sortie à notre disposition, nous allons tenter d’apprendre une relation capable de \textbf{généraliser} et d’estimer de nouvelles sorties sur de nouvelles données. Il est pour cela nécessaire de parvenir à isoler l'information responsable de ce cheminement, plus ou moins séparable, en cause souvent la qualité de :
+A l'aide de couples d'entrée/sortie à notre disposition, nous allons tenter d’apprendre une relation capable de \textbf{généraliser} et d’estimer de nouvelles sorties sur de nouvelles données. Il est pour cela nécessaire de parvenir à isoler l'information responsable de ce cheminement, plus ou moins séparable, en cause souvent la qualité de~:
 \begin{inlinerate}
-    \item l'hypothèse formulée, c'est à dire si la relation qui lie l'observation et sa conséquence est directe et vraie dans toutes circonstance,
+    \item l'hypothèse formulée, c'est à dire si la relation qui lie l'observation et sa conséquence est directe et vraie dans toute circonstance,
     \item l'information possédée, c'est à dire si l'information est juste pour répondre à la problématique cible (qualité de l'observation, rapport signal sur bruit, etc.),
     \item \ldots.
 \end{inlinerate}\par 
 
-Ce problème, évoqué dans la littérature porte le nom de « dilemme biais / variance » , dans lequel le biais représente le manque de relation pertinente entre données d’entrées et de sorties et où la variance représente l’influence du modèle au petites fluctuations souvent issues de bruit. Ces termes sont intrinsèquement liés aux problématiques respectives de \textbf{sous-apprentissage} et \textbf{sur-apprentissage}. La \Cref{fig:example_underfit_overfit} reprend de manière visuelle ces problématiques, et les exprime selon un jeu d’entraînement et de test. A noter que le sur-apprentissage peut être limité par l’utilisation de termes de régularisation, de schéma de validation de modèle adaptés ou l’utilisation d’ensembles de donnés suffisantes.\par
+Ce problème, évoqué dans la littérature porte le nom de « dilemme biais / variance », dans lequel le biais représente le manque de relation pertinente entre données d’entrée et de sortie et où la variance représente l’influence du modèle au petites fluctuations souvent issues de bruit. Ces termes sont intrinsèquement liés aux problématiques respectives de \textbf{sous-apprentissage} et \textbf{sur-apprentissage}. La \Cref{fig:example_underfit_overfit} reprend de manière visuelle ces problématiques, et les exprime selon un jeu d’entraînement et de test. A noter que le sur-apprentissage peut être limité par l’utilisation de termes de régularisation, de schéma de validation de modèle adaptés ou l’utilisation d’ensembles de données suffisantes.\par
  
 \begin{figure}[H]
     \centering
@@ -265,9 +263,9 @@ Ce problème, évoqué dans la littérature porte le nom de « dilemme biais / v
 
 \subsection{Choix de métriques}
 \label{subsec:metrics}
-Le choix des métriques sont une part importante de nos problématiques lors de la mise en place de modèles d’apprentissage. En effet, il va permettre d'une part de déterminer la sélection d'un modèle parmi un ensemble de modèles et va permettre de retenir des performances attendues de ce dernier par exemple dans le monde réel.\par
+Le choix des métriques représente une part une part importante de nos problématiques lors de la mise en place de modèles d’apprentissage. En effet, il permet d'une part de déterminer la sélection d'un modèle parmi un ensemble de modèles et, d'autre part, de retenir des performances attendues de ce dernier par exemple dans le monde réel.\par
 
-L’un des principaux outils à disposition afin d'évaluer la performance est la matrice de confusion, schématisé sur la \Cref{fig:scheme_confusion_matrix}). Elle permet de faire correspondre les classes réelles et prédites : la diagonale de cette matrice fait figurer les prédictions correctement réalisées par notre modèle, tandis que les éléments restants nous renseignent sur les prédictions erronées. Dans une situation à deux classes ou \textit{binaire}, cette matrice fait ainsi ressortir quatre valeurs :
+L’un des principaux outils à disposition afin d'évaluer la performance est la matrice de confusion, schématisé sur la \Cref{fig:scheme_confusion_matrix}. Elle permet de faire correspondre les classes réelles et prédites~: la diagonale de cette matrice fait figurer les prédictions correctement réalisées par notre modèle, tandis que les éléments restants nous renseignent sur les prédictions erronées. Dans une situation à deux classes ou \textit{binaire}, cette matrice fait ainsi ressortir quatre valeurs~:
 \begin{itemize}
 	\item Les \textbf{vrais positifs}, les éléments de la classe positive détectés comme positif,
 	\item Les \textbf{vrais négatifs}, les éléments de la classe négative détectés comme négatif,
@@ -277,12 +275,12 @@ L’un des principaux outils à disposition afin d'évaluer la performance est l
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.6\linewidth]{contents/chapter_3/resources/scheme_confusion_matrix.pdf}
+    \includegraphics[width=0.55\linewidth]{contents/chapter_3/resources/scheme_confusion_matrix.pdf}
     \caption{Schéma représentatif d’une matrice de confusion, qui met en avant une situation binaire.}
     \label{fig:scheme_confusion_matrix}
 \end{figure}
 
-Bien que déjà réduite, l'information de cette matrice est encore très riche et difficile à utiliser comme critère de sélection. Pour cela, diverses métriques éprouvés seront à envisager selon la problématique à laquelle nous tenterons de répondre. Parmi les plus courantes d'entre elles, les critères de précision, sensibilité ou encore spécificité sont pléthore dans la littérature mais ont tendance à ne capter qu'une partie du problème. Par exemple, la sensibilité est un critère très important en médecine ou détection de fraude, mais ne qualifie en rien la spécificité du modèle. De même, la moyenne fait également partie des critères extrait dans le domaine de l'intelligence artificielle, mais peut également manquer de sens en cas de non balancement de l'information~\cite{Guo2008} ou même ne pas mettre en avant un important gouffre entre spécificité et sensibilité. Ces métriques sont détaillés dans l'\Cref{eq:metrics_basics}.\par
+Bien que déjà réduite, l'information de cette matrice est encore très riche et difficile à utiliser comme critère de sélection. Pour cela, diverses métriques éprouvées sont à envisager selon la problématique à laquelle nous tentons de répondre. Parmi les plus courantes d'entre elles, les critères de précision, sensibilité ou encore spécificité sont pléthores dans la littérature mais ont tendance à ne capter qu'une partie du problème. Par exemple, la sensibilité est un critère très important en médecine ou détection de fraude, mais ne qualifie en rien la spécificité du modèle. De même, la moyenne fait également partie des critères extraits dans le domaine de l'intelligence artificielle, mais peut également manquer de sens en cas de non balancement de l'information~\cite{Guo2008} ou même ne pas mettre en avant un important gouffre entre spécificité et sensibilité. Ces métriques sont détaillés dans l'\Cref{eq:metrics_basics}.\par
 
 \begin{equation} 
     \label{eq:metrics_basics}
@@ -294,49 +292,49 @@ Bien que déjà réduite, l'information de cette matrice est encore très riche 
     \end{split}
 \end{equation}
 
-Dans ce cas, il peut être préférable de privilégier des métriques plus robustes, dans le cadre de données non balancées. La plupart des méthodes s’accordent sur l’utilisation de métriques tels que le F-Score, associant conjointement sensibilité et précision, par principe de la moyenne harmonique~\cite{Guo2008} (voir l'\Cref{eq:metrics_fscore}).\par
+Dans ce cas, il peut être préférable de privilégier des métriques plus robustes, dans le cadre de données non balancées. La plupart des méthodes s’accordent sur l’utilisation de métriques tels que le \fscore{}, associant conjointement sensibilité et précision, par principe de la moyenne harmonique~\cite{Guo2008}. L'\Cref{eq:metrics_fscore} met à disposition l'expression générique de cette métrique, dont le paramètre $\beta$ permet de moduler l'importance de la précision ou de la sensibilité. L'influence de ce paramètre est neutre lorsque sa valeur est égale à 1 comme dans le cas du \fscore.\par
  
 \begin{equation} 
-    {F-Score}=(1+\beta^2)*(Pr\acute{e}cision*Sensibilit\acute{e})/((\beta^2*Pr\acute{e}cision)+Sensibilit\acute{e})
+    {F_\beta \: score}=(1+\beta^2)*(Pr\acute{e}cision*Sensibilit\acute{e})/((\beta^2*Pr\acute{e}cision)+Sensibilit\acute{e})
     \label{eq:metrics_fscore}
 \end{equation}
  
-Une autre métrique permettant de se prémunir de ces effets de non balancement de l'information et celui de l'\acs{auc} et découlant de la courbe \gls{roc} dont le principe est résumé sur le schéma \Cref{fig:scheme_roc_curve}). La courbe \gls{roc} est tracée à partir des informations de spécificité / sensibilité et par variation d'une valeur seuil appliqué au modèle de prédiction, tandis que l'\acs{auc} correspond à l'intégration de l'aire de cette courbe. Ainsi, l'\acs{auc} est robuste au non balancement de données mais ses valeurs son optimiste sur des modèles de prédiction dont la variation du seuil est homogène vis à vis des résultats.\par
+Une autre métrique permettant de se prémunir de ces effets de non balancement de l'information et celui de l'\acs{auc} et découlant de la courbe \gls{roc} dont le principe est résumé sur le schéma \Cref{fig:scheme_roc_curve}). La courbe \gls{roc} est tracée à partir des informations de spécificité / sensibilité et par variation d'une valeur seuil appliquée au modèle de prédiction, tandis que l'\gls{auc} correspond à l'intégration de l'aire de cette courbe. Ainsi, l'\gls{auc} est robuste au non-balancement de données mais ses valeurs sont optimistes sur des modèles de prédiction dont la variation du seuil est homogène vis à vis des résultats.\par
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.6\linewidth]{contents/chapter_3/resources/scheme_roc_curve.pdf}
+    \includegraphics[width=0.55\linewidth]{contents/chapter_3/resources/scheme_roc_curve.pdf}
     \caption{Schéma de courbe \gls{roc} en orange et \gls{auc} en gris.}
     \label{fig:scheme_roc_curve}
 \end{figure}
 
-D'autres alternatives moins biaisés ont également été formulées~\cite{Sokolova2006}, néanmoins le F-Score et l'\gls{auc} sont couramment utilisés dans des articles clinique et constitueront une des bases de notre travail.\par
+D'autres alternatives moins biaisées ont également été formulées~\cite{Sokolova2006}. Néanmoins le \fscore{} et l'\gls{auc} sont couramment utilisés dans des articles clinique et constituent une des bases de notre travail.\par
 
 \subsection{Réglages des hyperparamètres}
 \label{subsec:hyperparameter}
-Avant d’entrer plus en profondeur dans le sujet, il est nécessaire de revenir sur le terme « d’hyperparamètres ». Il caractérise les paramètres d'un processus d'apprentissage automatique dont le réglage doit être effectué avant le processus d’apprentissage, et dont le réglage dépendra des données à traiter mais ne pourra souvent être déterminé par la simple observation de celle-ci. Le réglage de ces hyperparamètres est ainsi difficile à déterminer et sera à refaire en fonction de chaque situation rencontrée.\par
+Avant d’entrer plus en profondeur dans le sujet, il est nécessaire de revenir sur le terme « d’hyperparamètres ». Il caractérise les paramètres d'un processus d'apprentissage automatique dont le réglage doit être effectué avant la phase d'entraînement et dont les valeurs dépendent des données à traiter. Le réglage des hyperparamètres peut rarement être déterminé par la simple observation des données, et nécessite ainsi un réglage en fonction de chaque situation rencontrée.\par
 
-L’une des premières techniques permettant ce réglage consiste à définir une « grille » de ces hyperparamètres, contenant pour chacun leurs possible variations~\cite{Liu2006}. Il s'agit de la méthode la plus équitable puisqu'elle consiste à évaluer chaque combinaisons, par comparaison des performances finales (voir la \Cref{fig:example_hyperparameter_selection} - Gauche). Néanmoins, elle possède deux limitations majeures, dont :
+L’une des premières techniques permettant ce réglage consiste à définir une « grille » de ces hyperparamètres, contenant pour chacun leurs possible variations~\cite{Liu2006}. Il s'agit de la méthode la plus équitable puisqu'elle consiste à évaluer chaque combinaison par comparaison des performances finales (voir la \Cref{fig:example_hyperparameter_selection} - Gauche). Néanmoins, elle possède deux limitations majeures, dont~:
 \begin{itemize}
     \item Son \textbf{temps de calcul}, qui va croître de manière exponentielle en fonction du nombre d'hyperparamètres à valider,
     \item Sa \textbf{précision}, qui va dépendre du pas choisi pour chacun des paramètres.
 \end{itemize}\par
 
-La seconde technique consiste à définir un « espace » de recherche dont la distribution de chaque hyperparamètre sera choisie, ainsi qu'un nombre d'évaluation à réaliser pour déterminer la meilleure combinaison possible. Ce nombre d'évaluation est ensuite réalisé sous forme de tirage aléatoire, effectué à l'intérieur de cet espace de recherche défini~\cite{bergstra2012} (voir la \Cref{fig:example_hyperparameter_selection} - Droite). Cette méthode possède l'avantage d'être prévisible en terme de temps puisque le nombre de combinaisons évaluées est défini au préalable et quelque soit les proportions de l'espace. Néanmoins, cette méthode possède également des inconvénients comme la représentation des tirages au sein de l'espace défini.
+La seconde technique consiste à définir un « espace » de recherche dont la distribution de chaque hyperparamètre sera choisie, ainsi qu'un nombre d'évaluations à réaliser pour déterminer la meilleure combinaison possible. Ce nombre d'évaluation est ensuite réalisé sous forme de tirage aléatoire, effectué à l'intérieur de cet espace de recherche défini~\cite{bergstra2012} (voir la \Cref{fig:example_hyperparameter_selection} - Droite). Cette méthode possède l'avantage d'être prévisible en termes de temps puisque le nombre de combinaisons évaluées est défini au préalable et quel que soit les proportions de l'espace. Néanmoins, cette méthode possède également des inconvénients comme la représentation des tirages au sein de l'espace défini.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{contents/chapter_3/resources/example_hyperparameter_selection.pdf}
-    \caption{Exemple de recherche sur deux hyperparamètres $X_1$ et $X_2$. A gauche, une recherche sous forme de grille rigide, dans laquelle chaque combinaison sera évaluée. A droite, une recherche aléatoire de ces hyperparamètres.}
+    \caption{Exemple de recherche sur deux hyperparamètres $X_1$ et $X_2$. A gauche, une recherche sous forme de grille rigide, dans laquelle chaque combinaison est évaluée. A droite, une recherche aléatoire de ces hyperparamètres.}
     \label{fig:example_hyperparameter_selection}
 \end{figure}
 
 \subsection{Méthodes d'évaluation}
-Nous avons évoqué divers éléments permettant l'ajustement des modèles, voir la \Cref{subsec:hyperparameter}, et la mesure de performance, voir la \Cref{subsec:metrics}. Il est nécessaire d'orchestrer cet ensemble afin d'obtenir la meilleure attente possible d'un modèle de prédiction, tout en conservant une mesure permettant de renseigner sur la fiabilité de ce modèle et de ses prédictions futures dans des situations où la vérité terrain ne sera pas connue. En effet, l'évaluation d'un modèle de prédiction sur des données identiques à celles utilisées constitue un biais, par l'utilisation de connaissance à posteriori. De même, l'ajustement des hyperparamètres rentre dans cette catégorie de l'entraînement, et l'évaluation ne peut se faire sur des données ayant servi à les déterminer. Par ailleurs, une telle évaluation permet de détecter les problèmes de sous-apprentissage et sur-apprentissage évoqués en \Cref{subsec:generalized_models}.\par
+Nous avons évoqué divers éléments permettant l'ajustement des modèles, voir la \Cref{subsec:hyperparameter}, et la mesure de performance, voir la \Cref{subsec:metrics}. Il est nécessaire d'orchestrer cet ensemble afin d'obtenir la meilleure attente possible d'un modèle de prédiction, tout en conservant une mesure permettant de nous renseigner sur la fiabilité de ce modèle et de ses prédictions futures dans des situations où la vérité terrain n'est pas connue. En effet, l'évaluation d'un modèle de prédiction sur des données identiques à celles utilisées constitue un biais, par l'utilisation de connaissance \textit{a posteriori}. De même, l'ajustement des hyperparamètres rentre dans cette catégorie de l'entraînement, et l'évaluation ne peut se faire sur des données ayant servi à les déterminer. Par ailleurs, une telle évaluation permet de détecter les problèmes de sous-apprentissage et sur-apprentissage évoqués en \Cref{subsec:generalized_models}.\par
 
-La méthode \textbf{holdout} est la plus simple d'entre elle et consiste à diviser l’échantillon de données en deux sous-ensembles respectivement d'entraînement et de test. Il est important lors de cette étape de vérifier que les données présentes dans chacun de ces sous-ensembles soient représentatives de chaque classe présente dans la problématique. Les données spécifiées pour le test restent ainsi non utilisées jusqu'à leur confrontation au modèle définitif qui sera alors évalué par ces dernières. Le principal inconvénient de cette méthode est que seule une partie du jeu de donnée sert d'évaluation à la méthode développée. Néanmoins, cette méthode est rapide à exécuter puisqu'elle ne nécessite l'entraînement que d'un modèle. Cette méthode est schématisée sur la \Cref{fig:scheme_holdout_cv}, partie gauche.\par
+La méthode \textbf{holdout} est la plus simple d'entre elles et consiste à diviser l’échantillon de données en deux sous-ensembles respectivement d'entraînement et de test. Il est important lors de cette étape de vérifier que les données présentes dans chacun de ces sous-ensembles soient représentatives de chaque classe présente dans la problématique. Les données spécifiées pour le test restent ainsi non utilisées jusqu'à leur confrontation au modèle définitif qui est alors évalué sur ces dernières. Le principal inconvénient de cette méthode est que seule une partie du jeu de données sert d'évaluation à la méthode développée. Néanmoins, cette méthode est rapide à exécuter puisqu'elle ne nécessite l'entraînement que d'un modèle. Cette méthode est schématisée sur la \Cref{fig:scheme_holdout_cv}, partie gauche.\par
 
-La méthode de \textbf{validation croisée} permet d'étendre la méthode précédente à l'ensemble du jeu de données et d'obtenir un score moins biaisé. Pour cela, le jeu de données est subdivisé ainsi en \textbf{$k$ échantillons}, servant à tour de rôle de jeu de test, le reste de ces données étant réservé à l'entraînement. Nous obtenons ainsi $k$ modèles de prédictions et autant de score d'évaluation qui se résumeront à une unique valeur par application d'une fonction de moyenne. Le principal inconvénient de cette méthode est son temps de réalisation puisqu'elle nécessite l'entraînement d'autant de modèles que d'échantillons. Cette méthode est schématisée sur la \Cref{fig:scheme_holdout_cv}, partie droite.\par
+La méthode de \textbf{validation croisée} permet d'étendre la méthode précédente à l'ensemble du jeu de données et d'obtenir un score moins biaisé. Pour cela, le jeu de données est subdivisé ainsi en \textbf{$k$ échantillons}, servant à tour de rôle de jeu de test, le reste de ces données étant réservé à l'entraînement. Nous obtenons ainsi $k$ modèles de prédictions et autant de scores d'évaluation qui se résument à une unique valeur par application d'une fonction de moyenne. Le principal inconvénient de cette méthode est son temps de réalisation puisqu'elle nécessite l'entraînement d'autant de modèles que d'échantillons. Cette méthode est schématisée sur la \Cref{fig:scheme_holdout_cv}, partie droite.\par
 
 \begin{figure}[H]
     \centering
@@ -345,9 +343,9 @@ La méthode de \textbf{validation croisée} permet d'étendre la méthode préc�
     \label{fig:scheme_holdout_cv}
 \end{figure}
 
-Dans ce travail, nous nous intéresserons à la technique de validation croisée ainsi qu'à la valeur moyenne renvoyée par celle-ci. Afin de rendre l'information plus complète, nous renverrons également la valeur de l'écart-type à partir des évaluations réalisés sur les divers échantillons, utilisée comme mesure de stabilité au sein de travaux statistiques~\cite{Kim2009}. La plupart des travaux ayant recours à la validation croisée emploie une valeur $k$ de 5 jugée suffisante. Dans notre cas, cette valeur sera réduite à 4 afin réduire d'une part le coût en temps des expériences tout en conservant une information moyenne et d'écart-type satisfaisante. Cette valeur sera également suffisante pour permettre un entraînement en plusieurs phases nécessaires à certaines des expériences de ce manuscrit.\par
+Dans ce travail, nous nous intéressons à la technique de validation croisée ainsi qu'à la valeur moyenne renvoyée par celle-ci. Afin de rendre l'information plus complète, nous calculons également la valeur de l'écart-type à partir des évaluations réalisées sur les divers échantillons, jugée fiable afin de mesurer la stabilité du processus vis-à-vis des données~\cite{Kim2009}. La plupart des travaux ayant recours à la validation croisée emploient une valeur $k$ de 5 jugée suffisante. Dans notre cas, cette valeur sera réduite à 4 afin réduire d'une part le coût en temps des expériences tout en conservant une information moyenne et d'écart-type satisfaisante. Cette valeur est également suffisante pour permettre un entraînement en plusieurs phases nécessaires à certaines des expériences de ce manuscrit.\par
 
-Par ces deux méthodes nous répondons à la problématique de l'évaluation, mais n'apportons pas de solution quant au choix des hyperparamètres. En effet, utiliser un schéma de validation croisée pour régler et évaluer les modèles conduirait inévitablement à surestimer les performances du modèle~\cite{Tsamardinos2014}. Ce type de démarche reviendrait à ajuster au mieux une courbe à un nuage de points tout en affirmant que ces même données correspondent à des données inconnues. L'une des solutions a ce problème est l'utilisation d'un double schéma de validation, dont l'un des plus fonctionnels actuellement est celui de la validation croisée imbriquée~\cite{Cawley2010}. Le principe de cette méthode est schématisé sur la ~\Cref{fig:scheme_hyperparameter_process}, dans laquelle nous retrouvons :
+Par ces deux méthodes nous répondons à la problématique de l'évaluation, mais n'apportons pas de solution quant au choix des hyperparamètres. En effet, utiliser un schéma de validation croisée pour régler et évaluer les modèles conduit inévitablement à surestimer les performances du modèle~\cite{Tsamardinos2014}. Ce type de démarche revient à ajuster au mieux une courbe à un nuage de points tout en affirmant que ces mêmes données correspondent à des données inconnues. L'une des solutions à ce problème est l'utilisation d'un double schéma de validation, dont l'un des plus fonctionnels actuellement est celui de la validation croisée imbriquée~\cite{Cawley2010}. Le principe de cette méthode est schématisé sur la ~\Cref{fig:scheme_hyperparameter_process}, dans laquelle nous retrouvons~:
 \begin{itemize}
     \item une boucle \textbf{externe}, permettant d'évaluer un modèle à partir de données de \textbf{test},
     \item une boucle \textbf{interne}, permettant de valider un modèle et ses réglages à partir de données de \textbf{validation}.
@@ -358,57 +356,57 @@ Par ces deux méthodes nous répondons à la problématique de l'évaluation, ma
     \includegraphics[width=\linewidth]{contents/chapter_3/resources/scheme_hyperparameter_process.pdf}
     \caption{Schéma de la validation croisée imbriquée assurant le choix de la meilleur combinaison d'hyperparamètres et assurant une évaluation robuste des performances du modèle.}
     \label{fig:scheme_hyperparameter_process}
-\end{figure}
+\end{figure}\par
 
 \clearpage
 
 \section{Fusion d’informations}
 \label{sec:fusion_information}
-Dernier aspect de notre sujet, la fusion d’informations se définit comme l’action de "combiner des informations issues de plusieurs sources afin d’améliorer la prise de décision" ~\cite{Bloch2003}. Cette fusion se retrouve dans de nombreux domaines d'applications dont celui de la santé ou encore de la biométrie, et peut être considérée comme un moyen d'augmenter la fiabilité de systèmes. L'intérêt croissant pour ce domaine correspond, entre autre, à une réponse de l'augmentation et de la diversification du nombre de capteurs présents. L'ouvrage de Bloch~\cite{Bloch2003} justifie la fusion d'information, par différentes notions auxquelles sont soumises chaque capteurs, dont:
+Dernier aspect de notre sujet, la fusion d’informations se définit comme l’action de "combiner des informations issues de plusieurs sources afin d’améliorer la prise de décision" ~\cite{Bloch2003}. Cette fusion se retrouve dans de nombreux domaines d'applications dont celui de la santé ou encore de la biométrie, et peut être considérée comme un moyen d'augmenter la fiabilité de systèmes. L'intérêt croissant pour ce domaine correspond, entre autres, à une réponse de l'augmentation et de la diversification du nombre de capteurs présents. L'ouvrage de Bloch~\cite{Bloch2003} justifie la fusion d'information, par différentes notions auxquelles sont soumises chaque capteur, dont~:
 \begin{itemize}
-    \item \textbf{l'incertitude} : c'est à dire son "degré de conformité avec la réalité".
-    \item \textbf{l'imprécision} : définie comme une "mesure du défaut quantitatif de connaissance, sur une mesure".
-    \item \textbf{l'incomplétude} : correspond à "l'absence d'information d'une source sur des aspects du problème".
+    \item \textbf{l'incertitude}~: c'est à dire son "degré de conformité avec la réalité".
+    \item \textbf{l'imprécision}~: définie comme une "mesure du défaut quantitatif de connaissance, sur une mesure".
+    \item \textbf{l'incomplétude}~: correspond à "l'absence d'information d'une source sur des aspects du problème".
 \end{itemize}\par
 
-Cette fusion est indispensable pour permettre la réalisation de certaines tâches, l'effet de McGurk est un exemple concret de la \textit{complémentarité} de la vision et de l'audition dans le rôle de la perception de la parole, mais également de la difficulté à gérer les \textit{conflits} d'informations sur ces deux sources séparées~\cite{Mcgurk1976}. L'ouvrage de Bloch~\cite{Bloch2003} définit 3 termes propre à cette fusion:
+Cette fusion est indispensable pour permettre la réalisation de certaines tâches, l'effet de McGurk est un exemple concret de la \textit{complémentarité} de la vision et de l'audition dans le rôle de la perception de la parole, mais également de la difficulté à gérer les \textit{conflits} d'informations sur ces deux sources séparées~\cite{Mcgurk1976}. L'ouvrage de Bloch~\cite{Bloch2003} définit trois termes propres à cette fusion~:
 \begin{itemize}
-    \item \textbf{le conflit} : l'une des notions pouvant conduire à de mauvaise interprétation de la part de systèmes lorsque plusieurs information contradictoires sont reçues.
-    \item \textbf{la redondance} : l'apport multiple d'une même information, pouvant dans l'idéal permettre de réduire les incertitudes et les imprécisions.
-    \item \textbf{la complémentarité} : généralement des sources, liée à un apport de caractéristiques différentes permettant l'accès à une information globale et de lever des ambiguïtés.
+    \item \textbf{le conflit}~: l'une des notions pouvant conduire à une mauvaise interprétation du système lorsque plusieurs informations contradictoires sont reçues.
+    \item \textbf{la redondance}~: l'apport multiple d'une même information, pouvant dans l'idéal permettre de réduire les incertitudes et les imprécisions.
+    \item \textbf{la complémentarité}~: généralement des sources, liée à un apport de caractéristiques différentes permettant l'accès à une information globale et de lever des ambiguïtés.
 \end{itemize}\par
 
-Il est nécessaire également de caractériser le résultat de la fusion d'information. Il est relativement difficile d'obtenir une vision commune sur les divers niveaux et termes associés. Ainsi, ce travail se réfère à l'une d'entre elle~\cite{Dasarathy1997} proche de notre problématique. Trois niveaux de fusion y sont décrit:
+Il est nécessaire également de caractériser le résultat de la fusion d'informations. Il est relativement difficile d'obtenir une vision commune sur les divers niveaux et termes associés. Ainsi, ce travail se réfère à l'une d'entre elles~\cite{Dasarathy1997} proche de notre problématique. Trois niveaux de fusion y sont décris~:
 \begin{itemize}
-\item le \textbf{niveau bas}, également considéré comme étant la fusion sur les données,
-\item le\textbf{ niveau moyen}, également considéré comme la fusion des caractéristiques ou données plus abstraites,
-\item le \textbf{niveau haut}, également considéré comme la fusion des décisions.
-\end{itemize} Niveaux au sein desquels le processus de fusion d'information peut aboutir à :
+    \item le \textbf{niveau bas}, considéré comme étant la fusion sur les données,
+    \item le \textbf{niveau moyen}, considéré comme la fusion des caractéristiques ou données plus abstraites,
+    \item le \textbf{niveau haut}, considéré comme la fusion des décisions.
+\end{itemize} Niveaux au sein desquels le processus de fusion d'information peut aboutir à~:
 \begin{inlinerate}
-\item une sélection,
-\item une transformation,
-\item une extraction,
-\item ou encore une classification de l'information.
+    \item une sélection,
+    \item une transformation,
+    \item une extraction,
+    \item ou encore une classification de l'information.
 \end{inlinerate} La \Cref{fig:scheme_overview_fusion} propose une schématisation macroscopique de ce concept.\par
  
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{contents/chapter_3/resources/scheme_overview_fusion.pdf}
-    \caption{Schéma des différents niveaux théoriques de fusion sur un schéma multimodal à deux capteurs. Le niveau bas représente le niveau le plus proche des données et du capteurs, le niveau moyen représente le niveau aux plus proche de l'extraction de caractéristiques avancées, enfin le niveau haut représente le niveau de prise de décision.}
+    \caption{Schéma des différents niveaux théoriques de fusion sur un schéma multimodal à deux capteurs. Le niveau bas représente le niveau le plus proche des données et des capteurs, le niveau moyen représente le niveau au plus proche de l'extraction de caractéristiques avancées, enfin le niveau haut représente le niveau de prise de décision.}
     \label{fig:scheme_overview_fusion}
 \end{figure}\par
 
-La fusion à \textbf{bas niveau} s'exerce au niveau du capteur, quand celui-ci bénéficie de plusieurs relevés d'informations physique, ou après l'acquisition de données provenant de plusieurs capteurs. Cela va nécessiter une cohérence entre ces modalités: un référentiel, un repère commun permettant la mise en parallèle de ces dernières. La fusion à ce niveau consistera essentiellement à fournir une cohérence de ces modalités d'information, voir à réduire cette dernière afin de n'obtenir que celle jugée pertinente dans le cadre de son utilisation.\par
+La fusion à \textbf{bas niveau} s'exerce au niveau du capteur, quand celui-ci bénéficie de plusieurs relevés d'informations physiques, ou après l'acquisition de données provenant de plusieurs capteurs. Cela va nécessiter une cohérence entre ces modalités~: un référentiel, un repère commun permettant la mise en parallèle de ces dernières. La fusion à ce niveau consiste essentiellement à fournir une cohérence de ces modalités d'information, voire à réduire cette dernière afin de n'obtenir que celle jugée pertinente dans le cadre de son utilisation.\par
 
-La fusion à \textbf{moyen niveau} s'exerce au niveau de caractéristiques, c'est à dire après un premier traitement de chacune des modalités pour n'extraire que les éléments nécessaire à la réalisation du processus. Il s'agit d'une mise en commun des vecteurs d'information dans leur totalité ou réduite nécessitant dans ce second cas une sélection de l'information pertinente.\par
+La fusion à \textbf{moyen niveau} s'exerce au niveau de caractéristiques, c'est à dire après un premier traitement de chacune des modalités pour n'extraire que les éléments nécessaires à la réalisation du processus. Il s'agit d'une mise en commun des vecteurs d'information dans leur totalité ou réduite nécessitant dans ce second cas une sélection de l'information pertinente.\par
 
-Enfin, la fusion à \textbf{haut niveau} s'exerce après les mécanismes de prise de décision. C'est à dire que les branches correspondant à chaque modalité exercent indépendemment leur prise de décision. Il est donc nécessaire de définir une stratégie permettant de privilégier une décision ou d'extraire une décision à partir de l'information. Deux catégories sont ainsi identifiables: 
+Enfin, la fusion à \textbf{haut niveau} s'exerce après les mécanismes de prise de décision. C'est à dire que les branches correspondant à chaque modalité exercent indépendemment leur prise de décision. Il est donc nécessaire de définir une stratégie permettant de privilégier une décision ou d'extraire une décision à partir de l'information. Deux catégories sont ainsi identifiables~: 
 \begin{inlinerate}
-\item la \textbf{sélection dynamique de modèle} de prédiction dans lequel l'objectif est de définir le modèle pertinent,
-\item et la \textbf{fusion de modèles} de prédiction dans lequel le but est d'obtenir une décision globale tenant compte des différentes décisions.
+    \item la \textbf{sélection dynamique de modèle} de prédiction dans lequel l'objectif est de définir le modèle pertinent,
+    \item et la \textbf{fusion de modèles} de prédiction dans lequel le but est d'obtenir une décision globale tenant compte des différentes décisions.
 \end{inlinerate}\par
 
-Plus particulièrement, dans le cadre de problématique binaire, la fusion de modèle comporte deux niveaux conceptuels de décisions basées sur le type d'information mise à disposition par ces modèles. D'une part, au plus haut niveau : la fusion appliquée au \textbf{niveau décisionnel}. Seule les décisions issues de chaque modèle sont alors considérées selon diverses stratégies: le vote à la majorité ou encore la pondération des votes en sont deux représentants. D'autre part, au plus bas niveau : la fusion appliquée aux scores~\cite{Kittler1998}. Dans le cadre de problématique à plusieurs classes, nous pouvons évoquer une troisième prise de décision au niveau du rang, c'est à dire en considérant la position de chaque classe prédite issue des divers modèles.\par
+Plus particulièrement, dans le cadre de problématique binaire, la fusion de modèle comporte deux niveaux conceptuels de décision basés sur le type d'information mise à disposition par ces modèles. D'une part, au plus haut niveau~: la fusion appliquée au \textbf{niveau décisionnel}. Seules les décisions issues de chaque modèle sont alors considérées selon diverses stratégies~: le vote à la majorité ou encore la pondération des votes en sont deux représentants. D'autre part, au plus bas niveau~: la fusion appliquée aux scores~\cite{Kittler1998}. Dans le cadre de problématiques à plusieurs classes, nous pouvons évoquer une troisième prise de décision au niveau du rang, c'est à dire en considérant la position de chaque classe prédite issue des divers modèles.\par
 
 
 % \subsection{Équilibrage de données}
@@ -422,7 +420,7 @@ Plus particulièrement, dans le cadre de problématique binaire, la fusion de mo
 %     \label{fig:unbalanced}
 % \end{figure}
 
-% Plusieurs méthodes existent dans la littérature, pour permettre de rétablir l’équilibre entre les différentes classes. Nous pouvons citer les deux principaux :
+% Plusieurs méthodes existent dans la littérature, pour permettre de rétablir l’équilibre entre les différentes classes. Nous pouvons citer les deux principaux~:
 % 	Le sur-échantillonnage, c’est-à-dire que nous gonflons les classes sous représentatives de manière à égaliser la population de la classe majoritaire (en créant de nouveaux éléments artificiels par exemple).
 % 	Le sous-échantillonnage, c’est-à-dire que nous réduisons la population de l’ensemble des classes à celle de la classe minoritaire.
  

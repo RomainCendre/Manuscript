@@ -182,7 +182,7 @@
       \space\firstacronymfont{\glsentryshort{##1}}\space%
       (\textit{alt. : \glsifhasaltlong{##1}%
         {\glsentryaltlong{##1}##2\glsifhasaltshort{##1}{, \space}{}}{}%
-        \glsifhasaltshort{##1}{\glsentryaltshort{##1}}{}})%
+        \glsifhasaltshort{##1}{\glsentryaltshort{##1}}{}})\ignorespaces%
     }%
     {%
       \glsentrylong{##1}##2,
@@ -197,11 +197,11 @@
       \space\firstacronymfont{\glsentryshort{##1}}\space
       (\textit{alt. : \glsifhasaltlong{##1}%
         {\glsentryaltlong{##1}##2\glsifhasaltshort{##1}{, \space}{}}{}%
-        \glsifhasaltshort{##1}{\glsentryaltshort{##1}}{}})%
+        \glsifhasaltshort{##1}{\glsentryaltshort{##1}}{}})\ignorespaces%
     }%
     {%
       \Glsentrylong{##1}##2,
-      \space(\firstacronymfont{\glsentryshort{##1}})%
+      \space(\firstacronymfont{\glsentryshort{##1}})\ignorespaces%
     }%
   }%
   % Plural, no case change:
@@ -212,11 +212,11 @@
       \space\firstacronymfont{\glsentryshortpl{##1}}\space,
       (\textit{alt. : \glsifhasaltlong{##1}%
         {\glsentryaltlong{##1}##2\glsifhasaltshort{##1}{, \space}{}}{}%
-        \glsifhasaltshort{##1}{\glsentryaltshort{##1}}{}})%
+        \glsifhasaltshort{##1}{\glsentryaltshort{##1}}{}})\ignorespaces%
     }%
     {%
       \glsentrylongpl{##1}##2,
-      \space(\firstacronymfont{\glsentryshortpl{##1}})%
+      \space(\firstacronymfont{\glsentryshortpl{##1}})\ignorespaces%
     }%
   }%
   % Plural, first letter upper case:
@@ -227,11 +227,11 @@
       \space\firstacronymfont{\glsentryshortpl{##1}}\space,
       (\textit{alt : \glsifhasaltlong{##1}%
         {\glsentryaltlong{##1}##2\glsifhasaltshort{##1}{, \space}{}}{}%
-        \glsifhasaltshort{##1}{\glsentryaltshort{##1}}{}})%
+        \glsifhasaltshort{##1}{\glsentryaltshort{##1}}{}})\ignorespaces%
     }%
     {%
       \Glsentrylongpl{##1}##2,
-      \space(\firstacronymfont{\glsentryshortpl{##1}})%
+      \space(\firstacronymfont{\glsentryshortpl{##1}})\ignorespaces%
     }%
   }%
 }

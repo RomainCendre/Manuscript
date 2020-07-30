@@ -7,12 +7,25 @@
 Comme 	
 \newpage
 
-%=====================================
-% PATIENT LEVEL
-%=====================================
 \section{Diagnostic sur photographie clinique}
 \section{Diagnostic sur dermatoscopie}
 \section{Diagnostic sur microscopie confocale}
+
+\section{Calibration de modèles}
+La majeure partie des modèles de classification mettent à disposition des scores représentant l'appartenance à chacune des classes de la problématique visée. Ces scores sont souvent obtenus de manière complémentaire à la prédiction d'une classe, cette dernière n'étant bien souvent que la manifestation souvent de la classe ayant achevé le score le plus élevé.\par
+
+Malheureusement, ces scores n'ont de sens que dans le contexte où ceux-ci ont été obtenus, des valeurs plus utiles serait une réelle indication de la \textbf{probabilité} d'appartenance à chacune des classes. Une telle indication est alors pertinente dans un contexte de prise de décision mêlant divers modèles de prédiction, ces probabilités ayant un sens en dehors du champ d'action propre à chacun de ces modèles~\cite{Zadrozny2002}.\par
+
+Diverses méthodes ont ainsi été proposé afin de transformer ces scores en probabilités, tout d'abord sur des problématiques binaires, puis plus tardivement sur des problématiques à classes multiples. Ce principe de transformation des scores en probabilités porte le nom de processus de \textbf{calibration}.\par
+
+Ainsi, les méthodes de la littérature sont multiples
+Isotonic regression, \cite{Zadrozny2002}
+Bayesian Binning into Quantiles (BBQ) calibration\cite{Naeini2015}
+Beta calibration,\cite{Kull2017}
+Sigmoid,\cite{kull2017b}
+\section{Approche supervisée}
+% Mil & Majority vote\cite{Sudharshan2019}
+
 \section{Système multimodal}
 \subsection{Système séquentiel sans mémoire}
 \subsection{Système séquentiel avec mémoire}

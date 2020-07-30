@@ -1,4 +1,4 @@
-\chapter{Données et littérature}
+\chapter{État de l'art}
 \label{chap:chapter_31}
 \chapterintro
 Après avoir présenté les trois domaines impliqués dans ce travail, nous allons procéder à la présentation des données qui nous ont servi de base à la réalisation de ces travaux, ainsi que les méthodes cliniques et d'aide au diagnostic de la littérature.\par
@@ -12,7 +12,7 @@ Dans un second temps et dernier temps, nous procéderons d'une part à un état 
 \label{sec:clinical_data}
 Cette base a reçu une autorisation de la part du comité d'éthique du \gls{chuse} pour son exploitation au sein de l'étude clinique mentionnée précédemment mais également pour ce travail universitaire (numéro du comité d'examen institutionnel 672016/CHUSTE).\par
 
-Cette base de données compile des lésions faciales possédant les critères suivants :
+Cette base de données compile des lésions faciales possédant les critères suivants~:
 \begin{itemize}
     \item les images proviennent de patients inclus entre les années 2011 et 2015, dont les données ont exclusivement été acquises au \gls{chuse},
     \item les données sont disponibles pour chaque patient sous 3 formes que sont la photographie clinique, la dermoscopie et la \gls{rcm} (multimodales),
@@ -20,7 +20,7 @@ Cette base de données compile des lésions faciales possédant les critères su
     \Cref{subsec:lentigo}), était fortement controversé et supposé comme étant un \gls{lm} ou \gls{lmm}.
 \end{itemize}\par
 
-En terme de composition, la base regroupe 201 patients répartis entre 96 femmes et 105 hommes d'un âge moyen égal à 70 ans compris entre 29 et 97 ans comme présenté sur la \Cref{fig:statistics_age_sex}. Cette base comporte 223 lésions uniques dont le diagnostic que nous utiliserons comme référence provient de l'histologie. Ainsi, nous avons à notre disposition :
+En terme de composition, la base regroupe 201 patients répartis entre 96 femmes et 105 hommes d'un âge moyen égal à 70 ans compris entre 29 et 97 ans comme présenté sur la \Cref{fig:statistics_age_sex}. Cette base comporte 223 lésions uniques dont le diagnostic que nous utiliserons comme référence provient de l'histologie. Ainsi, nous avons à notre disposition~:
 \begin{itemize}
     \item 115 \textbf{lésions malignes}, scindée en 92 \gls{lm} et 23 \gls{lmm},
     \item 108 \textbf{lésions bénignes}, dont 20 \gls{bcc}, 37 \gls{sl}, 23 \gls{sk}, 15 \gls{pak}, 8 nævus, 2 kératoses lichénoïde, 2 cicatrices et 1 maladie de Bowen pigmentée.
@@ -38,13 +38,13 @@ Les acquisitions ont été à chaque fois réalisée par l'un des 3 experts inve
 L'intérêt de ces trois modalités est grand dans le contexte de la dermatologie puisqu'elles représentent le processus "classique" de prise en charge clinique, de la modalité la moins onéreuse avec la \textbf{photographie clinique} mais également la moins précise, à des modalités plus onéreuses, également plus riche en information, avec la \textbf{\gls{rcm}}. Ainsi, chaque modalité permet au praticien de réduire la zone d'incertitude chez un patient souffrant d'une pathologie de la peau.
 
 \addtocounter{footnote}{1}
-\footnotetext[\thefootnote]{Source : Canon Powershot®, Canon, Tokyo, Japon. \label{footnote:device_powershot}}
+\footnotetext[\thefootnote]{Source~: Canon Powershot®, Canon, Tokyo, Japon. \label{footnote:device_powershot}}
 \addtocounter{footnote}{1}
-\footnotetext[\thefootnote]{Source : FotoFinder Systems GmbH, Bad Birnbach, Allemagne. \label{footnote:device_fotofinder}}
+\footnotetext[\thefootnote]{Source~: FotoFinder Systems GmbH, Bad Birnbach, Allemagne. \label{footnote:device_fotofinder}}
 \addtocounter{footnote}{1}
-\footnotetext[\thefootnote]{Source : Distribué en Europe par MAVIG GmbH, Munich, Allemagne. \label{footnote:device_mavig}}
+\footnotetext[\thefootnote]{Source~: Distribué en Europe par MAVIG GmbH, Munich, Allemagne. \label{footnote:device_mavig}}
 
-Afin d'évaluer les performances de praticiens face à ces lésions, les investigateurs ont eu recours à 21 dermatologues détenant une expertise des modalités d'imagerie non-invasives. Ces experts sont répartis de manière homogène selon leurs compétences respectives pour chacun des dispositifs. Ainsi, le panel d'évaluation se décompose de la façon suivante : 
+Afin d'évaluer les performances de praticiens face à ces lésions, les investigateurs ont eu recours à 21 dermatologues détenant une expertise des modalités d'imagerie non-invasives. Ces experts sont répartis de manière homogène selon leurs compétences respectives pour chacun des dispositifs. Ainsi, le panel d'évaluation se décompose de la façon suivante~: 
 \begin{inlinerate}
     \item 6 experts sont soumis à l'ensemble des modalités,
     \item 15 experts sont soumis à l'évaluation de la photographie clinique et de la dermoscopie (dont 9 uniquement dédiés a ces deux modalités),
@@ -67,9 +67,9 @@ Ces experts ont évalué la gravité pour chaque cas clinique présenté selon l
 \end{inlinerate}
 Par ailleurs, les cas cliniques ont été présentés dans un ordre différent entre chaque journée d'évaluation afin d'éviter des biais liés à l'activité précédente des experts.\par
 
-La base d'images utilisée pour cette évaluation nous été remise, et ses données sensibles ont été anonymisée afin de ne pas pouvoir ré-identifier les patients. La structure de cette base peut être appréhendée sur la \Cref{fig:db_structure} - Gauche, et se compose :
+La base d'images utilisée pour cette évaluation nous été remise, et ses données sensibles ont été anonymisée afin de ne pas pouvoir ré-identifier les patients. La structure de cette base peut être appréhendée sur la \Cref{fig:db_structure} - Gauche, et se compose~:
 \begin{itemize}
-    \item d'un \textbf{tableau de lésions}, sous forme de fichier \gls{csv} et contenant :
+    \item d'un \textbf{tableau de lésions}, sous forme de fichier \gls{csv} et contenant~:
     \begin{itemize}
         \item \textbf{en colonne}, les diverses informations relatives au patient, soit \textit{l'âge, le sexe, la zone, son diagnostic binaire issu de l'histologie (malin ou bénin) et diagnostic précis},
         \item \textbf{en ligne}, les divers enregistrements liés à chaque lésion respectant les champs précisé en colonne.
@@ -120,7 +120,7 @@ Ces démarches "algorithmiques" de diagnostic, ainsi nommées, se sont progressi
 \label{tab:rcm_algorithm_lentigo}
 \end{table}\par
  
-Ainsi, une caractéristique a été déterminée comme pertinente par leurs auteurs~\cite{Pellacani2007, Guitera2010} lorsque celle-ci s'exprimait de manière plus significative dans l'un des deux groupes pathologique (\gls{lm} ou bénin). L'un de ces travaux~\cite{Guitera2010} procède à une analyse de ces caractéristiques par profondeur croissante de la peau, dont nous listons quelques uns des éléments majeurs :
+Ainsi, une caractéristique a été déterminée comme pertinente par leurs auteurs~\cite{Pellacani2007, Guitera2010} lorsque celle-ci s'exprimait de manière plus significative dans l'un des deux groupes pathologique (\gls{lm} ou bénin). L'un de ces travaux~\cite{Guitera2010} procède à une analyse de ces caractéristiques par profondeur croissante de la peau, dont nous listons quelques uns des éléments majeurs~:
 \begin{itemize}
     \item au niveau de \textbf{l'épiderme}, les auteurs ont constaté que les pathologies de \gls{lm} comportent un désordre des cellules de l'épiderme (56\% des lésions \gls{lm} contre 18\% des lésions bénignes). Également, une infiltration pagétoïde a été reportée dans la plupart des cas de \gls{lm} (75\% des lésions \gls{lm} contre 28\% des lésions bénignes). En opposition, un épiderme homogène, caractérisé part des motif en nids d'abeille, ont été constatés dans 92\% des cas bénins \Cref{fig:example_rcm_pattern_1}.
     \item au niveau de la \textbf{\gls{dej}}, les auteurs ont constaté que les papilles non démarquée étaient observées dans la majorité des \gls{lm} (68\% \gls{lm} and in 17\% des cas bénins) \Cref{fig:example_rcm_pattern_2}.
@@ -130,7 +130,7 @@ Ainsi, une caractéristique a été déterminée comme pertinente par leurs aute
 \begin{figure}[H]
     \begin{center}
         \includegraphics[width=0.9\linewidth]{contents/chapter_3_1/resources/example_rcm_pattern_1.pdf}
-        \caption{Cas de données cliniques \gls{rcm} en provenance de l'épiderme par Guitera~\cite{Guitera2010}. En a) et b), exemples de motifs en large nids d'abeille (\textit{broadened honeycomb pattern}), respectivement d'un kératose séborrhéique et de peau normale ; en c), exemples de motifs de pavés atypiques (\textit{atypical cobblestone pattern}) issus d'un \gls{lm} ; en d), exemples de \textit{large pagetoid} cellules propre au \gls{lmm}. Repère : barre = \SI{50}{\micro\metre}.}
+        \caption{Cas de données cliniques \gls{rcm} en provenance de l'épiderme par Guitera~\cite{Guitera2010}. En a) et b), exemples de motifs en large nids d'abeille (\textit{broadened honeycomb pattern}), respectivement d'un kératose séborrhéique et de peau normale ; en c), exemples de motifs de pavés atypiques (\textit{atypical cobblestone pattern}) issus d'un \gls{lm} ; en d), exemples de \textit{large pagetoid} cellules propre au \gls{lmm}. Repère~: barre = \SI{50}{\micro\metre}.}
         \label{fig:example_rcm_pattern_1}
     \end{center} 
 \end{figure}\par
@@ -138,7 +138,7 @@ Ainsi, une caractéristique a été déterminée comme pertinente par leurs aute
 \begin{figure}[H]
     \begin{center}
         \includegraphics[width=0.7\linewidth]{contents/chapter_3_1/resources/example_rcm_pattern_2.pdf}
-        \caption{Cas de données cliniques \gls{rcm} par Guitera~\cite{Guitera2010}. En a) et au niveau de la flèche, exemple de papille à frontière non marqué (\textit{Nonedge papillae}) et de cellules atypique d'un \gls{lm} acquise à la jonction \gls{dej} ; En b), exemple de papilles à frontières marquées (\textit{Edge papillae}) d'une pathologie bénigne. En c), exemple de cellules atypiques au niveau de la \gls{dej} typique de \gls{lm} ; En d), exemple de halo noir autour de cellules atypiques de l'épiderme issue d'un \gls{lm}. Repère : barre = \SI{50}{\micro\metre}.}
+        \caption{Cas de données cliniques \gls{rcm} par Guitera~\cite{Guitera2010}. En a) et au niveau de la flèche, exemple de papille à frontière non marqué (\textit{Nonedge papillae}) et de cellules atypique d'un \gls{lm} acquise à la jonction \gls{dej} ; En b), exemple de papilles à frontières marquées (\textit{Edge papillae}) d'une pathologie bénigne. En c), exemple de cellules atypiques au niveau de la \gls{dej} typique de \gls{lm} ; En d), exemple de halo noir autour de cellules atypiques de l'épiderme issue d'un \gls{lm}. Repère~: barre = \SI{50}{\micro\metre}.}
         \label{fig:example_rcm_pattern_2}
     \end{center} 
 \end{figure}\par
@@ -146,12 +146,12 @@ Ainsi, une caractéristique a été déterminée comme pertinente par leurs aute
 \begin{figure}[H]
     \begin{center}
         \includegraphics[width=0.8 \linewidth]{contents/chapter_3_1/resources/example_rcm_pattern_3.pdf}
-        \caption{Cas de données cliniques \gls{rcm} par Guitera~\cite{Guitera2010}. En a), exemple de cellules atypiques à proximité d'un follicule pileux au sein de la \gls{dej} sur un \gls{lm} ; En b), exemple de cellules nucléé du derme d'un \gls{lm}. Repère : barre = \SI{50}{\micro\metre}.}
+        \caption{Cas de données cliniques \gls{rcm} par Guitera~\cite{Guitera2010}. En a), exemple de cellules atypiques à proximité d'un follicule pileux au sein de la \gls{dej} sur un \gls{lm} ; En b), exemple de cellules nucléé du derme d'un \gls{lm}. Repère~: barre = \SI{50}{\micro\metre}.}
         \label{fig:example_rcm_pattern_3}
     \end{center} 
 \end{figure}\par
 
-Dans l'étude menée par Cinotti et al.~\cite{Cinotti2018}, les auteurs investigateurs ont demandé d'évaluer certaines caractéristiques récurrentes de la littérature, parmi lesquelles :
+Dans l'étude menée par Cinotti et al.~\cite{Cinotti2018}, les auteurs investigateurs ont demandé d'évaluer certaines caractéristiques récurrentes de la littérature, parmi lesquelles~:
 \begin{itemize}
     \item la présence de grandes cellules pagétoïdes arrondies, présentes dans 37\% des \gls{lm} et seulement 5\% des pathologies bénignes,
     \item la présence de grandes cellules dendritiques dans l'épiderme, présentes dans 81\% des \gls{lm} contre 13\% des pathologies bénignes,
