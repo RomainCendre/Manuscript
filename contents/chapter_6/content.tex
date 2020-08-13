@@ -1,7 +1,7 @@
 %=====================================
 % PATIENT LEVEL
 %=====================================
-\chapter{Prise de décision lésionnelle ou patient}
+\chapter{Prise de décision au niveau lésionnel ou patient}
 \label{chap:chapter_6}
 \chapterintro
 Lors des deux précédents chapitres, nous nous sommes consacrés aux données \gls{rcm} en notre possession et à la problématique de la prise en charge qui leur est associée. Nous avons apporté des solutions diverses permettant la gestion de chacune d'entre elles comme des entités à part entière, à l'aide de techniques propre à la globalité de l'image, puis d'approches à diverses échelles ou par instances multiples.\par
@@ -13,11 +13,12 @@ Ces diverses techniques seront évaluées à l'aide du \fscore{} sur une problé
 \newpage
 
 \section{Méthodologie}
+\label{sec:patient_decision_methodology}
 Durant les deux précédents chapitres, la classification des images \gls{rcm} a été la principale tâche de ce manuscrit en proposant des traitements permettant leur gestion comme des entités à part entière. Lors du \Cref{chap:chapter_4} ces images ont été abordées dans leur intégralité à l'aide des méthodes d'extraction de caractéristiques sur la totalité de l'image, mais également lors du \Cref{chap:chapter_5} à l'aide de méthodes proposant diverses échelles et niveaux de compréhension.\par
 
 Néanmoins, ces méthodes dans leur état actuel ne permettent que le diagnostic des images, dont le nombre varie fortement d'une lésion à l'autre soit d'une dizaine à plusieurs centaines d'images. La tâche reste donc en l'état complexe et difficile à trancher par un spécialiste et ne permet pas une aide à la prise de décisions. De plus, la finalité de ce travail est en l'état impossible, cette information étant inexploitable dans le cadre d'un processus à multiples modalités.\par
 
-Ce chapitre se dédiera à la problématique de la classification des lésions, assimilable à une classification du patient lorsque celui-ci n'est associé qu'a une unique lésion, dont l'objectif est schématisé sur la \Cref{fig:scheme_patient_decision_objectives}. A cette fin, les conclusions formulées lors des précédents chapitres propres aux images et à leur compréhension seront employées pour résoudre cette nouvelle problématique. Ainsi, comme lors du précédent chapitre seront considérés les méthodes d'extraction suivantes :
+Ce chapitre se dédiera à la problématique de la classification des lésions, assimilable à une classification du patient lorsque celui-ci n'est associé qu'a une unique lésion, dont l'objectif est schématisé sur la \Cref{fig:scheme_patient_decision_objectives}. A cette fin, les conclusions formulées lors des précédents chapitres propres aux images et à leur compréhension seront employées pour résoudre cette nouvelle problématique. Ainsi, comme lors du précédent chapitre seront considérés les méthodes d'extraction suivantes~:
 \begin{itemize}
     \item pour la \textbf{catégorie de méthodes spatiales}, les caractéristiques définies par Haralick et al.\cite{Haralick1973},
     \item pour la \textbf{catégorie de méthodes fréquentielles}, les caractéristiques sur base d'extraction en ondelettes,
@@ -35,26 +36,32 @@ Ce chapitre proposera diverses méthodes dans le but d'extraire une décision au
 \clearpage
 
 \section{Approches supervisées}
-Cette section dédiée aux approches supervisées se consacre à des schémas permettant de   l'aide d'annotation directes entre les données d'entrée et la sortie attendue. Les données \gls{rcm} exploitées dans ce travail possèdent :
+\label{sec:patient_decision_supervised}
+Cette section dédiée aux approches supervisées se consacre à des schémas d'apprentissages permettant de déterminer la relation entre l'aide d'annotation directes entre les données d'entrée et la sortie attendue. Les données \gls{rcm} exploitées dans ce travail possèdent~:
 \begin{inlinerate}
     \item d'une part des annotations à bas niveau ou niveau image,
     \item d'autre part des annotations à haut niveau ou niveau lésionnel. 
 \end{inlinerate}. L'une des contraintes majeures associées à ces données est l'inconsistance du nombre d'images entre les lésions composant le jeu de données. Ainsi, une lésion peut comporter un nombre d'image compris entre une dizaine et une centaine d'entre elles. Il est donc nécessaire de gérer cette variabilité au sein du processus de classification mis en place.\par
 
-Afin de résoudre cette tâche de manière supervisée, cette section propose un mécanisme de prédiction en deux temps : 
+Afin de résoudre cette tâche de manière supervisée, cette section propose un mécanisme de prédiction en deux temps~: 
 \begin{itemize}
-    \item une première étape de prédiction dont le but consiste à évaluer la teneur des images,
-    \item une seconde étape de prédiction au niveau des lésions dont la finalité est d'évaluer la lésion à partir de l'information résultant du processus de classification au niveau image.
-\end{itemize} Dans ce but, les données d'entraînement sont divisées en deux parts, l'une d'entre elle à destination du processus de prédiction image et l'autre à destination du processus décisionnel des lésions. Cette séparation des données d'entraînement permet de contrer un sur-apprentissage du modèle de prédiction au niveau lésionnel par l'utilisation de données images pour lesquelles les prédictions seraient trop optimistes. Le schéma global mis en oeuvre dans cette section est disponible sur la \Cref{fig:scheme_patient_decision}.\par
+    \item une première étape de prédiction \textbf{au niveau image} dont le but consiste à déterminer le contenu des images,
+    \item une seconde étape de prédiction \textbf{au niveau lésionnel} dont la finalité est d'évaluer la lésion à partir de l'information résultant du processus de classification au niveau image.
+\end{itemize} A cette fin, les données d'entraînement sont divisées en deux parts~:
+\begin{inlinerate}
+    \item l'une d'entre elle à destination du processus de prédiction image,
+    \item et l'autre à destination du processus décisionnel des lésions.
+\end{inlinerate}
+Cette séparation des données d'entraînement permet de contrer un sur-apprentissage du modèle de prédiction au niveau lésionnel par l'utilisation de données images pour lesquelles les prédictions seraient trop optimistes. Le schéma global mis en oeuvre dans cette section est disponible sur la \Cref{fig:scheme_patient_decision}.\par
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\linewidth]{contents/chapter_6/resources/scheme_patient_decision.pdf}
-    \caption{Schéma de représentation du système complet de décision supervisée au niveau lésionnel. Le processus d'entraînement se subdivise en deux étapes : une première étape d'entraînement du modèle de prédiction au niveau des instances images et une seconde étape permettant l'agrégation de l'information au niveau des lésions. La prédiction est ensuite réalisée sur les données de test par inférence des paramètres précédemment entraînés.}
+    \includegraphics[width=0.95\linewidth]{contents/chapter_6/resources/scheme_patient_decision.pdf}
+    \caption{Schéma de représentation du système complet de décision supervisée au niveau lésionnel. Le processus d'entraînement se subdivise en deux étapes~: une première étape d'entraînement du modèle de prédiction au niveau des instances images et une seconde étape permettant l'agrégation de l'information au niveau des lésions. La prédiction est ensuite réalisée sur les données de test par inférence des paramètres précédemment entraînés.}
     \label{fig:scheme_patient_decision}
 \end{figure}\par
 
-Ainsi, la première étape de prédiction exploite les conclusions issues des \Cref{chap:chapter_4,chap:chapter_5} dont le travail repose sur la prédiction au niveau image. Suite aux résultats de ces deux chapitres, cette première partie optera    \Cref{tab:parameters_lesion_classification_image_supervised}\par
+Ainsi, la première étape de ce processus exploite les résultats issues des \Cref{chap:chapter_4,chap:chapter_5} dont le travail repose sur la mise en place  au niveau des images. Cette première partie du processus emploie d'une part les méthodes d'extraction jugée les plus pertinentes de ces parties, rappelées en \Cref{sec:patient_decision_methodology}. Ainsi, sont utilisées des méthodes manuelles spatiales et fréquentielles dont le nombre de caractéristiques extraites est de l'ordre de la dizaine, et par transfert de connaissances sur des \gls{cnn} pré entrainé dont ce nombre dépasse la centaine. D'autre part, est utilisé un processus composé de d'une mise à l'échelle par Minimum / Maximum suivie d'un modèle \gls{svm} linéaire. Les hyperparamètres de ce dernier sont rappelés au niveau de la    \Cref{tab:parameters_lesion_classification_image_supervised}.\par
 
 \begin{table}[H]
     \centering
@@ -68,207 +75,249 @@ Ainsi, la première étape de prédiction exploite les conclusions issues des \C
     \label{tab:parameters_lesion_classification_image_supervised}
 \end{table}\par
 
-La seconde étape
+La seconde étape de ce processus tente d'établir une relation entre les diagnostics des images réalisé à l'aide de la première partie de ce processus et les annotations des lésions. Le nombre d'instances variant entre chaque lésion, les méthodes présentées ci-dessous sont mise en point exclusivement pour supporter cette contrainte de fonctionnement. Ainsi, deux types potentiel de données d'entrée sont envisagés dans cette seconde partie de la classification, donnant lieu à deux types d'approches dont~:
+\begin{itemize}
+    \item   une approche au niveau des \textbf{décisions} de classification de la première étape, défini par l'ensemble $\mathbf{N}$. Ces données sont de la forme $instances \times 1$, dans lequel $instances$ est une variable propre à chaque lésion. Afin de réduire ces données à un vecteur commun, chaque classe est réduite par la relation $ratio_c = \dfrac{classe_c}{instances}$, aboutissant à un vecteur réel de dimension $1 \times classes$. A partir de ce vecteur, deux méthodes ont été définies, dont~:
+            \begin{itemize}
+                \item une méthode dites de \textbf{priorité} par laquelle nous privilégions la détection d'une classe hiérarchiquement supérieure comme décision globale à la lésion,
+                \item une méthode dites par seuils \textbf{dynamiques} par laquelle des seuils optimaux sont déterminés pour chaque classe en privilégiant les classes prioritaires.
+            \end{itemize}
+    \item   une approche au niveau des \textbf{scores} de classification de la première étape, défini par l'ensemble $\mathbf{R}$. Cette approche aboutie à un vecteur de taille $instances \times classes$, dans lequel $instances$ est une variable propre à chaque lésion et $classes$ est le nombre de classes prédites soit 2. Afin de réduire là encore ces données à un vecteur commun, chaque classe est réduite soit par une fonction de \textbf{moyenne} soit de \textbf{maximum} aboutissant à un vecteur réel de dimension $1 \times classes$. Puis, par seuil \textbf{dynamique} sur chacune des classes, des seuils optimaux sont définis en privilégiant les classes prioritaires. La combinaison de réduction par moyenne et seuil dynamique est considéré par le terme \textbf{Dynamique - Moyenne} et la combinaison de réduction par maximum et seuil dynamique est considéré par le terme \textbf{Dynamique - Maximum}.
+\end{itemize}\par
 \clearpage
 
 \section{Approches faiblement supervisées}
-Une approche est décrite comme étant faiblement supervisée lorsque l'apprentissage de la relation entre les données et les annotations n'est pas directe. Ainsi, ces méthodes faiblement supervisées sont rassemblées en trois catégories majeures~\cite{Zhou2018}, dont :
+\label{sec:patient_decision_weak}
+Une approche est décrite comme étant faiblement supervisée lorsque l'apprentissage de la relation entre les données et les annotations n'est pas directe. Ainsi, ces méthodes faiblement supervisées sont rassemblées en trois catégories majeures~\cite{Zhou2018}, dont~:
 \begin{inlinerate}
     \item la \textbf{supervision dite incomplète} lorsque les données d'entraînement sont partiellement annotées,
     \item la \textbf{supervision dite inexacte} lorsque les annotations sont insuffisantes vis à vis du niveau de détails souhaité,
     \item et la \textbf{supervision dite imprécise} lorsque les annotations proviennent de sources manquant d'exactitude.
 \end{inlinerate} Ces diverses approches ont notamment servies à la résolution de tâches telles que de la catégorisation de textes~\cite{Andrews2003,Settles2008} ou d'images~\cite{Chen2004,Tang2009}. Plus spécifiquement au domaine médical, ces techniques ont permis l'aide au diagnostic d'images médicales sur des pathologies pulmonaires ou du colon~\cite{Dundar2007} mais également du cancer du sein~\cite{Sudharshan2019}.\par
 
-A cette fin, les annotations et les données images propres à chacune des lésions seront employées pour servir cette tâche faiblement supervisée. Par la nature des données en notre possession, cette nouvelle section s'intéresse au second mode de supervision dite inexacte, par l'utilisation de \textbf{méthodes à instances multiples}. De manière plus formelle ces techniques visent à résoudre la relation $f: X \mapsto Y$, à l'aide des données $D=\{(X_1,y_1),(X_2,y_2),\ldots,(X_b,y_b)\}$ avec $X=\{x_1,x_2,\ldots,x_b\}$ représentant un "sac" ou \textit{bag} d'information composé d'images et $y$ l'annotation associée~\cite{foulds2010}.\par
+A cette fin, les annotations et les données images propres à chacune des lésions seront employées pour servir cette tâche faiblement supervisée. Par la nature des données en notre possession, cette nouvelle section s'intéresse au second mode de supervision dite inexacte, par l'utilisation de \gls{mil}. De manière plus formelle ces techniques visent à résoudre la relation $f: X \mapsto Y$, à l'aide des données $D=\{(X_1,y_1),(X_2,y_2),\ldots,(X_b,y_b)\}$ avec $X=\{x_1,x_2,\ldots,x_b\}$ représentant un ensemble ou \textit{bag} d'information composé d'images et $y$ l'annotation associée~\cite{foulds2010}.\par
 
-le compromis entre la solidité, l'exhaustivité et la convexité
-Instance-based kernels
-Set-based kernels
-Hybrid approaches
-sMIL
-NSK
-SIL
-\gls{sil}
-\cite{Andrews2002}
+Ce principe de méthodes à instances multiples est initialement issue du domaine de la recherche de médicaments, domaine dans lequel sont recherché des molécules ainsi que le ou les \textit{conformères} (comprendre les formes que peuvent adopter ces molécules) responsables d'une activité biologique~\cite{Dietterich1997}. Ainsi dans ce contexte, l'activité biologique observée (\textbf{annotation}) est associé à une molécule (\textbf{ensemble}) dont certains conformères (\textbf{instances}) sont responsable du phénomène observé. Ce faisant, la théorie de base des méthodes à instances multiples stipule qu'un ensemble dont l'annotation est négative ne possède aucune instances relatives au phénomène observé, tandis qu'un ensemble dont l'annotation est positive contient au moins une instance relative au phénomène observé~\cite{Dietterich1997}.\par
 
-L'ensemble des modèles de prédiction exploitant le principe d'apprentissage par instances multiples que nous mettrons en oeuvre dans ce chapitre sont listés en \Cref{tab:patient_decision_weak_hyperparameters}. Afin de mener à bien la réalisation de ces expériences, nous nous reposerons essentiellement sur la librairie logicielle “MISVM” prévue à cet effet~\cite{Doran2014}.\par
+Par cette idée, de nombreuses théories ont émergées étendant le principe de techniques supervisées (principes de régression logistique, d'arbre de décision, \ldots) à la théorie des instances multiples~\cite{Maron1998,Xu2004,Blockeel2005}. Devant ces nombreuses théories et suite aux travaux des \Cref{chap:chapter_4} et \Cref{chap:chapter_5} mettant en avant l'efficacité des \gls{svm} sur cette problématique d'images \gls{rcm}, nous nous intéressons à leur extension au principe d'instances multiples. L'un de ces travaux~\cite{Doran2014} développe plusieurs de ces approches et met en notamment avant trois propriétés essentielles des \gls{svm}~:
+\begin{inlinerate}
+    \item la solidité,
+    \item l'exhaustivité,
+    \item et la convexité.
+\end{inlinerate} Ces propriétés sont toutes intrinsèques aux \gls{svm} et ne peuvent être satisfaites par cette extension au principe d'instances multiples, il est donc nécessaire de procéder à un compromis de ces propriétés~\cite{Doran2014}.\par
+
+Le travail de ce chapitre n'approfondi pas ces diverses propriétés, en revanche nous envisageons les divers modes d'approches associés à l'implémentation de ce principe, dont~: 
+\begin{itemize}
+    \item des approches par \textbf{instances} dont la méthode consiste à déterminer un hyperplan directement à partir des instances, sans considérer les annotation au niveau des ensembles~\cite{Andrews2003}. La séparation des ensembles découle de l'application du principe de base de la théorie des instances multiple, dans laquelle un ensemble est considéré positif si au moins l'une des instances qui le compose est considérée positive.
+    \item des approches par \textbf{ensembles} dont le principe repose sur les annotations des ensembles et consiste à opérer la séparation par hyperplan au niveau des ensembles à partir de noyaux d'ensembles~\cite{Gartner2002}.
+    \item des approches dites \textbf{hybrides} dont le principe se situe à mi-chemin des deux précédentes méthodes~\cite{Bunescu2007}.
+\end{itemize}\par 
+
+Ainsi, ces divers modes d'approches sont considérés dans les prochains paragraphes de ce travail. Dans le but de ne pas évaluer l'ensemble de ces modèles, ce travail ne se focalise que sur ceux jugées de manière empirique comme les plus pertinents au niveau de la classification d'ensembles par l'étude de Doran et al.~\cite{Doran2014}. Dans un premier temps, le modèle \gls{misvm} évalué dans ce travail suit une approche par \textit{instances}, dont le principe réside sur l'estimation de la meilleur instance représentative de chaque ensemble puis procède à une classification par \gls{svm}~\cite{Andrews2003}. Dans un second temps, le modèle \gls{nsk} employé suit une approche par \textbf{ensembles}, dont le principe consiste à projeter chaque ensemble et ses instances dans un nouvel espace de caractéristiques sur lequel sera réalisé la séparation par \gls{svm}~\cite{Gartner2002}. Enfin, le modèle \gls{sbmil} choisi dans ce travail suit une approche dites \textbf{hybride}, dans laquelle les instances d'ensemble négatifs sont considérées comme des ensembles négatifs à part entières et dans laquelle les ensembles positifs sont régis par une contrainte de balancement régit par une inconnue dont la totalité est projetée avant séparation par un modèle \gls{svm}~\cite{Bunescu2007}.\par
+
+Dans le but d'évaluer la pertinence de ces diverses méthodes, ce chapitre se consacre à l'évaluation de chacune d'entre elle combiné aux représentant des trois catégories d'extraction de caractéristiques formulés lors du \Cref{chap:chapter_4} et rappelées lors de la \Cref{sec:patient_decision_methodology}. De plus, suite aux résultats démontrant l'importance de la normalisation lors du \Cref{chap:chapter_4}, l'impact de la normalisation par Minimum et Maximum est évalué en combinaison de ces modèles faiblement supervisés.\par
+
+L'ensemble des modèles de prédiction exploitant le principe d'\gls{mil} que nous mettons en oeuvre dans ce chapitre sont listés en \Cref{tab:patient_decision_weak_hyperparameters}. Afin de mener à bien la réalisation de ces expériences, nous nous reposerons essentiellement sur la librairie logicielle “MISVM” prévue à cet effet~\cite{Doran2014}.\par
 
 \begin{table}[H]
     \centering
     \begin{tabular}{lll}
     \toprule
     \textbf{Méthode}    & \textbf{Paramètre}& \textbf{Valeurs}                                  \\ \midrule
-    SIL                 & \multirow{3}{*}{C}& \multirow{3}{*}{[0.01, 0.1, 1, 10, 100, 1000]}    \\ \cline{1-1}
-    mi-SVM              &                   &                                                   \\ \cline{1-1} 
-    MI-SVM              &                   &                                                   \\ \bottomrule 
+    \gls{misvm}         & \multirow{3}{*}{C}& \multirow{3}{*}{[0.01, 0.1, 1, 10, 100, 1000]}    \\ \cline{1-1}
+    \gls{nsk}           &                   &                                                   \\ \cline{1-1} 
+    \gls{sbmil}         &                   &                                                   \\ \bottomrule 
     \end{tabular}    
-    \caption{Table reprenant les modèles faiblement supervisés pour attenter une classification au niveau lésionnel, ainsi que les hyperparamètres associés.}
+    \caption{Table reprenant les divers modèles utilisant le principe d'\gls{mil} pour attenter une classification au niveau lésionnel, ainsi que leurs hyperparamètres associés.}
     \label{tab:patient_decision_weak_hyperparameters}
 \end{table}\par
+\clearpage
 
-\section{Analyse des résultats}
-Dans cette section dédiée aux résultats, les diverses méthodes envisagées pour la prise de décision au niveau des lésions vont être traités à l'aide de paragraphes respectifs. Pour chaque méthode, les résultats de la classe maligne seront recueilli et les méthodes possédant le meilleur \fscore{} seront mise en avant. Ce premier paragraphe à destination des techniques supervisées va permettre de décrire les résultats obtenus par ces diverses méthodes. Ainsi, des différences significatives sont à remarquer entre les méthodes spatiales, fréquentielles et de transfert de connaissances, nettement à l'avantage de cette dernière méthode comme mise en avant lors du \Cref{chap:chapter_4}. Un \fscore{} maximum et stable de 0,88$\pm$0,04 est obtenu sur les classes malignes à l'aide de la méthode d'extraction par transfert de connaissances et par utilisation de la méthode de prise de décision à haut niveau par l'utilisation d'un seuil dynamique.\par
+\section{Présentation des résultats}
+Les précédentes sections de ce travail se sont consacrées à décrire des méthodes pour tenter de résoudre la problématique de prédiction au niveau des lésions à partir de données \gls{rcm}. Cette nouvelle section se dédie à la présentation des résultats pour donner suite aux diverses expérimentations mentionnées lors de ces dernières. Dans une première sous partie, nous relatons le protocole d'expérimentation suivi pour permettre l'obtention des résultats et nous décrivons l'organisation de ceux-ci. Puis dans une seconde sous partie, nous développons les divers résultats issus des expériences mentionnées précédemment.\par
+
+\subsection{Protocole d'expérimentation}
+Afin de réaliser l'évaluation de ces expériences, nous emploierons une validation croisée imbriquée déjà discuté sur le \Cref{sec:models_settings}, pour ses avantages permettant ainsi l'obtention de métriques plus objectif sur les performances du système évalué~\cite{Cawley2010}. Ce type de structure de validation est plus robuste face au biais~\cite{Cawley2010} et est démontré empiriquement moins sensible au biais et à la variance lorsque celle-ci est couplée à des valeurs de $k$ comprises entre 5 et 10 pour l'évaluation~\cite{James2000}. La diversité de combinaisons relativement limité de cette partie, nous permet à l'instar des précédents chapitres, d'obtenir des résultats dans un temps raisonnable malgré des valeur de $k$ élevées. Ainsi une valeur de $k$ égale à 10 est utilisée pour l'évaluation, tandis qu'une valeur de 2 sera conservée pour la boucle interne suffisante pour déterminer la meilleure combinaison d'hyperparamètres. Bien que considéré, le schéma de validation de type \textit{leave-one-out} pour la boucle externe d'évaluation ne sera pas utilisé car plus sujet à une variance élevée lors des mesures notamment en présence de valeurs aberrantes~\cite{Bengio2004}. De plus, un tel schéma de validation est bien plus coûteux à entreprendre puisqu'il nécessite autant de phase d'entraînement et d'évaluation, que d'instances dans le jeu de données considéré soit 223 pour ce travail.\par
+
+Pour procéder au mieux au réglage des paramètres des modèles précédents et, d'autre part de retenir une évaluation objective de ces processus malgré les déséquilibres d'annotations il est nécessaire d'opter pour une métrique adaptée. Ces expériences emploient le \textbf{\fscore{}} permettant de représenter conjointement les mesures de précision et de rappel au sein d'une même métrique binaire. De plus, et afin de compléter l'analyse des résultats et de permettre un parallèle avec ceux des experts en dermatologie, les valeurs de \textbf{sensibilité} et de \textbf{spécificité} sont renseignées conjointement au \fscore{}. Comme pour l'article de \cite{Cinotti2016}, ce processus décompose la présentation des résultats en deux temps. Dans un premier temps, ce travail opte pour l'analyse des mesures précédentes sur l'ensemble des cas clinique du jeu de données, en adoptant comme classe positive les annotations des lésions dites \textit{malignes}. Puis dans un second temps, les même mesures sont extraites en ne considérant que les cas de \textbf{\gls{lm} / \gls{lmm}} parmi les annotations malignes et en adoptant comme classe positive les annotations des lésions dites \textit{malignes}.\par
+
+La partie dédiée aux résultats se décompose en diverses étapes, débutant dans un premier temps par une présentation des résultats obtenus au niveau lésionnel par les diverses propositions de méthodes supervisées présentée lors de la \Cref{sec:patient_decision_supervised}. Dans une second temps, ce travail procède à une présentation des résultats obtenus au niveau lésionnel par l'utilisation des méthodes faiblement supervisées listées lors de la \Cref{sec:patient_decision_weak}. En continuité de ces résultats sur les méthodes faiblement supervisées, ce travail procède à une analyse inversée par la méthode \gls{misvm}, dont le principe d'approche par instances permet de revenir à la prédiction d'annotations sur les données images de base de ce travail.\par
+\clearpage
+
+\subsection{Résultats des expérimentation}
+Dans cette section dédiée aux résultats, les diverses méthodes envisagées pour la prise de décision au niveau des lésions vont être traitées à l'aide de paragraphes respectifs. Cette première analyse à destination des méthodes supervisées se consacre aux résultats obtenus par ces diverses méthodes. Pour les méthodes spatiales, un \fscore{} maximal de 0,80 avec un écart-type de 0,11 sont obtenus à l'aide de la méthode "Décisions - Priorité" ; Pour les méthodes fréquentielles, un \fscore{} maximal de 0,83 avec un écart-type de 0,07 sont obtenus à l'aide de la méthode "Décisions - Dynamique" ; Pour les méthodes de transfert de connaissances, un \fscore{} maximal de 0,89 avec un écart-type de 0,08 sont obtenus à l'aide de la méthode "Scores - Moyenne". Ainsi, des différences significatives sont à remarquer entre les méthodes spatiales, fréquentielles et de transfert de connaissances, nettement à l'avantage de cette dernière méthode comme mise en avant lors du \Cref{chap:chapter_4}. L'utilisation du transfert de connaissances comme base d'extraction de caractéristiques et la méthode "Scores - Moyenne" permettent l'obtention d'une valeur de sensibilité de 0,95 et de spécificité de 0,70. Ces résultats peuvent être visualisés sur la \Cref{tab:results_lesion_classification_supervised_patient}.\par
 
 \begin{table}[H]
     \centering
     \begin{tabular}{cllll}
         \toprule
-        \multicolumn{1}{l}{}         &                      & Précision          & Rappel             & \fscore{}            \\ \midrule
-        \multirow{4}{*}{Spatial}     & Décisions - Priorité & \textbf{0.71±0.06} & \textbf{0.94±0.05} & \textbf{0.81±0.04} \\
-                                     & Décisions - Dynamique& 0.77±0.10          & 0.78±0.10          & 0.77±0.05          \\
-                                     & Scores - Maximum     & 0.69±0.10          & 0.83±0.19          & 0.75±0.06          \\
-                                     & Scores - Moyenne     & 0.75±0.11          & 0.82±0.17          & 0.78±0.06          \\ \midrule
-        \multirow{4}{*}{Fréquentiel} & Décisions - Priorité & 0.70±0.10          & 0.93±0.03          & 0.80±0.07          \\
-                                     & Décisions - Dynamique& 0.81±0.06          & 0.79±0.05          & 0.80±0.02          \\
-                                     & Scores - Maximum     & 0.72±0.09          & 0.78±0.25          & 0.75±0.13          \\
-                                     & Scores - Moyenne     & \textbf{0.82±0.07} & \textbf{0.80±0.12} & \textbf{0.81±0.03} \\ \midrule
-        \multirow{4}{*}{Transfert}   & Décisions - Priorité & 0.69±0.10          & 0.99±0.03          & 0.81±0.08          \\
-                                     & Décisions - Dynamique& \textbf{0.84±0.07} & \textbf{0.92±0.07} & \textbf{0.88±0.04} \\
-                                     & Scores - Maximum     & 0.79±0.09          & 0.93±0.05          & 0.85±0.05          \\
-                                     & Scores - Moyenne     & 0.82±0.09          & 0.93±0.08          & 0.87±0.04          \\ \bottomrule
+        \multicolumn{1}{l}{}         &                              & Sensibilité           & Spécificité           & \fscore{}             \\ \midrule
+        \multirow{4}{*}{Spatial}     & Décisions - Priorité         & \textbf{0.92$\pm$0.09}    & \textbf{0.40$\pm$0.16}    & \textbf{0.80$\pm$0.11}    \\
+                                     & Décisions - Dynamique        & 0.80$\pm$0.19             & 0.66$\pm$0.22             & 0.80$\pm$0.13             \\
+                                     & Scores - Maximum             & 0.83$\pm$0.18             & 0.57$\pm$0.25             & 0.79$\pm$0.12             \\
+                                     & Scores - Moyenne             & 0.83$\pm$0.20             & 0.58$\pm$0.30             & 0.79$\pm$0.13             \\ \midrule
+        \multirow{4}{*}{Fréquentiel} & Décisions - Priorité         & 0.93$\pm$0.06             & 0.37$\pm$0.25             & 0.80$\pm$0.11             \\
+                                     & Décisions - Dynamique        & \textbf{0.82$\pm$0.08}    & \textbf{0.77$\pm$0.10}    & \textbf{0.83$\pm$0.07}    \\
+                                     & Scores - Maximum             & 0.84$\pm$0.09             & 0.58$\pm$0.22             & 0.80$\pm$0.09             \\
+                                     & Scores - Moyenne             & 0.80$\pm$0.14             & 0.72$\pm$0.25             & 0.81$\pm$0.09             \\ \midrule
+        \multirow{4}{*}{Transfert}   & Décisions - Priorité         & 0.98$\pm$0.04             & 0.34$\pm$0.14             & 0.82$\pm$0.06             \\
+                                     & Décisions - Dynamique        & 0.91$\pm$0.13             & 0.71$\pm$0.24             & 0.87$\pm$0.09             \\
+                                     & Scores - Maximum             & 0.92$\pm$0.15             & 0.57$\pm$0.21             & 0.84$\pm$0.12             \\
+                                     & Scores - Moyenne             & \textbf{0.95$\pm$0.09}    & \textbf{0.70$\pm$0.22}    & \textbf{0.89$\pm$0.08}    \\ \bottomrule
     \end{tabular}
-    \caption{Résultats issus des processus de classification supervisés employés pour mener une classification au niveau lésionnel.}
+    \caption{Table de résultats issus des processus de classification supervisés employés pour mener une classification au niveau lésionnel, exprimés selon la sensibilité, la spécificité et le \fscore{}.}
     \label{tab:results_lesion_classification_supervised_patient}
-\end{table}\par
+\end{table}
+
+Ce second paragraphe se focalise sur les cas de lésions de types \gls{lm} / \gls{lmm} par ces mêmes méthodes de prédiction supervisées. Pour les méthodes spatiales, un \fscore{} maximal de 0,80 avec un écart-type de 0,14 sont obtenus à l'aide de la méthode "Décisions - Dynamique" ; Pour les méthodes fréquentielles, un \fscore{} maximal de 0,83 avec un écart-type de 0,09 sont obtenus à l'aide de la méthode "Décisions - Dynamique" ; Pour les méthodes de transfert de connaissances, un \fscore{} maximal de 0,87 avec un écart-type de 0,11 sont obtenus à l'aide de la méthode "Scores - Moyenne". À nouveau, des différences significatives sont à remarquer entre les méthodes spatiales, fréquentielles et de transfert de connaissances, à l'avantage de cette dernière méthode comme mise en avant lors du \Cref{chap:chapter_4}. La mise en oeuvre du transfert de connaissances comme base d'extraction de caractéristiques et la méthode "Scores - Moyenne" permettent l'obtention d'une valeur de sensibilité de 0,95 et de spécificité de 0,70 sur les lésions de types \gls{lm} / \gls{lmm}. Les diverses valeurs peuvent être visualisés sur la \Cref{tab:results_lesion_classification_supervised_patient_lm}.\par
 
 \begin{table}[H]
     \centering
     \begin{tabular}{cllll}
         \toprule
-        \multicolumn{1}{l}{}         &              & Précision          & Rappel             & \fscore{}            \\ \midrule
-        \multirow{4}{*}{Spatial}     & SIL          & \textbf{0.67±0.14} & \textbf{0.95±0.05} & \textbf{0.79±0.11} \\
-                                     & MI-SVM       & 0.75±0.07          & 0.67±0.09          & 0.71±0.08          \\
-                                     & Scale SIL    & 0.68±0.09          & 0.97±0.02          & 0.80±0.06          \\
-                                     & Scale MI-SVM & 0.86±0.06          & 0.78±0.01          & 0.82±0.03          \\ \midrule
-        \multirow{4}{*}{Fréquentiel} & SIL          & 0.67±0.10          & 0.97±0.02          & 0.80±0.07          \\
-                                     & MI-SVM       & 0.79±0.03          & 0.70±0.09          & 0.74±0.06          \\
-                                     & Scale SIL    & 0.64±0.10          & 0.99±0.01          & 0.78±0.08          \\
-                                     & Scale MI-SVM & \textbf{0.84±0.03} & \textbf{0.80±0.04} & \textbf{0.82±0.03} \\ \midrule
-        \multirow{4}{*}{Transfert}   & SIL          & 0.69±0.10          & 0.99±0.01          & 0.82±0.07          \\
-                                     & MI-SVM       & \textbf{0.86±0.06} & \textbf{0.83±0.10} & \textbf{0.85±0.06} \\
-                                     & Scale SIL    & 0.69±0.10          & 1.00±0.00          & 0.81±0.08          \\
-                                     & Scale MI-SVM & 0.87±0.06          & 0.88±0.03          & 0.87±0.04          \\ \bottomrule
+        \multicolumn{1}{l}{}         &                              & Sensibilité           & Spécificité           & \fscore{}             \\ \midrule
+        \multirow{4}{*}{Spatial}     & Décisions - Priorité         & 0.93$\pm$0.11             & 0.40$\pm$0.16             & 0.78$\pm$0.13             \\
+                                     & Décisions - Dynamique        & \textbf{0.84$\pm$0.18}    & \textbf{0.66$\pm$0.22}    & \textbf{0.80$\pm$0.14}    \\
+                                     & Scores - Maximum             & 0.83$\pm$0.18             & 0.57$\pm$0.25             & 0.77$\pm$0.14             \\
+                                     & Scores - Moyenne             & 0.86$\pm$0.18             & 0.58$\pm$0.30             & 0.79$\pm$0.14             \\ \midrule
+        \multirow{4}{*}{Fréquentiel} & Décisions - Priorité         & 0.93$\pm$0.07             & 0.37$\pm$0.25             & 0.77$\pm$0.13             \\
+                                     & Décisions - Dynamique        & \textbf{0.84$\pm$0.12}    & \textbf{0.77$\pm$0.10}    & \textbf{0.83$\pm$0.09}    \\
+                                     & Scores - Maximum             & 0.87$\pm$0.09             & 0.58$\pm$0.22             & 0.80$\pm$0.11             \\
+                                     & Scores - Moyenne             & 0.82$\pm$0.14             & 0.72$\pm$0.25             & 0.81$\pm$0.12             \\ \midrule
+        \multirow{4}{*}{Transfert}   & Décisions - Priorité         & 0.97$\pm$0.05             & 0.34$\pm$0.14             & 0.79$\pm$0.07             \\
+                                     & Décisions - Dynamique        & 0.91$\pm$0.16             & 0.71$\pm$0.24             & 0.86$\pm$0.12             \\
+                                     & Scores - Maximum             & 0.90$\pm$0.18             & 0.57$\pm$0.21             & 0.81$\pm$0.16             \\
+                                     & Scores - Moyenne             & \textbf{0.95$\pm$0.11}    & \textbf{0.70$\pm$0.22}    & \textbf{0.87$\pm$0.11}    \\ \bottomrule
     \end{tabular}
-    \caption{Résultats issus des processus de classification faiblement supervisés employés pour mener une classification au niveau lésionnel.}
+    \caption{Table de résultats issus des processus de classification supervisés employés pour mener une classification au niveau lésionnel sur les pathologies de \gls{lm} / \gls{lmm}, exprimés selon la sensibilité, la spécificité et le \fscore{}.}
+    \label{tab:results_lesion_classification_supervised_patient_lm}
+\end{table}
+
+\vspace{25pt}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{cllll}
+        \toprule
+        \multicolumn{1}{l}{}         &                      & Sensibilité           & Spécificité           & \fscore{}             \\ \midrule
+        \multirow{6}{*}{Spatial}     & \gls{misvm}          & 0.69$\pm$0.13             & 0.57$\pm$0.22             & 0.70$\pm$0.12             \\
+                                     & \gls{nsk}            & \textbf{0.81$\pm$0.12}    & \textbf{0.70$\pm$0.12}    & \textbf{0.81$\pm$0.08}    \\
+                                     & \gls{sbmil}          & 0.10$\pm$0.08             & 0.99$\pm$0.06             & 0.18$\pm$0.13             \\
+                                     & MMS + \gls{misvm}    & 0.78$\pm$0.14             & 0.77$\pm$0.14             & 0.81$\pm$0.12             \\
+                                     & MMS + \gls{nsk}      & 0.78$\pm$0.11             & 0.69$\pm$0.13             & 0.79$\pm$0.08             \\
+                                     & MMS + \gls{sbmil}    & 0.88$\pm$0.30             & 0.07$\pm$0.30             & 0.72$\pm$0.24             \\ \midrule
+        \multirow{6}{*}{Fréquentiel} & \gls{misvm}          & 0.72$\pm$0.19             & 0.62$\pm$0.26             & 0.73$\pm$0.16             \\
+                                     & \gls{nsk}            & 0.78$\pm$0.15             & 0.59$\pm$0.21             & 0.77$\pm$0.12             \\
+                                     & \gls{sbmil}          & 0.27$\pm$0.28             & 0.84$\pm$0.29             & 0.39$\pm$0.23             \\
+                                     & MMS + \gls{misvm}    & \textbf{0.83$\pm$0.12}    & \textbf{0.69$\pm$0.16}    & \textbf{0.82$\pm$0.10}    \\
+                                     & MMS + \gls{nsk}      & 0.80$\pm$0.14             & 0.71$\pm$0.09             & 0.81$\pm$0.11             \\
+                                     & MMS + \gls{sbmil}    & 0.09$\pm$0.06             & 1.00$\pm$0.00             & 0.16$\pm$0.09             \\ \midrule
+        \multirow{6}{*}{Transfert}   & \gls{misvm}          & 0.83$\pm$0.12             & 0.76$\pm$0.17             & 0.84$\pm$0.10             \\
+                                     & \gls{nsk}            & \textbf{0.86$\pm$0.10}    & \textbf{0.77$\pm$0.19}    & \textbf{0.86$\pm$0.11}    \\
+                                     & \gls{sbmil}          & 0.17$\pm$0.11             & 0.90$\pm$0.09             & 0.28$\pm$0.15             \\
+                                     & MMS + \gls{misvm}    & 0.83$\pm$0.10             & 0.77$\pm$0.16             & 0.84$\pm$0.07             \\
+                                     & MMS + \gls{nsk}      & 0.86$\pm$0.10             & 0.72$\pm$0.19             & 0.85$\pm$0.09             \\
+                                     & MMS + \gls{sbmil}    & 0.21$\pm$0.12             & 0.91$\pm$0.10             & 0.33$\pm$0.17             \\ \bottomrule
+    \end{tabular}
+    \caption{Table de résultats issus des processus de classification faiblement supervisés par \gls{mil} employés pour mener une classification au niveau lésionnel, exprimés selon la sensibilité, la spécificité et le \fscore{}.}
     \label{tab:results_lesion_classification_weakly_patient}
-\end{table}\par
+\end{table}
+\clearpage
+
+Cette seconde partie à destination des méthodes faiblement supervisées par \gls{mil} va permettre de décrire les résultats obtenus par ces diverses méthodes. Pour les méthodes spatiales, un \fscore{} maximal de 0,81 avec un écart-type de 0,08 sont obtenus à l'aide de la méthode \gls{nsk} ; Pour les méthodes fréquentielles, un \fscore{} maximal de 0,82 avec un écart-type faible de 0,10 sont obtenus à l'aide de la méthode combinant normalisation par Minimum / Maximum et \gls{misvm} ; Pour les méthodes de transfert de connaissances, un \fscore{} maximal de 0,86 avec un écart-type assez important de 0,11 sont obtenus à l'aide de la méthode \gls{nsk}. Ainsi, de même que pour les méthode supervisées, des différences significatives sont à remarquer entre les méthodes spatiales, fréquentielles et de transfert de connaissances. Cette dernière méthode comme base d'extraction de caractéristiques et la méthode \gls{nsk} permettent l'obtention d'une valeur de sensibilité de 0,86 et de spécificité de 0,77. Les valeurs des résultats de techniques faiblement supervisées par \gls{mil} peuvent être visualisés sur la \Cref{tab:results_lesion_classification_weakly_patient}.\par
+
+Ce second paragraphe à l'intention des méthodes faiblement supervisées par \gls{mil} se focalise sur les cas de \gls{lm} / \gls{lmm}. Pour les méthodes spatiales, un \fscore{} maximal de 0,80 avec un écart-type de 0,11 sont obtenus à l'aide de la méthode \gls{nsk} ; Pour les méthodes fréquentielles, un \fscore{} maximal de 0,80 avec un écart-type de 0,11 sont obtenus à l'aide de la méthode combinant normalisation par Minimum / Maximum au modèle \gls{nsk} ; Pour les méthodes de transfert de connaissances, un \fscore{} maximal de 0,85 avec un écart-type de 0,13 sont obtenus par la méthode \gls{nsk}. La méthode d'extraction par transfert de connaissances permet l'obtention des résultats les plus pertinent en combinaison de la méthode \gls{nsk}, soit des valeurs de sensibilité de 0.87 et de spécificité de 0.77. Ces nouvelles valeurs liées à l'évaluation des méthodes faiblement supervisées sur les cas de \gls{lm} / \gls{lmm} peuvent être visualisés sur la \Cref{tab:results_lesion_classification_weakly_patient_lm}.\par
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{cllll}
+        \toprule
+        \multicolumn{1}{l}{}         &                          & Sensibilité           & Spécificité           & \fscore{}             \\ \midrule
+        \multirow{6}{*}{Spatial}     & \gls{misvm}              & 0.69$\pm$0.17             & 0.57$\pm$0.22             & 0.69$\pm$0.14             \\
+                                     & \gls{nsk}                & \textbf{0.82$\pm$0.15}    & \textbf{0.70$\pm$0.12}    & \textbf{0.80$\pm$0.11}    \\
+                                     & \gls{sbmil}              & 0.11$\pm$0.09             & 0.99$\pm$0.06             & 0.20$\pm$0.14             \\
+                                     & MMS + \gls{misvm}        & 0.78$\pm$0.17             & 0.77$\pm$0.14             & 0.80$\pm$0.16             \\
+                                     & MMS + \gls{nsk}          & 0.81$\pm$0.14             & 0.69$\pm$0.13             & 0.79$\pm$0.09             \\
+                                     & MMS + \gls{sbmil}        & 0.86$\pm$0.30             & 0.07$\pm$0.30             & 0.67$\pm$0.23             \\ \midrule
+        \multirow{6}{*}{Fréquentiel} & \gls{misvm}              & 0.71$\pm$0.21             & 0.62$\pm$0.26             & 0.71$\pm$0.19             \\
+                                     & \gls{nsk}                & 0.78$\pm$0.12             & 0.59$\pm$0.21             & 0.75$\pm$0.10             \\
+                                     & \gls{sbmil}              & 0.25$\pm$0.28             & 0.84$\pm$0.29             & 0.37$\pm$0.22             \\
+                                     & MMS + \gls{misvm}        & 0.82$\pm$0.13             & 0.69$\pm$0.16             & 0.80$\pm$0.12             \\
+                                     & MMS + \gls{nsk}          & \textbf{0.82$\pm$0.14}    & \textbf{0.71$\pm$0.09}    & \textbf{0.80$\pm$0.11}    \\
+                                     & MMS + \gls{sbmil}        & 0.11$\pm$0.06             & 1.00$\pm$0.00             & 0.19$\pm$0.10             \\ \midrule
+        \multirow{6}{*}{Transfert}   & \gls{misvm}              & 0.82$\pm$0.13             & 0.76$\pm$0.17             & 0.82$\pm$0.12             \\
+                                     & \gls{nsk}                & \textbf{0.87$\pm$0.09}    & \textbf{0.77$\pm$0.19}    & \textbf{0.85$\pm$0.13}    \\
+                                     & \gls{sbmil}              & 0.19$\pm$0.10             & 0.90$\pm$0.09             & 0.30$\pm$0.15             \\
+                                     & MMS + \gls{misvm}        & 0.85$\pm$0.10             & 0.77$\pm$0.16             & 0.84$\pm$0.08             \\
+                                     & MMS + \gls{nsk}          & 0.88$\pm$0.10             & 0.72$\pm$0.19             & 0.84$\pm$0.11             \\
+                                     & MMS + \gls{sbmil}        & 0.25$\pm$0.13             & 0.91$\pm$0.10             & 0.38$\pm$0.18             \\ \bottomrule
+    \end{tabular}
+    \caption{Table de résultats issus des processus de classification faiblement supervisés par \gls{mil} employés pour mener une classification au niveau lésionnel sur les pathologies de \gls{lm} / \gls{lmm}, exprimés selon la sensibilité, la spécificité et le \fscore{}.}
+    \label{tab:results_lesion_classification_weakly_patient_lm}
+\end{table}
+
+Pour finir, ce paragraphe se consacre à la présentation des courbes \gls{roc} au niveau lésionnel des divers méthodes mentionnées précédemment. Sur l'ensemble des cas cliniques, la méthode supervisé issues du modèle de prédiction "Scores - Moyenne" permet l'obtention d'un score \gls{auc} de 0,87 ; la méthode faiblement supervisée par utilisation du modèle \gls{nsk} permet quant à elle l'obtention d'un score \gls{auc} de 0,83. Sur les seuls cas de \gls{lm} / \gls{lmm}, la méthode supervisé issues du modèle de prédiction "Scores - Moyenne" permet l'obtention d'un score \gls{auc} similaire de 0,88 ; la méthode faiblement supervisée par utilisation du modèle \gls{nsk} permet quant à elle l'obtention d'un score \gls{auc} de 0,83 identique à celui sur l'ensemble des lésions. L'ensemble de ces courbes \gls{roc} et de ces scores \gls{auc} peuvent être visualisées sur la \Cref{fig:results_lesion_roc_lesions}.\par
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{contents/chapter_6/resources/results_lesion_roc_lesions.pdf}
-    \caption{Courbes \gls{roc} issus de la prédiction au niveau des lésions à partir d'entrainement de modèles de prédictions supportant ce niveau de prédiction. A gauche, les courbes issus du modèle de prédiction supervisé sur base de seuils dynamiques ; A droite, les courbes issus du modèle de prédiction MI-SVM.}
+    \caption{Courbes \gls{roc} issues de la prédiction au niveau des lésions sur l'ensemble des cas, figurant à l'aide d'un trait orange estompé tracé en continu, et sur les cas de \gls{lm} / \gls{lmm}, figurant à l'aide d'un trait orange tracé en pointillés. A gauche, les courbes supervisés issues du modèle de prédiction employant la méthode "Scores - Moyenne" ; A droite, les courbes faiblement supervisés sur la base de la théorie \gls{mil} par utilisation du modèle \gls{nsk}.}
     \label{fig:results_lesion_roc_lesions}
 \end{figure}\par
+
+Cette dernière partie se dédie aux résultats de prédiction des méthodes faiblement supervisées par \gls{mil} dont l'approche se base sur les instances et permet de revenir à un niveau de prédiction sur les instances. A cet effet, seul le modèle \gls{misvm} permet de revenir à un tel niveau de prédiction au sein de ce travail. Pour les méthodes spatiales, un \fscore{} maximal de 0,56 avec un écart-type de 0,14 sont obtenus par combinaison de la normalisation Minimum / Maximum et du modèle \gls{misvm} ; Pour les méthodes fréquentielles, un \fscore{} maximal de 0,59 avec un écart-type de 0,15 sont obtenus par combinaison de la normalisation Minimum / Maximum et du modèle \gls{misvm} ; Pour les méthodes de transfert de connaissances, un \fscore{} maximal de 0,64 avec un écart-type de 0,16 sont obtenus avec le modèle \gls{misvm} seul. Les résultats de ce mode de prédiction sont visibles sur la \Cref{tab:results_lesion_classification_weakly_image}.\par
 
 \begin{table}[H]
     \centering
     \begin{tabular}{cllll}
         \toprule
-        \multicolumn{1}{l}{}         &              & Précision          & Rappel             & \fscore{}            \\ \midrule
-        \multirow{4}{*}{Spatial}     & SIL          & 0.63±0.18          & 0.74±0.12          & 0.68±0.16          \\
-                                     & MI-SVM       & 0.69±0.11          & 0.29±0.08          & 0.41±0.10          \\
-                                     & MMS + SIL    & \textbf{0.72±0.09} & \textbf{0.80±0.08} & \textbf{0.76±0.08} \\
-                                     & MMS + MI-SVM & 0.85±0.09          & 0.39±0.09          & 0.54±0.10          \\ \midrule
-        \multirow{4}{*}{Fréquentiel} & SIL          & 0.67±0.15          & 0.80±0.06          & 0.73±0.12          \\
-                                     & MI-SVM       & 0.81±0.07          & 0.26±0.07          & 0.39±0.08          \\
-                                     & MMS + SIL    & \textbf{0.71±0.08} & \textbf{0.85±0.07} & \textbf{0.77±0.06} \\
-                                     & MMS + MI-SVM & 0.89±0.04          & 0.43±0.12          & 0.58±0.11          \\ \midrule
-        \multirow{4}{*}{Transfert}   & SIL          & \textbf{0.74±0.08} & \textbf{0.88±0.05} & \textbf{0.81±0.06} \\
-                                     & MI-SVM       & 0.90±0.06          & 0.51±0.12          & 0.65±0.11          \\
-                                     & MMS + SIL    & 0.73±0.09          & 0.85±0.05          & 0.79±0.06          \\
-                                     & MMS + MI-SVM & 0.92±0.04          & 0.47±0.14          & 0.63±0.12          \\ \bottomrule
+        \multicolumn{1}{l}{}         &                      & Sensibilité           & Spécificité           & \fscore{}             \\ \midrule
+        \multirow{2}{*}{Spatial}     & \gls{misvm}          & 0.29$\pm$0.13             & 0.90$\pm$0.08             & 0.42$\pm$0.14             \\
+                                     & MMS + \gls{misvm}    & \textbf{0.42$\pm$0.15}    & \textbf{0.93$\pm$0.05}    & \textbf{0.56$\pm$0.14}    \\ \midrule
+        \multirow{2}{*}{Fréquentiel} & \gls{misvm}          & 0.29$\pm$0.22             & 0.89$\pm$0.28             & 0.42$\pm$0.20             \\
+                                     & MMS + \gls{misvm}    & \textbf{0.45$\pm$0.15}    & \textbf{0.93$\pm$0.05}    & \textbf{0.59$\pm$0.15}    \\ \midrule
+        \multirow{2}{*}{Transfert}   & \gls{misvm}          & \textbf{0.48$\pm$0.16}    & \textbf{0.97$\pm$0.02}    & \textbf{0.64$\pm$0.16}    \\
+                                     & MMS + \gls{misvm}    & 0.42$\pm$0.14             & 0.97$\pm$0.02             & 0.57$\pm$0.14             \\ \bottomrule
     \end{tabular}
-    \caption{Résultats issus des processus de classification faiblement supervisés employés pour mener une classification au niveau des instances de cette problématique également considérée sous le nom d'images.}
+    \caption{Table de résultats issus de l'application du modèle \gls{misvm} employés pour mener une classification au niveau des instances, sur l'ensemble des images annotées, et exprimés selon la sensibilité, la spécificité et le \fscore{}.}
     \label{tab:results_lesion_classification_weakly_image}
-\end{table}\par
+\end{table}
+
+Ce second paragraphe se dédie à l'intention des résultats de prédiction des méthodes faiblement supervisées par \gls{mil} sur les images issues de lésion de type \gls{lm} / \gls{lmm}. Pour les méthodes spatiales, un \fscore{} maximal de 0,60 avec un écart-type de 0,14 sont obtenus par combinaison de la normalisation Minimum / Maximum et du modèle \gls{misvm} ; Pour les méthodes fréquentielles, un \fscore{} maximal de 0,62 avec un écart-type de 0,14 sont obtenus par combinaison de la normalisation Minimum / Maximum et du modèle \gls{misvm} ; Pour les méthodes de transfert de connaissances, un \fscore{} maximal de 0,65 avec un écart-type de 0,16 sont obtenus avec le modèle \gls{misvm} seul.  La totalité de ces résultats est disponible sur la \Cref{tab:results_lesion_classification_weakly_image_lm}.\par
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{cllll}
+        \toprule
+        \multicolumn{1}{l}{}         &                      & Sensibilité           & Spécificité           & \fscore{}             \\ \midrule
+        \multirow{2}{*}{Spatial}     & \gls{misvm}          & 0.31$\pm$0.16             & 0.84$\pm$0.19             & 0.46$\pm$0.18             \\
+                                     & MMS + \gls{misvm}    & \textbf{0.44$\pm$0.14}    & \textbf{0.89$\pm$0.18}    & \textbf{0.60$\pm$0.14}    \\ \midrule
+        \multirow{2}{*}{Fréquentiel} & \gls{misvm}          & 0.28$\pm$0.23             & 0.87$\pm$0.32             & 0.42$\pm$0.24             \\
+                                     & MMS + \gls{misvm}    & \textbf{0.47$\pm$0.15}    & \textbf{0.86$\pm$0.25}    & \textbf{0.62$\pm$0.14}    \\ \midrule
+        \multirow{2}{*}{Transfert}   & \gls{misvm}          & \textbf{0.49$\pm$0.16}    & \textbf{0.94$\pm$0.07}    & \textbf{0.65$\pm$0.16}    \\
+                                     & MMS + \gls{misvm}    & 0.43$\pm$0.16             & 0.94$\pm$0.08             & 0.59$\pm$0.17             \\ \bottomrule
+    \end{tabular}
+    \caption{Table de résultats issus de l'application du modèle \gls{misvm} employés pour mener une classification au niveau des instances, sur les images annotées issues de pathologies de \gls{lm} / \gls{lmm}, et exprimés selon la sensibilité, la spécificité et le \fscore{}.}
+    \label{tab:results_lesion_classification_weakly_image_lm}
+\end{table}
+
+Pour finir cette présentation des résultats de prédiction au niveau des images à partir de méthodes faiblement supervisées employant le principe de \gls{mil}, ce paragraphe présente les résultats des courbes \gls{roc} et \gls{auc}. Ainsi sur l'ensemble des cas cliniques, la méthode \gls{mil} permet l'obtention d'un score \gls{auc} de 0,87. Cette méthode focalisé sur les cas de \gls{lm} et \gls{lmm} permet l'obtention d'un score \gls{auc} de 0,82. L'ensemble des courbes \gls{roc} et de ces scores \gls{auc} provenant de la prédiction sur les instances peuvent être visualisées sur la \Cref{fig:results_lesion_roc_instances}.\par
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\linewidth]{contents/chapter_6/resources/results_lesion_roc_instances.pdf}
-    \caption{Courbes \gls{roc} issus de la prédiction au niveau des instances images à partir d'un entraînement faiblement supervisé employant les annotations des lésions pour qualifier un ensemble d'instances image.}
+    \includegraphics[width=0.7\linewidth]{contents/chapter_6/resources/results_lesion_roc_instances.pdf}
+    \caption{Courbes \gls{roc} issues de la prédiction au niveau des instances sur l'ensemble des cas, figurant à l'aide d'un trait orange estompé tracé en continu, et sur les cas de \gls{lm} / \gls{lmm}, figurant à l'aide d'un trait orange tracé en pointillés. Les courbes sont issues  du mode de prédiction faiblement supervisés sur la base de la théorie \gls{mil} par utilisation du modèle \gls{misvm}.}
     \label{fig:results_lesion_roc_instances}
 \end{figure}\par
 
 \section{Discussion}
-% This part relates to different ways to achieve classification at the patient-level based on the same two categories: “malignant”, as the positive class, and “benign”. With this assumption, a patient should be considered “malignant” if at least one image is considered to be “malignant”. Additionally, this part needs to consider the varying number of samples per patient (as a reminder, the number of instances per patient can vary between 2 and 833 images).\par
-% In order to achieve this, the best combination of the feature extraction method and the classification model from \Cref{sec:image_decision} was used. The classification model provided two types of information for each image: the score was based on prediction probabilities and the decision (i.e., the class that achieved the best probability). In both cases, due to the varying number of images per patient, the information needs to be transformed into constant-size matrices to make a decision for existing and for new patients. At the score level, the structure was composed of patients, images, and scores of classes and transformed into a new matrix of size P*C, where P is the number of patients and C is the number of classes. A dynamic threshold was then used to adjust the positive class that maximizes the chosen metric. Multiple strategies can be used to achieve this:
-% \begin{itemize}
-% \item Mean - allows the contribution of each instance on the patient to be retained
-% \item Maximum – retention of the best confidence prediction as to the trusted one.
-% \end{itemize}
-% \begin{figure}[H]
-%     \begin{center}
-%         \includegraphics[width=0.8\linewidth]{Figures/Process_Decision.pdf}
-%         \caption{The classification process performed on \ac{rcm} patients in which the first part of the process remained the same as in \Cref{sec:image_decision}. The “Fit Model” and “Prediction” boxes refer to the decision and score level methods discussed in \Cref{sec:patient_decision}. The testing set was predicted for the patients based on “benign” and “malignant” classes.}
-%         \label{fig:decision_process}
-%     \end{center} 
-% \end{figure}\par
-% At the decision level, the structure was composed of structure, combining patients, images, and scores of classes and transformed into a new matrix of size P*C, where P is the number of patients and C is the number of classes. Also, C refers to the probability vector of each decision between 0 and 1.
-% \begin{itemize}
-% \item At Least One - at least one positive decision to consider the input as positive (initial assumption)
-% \item Dynamic - find a dynamic threshold that minimizes false-positive decisions.
-% \end{itemize}
-% A global overview of the processing scheme of this method is presented in \Cref{fig:decision_process}.
-% In a second stage, a number of \ac{mil} concepts are implemented in this part, as they fit the issue at hand: a patient is constitutive of several instances (consider it as a bag) and a positive instance assumes that the patient should be positive. Furthermore, only the patient label is known, and the annotation step of individual images is time-consuming. Such a problem can be set as a pair\(\{X|y\}\), in which \(X=\{X^1,X^2,\ldots,X^b\}\) is a bag containing \(b\) instances and each \(X^b\) formulated as follows: \(X^b=\{x^b_1,x^b_2,\ldots,x^b_n\}\), in which \(n\) is the number of features and \(y\) is the patient label~\cite{foulds_frank_2010}. Two ideas are developed regarding this context in the paragraphs that follow. In a first stage, a \ac{sil} classification is used in which a bag is considered as negative if all of the instances are considered to be negative, and positive if at least one of the instances has a positive label that fits our initial formulation of the patient label. In a second stage, the MI-SVM is an extension of \ac{svm} upon \ac{mil} theory and is employed in these due to the results of \Cref{sec:image_decision}. These experiments are configured to function with a linear kernel due to the observation made by the experiments of \Cref{sec:image_decision}. In this part, the experiments were implemented using the “MISVM” library~\cite{Doran2014}.\par
-% In addition, to provide the best performance on each of these models, a search for their optimal hyper-parameters was carried out (see \Cref{tab:patient_hyperparameters}).\par
+Cette partie de discussion se dédie à l'analyse des résultats de la précédente section. Ce premier paragraphe détaille les observations issues des méthodes de prédiction supervisées au niveau lésionnel. Les \fscore{} sont pour la plupart homogènes si l'on considère chaque méthode d'extraction indépendamment, mais les mesures de sensibilité et spécificité propre à chacune varient fortement entre méthode. Ainsi, la méthode de "Décisions - Priorité" bénéficie d'une forte sensibilité liée à son principe privilégiant la moindre détection de la classe prioritaire / positive, mais se contente d'une faible spécificité. Ce principe est ainsi plus nuance par la méthode "Décisions - Dynamique" qui apporte un seuil dynamique d'activation, et dont résultent des valeurs de sensibilité et spécificité plus équilibrés et supérieure en terme de \fscore{}. Néanmoins, cette méthode nécessite de laisser de côté certaines détections jusqu'à atteindre un certain seuil d'activation, ce principe peux être difficile à utiliser en milieu clinique. Afin de modérer ces deux méthodes, ont été proposées deux approches par scores. La première de ces méthodes "Scores - Maximum" initialement conçue pour conserver la sensibilité la méthode "Décisions - Priorité", perd une forte partie de celle-ci mais améliore nettement sa spécificité. La seconde de ces méthodes "Scores - Moyenne" initialement conçue pour affiner la décision de la méthode "Décisions - Dynamique", restes-en deçà de celle-ci avec néanmoins un score important sur les caractéristiques issues de l'extraction par transfert de connaissance. En ce qui concerne les résultats sur les pathologies malignes toutes confondues et sur les cas de \gls{lm} / \gls{lmm}, peu de différences sont à remarquer entre ces deux situations, ces méthodes semblent ainsi robustes au type de pathologie traitée.\par
+\clearpage
 
+Ce second paragraphe propose l'analyse des méthode faiblement supervisées par \gls{mil} dont les résultats sont très hétérogènes, par contraste aux méthodes supervisées. Ainsi, ce paragraphe procède à une analyse méthode par méthode. Dans un premier temps, la méthode \gls{misvm} permet l'obtention de modèle plus sensible que spécifique et dont le score global semble assez dépendant du type d'extraction employé, les résultats étant maximisé par l'utilisation du transfert de connaissances. Néanmoins, l'utilisation d'une normalisation par Minimum / Maximum semble bénéfique en moyenne et contribue à baisse cette dépendance à la méthode d'extraction de caractéristiques. Dans un second temps, la méthode \gls{nsk} est choisie pour représenter la catégorie des approches par noyaux d'ensembles, et semble être la méthode la plus adaptée dans ce schéma faiblement supervisé avec le jeu de données en notre possession. Ainsi, cette méthode achève des résultats assez proches quelques soit le mode d'extraction de caractéristiques choisi, et possède une bonne sensibilité bien que les valeurs de spécificité soient assez proche. Dans un dernier temps, la méthode \gls{sbmil} est utilisée comme représentante des approche hybride, non concluante dans ce cadre. En effet, ces méthodes ont une grande spécificité mais une sensibilité quasi-inexistante. Pour finir, les conclusions qui régissent les résultats sur les pathologies malignes toutes confondues et sur les cas de \gls{lm} / \gls{lmm} sont similaires à celle des méthodes supervisées, ces méthodes semblent ainsi robustes au type de pathologie traitée.\par
 
-% The validation protocol remains the same for each of these experiments, based on a nested cross-validation that is known to be less biased than a simple cross-validation scheme~\cite{Cawley2010}. This protocol allows 1) cross-validation of hyper-parameters and 2) objective evaluation of the prediction models. Each of the cross-validation step is based on a K-fold strategy with a $k$ value of 4 on the testing loop and 2 on the validation loop. Also, each time, the patients are separated and balanced as best as possible based on the image labels. In order to achieve an objective evaluation, each data cluster remains the same for the experiments in a given section (refer to \Cref{sec:image_decision} and \Cref{sec:patient_decision}). Moreover, each experiment is validated and evaluated using a \fscore{} metric, as it is statistically suitable for unbalanced populations in comparison with accuracy, and it represents in a single value both recall and precision information. In addition, standard deviation is computed to analyse the stability of models along the nested cross-validation. For this purpose, we used the “Scikit Learn” library for Machine Learning classification, validation, and metric~\cite{pedregosa2011scikit}.\par
+Ainsi, les deux approches proposées, c'est à dire par entraînement supervisé et faiblement supervisée, sont adaptées à la problématique actuelle bien que l'approche supervisé soit sensiblement supérieure. Cette supériorité des méthodes supervisée se traduit notamment sur les valeurs \gls{auc} avec des valeurs de 0,87 pour le modèle "Scores - Moyenne" et de 0,83 pour \gls{nsk}. Il est à remarquer que toutes ces approches possède un écart-type assez élevé situé entre 0,08 et 0,15, à l'exception de \gls{sbmil} dont les valeurs sont plus conséquentes. Cette tendance assez forte montre une certaine dépendance aux données mais peut être la conséquence du nombre restreint d'échantillons au niveau lésionnel du jeu de données, soit 223 lésions. Un élément supplémentaire à considérer est la complexité nécessaire à l'obtention des résultats supervisées, dont le nombre de paramètres est supérieur aux méthodes faiblement supervisées présentées. Par ailleurs, les méthodes supervisées utilisées ici nécessitent un processus en deux temps (voir trois si l'on considère l'extraction de caractéristiques), tandis que ces méthodes faiblement supervisées nécessitent une étape en moins. Le dernier argument en faveur des méthodes faiblement supervisées est celui de la très faible quantité d'annotations sollicité pour parvenir à de tel résultats, soit 223 annotations.\par
 
+Afin de mesurer, d'une part la compréhension au niveau lésionnel de ces modèles faiblement supervisés et d'autre part d'évaluer la qualité d'un système permettant de revenir à des prédiction bas niveau, une évaluation des prédiction au niveau des instance à été réalisée. Ces tests sont menés sur le modèle \gls{misvm}, et on permis d'obtenir une valeur de \fscore{} de 0,64 et \gls{auc} de 0,87 sur l'ensemble des cas cliniques. Cette valeur était en comparaison respectivement à un \fscore{} de 0,82 et \gls{auc} au 0,90 sein du \Cref{chap:chapter_4} avec des valeurs d'écart-type beaucoup plus restreintes. Il existe de ce fait une différence notable entre ces méthodes, pouvant rendre la prédiction au niveau des instances difficile pour la méthode \gls{misvm}.\par
 
-% This paragraph focuses on the methods implemented to reach the patient diagnosis (see \Cref{sec:patient_decision}) and it relates to the initial \ac{rcm} data (including unlabeled images) used previously to evaluate specialists~\cite{Cinotti2018}. All these experimental results are listed in \Cref{tab:patient_results} and discussed below. Firstly, the methods performance varied between 0.61 and 0.84 in terms of the \fscore{} for Malignancy. The “At Least One” method achieved poor performance due to prediction errors over the “benign” class. This problem can be solved by the use of a dynamic activation threshold for decisions to minimize the risk of false-positives, at the cost of resulting in an ethical consideration of this method in the clinical context. Secondly, the methods based on the score are almost the same and varied from 0.76 to 0.83 for the \fscore{} for Malignancy. By contrast, with these results, the standard deviations remained reasonable, varying from 0.03 to 0.06. Finally, \ac{mil} was also evaluated, and a substantial difference was noted between the \ac{sil} and the MI-SVM. Indeed, the \ac{sil} assumption yielded similar results with the decision based on the “At Least One” method, due to an insufficient ability to discriminate on the same “benign” class. By contrast, the MI-SVM yielded a number of good results, with an \fscore{} of 0.82. Both methods are stable, with a deviation that only varied from 0.02 to 0.04. Poor results with the “At Least One” and the \ac{sil} methods can be due to a lack of discriminative information provided by the “Inception-ResNet” for these methods.\par
-% \begin{table}[H]
-%     \centering
-%     \begin{tabular}{lllll}
-%                                 &                   & \multicolumn{3}{c}{\textbf{Malignancy - \fscore{}}}                    \\ \hline
-%     \textbf{Category}           & \textbf{Name}     & \textbf{Weighted}     & \textbf{Benign}       & \textbf{Malignant}    \\ \hline
-%     \multirow{2}{*}{Decision}   & At Least One      & 0.61$\pm$0.06         & 0.32$\pm$0.07         & 0.79$\pm$0.05         \\ \cline{2-5} 
-%                                 & \textbf{Dynamic}  & \textbf{0.84$\pm$0.03}& \textbf{0.78$\pm$0.07}& \textbf{0.87$\pm$0.02}\\ \hline 
-%     \multirow{2}{*}{Score}      & Mean              & 0.83$\pm$0.03         & 0.78$\pm$0.08         & 0.87$\pm$0.02         \\ \cline{2-5}
-%                                 & Maximum           & 0.76$\pm$0.04         & 0.68$\pm$0.03         & 0.80$\pm$0.05         \\ \hline  
-%     \multirow{2}{*}{\ac{mil}}   & \ac{sil}          & 0.70$\pm$0.04         & 0.50$\pm$0.10         & 0.83$\pm$0.03         \\ \cline{2-5} 
-%                                 & \textbf{MI-SVM}   & \textbf{0.82$\pm$0.02}& \textbf{0.78$\pm$0.05}& \textbf{0.84$\pm$0.02}\\ \hline 
-%     \end{tabular}    
-%     \caption{Results for the patient-level classification for Malignancy (\ac{lm} and \ac{bcc}) according to the different methods from \Cref{sec:patient_decision}. For Malignancy and \ac{lm}, the table provides a weighted average \fscore{} and individual \fscore{} for the benign and the malignant classes.}
-%     \label{tab:patient_results}
-% \end{table}\par
-% Following previous results, this paragraph discusses in detail the results of supervised “Dynamic” decision threshold and \ac{mil} based on “MI-SVM” methods over the Malignancy (meaning \ac{bcc} and \ac{lm}) and \ac{lm} as the cited clinical study does~\cite{Cinotti2018}. \Cref{tab:patient_results_details} provides \fscore{}, precision, and recall based on these experiments. As the classification is binary, recall of the positive class refers to the sensitivity and recall of the negative class refers to the Specificity. The “Dynamic” method achieves scores of 0.89$\pm$0.03 sensitivity and 0.75$\pm$0.07 specificity for Malignancy; 0.88$\pm$0.04 sensitivity and 0.75$\pm$0.07 specificity for \ac{lm} pathologies. The “MI-SVM” method achieves scores of 0.80$\pm$0.02 sensitivity and 0.84$\pm$0.05 specificity for Malignancy; 0.78$\pm$0.07 sensitivity and 0.84$\pm$0.07 specificity for \ac{lm} pathologies. The “Dynamic” method provides more emphasis on sensitivity while “MI-SVM” provides a good specificity. These methods are quite comparable to the evaluation of the dermatologists, reaching 0.80 of sensitivity and 0.81 of specificity, but less homogeneous compared to them.\par
-% \par
-% \begin{table}[H]
-%     \centering
-%     \begin{tabular}{lllll||lll}
-%                                 &                   & \multicolumn{3}{c}{\textbf{Malignancy}}                               & \multicolumn{3}{c}{\textbf{\ac{lm}}}                                  \\ \hline
-%     \textbf{Name}               & \textbf{Label}    & \textbf{\fscore{}}     & \textbf{Precision}    & \textbf{Recall}       & \textbf{\fscore{}}     & \textbf{Precision}    & \textbf{Recall}       \\ \hline
-%     \multirow{3}{*}{Dynamic}    & Benign            & 0.78$\pm$0.07         & 0.81$\pm$0.08         & 0.75$\pm$0.07         & 0.79$\pm$0.06         & 0.82$\pm$0.07         & 0.75$\pm$0.07         \\ \cline{2-8}  
-%                                 & Malignant         & 0.87$\pm$0.02         & 0.85$\pm$0.03         & 0.89$\pm$0.03         & 0.86$\pm$0.03         & 0.83$\pm$0.03         & 0.88$\pm$0.04         \\ \cline{2-8} 
-%                                 & Weighted          & 0.84$\pm$0.03         & 0.84$\pm$0.03         & 0.84$\pm$0.03         & 0.83$\pm$0.03         & 0.83$\pm$0.03         & 0.83$\pm$0.03         \\ \hline
-%     \multirow{3}{*}{MI-SVM}     & Benign            & 0.78$\pm$0.02         & 0.72$\pm$0.08         & 0.84$\pm$0.07         & 0.78$\pm$0.05         & 0.73$\pm$0.07         & 0.84$\pm$0.07         \\ \cline{2-8}
-%                                 & Malignant         & 0.84$\pm$0.02         & 0.89$\pm$0.05         & 0.80$\pm$0.05         & 0.82$\pm$0.03         & 0.87$\pm$0.06         & 0.78$\pm$0.07         \\ \cline{2-8} 
-%                                 & Weighted          & 0.82$\pm$0.02         & 0.82$\pm$0.02         & 0.83$\pm$0.02         & 0.80$\pm$0.03         & 0.80$\pm$0.03         & 0.81$\pm$0.02         \\ \hline 
-%     \end{tabular}    
-%     \caption{Detailed results for the patient-level classification for the Decision method based on a Dynamic threshold and \ac{mil} based on the MI-SVM assumption. The table provides the \fscore{}, Precision, and Recall for the benign and malignant classes with these methods.}
-%     \label{tab:patient_results_details}
-% \end{table}\par
-% Finally, \Cref{fig:roc_results} provides \ac{roc} curves for both malignancy and \ac{lm} pathologies on “Dynamic” and “MI-SVM” methods. In the context of Malignancy evaluation, the measured \ac{auc} is 0.89 for “MI-SVM” and 0.88 for “Dynamic”. For \ac{lm} evaluation, the measured \ac{auc} is 0.88 for “MI-SVM” and 0.87 for “Dynamic”. In the same context of \ac{lm} lesions, the experts obtained an \ac{auc} score of 0.89, so close to the previous two methods. Apart from this, \Cref{fig:misclassified} provides some misleading images: the \ac{rcm} images in the center belongs to the same patient (image c and d) with similar patterns and homogeneous information while the \ac{rcm} images on the outside parts of the figure contain hair, artifacts, tricky patterns or nonhomogeneous information (image a, b, e, and f). Also, the images on the bottom left and the bottom right (image b and e) of the figure are examples of images were experts will use stacks of images to make their decision and where the currently developed methods only use a single image.
-% \begin{figure}[H]
-%     \centering
-%     \begin{subfigure}{0.47\linewidth}
-%         \centering
-%         \textbf{Malignancy \ac{roc} curves}\par
-%         \includegraphics[width=\linewidth]{Figures/Result_Malignancy.pdf}
-%     \end{subfigure}
-%     \begin{subfigure}{0.47\linewidth}
-%         \centering
-%         \textbf{\ac{lm} \ac{roc} curves}\par
-%         \includegraphics[width=\linewidth]{Figures/Result_LMM.pdf}
-%     \end{subfigure} 
-%     \caption{On the left, the \ac{roc} curves for Malignancy with the Dynamic and MI-SVM methods. On the right, the \ac{roc} curves for \ac{lm} with the Dynamic and MI-SVM methods.}
-%     \label{fig:roc_results}
-% \end{figure}
-
-% \begin{figure}[H]
-%     \centering
-%     \includegraphics[width=\linewidth]{Figures/Misclassified.pdf}
-%     \caption{Examples of \ac{rcm} images that mislead the classifier with the highest \fscore{} (Inception-ResNet + SVM - Linear). On the left part (image a, b and c), \ac{rcm} images belonging to the benign label and classified as malignant. On the right part (image d, e and f), \ac{rcm} images belonging to the malignant label and classified as benign. In the center of the figure (image c and d), two \ac{rcm} images of the same patient belonging to benign and malignant labels.}
-%     \label{fig:misclassified}
-% \end{figure}
+Pour finir cette discussion, ce paragraphe réalise un parallèle entre les résultats expérimentaux de chapitre et ceux des spécialistes en dermatologie. Pour rappel, les  18 experts en \gls{rcm} de l’étude de référence~\cite{Cinotti2016} obtiennent une sensibilité de 0,84$\pm$0,05 et une spécificité de 0,75$\pm$0,06 ainsi qu'une \gls{auc} de 0,86 sur l'ensemble des cas d'études. Sur ce même ensemble de cas cliniques, la méthode supervisé "Scores - Moyenne" parvient à accomplir une sensibilité de 0,95$\pm$0,09 et une spécificité de 0,70$\pm$0,22 ainsi qu'une \gls{auc} de 0,87 et la méthode faiblement supervisée \gls{nsk} parvient à accomplir une sensibilité de 0,86$\pm$0,10 et une spécificité de 0,77$\pm$0,19 ainsi qu'une \gls{auc} de 0,83. Sur les données malignes de lésions \gls{lm}/\gls{lmm}, les même experts obtiennent une sensibilité de 0,80$\pm$0,07 et et une spécificité de 0.81$\pm$0,05 ainsi qu'une \gls{auc} de 0,88. Sur ces même cas cliniques, la méthode supervisé "Scores - Moyenne" parvient à accomplir une sensibilité de 0,95$\pm$0,11 et une spécificité de 0,70$\pm$0,22 ainsi qu'une \gls{auc} de 0,88 et la méthode faiblement supervisée \gls{nsk} parvient à accomplir une sensibilité de 0,87$\pm$0,09 et une spécificité de 0,77$\pm$0,19 ainsi qu'une \gls{auc} de 0,83.\par

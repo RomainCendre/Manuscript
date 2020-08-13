@@ -1,9 +1,9 @@
 \chapter{Intelligence artificielle et notion complémentaires}
 \label{chap:chapter_3}
 \chapterintro
-Lors du précédent chapitre, nous avons abordé les interactions entre la peau et la lumière, ainsi que les dispositifs majeurs permettant l'acquisition d'informations de la peau. Dans la continuité de cette partie nous avons présenté l'étude clinique de référence et les données associées.\par
+Lors du précédent chapitre, nous avons abordé les interactions entre la peau et la lumière, ainsi que les dispositifs majeurs permettant l'acquisition d'informations de la peau.\par
 
-De nos jours, l’informatique est une ressource omniprésente dans de nombreux domaines d’application. Sa faculté à nous divertir ou encore à nous guider dans nos choix quotidiens personnels et professionnels en fait un précieux allié.\par 
+De nos jours, l’informatique est une ressource omniprésente dans de nombreux domaines d’application. Ses facultés à nous divertir ou encore à nous guider dans nos choix quotidiens personnels et professionnels en font un précieux allié.\par 
 
 De nouvelles pratiques font leurs apparitions, intégrant la machine au cœur des processus décisionnels. Les disciplines médicales évoluent largement et l’ordinateur permet de répondre aux besoins croissants de précision et reproductibilité (intra et inter opérateur) et de gain de temps au sein de la pratique clinique. Il s’agit également d’un moyen de formaliser la connaissance au travers d’un outil, qui dans un cadre bien défini, peut être utilisé par des non-initiés.\par
 
@@ -12,7 +12,7 @@ Cette nouvelle partie nous permet de dérouler un peu plus notre plan, en aborda
 
 \section{Généralités sur l'intelligence artificielle}
 \label{sec:artificial_intelligence}
-La notion \textbf{d’\gls{ai}} est assez souvent contestée, mais se définit plus généralement comme étant « L’ensemble de théories et de techniques mises en œuvre en vue de réaliser des machines capables de simuler l'intelligence humaine »~\textsuperscript{\ref{footnote:ia_larousse}}. Ainsi, dans cette définition, ces techniques ne se limitent pas à la reproduction du comportement interactif social humain souvent représenté dans les médias. La mise en pratique sous forme informatique de mécanismes dédiés à de la prise de décision à partir de données ou encore, la retranscription du raisonnement d'un expert fait partie de cette définition.\par
+La notion \textbf{d’\gls{ai}} est assez souvent contestée, mais se définit plus généralement comme étant « L’ensemble de théories et de techniques mises en œuvre en vue de réaliser des machines capables de simuler l'intelligence humaine »~\textsuperscript{\ref{footnote:ia_larousse}}. Ainsi, dans cette définition, ces techniques ne se limitent pas à la reproduction du comportement interactif social humain souvent représenté dans les médias. La mise en pratique sous forme informatique de mécanismes dédiés à la prise de décision à partir de données ou encore, la retranscription du raisonnement d'un expert fait partie de cette définition.\par
 
 Une vision plus complète de ce terme consiste a décomposer l'\gls{ai} en une discipline organisée en sous domaines possédant chacun leurs spécificités, comme schématisé sur la \Cref{fig:scheme_overview_ia}. Ainsi, le terme \textbf{d'apprentissage automatique} ou de "Machine Learning" caractérise un premier sous champ de l'\gls{ai} et est employé pour qualifier l'utilisation de mécanismes statistiques dans le but de générer des règles, à partir de données d'apprentissage. Ces données étant souvent complexes, il est souvent nécessaire de laisser l'humain intervenir pour extraire l'information pertinente à l'accomplissement de la tâche souhaitée. Enfin, le terme \textbf{d'apprentissage profond} ou de "Deep Learning" désigne un sous champ de l'apprentissage automatique, dans lequel des couches de prises de décision vont permettre d'augmenter la complexité des relations entre les données d'entrée et les tâches.\par
 
@@ -93,7 +93,7 @@ Les travaux que nous menons dans ce manuscrit portent sur les méthodes de class
 
 Devant ces nombreuses méthodes, il est difficile de déterminer un modèle optimal à une situation particulière, notamment dans le cadre de données à forte complexité. En effet, une évaluation de manière empirique de ces diverses méthodes reste encore la meilleure solution afin de déterminer ce modèle optimal, en contrepartie d'un temps de calcul important. Néanmoins, l'un des travaux menés sur la performance des modèles supervisés, a permis de déterminer un certain nombre de critères de comparaison entre ces diverses techniques mettant en valeur en général les avantages et inconvénients de chacune~\cite{Kotsiantis2007}.\par
 
-Pour cela, nous avons, au sein de la \Cref{tab:model_comparison}, recensé la plupart des critères importants évoqués par ce travail de recherche. La performance de classification notamment, qui semble indéniable dans le champ que nous tentons d'évaluer avec une emphase forte en termes de performances pour les \gls{svm}. La vitesse d'apprentissage a également été précisée, bien que contraignante lors de nos essais, elle ne constitue pas un frein et reste le principal inconvénient des \gls{svm}. Enfin, ces derniers sont robustes reconnus comme robuste face à des situations pouvant comporter des caractéristiques non pertinentes ou redondantes.\par
+Pour cela, nous avons, au sein de la \Cref{tab:model_comparison}, recensé la plupart des critères importants évoqués par ce travail de recherche. La performance de classification notamment, qui semble indéniable dans le champ que nous tentons d'évaluer avec une emphase forte en termes de performances pour les \gls{svm}. La vitesse d'apprentissage a également été précisée, bien que contraignante lors de nos essais, elle ne constitue pas un frein et reste le principal inconvénient des \gls{svm}. Enfin, ces derniers sont reconnus comme robustes face à des situations pouvant comporter des caractéristiques non pertinentes ou redondantes.\par
 
 A la vue de ces éléments, il semble plus que nécessaire de considérer l'utilisation des \gls{svm} au sein de nos travaux. De même, il est nécessaire de considérer l'utilisation des deux méthodes d'approches par ensemble mentionnées, les \gls{rf} et l'\gls{gb}, pour lesquelles aucun travail comparatif généraliste n'a été trouvé. Néanmoins, une étude génomique semble plaider dans le sens des \gls{svm} et de l'\gls{gb}~\cite{Ogutu2011}. Pour finir, il est également nécessaire de considérer ces modèles de classification au sein de processus proposés par des travaux proches de notre thématique. Nous abordons plus en détails ces éléments dans leur partie respective.\par
 
@@ -145,14 +145,14 @@ Ce principe a été également utilisé dans le but de réduire la dimension des
 
 \subsection{Apprentissage semi-supervisé}
 \label{sec:semisupervised_learning}
-Les techniques d'apprentissage semi-supervisé tentent de combiner les deux principes précédents. Elles sont entre autres la conséquence du coût de l'annotation des données qui nécessite souvent le travail d'experts. Ainsi, il peut être difficile d'avoir accès à une vérité terrain associée aux données ou simplement être dommage de ne pas tirer parti de l'ensemble des données en notre possession. Ce dernier point est particulièrement intéressant dans le cadre de données à grande dimensions pour lesquelles \textbf{l'espace} des dimensions croît de manière exponentielle et "dilue" les échantillons (connu sous le terme de "Fléau des dimensions"~\cite{Donoho2000}).\par 
+Les techniques d'apprentissage semi-supervisé tentent de combiner les deux principes précédents et sont la conséquence du coût de l'annotation des données qui nécessite souvent le travail d'experts. En effet, il peut être difficile d'avoir accès à une vérité terrain qui couvre la totalité d'un jeu de données sans pour autant perdre l'apport de cette information non-annotée. Ce dernier point est particulièrement intéressant dans le cadre de données à grande dimensions pour lesquelles \textbf{l'espace} des dimensions croît de manière exponentielle et "dilue" les échantillons (connu sous le terme de "Fléau des dimensions"~\cite{Donoho2000}).\par 
 
 Ainsi, l'apprentissage semi-supervisé se base sur plusieurs hypothèses auxquelles doivent se confronter les données~\cite{Zhu2009}, dont~:
 \begin{itemize}
 	\item un critère \textbf{d'homogénéité}, c'est à dire que des données issues d'une zone de haute densité partagent les mêmes annotations, 
 	\item un critère \textbf{de séparation par faible densité}, c'est à dire que s'il existe une  séparation entre plusieurs types d'annotations, celle-ci se situant dans une zone à faible densité~\cite{chapelle2005}.
 \end{itemize}
-En pratique, il est difficile de s'assurer que les données en notre possession respectent bien ces engagements. Afin de mieux visualiser ce concept, l'exemple en \Cref{fig:example_semi_supervised} démontre l'intérêt de telles approches. Ce principe permet d'éviter d'extrapoler des frontières difficilement définissables dans une situation de faible densité de l'information étiqueté.\par
+En pratique, il est difficile de s'assurer que les données en notre possession respectent bien ces engagements. Afin de mieux visualiser ce concept, l'exemple en \Cref{fig:example_semi_supervised} démontre l'intérêt de telles approches. Ce principe permet d'éviter d'extrapoler des frontières difficilement définissables dans une situation de faible densité de l'information étiquetée.\par
  
 \begin{figure}[H]
     \centering
@@ -176,7 +176,7 @@ Les \gls{ann} sont des structures multicouches composées d'unités basiques app
 
 Les neurones se partagent ainsi l'information de point à point de l'entrée vers la sortie, appliquant respectivement l'opération dont ils sont responsables. Cette opération au sein d'une unité est de la forme $y = W\mathbf{x}+\mathbf{b}$ dans laquelle $W$ représente une matrice de poids qui permettra de pondérer les signaux des prédécesseurs et $b$ un terme de correction appelé biais~\cite{Stephen1990}. Ainsi, les neurones en entrée d'un réseau reçoivent une information "brute" tandis que, les neurones situés en sortie du réseau recevront une information pré-traitée par les prédécesseurs. Le schéma présent sur la \Cref{fig:scheme_deep_understanding} permet de mettre en évidence un cas simple de résolution par apprentissage pour appréhender cette notion.\par
 
-Néanmoins, cet exemple met également en avant que ce même modèle pourrait être représentée à l'aide d'une fonction d'ordre suffisante~\cite{Bishop2006}. Ce mécanisme seul ne suffit pas à créer des réseaux exploitant les bénéfices d'un tel agencement. En effet, si une unité de ce réseau est représentée par $y = W\mathbf{x}+\mathbf{b}$, une succession de ces unités pourrait se résumer à la fonction linéaire représentée par l'\Cref{eq:proof_linearity}~\textsuperscript{\ref{footnote:equation_andrewng}}. Afin de tirer parti du potentiel de ce choix d'agencement en couches, ont été introduites des fonctions d'activation (tanh, ReLu, \ldots) qui permettent d'introduire une non-linéarité au sein de ces réseaux, permettant notamment l’autodétermination de structures de décision complexes.\par
+Néanmoins, cet exemple met également en avant que ce même modèle pourrait être représenté à l'aide d'une fonction d'ordre suffisante~\cite{Bishop2006}. Ce mécanisme seul ne suffit pas à créer des réseaux exploitant les bénéfices d'un tel agencement. En effet, si une unité de ce réseau est représentée par $y = W\mathbf{x}+\mathbf{b}$, une succession de ces unités pourrait se résumer à la fonction linéaire représentée par l'\Cref{eq:proof_linearity}~\textsuperscript{\ref{footnote:equation_andrewng}}. Afin de tirer parti du potentiel de ce choix d'agencement en couches, ont été introduites des fonctions d'activation (tanh, ReLu, \ldots) qui permettent d'introduire une non-linéarité au sein de ces réseaux, permettant notamment l’autodétermination de structures de décision complexes.\par
 
 \begin{equation} 
     \label{eq:proof_linearity}
@@ -252,7 +252,7 @@ A l'aide de couples d'entrée/sortie à notre disposition, nous allons tenter d�
     \item \ldots.
 \end{inlinerate}\par 
 
-Ce problème, évoqué dans la littérature porte le nom de « dilemme biais / variance », dans lequel le biais représente le manque de relation pertinente entre données d’entrée et de sortie et où la variance représente l’influence du modèle au petites fluctuations souvent issues de bruit. Ces termes sont intrinsèquement liés aux problématiques respectives de \textbf{sous-apprentissage} et \textbf{sur-apprentissage}. La \Cref{fig:example_underfit_overfit} reprend de manière visuelle ces problématiques, et les exprime selon un jeu d’entraînement et de test. A noter que le sur-apprentissage peut être limité par l’utilisation de termes de régularisation, de schéma de validation de modèle adaptés ou l’utilisation d’ensembles de données suffisantes.\par
+Ce problème, évoqué dans la littérature porte le nom de « dilemme biais / variance », dans lequel le biais représente le manque de relation pertinente entre données d’entrée et de sortie et où la variance représente l’influence du modèle au petites fluctuations souvent issues de bruit. Ces termes sont intrinsèquement liés aux problématiques respectives de \textbf{sous-apprentissage} et \textbf{sur-apprentissage}. La \Cref{fig:example_underfit_overfit} reprend de manière visuelle ces problématiques, et les exprime selon un jeu d’entraînement et de test. A noter que le sur-apprentissage peut être limité par l’utilisation de termes de régularisation, de schémas de validation de modèle adaptés ou l’utilisation d’ensembles de données suffisantes.\par
  
 \begin{figure}[H]
     \centering
@@ -263,7 +263,7 @@ Ce problème, évoqué dans la littérature porte le nom de « dilemme biais / v
 
 \subsection{Choix de métriques}
 \label{subsec:metrics}
-Le choix des métriques représente une part une part importante de nos problématiques lors de la mise en place de modèles d’apprentissage. En effet, il permet d'une part de déterminer la sélection d'un modèle parmi un ensemble de modèles et, d'autre part, de retenir des performances attendues de ce dernier par exemple dans le monde réel.\par
+Le choix des métriques représente une part importante de nos problématiques lors de la mise en place de modèles d’apprentissage. En effet, il permet d'une part de déterminer la sélection d'un modèle parmi un ensemble de modèles et, d'autre part, de retenir des performances attendues de ce dernier par exemple dans le monde réel.\par
 
 L’un des principaux outils à disposition afin d'évaluer la performance est la matrice de confusion, schématisé sur la \Cref{fig:scheme_confusion_matrix}. Elle permet de faire correspondre les classes réelles et prédites~: la diagonale de cette matrice fait figurer les prédictions correctement réalisées par notre modèle, tandis que les éléments restants nous renseignent sur les prédictions erronées. Dans une situation à deux classes ou \textit{binaire}, cette matrice fait ainsi ressortir quatre valeurs~:
 \begin{itemize}
@@ -285,17 +285,18 @@ Bien que déjà réduite, l'information de cette matrice est encore très riche 
 \begin{equation} 
     \label{eq:metrics_basics}
     \begin{split}
-    Sensibilit\acute{e} &= VP/(VP+FN) \\	
+    Sensibilit\acute{e} &= VP/(VP+FN) \\
+    Rappel &= VP/(VP+FN) \\	
     Sp\acute{e}cificit\acute{e} &=  VN/(VN+FP) \\
     Pr\acute{e}cision &= VP/(VP+FP) \\
     Moyenne &= (VP+VN)/(VP+VN+FP+FN)
     \end{split}
 \end{equation}
 
-Dans ce cas, il peut être préférable de privilégier des métriques plus robustes, dans le cadre de données non balancées. La plupart des méthodes s’accordent sur l’utilisation de métriques tels que le \fscore{}, associant conjointement sensibilité et précision, par principe de la moyenne harmonique~\cite{Guo2008}. L'\Cref{eq:metrics_fscore} met à disposition l'expression générique de cette métrique, dont le paramètre $\beta$ permet de moduler l'importance de la précision ou de la sensibilité. L'influence de ce paramètre est neutre lorsque sa valeur est égale à 1 comme dans le cas du \fscore.\par
+Dans ce cas, il peut être préférable de privilégier des métriques plus robustes, dans le cadre de données non balancées. La plupart des méthodes s’accordent sur l’utilisation de métriques tels que le \fscore{}, associant conjointement sensibilité et précision, par principe de la moyenne harmonique~\cite{Guo2008}. L'\Cref{eq:metrics_fscore} met à disposition l'expression générique de cette métrique, dont le paramètre $\beta$ permet de moduler l'importance de la précision ou du rappel. L'influence de ce paramètre est neutre lorsque sa valeur est égale à 1 comme dans le cas du \fscore.\par
  
 \begin{equation} 
-    {F_\beta \: score}=(1+\beta^2)*(Pr\acute{e}cision*Sensibilit\acute{e})/((\beta^2*Pr\acute{e}cision)+Sensibilit\acute{e})
+    {F_\beta \: score}=(1+\beta^2)*(Pr\acute{e}cision*Rappel)/((\beta^2*Pr\acute{e}cision)+Rappel)
     \label{eq:metrics_fscore}
 \end{equation}
  
@@ -308,13 +309,13 @@ Une autre métrique permettant de se prémunir de ces effets de non balancement 
     \label{fig:scheme_roc_curve}
 \end{figure}
 
-D'autres alternatives moins biaisées ont également été formulées~\cite{Sokolova2006}. Néanmoins le \fscore{} et l'\gls{auc} sont couramment utilisés dans des articles clinique et constituent une des bases de notre travail.\par
+D'autres alternatives moins biaisées ont également été formulées~\cite{Sokolova2006}. Néanmoins le \fscore{} et l'\gls{auc} sont couramment utilisés dans des articles cliniques et constituent une des bases de notre travail.\par
 
 \subsection{Réglages des hyperparamètres}
 \label{subsec:hyperparameter}
 Avant d’entrer plus en profondeur dans le sujet, il est nécessaire de revenir sur le terme « d’hyperparamètres ». Il caractérise les paramètres d'un processus d'apprentissage automatique dont le réglage doit être effectué avant la phase d'entraînement et dont les valeurs dépendent des données à traiter. Le réglage des hyperparamètres peut rarement être déterminé par la simple observation des données, et nécessite ainsi un réglage en fonction de chaque situation rencontrée.\par
 
-L’une des premières techniques permettant ce réglage consiste à définir une « grille » de ces hyperparamètres, contenant pour chacun leurs possible variations~\cite{Liu2006}. Il s'agit de la méthode la plus équitable puisqu'elle consiste à évaluer chaque combinaison par comparaison des performances finales (voir la \Cref{fig:example_hyperparameter_selection} - Gauche). Néanmoins, elle possède deux limitations majeures, dont~:
+L’une des premières techniques permettant ce réglage consiste à définir une « grille » de ces hyperparamètres, contenant pour chacun leurs possibles variations~\cite{Liu2006}. Il s'agit de la méthode la plus équitable puisqu'elle consiste à évaluer chaque combinaison par comparaison des performances finales (voir la \Cref{fig:example_hyperparameter_selection} - Gauche). Néanmoins, elle possède deux limitations majeures, dont~:
 \begin{itemize}
     \item Son \textbf{temps de calcul}, qui va croître de manière exponentielle en fonction du nombre d'hyperparamètres à valider,
     \item Sa \textbf{précision}, qui va dépendre du pas choisi pour chacun des paramètres.
@@ -343,9 +344,9 @@ La méthode de \textbf{validation croisée} permet d'étendre la méthode préc�
     \label{fig:scheme_holdout_cv}
 \end{figure}
 
-Dans ce travail, nous nous intéressons à la technique de validation croisée ainsi qu'à la valeur moyenne renvoyée par celle-ci. Afin de rendre l'information plus complète, nous calculons également la valeur de l'écart-type à partir des évaluations réalisées sur les divers échantillons, jugée fiable afin de mesurer la stabilité du processus vis-à-vis des données~\cite{Kim2009}. La plupart des travaux ayant recours à la validation croisée emploient une valeur $k$ de 5 jugée suffisante. Dans notre cas, cette valeur sera réduite à 4 afin réduire d'une part le coût en temps des expériences tout en conservant une information moyenne et d'écart-type satisfaisante. Cette valeur est également suffisante pour permettre un entraînement en plusieurs phases nécessaires à certaines des expériences de ce manuscrit.\par
+Dans ce travail, nous nous intéressons à la technique de validation croisée ainsi qu'à la valeur moyenne renvoyée par celle-ci. Afin de rendre l'information plus complète, nous calculons également la valeur de l'écart-type à partir des évaluations réalisées sur les divers échantillons, jugée fiable afin de mesurer la stabilité du processus vis-à-vis des données~\cite{Kim2009}. La plupart des travaux ayant recours à la validation croisée emploient une valeur $k$ de 5, jugée suffisante pour l'obtention de valeurs de moyenne et écart-type dans un temps de calcul raisonnable. Néanmoins, il est possible d'amener ce principe à l'extrême en choisissant la plus petite valeur possible pour un lot dédié à l'évaluation soit la taille d'une donnée. Cette valeur $k$ devient égale au nombre de données à traiter, nous basculons alors dans un schéma qualifié de \textit{leave-one-out} ou littéralement "en laisser un de côté".\par
 
-Par ces deux méthodes nous répondons à la problématique de l'évaluation, mais n'apportons pas de solution quant au choix des hyperparamètres. En effet, utiliser un schéma de validation croisée pour régler et évaluer les modèles conduit inévitablement à surestimer les performances du modèle~\cite{Tsamardinos2014}. Ce type de démarche revient à ajuster au mieux une courbe à un nuage de points tout en affirmant que ces mêmes données correspondent à des données inconnues. L'une des solutions à ce problème est l'utilisation d'un double schéma de validation, dont l'un des plus fonctionnels actuellement est celui de la validation croisée imbriquée~\cite{Cawley2010}. Le principe de cette méthode est schématisé sur la ~\Cref{fig:scheme_hyperparameter_process}, dans laquelle nous retrouvons~:
+Par ces deux méthodes nous répondons à la problématique de l'évaluation, mais n'apportons pas de solution quant au choix des hyperparamètres. En effet, utiliser un schéma de validation croisée pour régler et évaluer les modèles conduit inévitablement à surestimer les performances du modèle~\cite{Tsamardinos2014}. Ce type de démarche revient à ajuster au mieux une courbe à un nuage de points tout en affirmant que ces mêmes données correspondent à des données inconnues. L'une des solutions à ce problème est l'utilisation d'un double schéma de validation, dont l'un des plus fonctionnels actuellement est celui de la validation croisée imbriquée~\cite{Cawley2010}. Le principe de cette méthode est schématisé sur la \Cref{fig:scheme_hyperparameter_process}, dans laquelle nous retrouvons~:
 \begin{itemize}
     \item une boucle \textbf{externe}, permettant d'évaluer un modèle à partir de données de \textbf{test},
     \item une boucle \textbf{interne}, permettant de valider un modèle et ses réglages à partir de données de \textbf{validation}.
@@ -353,7 +354,7 @@ Par ces deux méthodes nous répondons à la problématique de l'évaluation, ma
   
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\linewidth]{contents/chapter_3/resources/scheme_hyperparameter_process.pdf}
+    \includegraphics[width=0.9\linewidth]{contents/chapter_3/resources/scheme_hyperparameter_process.pdf}
     \caption{Schéma de la validation croisée imbriquée assurant le choix de la meilleur combinaison d'hyperparamètres et assurant une évaluation robuste des performances du modèle.}
     \label{fig:scheme_hyperparameter_process}
 \end{figure}\par
@@ -362,7 +363,7 @@ Par ces deux méthodes nous répondons à la problématique de l'évaluation, ma
 
 \section{Fusion d’informations}
 \label{sec:fusion_information}
-Dernier aspect de notre sujet, la fusion d’informations se définit comme l’action de "combiner des informations issues de plusieurs sources afin d’améliorer la prise de décision" ~\cite{Bloch2003}. Cette fusion se retrouve dans de nombreux domaines d'applications dont celui de la santé ou encore de la biométrie, et peut être considérée comme un moyen d'augmenter la fiabilité de systèmes. L'intérêt croissant pour ce domaine correspond, entre autres, à une réponse de l'augmentation et de la diversification du nombre de capteurs présents. L'ouvrage de Bloch~\cite{Bloch2003} justifie la fusion d'information, par différentes notions auxquelles sont soumises chaque capteur, dont~:
+Dernier aspect de notre sujet, la fusion d’informations se définit comme l’action de "combiner des informations issues de plusieurs sources afin d’améliorer la prise de décision" ~\cite{Bloch2003}. Cette fusion se retrouve dans de nombreux domaines d'applications dont celui de la santé ou encore de la biométrie, et peut être considérée comme un moyen d'augmenter la fiabilité de systèmes. L'intérêt croissant pour ce domaine correspond, entre autres, à une réponse de l'augmentation et de la diversification du nombre de capteurs présents. L'ouvrage de Bloch~\cite{Bloch2003} justifie la fusion d'informations, par différentes notions auxquelles sont soumises chaque capteur, dont~:
 \begin{itemize}
     \item \textbf{l'incertitude}~: c'est à dire son "degré de conformité avec la réalité".
     \item \textbf{l'imprécision}~: définie comme une "mesure du défaut quantitatif de connaissance, sur une mesure".
@@ -381,7 +382,7 @@ Il est nécessaire également de caractériser le résultat de la fusion d'infor
     \item le \textbf{niveau bas}, considéré comme étant la fusion sur les données,
     \item le \textbf{niveau moyen}, considéré comme la fusion des caractéristiques ou données plus abstraites,
     \item le \textbf{niveau haut}, considéré comme la fusion des décisions.
-\end{itemize} Niveaux au sein desquels le processus de fusion d'information peut aboutir à~:
+\end{itemize} Niveaux au sein desquels le processus de fusion d'informations peut aboutir à~:
 \begin{inlinerate}
     \item une sélection,
     \item une transformation,
