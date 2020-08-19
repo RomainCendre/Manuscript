@@ -37,21 +37,22 @@ Dans cette configuration, le choix de la source d'émission de lumière est l'un
     \label{fig:scheme_light_penatrating}
 \end{figure}\par
 
-Outre la question de la profondeur, le choix de la longueur d'onde permet d'interagir avec différents types de chromophores pouvant renseigner l'observateur sur des propriétés locales à la peau. Certains travaux focalisés sur les systèmes lasers et d'émission en général~\cite{Stewart2013} ont permis de mettre en avant le rapport entre la longueur d'onde et des composants majeurs de la peau tels que l'eau, la mélanine ou l'hémoglobine (oxygénée ou non). Pour illustrer ce propos, la \Cref{fig:scheme_light_absorption} synthétise ce rapport entre la longueur d'onde d'émission et l'absorption associée à ces quatre composants. La quantification de ces composants peut présenter un intérêt dans la mesure où certaines pathologies peuvent altérer le métabolisme et donc modifier fondamentalement le ratio de chromophores présents, pouvant par exemple amener à une hypervascularisation. Certains travaux tentent ainsi de revenir à des fonctions de métabolisme~\cite{Im2016}.\par
+Outre la question de la profondeur, le choix de la longueur d'onde permet d'interagir avec différents types de chromophores pouvant renseigner l'observateur sur des propriétés locales à la peau. Certains travaux focalisés sur les systèmes lasers et d'émission en général~\cite{Stewart2013} ont permis de mettre en avant le rapport entre la longueur d'onde et des composants majeurs de la peau tels que l'eau, l'hémoglobine (oxygénée ou non) ou la mélanine. Pour illustrer ce propos, la \Cref{fig:scheme_light_absorption} synthétise ce rapport entre la longueur d'onde d'émission et l'absorption associée aux principaux composants chromophores de la peau dont les quatre mentionnés. La quantification de ces composants peut présenter un intérêt dans la mesure où certaines pathologies peuvent altérer le métabolisme et donc modifier fondamentalement le ratio de chromophores présents, pouvant par exemple amener à une hypervascularisation. Certains travaux tentent ainsi de revenir à des fonctions de métabolisme~\cite{Im2016}.\par
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\linewidth]{contents/chapter_2/resources/scheme_light_absorption.png}
-    \caption{Représentation des coefficients d'absorption en fonction de la longueur d'onde pour quatre des composants majeurs responsable de l'absorption dans le peau~\cite{Stewart2013}.}
+    \includegraphics[width=\linewidth]{contents/chapter_2/resources/scheme_light_absorption.pdf}
+    \caption{Représentation des coefficients d'absorption en fonction de la longueur d'onde pour les principaux composants chromophores présents dans la peau~\cite{Raulin2013}.}
     \label{fig:scheme_light_absorption}
 \end{figure}
  
 \clearpage
-\section{Modalités d’imagerie non invasives}
-Afin de mieux suivre, voire de conserver une trace de leurs patients, les dermatologues disposent de nombreux outils. Ils peuvent entre autre dans leur pratique clinique se référer à divers types d’examen que nous distinguons au travers de deux catégories~:
+
+\section{Modalités d’imagerie non-invasives}
+Afin de mieux suivre, voire de conserver une trace de leurs patients, les dermatologues disposent de nombreux outils. Ils peuvent entre autre dans leur pratique clinique se référer à divers types d’examens que nous distinguons au travers de deux catégories~:
 \begin{itemize}
-    \item D’une part les examens invasifs, pouvant altérer l’organisme du patient à plus ou moins grande échelle. La biopsie est à ce jour le « gold standard » de ce domaine et se réalise par prélèvement et analyse des tissus du patient. Ces techniques sont généralement plus coûteuses à réaliser par unité, nécessitent davantage de temps et peuvent engendrer une gêne voire un risque lors de leur exécution.
-    \item D’autres part, les examens dit non-invasifs, c’est-à-dire ne provoquant pas de destruction des tissus du corps humain parmi lesquels les « imageurs », dispositifs capables de nous restituer une image de différente nature selon le phénomène physique observé. Ces dispositifs peuvent représenter un investissement initial important à leur achat, mais s'amortissent pour la plupart sur le long terme. Autre avantage, ces examens ne provoquent en général pas d’inconfort particulier pour le patient.
+    \item D’une part \textbf{les examens dit non-invasifs}, c’est-à-dire ne provoquant pas de destruction des tissus du corps humain. Ces dispositifs sont capables de restituer une image de différente nature selon la nature du phénomène physique observé et ne provoquent en général pas d’inconfort particulier pour le patient. Ils peuvent représenter un investissement initial important mais s'amortissent assez bien sur le long terme. 
+    \item D’autres part \textbf{les examens invasifs}, c’est-à-dire provoquant une effraction des tissus. L'histopathologie est le principal mode d'examen invasif et représente à ce jour le « gold standard » de ce domaine. Cet examen se réalise par biopsie, c'est à dire par prélèvement de tissus puis par une analyse histologique de ceux-ci. Cette technique peux être incommodantes pour le patient, requiert plus de temps qu'un examen non-invasif et est généralement plus coûteuses à l'unité.
 \end{itemize}\par
 
 Après avoir abordé de manière non exhaustive les principales pathologies de la peau et les principes d'interaction majeurs de la lumière avec la peau, il convient désormais d'aborder les diverses méthodes permettant une observation non invasive. Ces modalités d'imagerie franchissent en majorité le cap du numérique permettant un suivi plus aisé, voire un échange plus rapide entre professionnels, et l’utilisation de traitements automatiques. Nous séparons ces techniques en deux catégories distinctes~: d’une part les techniques de mesure optique et d'autre part les autres dispositifs basés sur une mesures physique indépendante de l'optique.\par
@@ -68,7 +69,7 @@ Cette partie va nous permettre de décrire les principaux appareillages existant
     Tomographie en cohérence optique            & Réflectance       & \si{\micro\metre}            & \SIrange{1}{2}{\milli\metre}       \\
     Imagerie multispectrale                     & Réflectance       & Lentille dépendant           & \SIrange{0.1}{1}{\milli\metre}     \\
     Spectroscopie à réflexion                   & Réflectance       & Diamètre de la fibre         & \SIrange{0.1}{1}{\milli\metre}     \\
-    Microscopie confocale Raman                 & Raman             & \si{\micro\metre}            & \SI{150}{\milli\metre}             \\
+    Microscopie confocale Raman                 & Raman             & \si{\micro\metre}            & \SI{150}{\micro\metre}             \\
     \bottomrule
 \end{tabular}
 \caption{Aperçu des principales modalités de mesure optique actuelles en dermatologie, utilisées à but clinique ou à un stade de recherche clinique~\cite{Kollias2002}.}
@@ -96,7 +97,7 @@ Ce type d’imagerie donne à l’observateur un point de vue subjectif, similai
     \label{fig:example_photography}
 \end{figure}\par
 
-Ces dernières années ont vu l'émergence de nouveaux types d'appareillages qui étendent la photographie clinique au corps entier. Ces appareils permettent une traçabilité et un suivi des lésions apparentes sur le corps d'un patient. En effet, l'un des meilleurs critères du suivi de lésions dans le dépistage de maladies, tel que le mélanome, reste l'évolution au cours du temps de ces lésions. Cet élément a notamment été mis en avant en 2004, et est encore considéré de nos jours comme l'un des critères majeurs~\cite{Abbasi2004,Glazer2017}. La société Pixience® à notamment développé un des ces appareils, le "Body-Mapper®" permettant ce suivi ainsi qu'un contrôle de l'éclairage lors de la prise de vue. Une interface guide le médecin lors de la prise d'images et permet d'associer à un modèle humain les diverses parties du corps (voir la \Cref{fig:example_device_bodymapper}).\par
+Ces dernières années ont vu l'émergence de nouveaux types d'appareillages qui étendent la photographie clinique au corps entier. Ces appareils permettent une traçabilité et un suivi des lésions apparentes sur le corps d'un patient. En effet, l'un des meilleurs critères du suivi de lésions dans le dépistage de maladies, tel que le mélanome, reste l'évolution au cours du temps de ces lésions. Cet élément a notamment été mis en avant en 2004, et est encore considéré de nos jours comme l'un des critères majeurs~\cite{Abbasi2004,Glazer2017}. Différents industriels commercialisent des dispositifs de plus en plus performants dont FotoFinder et son système ATBM mais également la société Pixience avec le "Body-Mapper®" permettant ce suivi ainsi qu'un contrôle de l'éclairage lors de la prise de vue. Une interface guide le médecin lors de la prise d'images et permet d'associer à un modèle humain les diverses parties du corps (voir la \Cref{fig:example_device_bodymapper}).\par
 
 \begin{figure}[H]
 \centering
