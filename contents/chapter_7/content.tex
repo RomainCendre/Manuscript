@@ -4,29 +4,36 @@
 \chapter{Approche multimodale}
 \label{chap:chapter_7}
 \chapterintro
-Comme 	
+Les travaux de la précédente partie ont porté sur le diagnostic de données malignes sur la modalité de \acrlong{rcm}, plus particulièrement de pathologies de \acrlong{lm} et de \acrlong{lmm}. Au premier niveau hiérarchique, soit celui des images, ces chapitres ont permis la mise en avant de méthodes de séparation des tissus sain, bénin et malin. Au second niveau hiérarchique, soit celui des lésions, ces méthodes permettent la prédiction des pathologies bénignes et malignes.\par
+
+Ce nouveau chapitre rempli l'objectif de ce manuscrit en intégrant une dimension multimodale au processus de prise de décision. Tout d'abord, les aspects d'extraction de caractéristiques et de diagnostic par le biais de modèles de prédiction est traité pour chacune des modalités présentes dans le jeu de données utilisé. De plus, la calibration de ces modèles de prédiction est envisagée afin de rendre cohérent les décisions entre chacun d’entre eux. Puis, les systèmes multimodaux envisagés dans ce travail sont présentés selon deux axes~: une première méthode qualifiée comme sans mémoire, puis une seconde méthode qualifiée sous le terme d’avec mémoire. Finalement, les résultats obtenus à l'aide de ces méthodes sont présentés et discutés.\par
 \newpage
 
-\section{Diagnostic sur photographie clinique}
-\section{Diagnostic sur dermatoscopie}
-\section{Diagnostic sur microscopie confocale}
+\section{Méthodologie}
+\section{Diagnostic des modalités}
+\subsection{Diagnostic sur photographie clinique}
+\subsection{Diagnostic sur dermatoscopie}
+\subsection{Diagnostic sur microscopie confocale}
+\clearpage
 
 \section{Calibration de modèles}
-La majeure partie des modèles de classification mettent à disposition des scores représentant l'appartenance à chacune des classes de la problématique visée. Ces scores sont souvent obtenus de manière complémentaire à la prédiction d'une classe, cette dernière n'étant bien souvent que la manifestation souvent de la classe ayant achevé le score le plus élevé.\par
+La majeure partie des modèles de classification mettent à disposition des scores représentant l'appartenance à chacune des classes de la problématique visée. Ces scores sont à l'origine des prédictions de ces modèles et peuvent être obtenus de manière complémentaire à la prédiction. Ainsi, la classe n'est bien souvent que la manifestation de la classe ayant achevé le score le plus élevé.\par
 
-Malheureusement, ces scores n'ont de sens que dans le contexte où ceux-ci ont été obtenus, des valeurs plus utiles serait une réelle indication de la \textbf{probabilité} d'appartenance à chacune des classes. Une telle indication est alors pertinente dans un contexte de prise de décision mêlant divers modèles de prédiction, ces probabilités ayant un sens en dehors du champ d'action propre à chacun de ces modèles~\cite{Zadrozny2002}.\par
+Malheureusement, ces scores n'ont de sens que dans le contexte dans lequel ils ont été obtenus et ne conviennent pas lorsque plusieurs sources d'information différentes sont combinées. Ainsi, une estimation précise de la \textbf{probabilité} d'appartenance à chacune des classes est un indicateur plus pertinent dans ce type de stituation, ayant un sens en dehors du champ d'action propre à chacun de ces modèles~\cite{Zadrozny2002}.\par
 
-Diverses méthodes ont ainsi été proposé afin de transformer ces scores en probabilités, tout d'abord sur des problématiques binaires, puis plus tardivement sur des problématiques à classes multiples. Ce principe de transformation des scores en probabilités porte le nom de processus de \textbf{calibration}.\par
+Diverses méthodes sont proposées afin de transformer ces scores en probabilités, tout d'abord sur des problématiques binaires, puis plus tardivement sur des problématiques à classes multiples. Ce principe de transformation des scores en probabilités porte le nom de processus de \textbf{calibration}.\par
 
 Ainsi, les méthodes de la littérature sont multiples
 Isotonic regression, \cite{Zadrozny2002}
 Bayesian Binning into Quantiles (BBQ) calibration\cite{Naeini2015}
 Beta calibration,\cite{Kull2017}
 Sigmoid,\cite{kull2017b}
-\section{Approche supervisée}
-% Mil & Majority vote\cite{Sudharshan2019}
 
 \section{Système multimodal}
 \subsection{Système séquentiel sans mémoire}
 \subsection{Système séquentiel avec mémoire}
-\section{Evaluation}
+
+\section{Présentation des résultats}
+\subsection{Protocole d’expérimentation}
+\subsection{Résultats des expérimentation}
+\section{Discussion}

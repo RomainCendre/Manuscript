@@ -27,7 +27,7 @@ A partir de ces données, les 18 experts en \gls{rcm} de l'étude~\cite{Cinotti2
     \end{center} 
 \end{figure}\par
 
-L'objectif visé par cette partie sera d'égaler ces scores à l'aide de nos méthodes de diagnostic sur base d'images issues de \gls{rcm}. A ce titre, nous n'exploiterons pas les méta-données issues des informations patient bien que utilisées par les spécialistes lors de l'évaluation. Ainsi, l'âge, le sexe ou encore l'emplacement sont autant de critères que nous ne considérerons pas au sein de ces prochains paragraphes bien que employés par les dermatologues experts en \gls{rcm} durant leur évaluation. De plus, contrairement aux connaissances des experts, ces méta-données ne sont pas représentatives de la population réelle, et biaiseraient nos méthodes par des corrélations non valides dans le monde réel dû à l'acquisition de la base de données.\par
+L'objectif visé par cette partie est d'égaler ces scores à l'aide de méthodes de diagnostic sur base d'images issues de \gls{rcm}. A ce titre, les méta-données issues des informations patient (telles que l'âge, le sexe ou encore l'emplacement de la lésion) ne sont pas exploitées bien que utilisées par les dermatologues experts en \gls{rcm} durant leur évaluation. Ce choix est justifié car contrairement aux connaissances des experts, ces méta-données ne sont pas représentatives de la population réelle et peuvent induire des biais de corrélations sur des données extérieures à la base employée. Ainsi, les évaluation des méthodes ne portent que sur \textbf{l'aspect vision} de ces données \gls{rcm}.\par
 
 Ainsi, nous sollicitons diverses ressources d'intelligence artificielle évoquées lors du \Cref{chap:chapter_3}. Des apports ont été réalisés pour permettre le déroulement des expériences que nous présenterons lors des chapitres suivants. En effet, la base d'images actuelle ne possède que des annotations au niveau des patients, ce qui limite fortement nos travaux essentiellement basés sur de l'apprentissage supervisé. A l'aide d'un outil graphique réalisé pour cette étude (\Cref{fig:example_gui_annotation}), nous avons pu obtenir grâce au travail de l'un des dermatologistes investigateur divers niveaux d'annotations supplémentaires, dont~:
 \begin{itemize}
@@ -50,32 +50,32 @@ Ainsi, nous sollicitons diverses ressources d'intelligence artificielle évoqué
     \label{fig:example_gui_annotation}
 \end{figure}
 
-Les annotations au niveau des lésions bien que initialement sur deux classes, donnent naturellement lieu au niveau des images à des annotations sur \textbf{trois classes}. Ces annotations sont les suivantes~:
+Les annotations au niveau des lésions bien que initialement sur deux classes, donnent naturellement lieu au niveau des images à des annotations sur \textbf{trois classes}. Ces annotations, dont des exemples sont visibles sur la \Cref{fig:example_rcm_data}, sont les suivantes~:
 \begin{itemize}
     \item Un premier type d'annotation du nom de \textit{malin} a été apposée \textit{sur des images} contenant \textbf{au moins} du tissu de type malin et \textit{sur des sous-images} contenant essentiellement ce type de tissus. 
     \item Un second type d'annotation du nom de \textit{bénin} a été apposé \textit{sur des images} ne contenant \textbf{aucun} tissus malin mais \textbf{au moins} du tissu bénin et \textit{sur des sous-images} composées de ce type de tissus. 
     \item  Enfin, un troisième type d'annotation du nom \textit{sain} a été renseignée \textit{sur des images} ne contenant \textbf{aucun} des deux types de tissus précédents et \textit{sur des sous-images} composées de tissus sains. 
-\end{itemize} Des exemples de ces images et diverses annotations sont visibles sur la \Cref{fig:example_rcm_data}.\par
+\end{itemize}\par
 
-La répartition complète de cette base annotée peut être visualisée sur la \Cref{fig:scheme_rcm_statistics}. Nous pouvons y visualiser la composition de la base d'image et celle des sous-images ou patchs. La couleur bleu permet de visualiser le jeu de données initial servant à l'entraînement et l'évaluation~\cite{Cinotti2018}, et en orange les données servant à corriger partiellement le non balancement lors de l'entraînement.\par
+La répartition complète de cette base annotée est disponible sur la \Cref{fig:scheme_rcm_statistics} dans laquelle peut être visualisé la composition des annotations de la base d'image au niveau des lésions, des images et des sous-images. La couleur bleu met en avant le jeu de données initial~\cite{Cinotti2018} desquels sont issues les évaluations des experts et servant à l'entraînement et l'évaluation des méthodes qui suivent. Enfin, la couleur orange met en avant les données qui servent à corriger partiellement le non-balancement de ces annotations lors de la phase d'entraînement.\par
 
 \begin{figure}[H]
     \begin{center}
-        \includegraphics[width=\linewidth]{contents/ii_preamble_microscopy/resources/example_rcm_data.pdf}
-        \caption{Exemple de tissus et annotations, considérés respectivement de gauche à droite comme \textit{sain}, \textit{bénin} et \textit{malin} par le spécialiste.}
+        \includegraphics[width=0.9\linewidth]{contents/ii_preamble_microscopy/resources/example_rcm_data.pdf}
+        \caption{Exemple de tissus et annotations, considérés respectivement de gauche à droite comme \textit{malin}, \textit{bénin} et \textit{sain} par le spécialiste.}
         \label{fig:example_rcm_data}
     \end{center} 
 \end{figure}\par
 
 \begin{figure}[H]
     \begin{center}
-        \includegraphics[width=\linewidth]{contents/ii_preamble_microscopy/resources/scheme_rcm_statistics.pdf}
-        \caption{Répartition des annotations réalisées par l'expert, en bleu sur la base initiale de Cinotti~\cite{Cinotti2018} et en orange sur les données bénignes supplémentaires. A gauche, la répartition des annotations images ; A droite, la répartition des annotations sur les sous-images.}
+        \includegraphics[width=0.8\linewidth]{contents/ii_preamble_microscopy/resources/scheme_rcm_statistics.pdf}
+        \caption{Répartition des annotations réalisées par l'expert sur lésions, les images et sous-images. En bleu, la base initiale de Cinotti~\cite{Cinotti2018} ; En orange, les données additionnelles.}
         \label{fig:scheme_rcm_statistics}
     \end{center} 
 \end{figure}\par
 
-Afin de répondre à ce besoin de diagnostic au niveau des lésions acquises par \gls{rcm}, cette partie dédiée à cette modalité se compose de trois chapitres dans lesquels est développée une méthodologie ascendante~:
+Afin de répondre à ce besoin de diagnostic au niveau des lésions acquises par \gls{rcm}, cette partie dédiée à cette modalité se compose de trois chapitres dans laquelle est développée une méthodologie ascendante~:
 \begin{itemize}
     \item dans un premier temps, le \Cref{chap:chapter_4} aborde la \textbf{prise de décision au niveau de l'image} par des schémas simples permettant une prise de décision sur les images \gls{rcm},
     \item dans un second temps, le \Cref{chap:chapter_5} propose des méthodes destinées à \textbf{améliorer ce diagnostic image} par la mise en oeuvre de schémas avancés permettant à nouveau la prise de décision sur les images \gls{rcm},

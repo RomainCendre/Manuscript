@@ -71,18 +71,22 @@ English resume
 %%--------------------
 %% Set the English keywords. They only appear if
 %% there is an English abstract
-\thesiskeywords[english]{Dermatology, Lentigo, Machine Learning, Deep Learning, Image processing, Image classification, Multimodality, Data fusion, Reflectance Confocal Microscopy}
+\thesiskeywords[english]{Dermatology, Lentigo Maligna, Lentigo Maligna Melanoma, Machine Learning, Deep Learning, Image classification, Multimodality, Data fusion, Dermoscopy, Reflectance Confocal Microscopy}
 
-%%--------------------
+%%-------------------- 
 %% Set the French abstract
 \thesisabstract[french]{
-Ces travaux s'inscrivent dans la continuité d'outils d'aide au diagnostic de la peau par ordinateur, dont le but est d'apporter de nouveau éléments de réponse utiles à la prise de décision du spécialiste. La finalité de ces travaux est de proposer des méthodes d'aide à la prise de décision exploitant les trois modalités majeures de la dermatologie afin d'améliorer la prise en charge clinique des patients. A la manière d'un processus clinique, ces modalités sont exploités de la moins coûteuse d'entre elle à la plus coûteuse soit respectivement, la photographie clinique puis la dermatoscopie et enfin la microscopie par réflectance.
+Réalisé en collaboration avec le CHU de Saint-Étienne, ce travail s'inscrit dans la continuité d'outils d'aide au diagnostic de la peau par l'apport de nouvelles méthodes de prise de décision sur les pathologies de Lentigo Maligna et de Lentigo Maligna Melanoma. A cette fin, est utilisé une approche multimodale exploitant les modalités majeures pour le diagnostic de ces pathologies respectivement la photographie clinique, la dermatoscopie et la microscopie confocale par réflectance.\par
+
+Pour commencer, ce travail se focalise sur la microscopie confocale par réflectance dont la littérature est relativement peu développée sur la détection des pathologies de Lentigo Maligna et de Lentigo Maligna Melanoma. A cet effet, plusieurs méthodes d'apprentissage automatique sont présentées pour permettre la séparation de cette modalité au niveau des données images selon les annotations saines, bénignes et malignes. Puis, les méthodes les plus pertinentes au niveau image sont combinées à des méthodes de prédiction supervisées et faiblement supervisées pour permettre une prise de décision au niveau des lésions.\par
+
+Pour finir, l'aspect de multimodalité est abordé à la manière d'un processus clinique, de la modalité la plus accessible à la moins accessible d'entre elles soit respectivement~: la photographie clinique puis la dermatoscopie et enfin la microscopie par réflectance. Un premier schéma sans mémoire est envisagé par l'utilisation des décisions de chaque modèle et un second schéma avec mémoire par aggrégation des caractéristiques des diverses modalités.\par
 }
 
 %%--------------------
 %% Set the French keywords. They only appear if
 %% there is an French abstract
-\thesiskeywords[french]{Dermatologie, Lentigo, Apprentissage automatique, Apprentissage profond, Traitement d'image, Classification d'images, Multimodalité, Fusion de données, Microscopie confocale par réflectance}
+\thesiskeywords[french]{Dermatologie, Lentigo Maligna, Lentigo Maligna Melanoma, Apprentissage automatique, Apprentissage profond, Classification d'images, Multimodalité, Fusion de données, Dermatoscopie, Microscopie confocale par réflectance}
 
 %%--------------------
 %% Change the layout and the style of the text of the "primary" abstract.
@@ -193,6 +197,7 @@ Bien évidemment, je ne peux finir ces remerciements sans oublier mes proches qu
 \mainmatter
 %% Set part of page headings
 \renewcommand\chaptermark[1]{\markboth{\uppercase{#1}}{}}
+\renewcommand\glossarymark[1]{\markboth{\uppercase{#1}}{}}
 
 % Introduction
 \include{contents/i_introduction/content}
@@ -236,6 +241,7 @@ Bien évidemment, je ne peux finir ces remerciements sans oublier mes proches qu
 
 %%--------------------
 %% Bibliography
+\renewcommand{\bibname}{Bibliographie}
 \bibliographystyle{plain}
 \bibliography{resources/bibliography}
 
@@ -243,6 +249,7 @@ Bien évidemment, je ne peux finir ces remerciements sans oublier mes proches qu
 %% List of figures and tables
 
 %% Include a chapter with a list of all the figures (French).
+\renewcommand*\listfigurename{Liste des figures}
 \listoffigures
 
 %% Include a chapter with a list of all the tables (French).
@@ -254,7 +261,8 @@ Bien évidemment, je ne peux finir ces remerciements sans oublier mes proches qu
 
 %% --------------------
 %% Include a list of acronyms and a glossary (fichier acronymes.tex)
-\printglossary[type=\acronymtype,style=listaltacr,title={Liste des acronymes}]
+
+\printglossary[type=\acronymtype,style=listaltacr,title={Liste des acronymes}]%\MakeUppercase{Liste des acronymes}
 
 %%--------------------
 %% Appendixes

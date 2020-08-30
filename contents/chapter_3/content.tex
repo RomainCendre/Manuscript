@@ -1,13 +1,13 @@
 \chapter{Intelligence artificielle et notion complémentaires}
 \label{chap:chapter_3}
 \chapterintro
-Lors du précédent chapitre, nous avons abordé les interactions entre la peau et la lumière, ainsi que les dispositifs majeurs permettant l'acquisition d'informations de la peau.\par
+Lors du précédent chapitre, les interactions entre la peau et la lumière ont été abordées ainsi que les dispositifs majeurs permettant l'acquisition d'informations de la peau.\par
 
-De nos jours, l’informatique est une ressource omniprésente dans de nombreux domaines d’application. Ses facultés à nous divertir ou encore à nous guider dans nos choix quotidiens personnels et professionnels en font un précieux allié.\par 
+De nos jours, l’informatique est une ressource omniprésente dans de nombreux domaines d’application. Ses facultés à divertir ou encore à guider ses usagers dans leurs choix quotidiens personnels et professionnels en font un précieux allié.\par 
 
 De nouvelles pratiques font leurs apparitions, intégrant la machine au cœur des processus décisionnels. Les disciplines médicales évoluent largement et l’ordinateur permet de répondre aux besoins croissants de précision et reproductibilité (intra et inter opérateur) et de gain de temps au sein de la pratique clinique. Il s’agit également d’un moyen de formaliser la connaissance au travers d’un outil, qui dans un cadre bien défini, peut être utilisé par des non-initiés.\par
 
-Cette nouvelle partie nous permet de dérouler un peu plus notre plan, en abordant cette fois-ci les systèmes d'intelligence artificielle et comment appréhender leur utilité vis à vis des données que nous avons à traiter.\par
+Cette nouvelle partie permet de dérouler un peu plus le plan de ce manuscrit, en abordant cette fois-ci les systèmes d'intelligence artificielle et leur utilité vis à vis des données médicales présentes.\par
 \newpage
 
 \section{Généralités sur l'intelligence artificielle}
@@ -26,24 +26,24 @@ Une vision plus complète de ce terme consiste a décomposer l'\gls{ai} en une d
     \label{fig:scheme_overview_ia}
 \end{figure}\par
 
-Cette partie a pour vocation d’amener à la compréhension générale des courants d’\gls{ai}, qui permettent la résolution de problématiques variées, mais surtout la résolution de certains problèmes de dermatologie. Nous décrirons dans une première partie, les approches par apprentissage. Ces deux catégories se référent directement à notre thématique, à savoir l’analyse de lésions assistée par l’imagerie optique.\par
+Cette partie a pour vocation d’amener à la compréhension générale des courants d’\gls{ai}, qui permettent la résolution de problématiques variées telles que la dermatologie. Dans une première section, les approches par apprentissage sont décrites, puis par extension amène à la présentation de l'apprentissage profond dans une seconde section. La troisième section décrit les méthodes permettant le paramétrage et l'évaluation de ces modèles. Enfin, la dernière section décrit les principes de fusions utiles à ce travail.\par
 
 \section{Approches par apprentissage}
 \label{sec:machine_learning}
-Ce courant a été « évoqué » en 1948 par Alan Turing ; son idée était de proposer des « machine à apprendre susceptibles de construire elles-mêmes leurs propres codes » \cite{Turing1950}. En 1959, Arthur Samuel formule une première définition des approches par apprentissage comme étant un « domaine d’étude dans lequel nous donnons à l’ordinateur la possibilité d’apprendre sans avoir été explicitement programmé ».\par 
+Ce courant a été « évoqué » en 1948 par Alan Turing ; son idée était de proposer des « machines à apprendre susceptibles de construire elles-mêmes leurs propres codes » \cite{Turing1950}. En 1959, Arthur Samuel formule une première définition des approches par apprentissage comme étant un « domaine d’étude dans lequel la possibilité est donné à l’ordinateur d’apprendre sans avoir été explicitement programmé ».\par 
 
 Les approches par apprentissage automatique peuvent être résumées aux techniques permettant à un système informatique d’adapter son analyse et son comportement en fonction de ses données d’entrée. Une définition plus formelle et récente de ce domaine proposée par Tom Michael Mitchell est qu’un « programme informatique apprend d’une expérience E, en adéquation avec des tâches T et une mesure de performance P, si sa performance sur les tâches T, mesurée par P, s’améliore avec l’expérience E ».\par
 
-Nous pouvons distinguer deux grandes sous catégories au sein des courants d’apprentissage, synthétisé dans la \Cref{fig:scheme_machine_learning}, dont~: 
+Ainsi au sein des courants d’apprentissage, deux grandes sous catégories synthétisé dans la \Cref{fig:scheme_machine_learning} peuvent être distingués, dont~: 
 \begin{itemize}
     \item L'apprentissage \textbf{supervisé} correspond aux techniques visant à faire correspondre les données d'entrée avec des sorties de valeurs discrètes (on parle aussi de classification) ou continues (on parle alors de régression),
     \item L'apprentissage \textbf{non-supervisé} correspond à des approches exploratoires, dans lesquelles l'ordinateur tente d'identifier des corrélations au sein des données (désigné par le terme de clustering),
     \item L'apprentissage \textbf{semi-supervisé}~\cite{Murphy2012} reprend les précédentes théories afin d'exploiter au mieux l'ensemble des données à disposition et de mieux discerner le problème.
 \end{itemize}
 
-Nous présenterons plus en détail chacune de ces catégories au sein des sous parties qui suivent.
+Les prochaines sous-sections abordent chacune de ces catégories.\par
  
- \begin{figure}[H]
+\begin{figure}[H]
     \centering 
     \includegraphics[width=\linewidth]{contents/chapter_3/resources/scheme_machine_learning.pdf}
     \caption{Schéma de décomposition des approches par apprentissage automatique.}
@@ -52,16 +52,16 @@ Nous présenterons plus en détail chacune de ces catégories au sein des sous p
 
 \subsection{Apprentissage supervisé}
 \label{sec:supervised_learning}
-L’apprentissage supervisé ou « prédictif » consiste à déterminer la relation permettant de faire correspondre des données d’entrée $x$ et des données de sorties $y$ et cela, dans le but de produire sur de nouvelles données d’entrée $x'$, de nouvelles sorties $y'$.\par
+L’apprentissage supervisé consiste à déterminer la relation permettant de faire correspondre des données d’entrée $x$ et des données de sorties $y$ et cela, dans le but de produire sur de nouvelles données d’entrée $x'$, de nouvelles sorties $y'$.\par
 
-Cette approche implique l’utilisation d’une base d’apprentissage, définie comme « un ensemble de couples entrée-sortie » noté $\{(x_1,y_1 ),\ldots,(x_n,y_n )\}$ avec $n \in N$. Ainsi, l’humain tente d'apporter une signification à ces données sous forme d'annotations (ou étiquettes) pour lesquelles la machine devra être en mesure de trouver la relation existante.\par
+Cette approche implique l’utilisation d’une base d’apprentissage, définie comme \textit{un ensemble de couples entrée-sortie} noté $\{(x_1,y_1 ),\ldots,(x_n,y_n )\}$ avec $n \in N$. Ainsi, l’humain tente d'apporter une signification à ces données sous forme d'annotations (ou étiquettes) pour lesquelles la machine devra être en mesure de trouver la relation existante.\par
 
-Dans le but d'achever cette tâche, nous supposons qu'une observation possède suffisamment de variables discriminantes permettant l'identification des annotations. Ce problème à été défini comme un algorithme qui tente de répondre au problème $y=f(x)$, où $f$ est notre fonction inconnue correspondant au phénomène observé, par une fonction d’approche $g$ appelée fonction de prédiction tel que $y=g(x)$, avec $x=\{x_1,x_2,\ldots,x_n\}$ un vecteur de caractéristiques possédant suffisamment d'information~\cite{foulds2010}.\par 
+Dans le but d'achever cette tâche, les variables propres à chaque observation sont supposées suffisamment discriminantes pour permettre l'identification des annotations. Ce problème est défini par la relation $y=f(x)$, où $f$ est notre fonction inconnue correspondant au phénomène observé, par une fonction d’approche $g$ appelée fonction de prédiction tel que $y=g(x)$, avec $x=\{x_1,x_2,\ldots,x_n\}$ un vecteur de caractéristiques possédant suffisamment d'information~\cite{foulds2010}.\par 
 
 Cet apprentissage, schématisé sur la \Cref{fig:scheme_supervised_classification}, se découpe en deux processus distincts~:
 \begin{itemize}
-    \item \textbf{l’apprentissage} ou entraînement, qui consiste à approcher la fonction $f$ par une fonction d’approche $g$ compte tenu de données étiquetées,
-    \item \textbf{la prédiction} ou inférence, qui consiste à prédire sur de nouvelles données à partir de $g$ tel que $g(x') = y'$.
+    \item \textbf{l’apprentissage} ou \textit{entraînement}, qui consiste à approcher la fonction $f$ par une fonction $g$ compte tenue de données étiquetées,
+    \item \textbf{la prédiction} ou \textit{inférence}, qui consiste à prédire sur de nouvelles données à partir de $g$ tel que $g(x') = y'$.
 \end{itemize}\par
 
 \begin{figure}[H]
@@ -71,13 +71,13 @@ Cet apprentissage, schématisé sur la \Cref{fig:scheme_supervised_classificatio
     \label{fig:scheme_supervised_classification}
 \end{figure}
 
-Ces approches dites supervisées, se regroupent ainsi au travers de deux catégories majeures~:
+Ces approches dites supervisées se regroupent ainsi au travers de deux catégories majeures~:
 \begin{itemize}
     \item La \textbf{classification}, c'est à dire la prédiction de valeurs discrètes, soit l’ensemble des entiers relatifs noté $\pmb{\mathbb{Z}}$. Sont également utilisés les compléments de \textit{classification binaire} lorsque le problème formulé ne comporte que deux classes, et de \textit{classification multi-classes} lorsque la situation nécessite de prédire $N$ classes avec $N$ > 2.
     \item La \textbf{régression}, c'est à dire la prédiction de valeurs continues, soit l’ensemble des nombres réels noté $\pmb{\mathbb{R}}$.
 \end{itemize}\par
 
-Les travaux que nous menons dans ce manuscrit portent sur les méthodes de classification car le problème que nous tentons de résoudre relève de la catégorisation de données. Ainsi, nous proposons un bref échantillon de ces méthodes en détaillant leur principe respectif de fonctionnement. En prenant appui sur l'un des travaux~\cite{Kotsiantis2007}, nous avons identifié cinq catégories majeures dont~:
+Les travaux de ce manuscrit portent sur les méthodes de classification, traduit par la catégorisation de données images cliniques pathologiques selon divers niveau de dangerosité. En prenant appui sur l'un des travaux~\cite{Kotsiantis2007}, un échantillon de ces méthodes et de leur principe respectif est fourni, dont~:
 \begin{itemize}
     \item \textbf{Les approches logiques} qui correspondent à des approches par succession de décisions~\cite{Kotsiantis2007}. Dans cette catégorie, nous retrouvons les arbres de décision~\cite{Breiman1984} (également connu sous le terme de \gls{cart}) dont le principe peut se résumer à la construction d'un graphe, dans lequel chaque noeud est associé à une décision caractérisée par le choix d'une caractéristique et d'un seuil~\cite{Quinlan1986}. Toute la complexité de ces approches repose sur le choix de ces caractéristiques, Ainsi, les caractéristiques sont utilisées par ordre d'importance dans la séparation du problème.
     \item \textbf{Les approches statistiques} qui correspondent à des approches probabilistes, qui déterminent dans quelle mesure un élément fait partie d'une classe. Le \gls{nbm}~\cite{Zhang2004} est un exemple typique de ce type d'approche, dans lequel chaque caractéristique est considérée comme indépendante. La relation entre caractéristique et annotation se définit ainsi comme le produit des probabilités de chacune d'entre elles d'appartenir à la classe supposée (voir l'\Cref{eq:bayesian}). Ce type de classification bayésienne peut également être étendue sous la forme de réseau~\cite{Kononenko1989}.
@@ -245,7 +245,7 @@ Cette partie se concentre sur des problématiques de biais lors de l'apprentissa
 
 \subsection{Généralisation de modèles}
 \label{subsec:generalized_models}
-A l'aide de couples d'entrée/sortie à notre disposition, nous allons tenter d’apprendre une relation capable de \textbf{généraliser} et d’estimer de nouvelles sorties sur de nouvelles données. Il est pour cela nécessaire de parvenir à isoler l'information responsable de ce cheminement, plus ou moins séparable, en cause souvent la qualité de~:
+A l'aide de couples d'entrée/sortie à notre disposition, ces modèles d’apprendre une relation capable de \textbf{généraliser} et d’estimer de nouvelles sorties sur de nouvelles données. Il est pour cela nécessaire de parvenir à isoler l'information responsable de ce cheminement, plus ou moins séparable, en cause souvent la qualité de~:
 \begin{inlinerate}
     \item l'hypothèse formulée, c'est à dire si la relation qui lie l'observation et sa conséquence est directe et vraie dans toute circonstance,
     \item l'information possédée, c'est à dire si l'information est juste pour répondre à la problématique cible (qualité de l'observation, rapport signal sur bruit, etc.),
