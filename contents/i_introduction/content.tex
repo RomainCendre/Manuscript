@@ -13,7 +13,7 @@ peuvent être cité la mise en place de formations de prévention dès le plus j
 
 Néanmoins, les mesures de sensibilisation tendent aujourd’hui à dépasser la prévention et s'orientent vers la sensibilisation des individus à l'auto-surveillance. Certains articles montrent l’importance d’une auto-surveillance régulière des individus par des gestes à la portée de tous, permettant une prise en charge des pathologies dans un meilleur délai. Dans ce même objectif, l’accroissement du nombre de campagnes de dépistage mises en place par les gouvernements peut-être mentionné~\cite{Friedman1985}. Ces diverses actions sont particulièrement efficaces pour permettre la détection de mélanomes à des stades moins avancées, et donc plus susceptibles d'être correctement pris en charges et traitées.\par
 
-Malgré ces nombreuses démarches, le taux d’apparition de ces cancers ne cesse d’augmenter dans le monde. Ces dernières années, l'\gls{who} dénombre entre 2 et 3 millions de cancers de la peau par an, dont environ 360 000 sont des mélanomes. Ces chiffres sont corroborées avec ceux d'études épidémiologique dont les recensements ont été réalisés en 2015~\cite{Vos2016}, dont la \Cref{tab:introduction_cancer_incidence} reprend les diverses données. Ainsi, certaines régions du globe comme l'Australasia ou encore l'Amérique du Nord sont particulièrement touchées par cette recrudescence des maladies de la peau avec de fortes incidences~\cite{Karimkhani2017}. De même, au niveau des populations touchées, le facteur d'âge semble être un critère de risque important~\cite{Karimkhani2017}.\par 
+Malgré ces nombreuses démarches, le taux d’apparition de ces cancers ne cesse d’augmenter dans le monde. Ces dernières années, l'\gls{who} dénombre entre 2 et 3 millions de cancers de la peau par an, dont environ 360 000 sont des mélanomes. Ces chiffres sont corroborées par ceux d'études épidémiologiques dont les recensements ont été réalisés en 2015~\cite{Vos2016}, dont la \Cref{tab:introduction_cancer_incidence} reprend les diverses données. Ainsi, certaines régions du globe comme l'Australasia ou encore l'Amérique du Nord sont particulièrement touchées par cette recrudescence des maladies de la peau avec de fortes incidences~\cite{Karimkhani2017}. De même, au niveau des populations touchées, le facteur d'âge semble être un critère de risque important~\cite{Karimkhani2017}.\par 
 
 \begin{table}[H]
     \centering
@@ -80,23 +80,23 @@ Outre cette réponse à un besoin sociétal, cette thématique ne demeure pas mo
 \end{itemize}\par
 \clearpage
 
-Ce travail s'inscrit dans une démarche d'aide au diagnostic des lésions de la peau et particulièrement des pathologies de \gls{lm} et \gls{lmm}. De nombreux travaux se sont portés sur l'aide à la détection par ordinateur de lésions de la peau à partir d'une modalité unique d'imagerie. Néanmoins, peu d'entre eux s'intéressent à une démarche multimodale de cette thématique, soit par non-considération de cette application, soit par manque ou insuffisance de données à leur disposition.\par
+Ce travail s'inscrit dans une démarche d'aide au diagnostic des lésions de la peau et particulièrement des pathologies de \gls{lm} et \gls{lmm}. De nombreux travaux se sont portés sur l'aide à la détection par ordinateur de lésions de la peau à partir d'une modalité unique d'imagerie. Néanmoins, peu d'entre eux s'intéressent à une démarche multimodale de cette thématique, dû à la complexité que gènère une telle étude ou bien par manque ou insuffisance de données à leur disposition.\par
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{contents/i_introduction/resources/evolution_publications.pdf}
-    \caption{Graphique représentant l'évolution de la recherche autour des termes "skin computer diagnosis" lors de ces trente dernières années recensé par le moteur \href{https://scholar.google.fr/}{Google Scholar} \textsuperscript{\ref{footnote:evolution_publications}}.}
+    \caption{Graphique représentant l'évolution de la recherche autour des termes de « skin computer diagnosis » lors de ces trente dernières années recensé par le moteur \href{https://scholar.google.fr/}{Google Scholar} \textsuperscript{\ref{footnote:evolution_publications}}.}
     \label{fig:evolution_publications}
 \end{figure}\par
 \addtocounter{footnote}{1}
 \footnotetext[\thefootnote]{Source image~: Graphique généré à partir du site \href{https://www.dimensions.ai/}{Dimensions.}  \label{footnote:evolution_publications}}
 
-La matière première mise à notre disposition permet une orientation de nos travaux dans le sens de la multimodalité. En effet, l'une des problématiques majeures aujourd'hui en dermatologie est ce que les médecins qualifient de zone d'indécision, également appelée \textit{zone grise}. Il s'agit d'une catégorie de cas cliniques pour lesquels le médecin n'a pas à un instant $t$ suffisamment d'information ou de connaissances pour prendre une décision. Ces cas nécessitent souvent une prise en charge plus importante, avec l'aide d'autres spécialistes ou encore avec notamment de nouveaux examens plus spécifiques.\par
+La matière première mise à notre disposition permet une orientation de ces travaux dans le sens de la multimodalité. En effet, l'une des problématiques majeures aujourd'hui en dermatologie est ce que les médecins qualifient de zone d'indécision, également appelée \textit{zone grise}. Il s'agit d'une catégorie de cas cliniques pour lesquels le médecin n'a pas à un instant $t$ suffisamment d'information ou de connaissances pour prendre une décision. Ces cas nécessitent souvent une prise en charge plus importante, avec l'aide d'autres spécialistes ou encore avec notamment de nouveaux examens plus spécifiques.\par
 
 La finalité de ce travail est de proposer diverses méthodes et outils permettant une aide à la décision dans la gestion de cette zone grise, et ainsi améliorer la prise en charge clinique en service de dermatologie. A l'instar des travaux existants, cette gestion de la zone grise passe d'une part par l'implémentation de méthodes propre à certaines des modalités de ce travail et d'autre part par la mise en place d'un schéma multimodal. Ainsi, un schéma macroscopique de cet objectif sur la \Cref{fig:scheme_reduce_indecision}.\par
 \clearpage
 
-Dans ce schéma idéal représenté sur la \Cref{fig:scheme_reduce_indecision}, les patients jugé avec une certaine certitude comme "bénin" ou "malin", seront exclus des procédures suivantes. Seuls les patients encore présents dans cette "zone grise" sont pris en charge pour des examens supplémentaires, pour lesquels le processus sont réitérés.\par 
+Dans ce schéma idéal représenté sur la \Cref{fig:scheme_reduce_indecision}, les patients jugé avec une certaine certitude comme \textbf{bénin} ou \textbf{malin}, seront exclus des procédures suivantes. Seuls les patients encore présents dans cette \textit{zone grise} sont pris en charge pour des examens supplémentaires, pour lesquels le processus sont réitérés.\par 
 
 \begin{figure}[H]
     \centering
@@ -110,20 +110,17 @@ A cette fin, ce travail mobilise des connaissances en provenance de divers champ
     \item à la peau d'un point de vue médical, 
     \item aux modalités permettant l'observation des tissus,
     \item et à l'intelligence artificielle.
-\end{inlinerate} Cette complémentarité est représentée sous forme de schéma macroscopique sur la \Cref{fig:scheme_our_work}.\par
+\end{inlinerate} Cette complémentarité est représentée sous forme de schéma sur la \Cref{fig:scheme_our_work}.\par
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\linewidth]{contents/i_introduction/resources/scheme_our_work.pdf}
-    \caption{Représentation macroscopique des domaines impliqués de cette thématique de recherche. Notre travail se retrouve ainsi aux confluents de connaissances de la peau, des modalités d'imagerie permettant son acquisition et des domaines de l'intelligence artificielle.}
+    \caption{Schéma de représentation des domaines impliqués de cette thématique de recherche. Notre travail se retrouve ainsi aux confluents de connaissances de la peau, des modalités d'imagerie permettant son acquisition et des domaines de l'intelligence artificielle.}
     \label{fig:scheme_our_work}
 \end{figure}\par
 
-Dans un premier temps, le contexte de cette étude est abordé dans la \Cref{part:contexte}. Cette partie débute par une présentation de la peau, l'organe majeur de cette étude, réalisé au sein du \Cref{chap:chapter_1}. Puis, s'ensuit une mise en évidence des principes d'interaction entre la peau et la lumière, avant de présenter les techniques de visualisation mises à disposition des médecins dans le \Cref{chap:chapter_2}. Pour finir cette partie, le \Cref{chap:chapter_3} met à la disposition du lecteur l'ensemble des connaissances d'intelligence artificielle sollicitées dans ce manuscrit.\par
+Dans un premier temps, le contexte de cette étude est abordé dans la \Cref{part:contexte}. Cette partie débute par une présentation de la peau, l'organe majeur de cette étude, réalisé au sein du \Cref{chap:chapter_1}. Puis, s'ensuit une mise en évidence des principes d'interaction entre la peau et la lumière, avant de présenter les techniques de visualisation mises à disposition des médecins dans le \Cref{chap:chapter_2}. Ensuite, le \Cref{chap:chapter_3} met à la disposition du lecteur l'ensemble des connaissances d'intelligence artificielle sollicitées dans ce manuscrit. Pour finir cette partie, le \Cref{chap:chapter_31} présente les données mise à disposition de cette étude mais également les principaux travaux en lien avec ce travail.\par
 
-Dans un second temps, la prise en charge de la modalité \gls{rcm} est abordé à l'aide de la \Cref{part:microscopy}. A cette fin, cette partie débute par le traitement des images de cette modalité dans le \Cref{chap:chapter_4} dédié à la classification de ces images et propose une extension de ces travaux dans le \Cref{chap:chapter_5}. Pour finir, le \Cref{chap:chapter_6} propose diverses méthodes permettant à partir des images de remonter à la prise de décision au niveau d'une lésion.\par
+Dans un second temps, la prise en charge de la modalité \gls{rcm} est abordé par la \Cref{part:microscopy}. A cette fin, cette partie débute par le traitement des images de cette modalité dans le \Cref{chap:chapter_4} dédié à la classification de ces images et propose une extension de ces travaux dans le \Cref{chap:chapter_5}. Pour finir, le \Cref{chap:chapter_6} propose diverses méthodes permettant à partir des images de remonter à la prise de décision au niveau d'une lésion.\par
 
-Dans un dernier temps, la finalité de ce travail est traitée par la \Cref{part:multimodal} dédiée aux processus de décision multimodaux.
-, celui de la multimodalité, . Le \Cref{chap:chapter_7} reprendra les travaux des autres modalités en notre possession ainsi que les conclusions de la \gls{rcm} et mettra en avant des méthodes d'agrégation de l'information.\par
-
-
+Dans un dernier temps, la finalité de ce travail est traitée par la \Cref{part:multimodal} dédiée à l'apport de l'information multimodale. Dans ce but, le \Cref{chap:chapter_7} reprend les conclusions de travaux sur les modalités d'imagerie clinique et de dermatoscopie ainsi que les conclusions issues de la précédente partie sur la modalité \gls{rcm} et propose des méthodes d'agrégation séquentielles de ces informations.\par
