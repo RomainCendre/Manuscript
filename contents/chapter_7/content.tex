@@ -36,4 +36,112 @@ Sigmoid,\cite{kull2017b}
 \section{Présentation des résultats}
 \subsection{Protocole d’expérimentation}
 \subsection{Résultats des expérimentation}
+
+% Sequential - Pondéré
+\begin{table}[H]
+    \begin{tabular}{llllll}
+        \toprule 
+        Type                    & Modalité                          & Seuil             & Sans                  & Isotonic              & Sigmoid               \\ \midrule
+        \multirow{4}{*}{Simple} & \multirow{2}{*}{Croissant}        & Croissant         & 0.72$\pm$0.14         & 0.65$\pm$0.14         & 0.66$\pm$0.10         \\ \cline{3-6}
+                                &                                   & Décroissant       & 0.72$\pm$0.14         & 0.64$\pm$0.12         & 0.65$\pm$0.09         \\ \cline{2-6}
+                                & \multirow{2}{*}{Décroissant}      & Croissant         & \textbf{0.81$\pm$0.08}& 0.61$\pm$0.11         & 0.79$\pm$0.10         \\ \cline{3-6}
+                                &                                   & Décroissant       & 0.81$\pm$0.11         & 0.60$\pm$0.13         & 0.79$\pm$0.10         \\ \cline{1-6}
+        \multirow{4}{*}{Double} & \multirow{2}{*}{Croissant}        & Croissant         & 0.71$\pm$0.09         & 0.64$\pm$0.18         & 0.71$\pm$0.13         \\ \cline{3-6}
+                                &                                   & Décroissant       & 0.71$\pm$0.09         & 0.63$\pm$0.17         & 0.70$\pm$0.14         \\ \cline{2-6}
+                                & \multirow{2}{*}{Décroissant}      & Croissant         & 0.77$\pm$0.13         & 0.71$\pm$0.16         & 0.77$\pm$0.12         \\ \cline{3-6}
+                                &                                   & Décroissant       & 0.77$\pm$0.13         & 0.68$\pm$0.14         & 0.77$\pm$0.12         \\ \bottomrule
+    \end{tabular}
+\end{table}
+
+% Sequential - Malignant
+\begin{table}[H]
+    \begin{tabular}{llllll}
+        \toprule 
+        Type                    & Modalité                          & Seuil             & Sans                  & Isotonic              & Sigmoid               \\ \midrule
+        \multirow{4}{*}{Simple} & \multirow{2}{*}{Croissant}        & Croissant         & 0.79$\pm$0.10         & 0.76$\pm$0.09         & 0.79$\pm$0.07         \\ \cline{3-6}
+                                &                                   & Décroissant       & 0.79$\pm$0.10         & 0.76$\pm$0.09         & 0.79$\pm$0.07         \\ \cline{2-6}
+                                & \multirow{2}{*}{Décroissant}      & Croissant         & 0.85$\pm$0.11         & 0.74$\pm$0.07         & 0.85$\pm$0.10         \\ \cline{3-6}
+                                &                                   & Décroissant       & 0.85$\pm$0.10         & 0.75$\pm$0.08         & \textbf{0.85$\pm$0.08}\\ \cline{1-6}
+        \multirow{4}{*}{Double} & \multirow{2}{*}{Croissant}        & Croissant         & 0.80$\pm$0.07         & 0.77$\pm$0.11         & 0.78$\pm$0.10         \\ \cline{3-6}
+                                &                                   & Décroissant       & 0.80$\pm$0.07         & 0.76$\pm$0.11         & 0.79$\pm$0.09         \\ \cline{2-6}
+                                & \multirow{2}{*}{Décroissant}      & Croissant         & 0.83$\pm$0.11         & 0.80$\pm$0.11         & 0.83$\pm$0.09         \\ \cline{3-6}
+                                &                                   & Décroissant       & 0.83$\pm$0.10         & 0.79$\pm$0.11         & 0.84$\pm$0.09         \\ \bottomrule    
+    \end{tabular}
+\end{table}
+
+
+% Cumulative - Pondéré
+\begin{table}[H]
+    \begin{tabular}{llllll}
+        \toprule 
+        Type                    & Modalité                          & Seuil             & Sans                  & Isotonic              & Sigmoid               \\ \midrule
+        \multirow{4}{*}{Simple} & \multirow{2}{*}{Croissant}        & Croissant         & 0.74$\pm$0.08         & 0.72$\pm$0.13         & 0.72$\pm$0.12         \\ \cline{3-6}
+                                &                                   & Décroissant       & 0.72$\pm$0.09         & 0.74$\pm$0.14         & 0.70$\pm$0.13         \\ \cline{2-6}
+                                & \multirow{2}{*}{Décroissant}      & Croissant         & 0.83$\pm$0.10         & 0.82$\pm$0.08         & 0.82$\pm$0.09         \\ \cline{3-6}
+                                &                                   & Décroissant       & 0.82$\pm$0.10         & 0.81$\pm$0.08         & 0.80$\pm$0.12         \\ \cline{1-6}
+        \multirow{4}{*}{Double} & \multirow{2}{*}{Croissant}        & Croissant         & 0.69$\pm$0.11         & 0.73$\pm$0.14         & 0.68$\pm$0.11         \\ \cline{3-6}
+                                &                                   & Décroissant       & 0.68$\pm$0.12         & 0.72$\pm$0.12         & 0.68$\pm$0.13         \\ \cline{2-6}
+                                & \multirow{2}{*}{Décroissant}      & Croissant         & \textbf{0.83$\pm$0.08}& 0.82$\pm$0.08         & 0.78$\pm$0.11         \\ \cline{3-6}
+                                &                                   & Décroissant       & 0.82$\pm$0.08         & 0.81$\pm$0.08         & 0.78$\pm$0.12         \\ \bottomrule
+    \end{tabular}
+\end{table}
+
+% Cumulative - Malignant
+\begin{table}[H]
+    \begin{tabular}{llllll}
+        \toprule 
+        Type                    & Modalité                          & Seuil             & Sans                  & Isotonic              & Sigmoid               \\ \midrule
+        \multirow{4}{*}{Simple} & \multirow{2}{*}{Croissant}        & Croissant         & 0.82$\pm$0.06         & 0.81$\pm$0.09         & 0.81$\pm$0.09         \\ \cline{3-6}
+                                &                                   & Décroissant       & 0.80$\pm$0.06         & 0.82$\pm$0.09         & 0.80$\pm$0.09         \\ \cline{2-6}
+                                & \multirow{2}{*}{Décroissant}      & Croissant         & \textbf{0.87$\pm$0.06}& 0.86$\pm$0.06         & 0.85$\pm$0.08         \\ \cline{3-6}
+                                &                                   & Décroissant       & 0.86$\pm$0.07         & 0.85$\pm$0.06         & 0.84$\pm$0.08         \\ \cline{1-6}
+        \multirow{4}{*}{Double} & \multirow{2}{*}{Croissant}        & Croissant         & 0.79$\pm$0.08         & 0.81$\pm$0.10         & 0.78$\pm$0.08         \\ \cline{3-6}
+                                &                                   & Décroissant       & 0.79$\pm$0.08         & 0.81$\pm$0.08         & 0.78$\pm$0.09         \\ \cline{2-6}
+                                & \multirow{2}{*}{Décroissant}      & Croissant         & 0.86$\pm$0.06         & 0.86$\pm$0.06         & 0.83$\pm$0.09         \\ \cline{3-6}
+                                &                                   & Décroissant       & 0.86$\pm$0.07         & 0.86$\pm$0.06         & 0.82$\pm$0.09         \\ \bottomrule
+    \end{tabular}
+\end{table}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{contents/chapter_7/resources/results_calibration_sequential.pdf}
+    \caption{}
+    \label{fig:results_calibration_sequential}
+\end{figure}\par
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{contents/chapter_7/resources/results_calibration_sequential_calibrated.pdf}
+    \caption{}
+    \label{fig:results_calibration_sequential_calibrated}
+\end{figure}\par
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{contents/chapter_7/resources/results_calibration_cumulative.pdf}
+    \caption{}
+    \label{fig:results_calibration_cumulative}
+\end{figure}\par
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{contents/chapter_7/resources/results_calibration_cumulative_calibrated.pdf}
+    \caption{}
+    \label{fig:results_calibration_cumulative_calibrated}
+\end{figure}\par
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{contents/chapter_7/resources/results_processus_weighted.pdf}
+    \caption{}
+    \label{fig:results_processus_weighted}
+\end{figure}\par
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{contents/chapter_7/resources/results_processus_malignant.pdf}
+    \caption{}
+    \label{fig:results_processus_malignant}
+\end{figure}\par
+
 \section{Discussion}

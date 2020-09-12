@@ -81,34 +81,13 @@ L’examen de dépistage classique est associé en dermatologie à une inspectio
 
 Cette modalité, avant l’avènement de l’informatique, se basait sur des supports de type argentique. L’évolution de ce matériel vers le numérique, et l’arrivée de systèmes de type \gls{pacs} ont conjointement motivé une transition vers des données dématérialisées.\par
 
-Ce type d’imagerie donne à l’observateur un point de vue subjectif, similaire à une observation à l’œil nu, utile dans le cadre d’un diagnostic à distance ou dans le suivi à long terme d’un patient. Néanmoins, l'un des points faibles est le manque de standard concernant le format d'image et de protocole concernant l'acquisition des images~: pas de spécifications d'éclairage, ni de spécifications sur le point de vue à adopter au moment de la prise d'image. Ces éléments amènent à une grande diversité de données, comme représenté sur la \Cref{fig:example_photography}.\par
-
-\begin{figure}[H]
-\centering
-    \begin{subfigure}{.45\textwidth}
-      \centering
-      \includegraphics[width=\linewidth]{contents/chapter_2/resources/example_photography_1.png}
-    \end{subfigure}
-    \begin{subfigure}{.45\textwidth}
-      \centering
-      \includegraphics[width=\linewidth]{contents/chapter_2/resources/example_photography_2.png}
-    \end{subfigure}
-    \caption{Exemple d'images dites de photographie clinique. Ces deux exemples donnent un aperçu de la diversité des acquisitions en terme d'exposition, d'angle de vue et de résolution d'image.}
-    \label{fig:example_photography}
-\end{figure}\par
+Ce type d’imagerie donne à l’observateur un point de vue subjectif, similaire à une observation à l’œil nu, utile dans le cadre d’un diagnostic à distance ou dans le suivi à long terme d’un patient. Néanmoins, l'un des points faibles est le manque de standard concernant le format d'image et de protocole concernant l'acquisition des images~: pas de spécifications d'éclairage, ni de spécifications sur le point de vue à adopter au moment de la prise d'image.\par
 
 Ces dernières années ont vu l'émergence de nouveaux types d'appareillages qui étendent la photographie clinique au corps entier. Ces appareils permettent une traçabilité et un suivi des lésions apparentes sur le corps d'un patient. En effet, l'un des meilleurs critères du suivi de lésions dans le dépistage de maladies, tel que le mélanome, reste l'évolution au cours du temps de ces lésions. Cet élément a notamment été mis en avant en 2004, et est encore considéré de nos jours comme l'un des critères majeurs~\cite{Abbasi2004,Glazer2017}. Différents industriels commercialisent des dispositifs de plus en plus performants dont FotoFinder et son système ATBM mais également la société Pixience avec le Body-Mapper® permettant ce suivi ainsi qu'un contrôle de l'éclairage lors de la prise de vue. Une interface guide le médecin lors de la prise d'images et permet d'associer à un modèle humain les diverses parties du corps (voir la \Cref{fig:example_device_bodymapper}).\par
 
 \begin{figure}[H]
 \centering
-    \begin{subfigure}{.28\textwidth}
-      \centering
-      \includegraphics[width=\linewidth]{contents/chapter_2/resources/example_device_bodymapper_1.png}
-    \end{subfigure}
-    \begin{subfigure}{.65\textwidth}
-      \centering
-      \includegraphics[width=\linewidth]{contents/chapter_2/resources/example_device_bodymapper_2.png}
-    \end{subfigure}
+    \includegraphics[width=0.75\linewidth]{contents/chapter_2/resources/example_device_bodymapper.pdf}
     \caption{Exemple du Body-Mapper, un appareil de photographie clinique corps entier, proposé par Pixience. A gauche, l'appareil d'acquisition ; A droite, son interface logicielle permettant d'acquérir les diverses partie du corps.}
     \label{fig:example_device_bodymapper}
 \end{figure}\par
@@ -121,7 +100,7 @@ Cet outil possède comme première caractéristique, de réduire les réflexions
 
 \begin{figure}[H]
 \centering
-    \includegraphics[width=0.7\linewidth]{contents/chapter_2/resources/scheme_polarized_dermoscopy.pdf}
+    \includegraphics[width=0.9\linewidth]{contents/chapter_2/resources/scheme_polarized_dermoscopy.pdf}
     \caption{Principe de dermatoscope à lumière polarisée. Un filtre est disposé après la source de lumière, puis un second dont la polarisation est perpendiculaire au premier juste avant la fenêtre d'observation~\cite{sonthalia2019}.}
     \label{fig:scheme_polarized_dermoscopy}
 \end{figure}\par
@@ -134,7 +113,7 @@ Ces dispositifs tendent à s'adapter de plus en plus aux besoins de leur marché
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.50\linewidth]{contents/chapter_2/resources/example_device_ccube.jpg}
+    \includegraphics[width=0.75\linewidth]{contents/chapter_2/resources/example_device_ccube.jpg}
     \caption{Exemple du dermatoscope C-Cube proposé par la société Pixience.}
     \label{fig:example_device_ccube}
 \end{figure}\par
@@ -165,7 +144,7 @@ La \acrfull{rcm} est une technique d’imagerie décrite durant les années 1950
 
 \begin{figure}[H]
 \centering
-    \includegraphics[width=0.9\linewidth]{contents/chapter_2/resources/scheme_principle_rcm.pdf}
+    \includegraphics[width=\linewidth]{contents/chapter_2/resources/scheme_principle_rcm.pdf}
     \caption{Schéma de fonctionnement du \gls{rcm} par Marvin Minsky. Une source de lumière est émise et focalisée en un point spécifique de la peau puis la lumière est réfléchie et reçue par une caméra au travers d'un sténopé (trou de faible diamètre). La lumière hors focale est ainsi arrêtée.}
     \label{fig:scheme_principle_rcm}
 \end{figure}\par
@@ -181,10 +160,11 @@ Initialement, ce principe a été exploité pour des dispositifs dits d’interf
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\linewidth]{contents/chapter_2/resources/scheme_principle_oct.pdf}
+    \includegraphics[width=1\linewidth]{contents/chapter_2/resources/scheme_principle_oct.pdf}
     \caption{Schéma de fonctionnement du \gls{oct}.}
     \label{fig:scheme_principle_oct}
 \end{figure}\par
+\clearpage
 
 \subsubsection{Spectroscopie par réflectance}
 La spectroscopie de réflectance fournit une information de spectre à un même instant, c'est à dire contenant plusieurs valeurs numériques, chacune propre à une longueur d'onde spécifique. L'information fournie est propre à un unique point de l'espace et est obtenue en temps réel. Cette modalité ne constitue donc pas d'une technique d'imagerie au sens matriciel à deux dimensions.\par
