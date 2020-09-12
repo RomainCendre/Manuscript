@@ -1,67 +1,64 @@
-%=====================================
-% PATIENT LEVEL
-%=====================================
-\chapter{Prise de décision au niveau lésionnel ou patient}
+\renewcommand{\thechapter}{\arabic{chapter}}
+\setcounter{chapter}{6}
+
+\chapter{Amélioration du diagnostic image}
 \label{chap:chapter_6}
 \chapterintro
-Les deux précédents chapitres se sont consacrés aux diagnostic des images \acrlong {rcm} mise à la disposition de ce travail. Diverses solutions permettant la gestion de ces images comme des entités à part entière sont proposées, d'une part à l'aide de techniques propre à la globalité de l'image, et d'autre part à l'aide d'approches à diverses échelles ou par instances multiples.\par
+Précédemment, nous avons tenté d'apporter une première réponse à la classification des images \gls{rcm} contenant des tissus sains, bénins ou encore malins. Nous nous sommes intéressés aux méthodes permettant de caractériser au mieux les aspects de texture de ces images par l'extraction de caractéristiques pertinentes, et nous avons employé des mécanismes permettant d'exploiter au mieux ces caractéristiques.\par
 
-Par ce nouveau chapitre, une méthodologie est mise en place permettant d'aider les experts lors de la prise de décision au niveau patient sur cette modalité complexe. Cette prise de décision au niveau patient est également nécessaire afin de mettre en place le processus multimodal, finalité de ce manuscrit. Pour cela, les précédentes expérimentations sont sollicitées afin d'extraire l'information des images, et diverses méthodes sont proposées pour permettre l'obtention d'une décision à partir d'un ensemble d'images d'un même patient.\par
-
-Les résultats de ces expérimentations sont présentés en fin de chapitre, sur l'ensemble des lésions mais également sur les lésions malignes ne comportant que des types \acrlong{lm} et \acrlong{lmm}. Ces résultats sont également exprimés en termes de sensibilité et spécificité afin d'être confrontés à ceux des spécialistes sur cette même base de données.\par
+Dans ce chapitre, nous nous emploierons à améliorer la qualité du diagnostic sur les images en explorant de nouveaux schémas d'extraction de caractéristiques. Ainsi, nous pencherons sur des pistes utilisant dans un premier temps la multi-résolution et le principe de fenêtre glissante, puis dans un second temps nous envisagerons des solutions de type \gls{cnn} de bout en bout et procéderons à du réglages fin de ceux-ci.\par
 
 \newpage
 
 \section{Méthodologie}
-\label{sec:patient_decision_methodology}
-Lors des deux précédents chapitres, la classification des images \gls{rcm} a été la principale tâche de ce manuscrit en proposant des traitements permettant leur gestion comme des entités à part entière. Lors du \Cref{chap:chapter_4}, ces images ont été abordées dans leur intégralité à l'aide des méthodes d'extraction de caractéristiques sur la totalité de l'image, mais également lors du \Cref{chap:chapter_5} à l'aide de méthodes proposant diverses échelles et niveaux de compréhension.\par
+Lors du précédent chapitre, nous avons proposé diverses approches dans une philosophie de classification de l'image dans son intégralité pour permettre la séparation des éléments sain, bénin et malin. Cette approche suppose que l'information extraite par ces méthodes est suffisante pour permettre un diagnostic selon ces trois catégories de tissus. Cette hypothèse est partiellement juste puisqu'une même image \gls{rcm} peux comporter divers types de tissus, des trois classes précédemment évoquées, comme visible sur la \Cref{fig:scheme_image_improvement_annotations_hierarchy}.\par
 
-Néanmoins, ces méthodes dans leur état actuel ne permettent que le diagnostic des images, dont le nombre varie fortement d'une lésion à l'autre soit d'une dizaine à plusieurs centaines d'images pour un même patient. La tâche reste donc en l'état complexe et difficile à trancher par un spécialiste et ne permet pas une aide réaliste à la prise de décisions. De plus, la finalité de ce travail est en l'état impossible, cette information étant inexploitable dans le cadre d'un processus à multiples modalités.\par
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{contents/chapter_6/resources/scheme_image_improvement_annotations_hierarchy.pdf}
+    \caption{Relation hiérarchiques entre les annotations. Les images malignes peuvent ainsi contenir des tissus bénin et sain ; Les images bénignes peuvent contenir des tissus sains ; Les images saines ne contiennent que des tissus sains.}
+    \label{fig:scheme_image_improvement_annotations_hierarchy}
+\end{figure}\par
 
-Ce chapitre se dédie à la problématique de la classification des lésions, assimilable à une classification du patient lorsque celui-ci n'est associé qu'à une unique lésion, dont l'objectif est schématisé sur la \Cref{fig:scheme_patient_decision_objectives}. À cette fin, les conclusions formulées lors des précédents chapitres propres aux images et à leur compréhension sont employées pour résoudre cette nouvelle problématique. Ainsi, comme lors du précédent chapitre sont considérés les méthodes d'extraction suivantes~:
+Dans ce nouveau chapitre dédié à l'amélioration du diagnostic de l'image, nous exploiterons d'une part les conclusions du précèdent chapitre quant aux procédés de classification en privilégiant l'utilisation de \gls{svm} à noyau linéaire et d'autre part aux méthodes permettant l'extraction de l'information de texture. Ainsi, nous nous référerons aux méthodes suivantes~:
 \begin{itemize}
-    \item pour la \textbf{catégorie de méthodes spatiales}, les caractéristiques définies par Haralick et al.\cite{Haralick1973},
+    \item pour la \textbf{catégorie de méthodes spatiales}, les caractéristiques définies par Haralick et al.,
     \item pour la \textbf{catégorie de méthodes fréquentielles}, les caractéristiques sur base d'extraction en ondelettes,
     \item pour la \textbf{catégorie de méthodes de transfert de connaissances}, nous utiliserons l'architecture ResNet-50.
-\end{itemize}\par\par
+\end{itemize}\par
 
-Ce chapitre propose diverses méthodes dans le but d'extraire une décision au niveau patient. Dans cette optique, la première partie de ce travail se consacre à la mise en place d'une classification patient par des mécanismes de prédiction supervisée. Puis, dans la seconde partie de ce travail sont élaborées diverses pistes de prédiction au niveau des lésions employant des principes qualifiés de faiblement supervisé par l'utilisation d'\gls{mil}. Les dernières sections sont consacrées à l'analyse et une discussion des résultats de ces expériences.\par
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.65\linewidth]{contents/chapter_6/resources/scheme_patient_decision_objectives.pdf}
-    \caption{Schéma récapitulatif de la problématique de l'inconsistance du nombres d'images constituant les lésions et de l'obtention de décisions et scores pour chacune de ces lésions.}
-    \label{fig:scheme_patient_decision_objectives}
-\end{figure}\par
+Nous envisagerons de manière complémentaire des schémas alternatifs afin d'extraire une information suffisante à la séparation de nos données. Nous débuterons par la présentation de méthodes par multiples échelles, en supposant que l'information comporte plusieurs niveaux d'interprétations pouvant être capté par une méthode de classification. Dans un second temps, nous tenterons de capter l'information localement en employant un principe de fenêtre glissante et de prédiction associées. Enfin, nous étendrons ces approches locales par l'utilisation de réseaux de \gls{cnn}, ajusté de bout en bout sur notre problème de classification à trois classes.\par
 \clearpage
 
-\section{Approches supervisées}
-\label{sec:patient_decision_supervised}
-Cette section dédiée aux approches supervisées se consacre à des schémas d'apprentissages supervisés, c'est-à-dire dont la relation entre les instances et annotations est directe. Les données \gls{rcm} exploitées dans ce travail possèdent~:
-\begin{inlinerate}
-    \item d'une part des annotations à bas niveau ou niveau image,
-    \item d'autre part des annotations à haut niveau ou niveau lésionnel. 
-\end{inlinerate} L'une des contraintes majeures associées à ces données est l'inconsistance du nombre d'images entre les lésions composant le jeu de données. Ainsi, une lésion peut comporter un nombre d'image compris entre une dizaine et une centaine d'entre elles. Il est donc nécessaire de gérer cette variabilité au sein du processus de classification mis en place.\par
+\section{Approche par échelles multiples}
+Comme évoqué précédemment, les traitements réalisés jusqu'à lors ne permettent qu'une compréhension globale de l'image. Cette vision de l'extraction de caractéristiques peut être erronée si nous supposons une interprétation de l'image à divers niveaux de compréhension.\par
 
-Afin de résoudre cette tâche de manière supervisée, cette section propose un mécanisme de prédiction en deux temps~: 
-\begin{itemize}
-    \item une première étape de prédiction \textbf{au niveau image}, dont le but consiste à émettre une étiquette à chaque image,
-    \item une seconde étape de prédiction \textbf{au niveau lésionnel} dont la finalité est d'évaluer la lésion à partir de l'information résultant du processus de classification au niveau image.
-\end{itemize} A cette fin, les données d'entraînement sont divisées en deux parts~:
+C'est ainsi que des hypothèses de compréhensions de l'image à multiples échelles ont émergées, bien que peu relatées dans la littérature. Ces approches ont été employées à différentes fins~: 
 \begin{inlinerate}
-    \item l'une d'entre elle à destination du processus de prédiction image,
-    \item et l'autre à destination du processus décisionnel des lésions.
-\end{inlinerate}
-Cette séparation des données d'entraînement permet de contrer un sur-apprentissage du modèle de prédiction au niveau lésionnel par l'utilisation de données images pour lesquelles les prédictions seraient trop optimistes. Le schéma global mis en oeuvre dans cette section est disponible sur la \Cref{fig:scheme_patient_decision}.\par
+    \item de détection de frontières dans un contexte d'images naturelles~\cite{Ren2008},
+    \item de segmentation d'images~\cite{Santos2012,Arbelaez2014},
+    \item de détection d'objet~\cite{Felzenszwalb2008} ou d'actions~\cite{Pedersoli2011},
+    \item ou encore de classification d'images médicales~\cite{Alsaih2016,Tang2017}.
+\end{inlinerate} En termes d'images ~\gls{rcm} appliquée au domaine de la dermatologie, le travail de Wiltgen et al~\cite{Wiltgen2008} semble le plus proche et propose en autre le traitement de ces données par échelle multiples. Ainsi, nous scinderons cette section en deux parties respectives, avec d'une part l'application de ce principe à la décomposition en ondelettes et d'autres part l'application de ce principe à des techniques d'extraction spatiales.\par 
+
+\subsection{Décomposition en ondelettes à échelles multiples}
+Notre première approche par échelles multiples se portera sur la décomposition en ondelettes. En effet, ce principe a été démontré comme judicieux dans de nombreux domaines impliquant l'analyse d'images~\cite{Carvalho2004}. La décomposition peut ainsi être réalisé sous la forme d'un schéma dit diadique ou bien pyramidal. Ces deux mode sont schématisés sur la \Cref{fig:scheme_image_improvement_dwt_decomposition}. L'un de nos articles de référence préconise l'utilisation du schéma de décomposition diadique pour l'extraction de caractéristiques de texture sur images \gls{rcm}~\cite{Wiltgen2008}. Pour cela, cet article se focalise sur l'utilisation d'une ondelette mère de Daubechies et emploie la transformée en ondelette à cinq niveaux successifs sous forme d'arbre diadique. Les mesures associées à chaque bande de fréquences de la transformée sont les même que dans le \Cref{chap:chapter_5} et se base sur l'extraction de la déviation standard, l'énergie et l'entropie pour un total de \textbf{39 descripteurs}. Suite aux résultats obtenus lors du \Cref{chap:chapter_5}, nous évaluerons également ce procédé selon l'ondelette mère de Haar.\par
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.95\linewidth]{contents/chapter_6/resources/scheme_patient_decision.pdf}
-    \caption{Schéma de représentation du système complet de décision supervisée au niveau lésionnel. Le processus d'entraînement se subdivise en deux étapes~: une première étape d'entraînement du modèle de prédiction au niveau des instances images et une seconde étape permettant l'agrégation de l'information au niveau des lésions. La prédiction est ensuite réalisée sur les données de test par inférence des paramètres précédemment entraînés.}
-    \label{fig:scheme_patient_decision}
+    \includegraphics[width=\textwidth]{contents/chapter_6/resources/scheme_image_improvement_dwt_decomposition.pdf}
+    \caption{Schématisation deux principaux types de décomposition successives par ondelettes. En a), schéma de décomposition multi-échelle en ondelettes dit \textbf{diadique} ; En b), schéma de décomposition multi-échelle en ondelettes dit \textbf{pyramidal}.}
+    \label{fig:scheme_image_improvement_dwt_decomposition}
 \end{figure}\par
 
-Ainsi, la première étape de ce processus exploite les résultats issues des \Cref{chap:chapter_4,chap:chapter_5} dont le travail repose sur la mise en place  au niveau des images. Cette première partie du processus emploie d'une part les méthodes d'extraction jugée les plus pertinentes de ces parties, rappelées en \Cref{sec:patient_decision_methodology}. Ainsi, sont utilisées des méthodes manuelles spatiales et fréquentielles dont le nombre de caractéristiques extraites est de l'ordre de la dizaine, et par transfert de connaissances sur des \gls{cnn} pré entrainé dont ce nombre dépasse la centaine. D'autre part, est utilisé un processus composé de d'une mise à l'échelle par Minimum / Maximum suivie d'un modèle \gls{svm} linéaire. Les hyperparamètres de ce dernier sont rappelés au niveau de la    \Cref{tab:parameters_lesion_classification_image_supervised}.\par
+Le second travail sur base de décomposition en ondelettes sur lequel nous nous appuyons est une extension de la transformée en ondelettes du précédent travail~\cite{Halimi2017a}. Ainsi, ce travail reprend la précédente décomposition selon un schéma diadique, et modifie le nombre de niveaux de décomposition (quatre niveaux au lieu des cinq initialement prévu par Wiltgen et al.). Selon ce même travail, une loi normale généralisée centrée, dont la densité de probabilité $f$ est décrite par l'\Cref{eq:image_improvement_ggd}, est ajustée à la distribution de valeurs de chaque niveau de décomposition. Enfin, les auteurs de l'étude ne retiennent comme caractéristiques que les paramètres d'échelle $\alpha$ et de forme $\beta$ de cette loi normale généralisée pour un total de 24 caractéristiques.\par
+
+\begin{equation}
+    f(x)= \frac{\beta}{2\alpha\Gamma(1/\beta)} e^{-\left(|\frac{x}{\alpha}|\right)^\beta}
+    \label{eq:image_improvement_ggd}
+\end{equation}
+
+Afin de gérer ces diverses caractéristiques, nous nous emploierons à l'utilisation d'un modèle de type \gls{svm} linéaire, démontré empiriquement efficace pour la classification de données fréquentielles dans ce contexte lors du \Cref{chap:chapter_5}. Les hyperparamètres que nous utiliserons pour validations sont présentés sur la \Cref{tab:parameters_image_improvement_multiscale_frequency}.\par
 
 \begin{table}[H]
     \centering
@@ -71,253 +68,355 @@ Ainsi, la première étape de ce processus exploite les résultats issues des \C
         \gls{svm} - Noyau linéaire                      & C                         & [0.001, 0.01, 0.1, 1, 10, 100, 1000]      \\ 
         \bottomrule 
     \end{tabular} 
-    \caption{Table reprenant le modèle et les hyperparamètres du modèle de classification employé pour la détection bas niveau des images.}
-    \label{tab:parameters_lesion_classification_image_supervised}
+    \caption{Table reprenant le modèle et les hyperparamètres du modèle de classification employé pour la prédiction sur les caractéristiques fréquentielles par échelles multiples.}
+    \label{tab:parameters_image_improvement_multiscale_frequency}
 \end{table}\par
 
-La seconde étape de ce processus tente d'établir une relation entre les diagnostics des images réalisé à l'aide de la première partie de ce processus et les annotations des lésions. Le nombre d'instances variant entre chaque lésion, les méthodes présentées ci-dessous sont mise en point exclusivement pour supporter cette contrainte de fonctionnement. Ainsi, deux types potentiel de données d'entrée sont envisagés dans cette seconde partie de la classification, donnant lieu à deux types d'approches dont~:
-\begin{itemize}
-    \item   une approche au niveau des \textbf{décisions} de classification de la première étape, défini par l'ensemble $\mathbf{N}$. Ces données sont de la forme $instances \times 1$, dans lequel $instances$ est une variable propre à chaque lésion. Afin de réduire ces données à un vecteur commun, chaque classe est réduite par la relation $ratio_c = \dfrac{classe_c}{instances}$, aboutissant à un vecteur réel de dimension $1 \times classes$. A partir de ce vecteur, deux méthodes ont été définies, dont~:
-            \begin{itemize}
-                \item une méthode dites de \textbf{priorité} par laquelle nous privilégions la détection d'une classe hiérarchiquement supérieure comme décision globale à la lésion,
-                \item une méthode dites par seuils \textbf{dynamiques} par laquelle des seuils optimaux sont déterminés pour chaque classe en privilégiant les classes prioritaires.
-            \end{itemize}
-    \item   une approche au niveau des \textbf{scores} de classification de la première étape, défini par l'ensemble $\mathbf{R}$. Cette approche aboutie à un vecteur de taille $instances \times classes$, dans lequel $instances$ est une variable propre à chaque lésion et $classes$ est le nombre de classes prédites soit 2. Afin de réduire là encore ces données à un vecteur commun, chaque classe est réduite soit par une fonction de \textbf{moyenne} soit de \textbf{maximum} aboutissant à un vecteur réel de dimension $1 \times classes$. Puis, par seuil \textbf{dynamique} sur chacune des classes, des seuils optimaux sont définis en privilégiant les classes prioritaires. La combinaison de réduction par moyenne et seuil dynamique est considéré par le terme \textbf{Dynamique - Moyenne} et la combinaison de réduction par maximum et seuil dynamique est considéré par le terme \textbf{Dynamique - Maximum}.
-\end{itemize}\par
-\clearpage
+Nous effectuerons la transformée en ondelettes et la décomposition à échelles multiples de ce travail à l'aide de la bibliothèque logicielle "PyWavelets"~\cite{lee2006}. Quant aux opérations d'ajustement de la loi généralisée nous nous appuierons sur la bibliothèque logicielle "SciPy"~\cite{Virtanen2020}. L'ensemble de nos expérimentations basées sur la décomposition en ondelettes à échelle multiples sont recensées sur la \Cref{tab:wavelet_image_improvement_multiscale_nb_features} ainsi que leurs nombres de caractéristiques associées.\par
 
-\section{Approches faiblement supervisées}
-\label{sec:patient_decision_weak}
-Une approche est décrite comme étant faiblement supervisée lorsque l'apprentissage de la relation entre les données et les annotations n'est pas directe. Ainsi, ces méthodes faiblement supervisées sont rassemblées en trois catégories majeures~\cite{Zhou2018}, dont~:
+\begin{table}[h]
+    \centering
+    \begin{tabular}{ll}
+        \toprule
+        \textbf{Méthode}                                    & \textbf{Nombre de caractéristiques}   \\ \hline
+        Ondelettes - Haar                                   & 39 (13$\times$3)   \\ \hline
+        Ondelettes - Daubechies / Wiltgen~\cite{Wiltgen2008}& 39 (13$\times$3)   \\ \hline
+        Halimi~\cite{Halimi2017a}                           & 24 (12$\times$2)   \\
+        \bottomrule
+    \end{tabular}
+    \caption{Listes des méthodes sur base de décomposition par échelles multiples en ondelettes et leur nombre de caractéristiques extraites associées.}
+    \label{tab:wavelet_image_improvement_multiscale_nb_features}
+\end{table}\par
+
+\subsection{Approche par échelles multiples}
+Lors de la précédente sous-section, nous avons abordé les approches à échelle multiples sur base d'extraction en ondelettes. Toujours dans cette optique d'approche par échelle multiples, divers travaux se sont orientées afin de permettre une classification d'images médicale sur base d'extraction de caractéristiques spatiales~\cite{Alsaih2016,Tzalavra2016}. Les prochains étapes s'inspireront de ces travaux mais également des conclusions apportées par le \Cref{chap:chapter_5} sur l'extraction de caractéristiques spatiales et par transfert de connaissances. Ainsi, nous mettrons en œuvre deux processus par échelle multiples dans ce chapitre présentés lors des prochains paragraphes.\par
+
+La première approche utilisée se base sur une approche de type fusion de caractéristiques avant l'étape de classification, telle qu'employé dans des travaux à but similaire~\cite{Pedersoli2011,Alsaih2016}. Afin de permettre l'agrégation des caractéristiques, nous emploierons un modèle \gls{svm} de type linéaire démontré efficace de manière empirique au sein du \Cref{chap:chapter_5} et robuste dans des contextes à forte dimensions. Les paramètres du modèle sont recensé sur la \Cref{tab:parameters_image_improvement_models_multiscale_spatial} et le principe de cette approche est schématisé au travers de la \Cref{fig:scheme_image_improvement_multiscale_features}.\par
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{contents/chapter_6/resources/scheme_image_improvement_multiscale_features.pdf}
+    \caption{Schéma de représentation du système par échelles multiple, sur la base d'une extraction à diverses échelles puis par l'agrégation des caractéristiques avant la procédure de classification.}
+    \label{fig:scheme_image_improvement_multiscale_features}
+\end{figure}\par
+
+La seconde approche à échelles multiples correspond à un schéma en deux temps. En effet, nous considérerons dans cette seconde hypothèse la spécialisation de modèles de prédiction à des échelles précises. Nous emploierons à chacune de ces échelles, un modèle de type \gls{svm} linéaire pour les raisons évoquées précédemment, dont les hyperparamètres sont recensés en \Cref{tab:parameters_image_improvement_models_multiscale_spatial}. Pour cela, une étape d'entraînement de ces modèles sera réalisée en amont à l'aide de données d'entraînement accompagné par une étape de fusion des prédictions. Concernant la fusion de ces prédictions, le choix d'un vote à la majorité~\cite{Kam1994,Lam1997} a été évalué sur~: 
 \begin{inlinerate}
-    \item la \textbf{supervision dite incomplète} lorsque les données d'entraînement sont partiellement annotées,
-    \item la \textbf{supervision dite inexacte} lorsque les annotations sont insuffisantes vis à vis du niveau de détails souhaité,
-    \item et la \textbf{supervision dite imprécise} lorsque les annotations proviennent de sources manquant d'exactitude.
-\end{inlinerate} Ces diverses approches ont notamment servies à la résolution de tâches telles que de la catégorisation de textes~\cite{Andrews2003,Settles2008} ou d'images~\cite{Chen2004,Tang2009}. Plus spécifiquement au domaine médical, ces techniques ont permis l'aide au diagnostic d'images médicales sur des pathologies pulmonaires ou du colon~\cite{Dundar2007} mais également du cancer du sein~\cite{Sudharshan2019}.\par
+    \item les \textbf{décisions}, défini par l'ensemble $\mathbf{N}$,
+    \item mais également sur les \textbf{scores}, défini par l'ensemble $\mathbf{R}$.
+\end{inlinerate}
+Il est à noter que ces schémas d'agrégation ne nécessitent aucune phase d'apprentissage. Afin de mettre en œuvre l'approche par scores, dans un premier temps, nous arborerons un schéma de type fonction de moyenne associé à la classe répertoriant le score le plus élevé. Ce schéma permet de notifier d'une tendance globale d'une classe par rapport aux autres. Dans un second temps, nous avons réalisé une approche de type fonction de maximum et détection de la classe recueillant le plus grand score. En effet, dans ce second schéma, nous optons pour une vision de la classe ayant recueilli la plus grande confiance. Le schéma global de cette expérience est présenté sur la \Cref{fig:scheme_image_improvement_multiscale_decision}.\par
 
-A cette fin, les annotations et les données images propres à chacune des lésions seront employées pour servir cette tâche faiblement supervisée. Par la nature des données en notre possession, cette nouvelle section s'intéresse au second mode de supervision dite inexacte, par l'utilisation de \gls{mil}. De manière plus formelle ces techniques visent à résoudre la relation $f: X \mapsto Y$, à l'aide des données $D=\{(X_1,y_1),(X_2,y_2),\ldots,(X_b,y_b)\}$ avec $X=\{x_1,x_2,\ldots,x_b\}$ représentant un ensemble ou \textit{bag} d'information composé d'images et $y$ l'annotation associée~\cite{foulds2010}.\par
-
-Ce principe de méthodes à instances multiples est initialement issue du domaine de la recherche de médicaments, domaine dans lequel sont recherché des molécules ainsi que le ou les \textit{conformères} (comprendre les formes que peuvent adopter ces molécules) responsables d'une activité biologique~\cite{Dietterich1997}. Ainsi dans ce contexte, l'activité biologique observée (\textbf{annotation}) est associé à une molécule (\textbf{ensemble}) dont certains conformères (\textbf{instances}) sont responsable du phénomène observé. Ce faisant, la théorie de base des méthodes à instances multiples stipule qu'un ensemble dont l'annotation est négative ne possède aucune instances relatives au phénomène observé, tandis qu'un ensemble dont l'annotation est positive contient au moins une instance relative au phénomène observé~\cite{Dietterich1997}.\par
-
-Par cette idée, de nombreuses théories ont émergées étendant le principe de techniques supervisées (principes de régression logistique, d'arbre de décision, \ldots) à la théorie des instances multiples~\cite{Maron1998,Xu2004,Blockeel2005}. Devant ces nombreuses théories et suite aux travaux des \Cref{chap:chapter_4} et \Cref{chap:chapter_5} mettant en avant l'efficacité des \gls{svm} sur cette problématique d'images \gls{rcm}, nous nous intéressons à leur extension au principe d'instances multiples. L'un de ces travaux~\cite{Doran2014} développe plusieurs de ces approches et met en notamment avant trois propriétés essentielles des \gls{svm}~:
-\begin{inlinerate}
-    \item la solidité,
-    \item l'exhaustivité,
-    \item et la convexité.
-\end{inlinerate} Ces propriétés sont toutes intrinsèques aux \gls{svm} et ne peuvent être satisfaites par cette extension au principe d'instances multiples, il est donc nécessaire de procéder à un compromis de ces propriétés~\cite{Doran2014}.\par
-
-Le travail de ce chapitre n'approfondi pas ces diverses propriétés, en revanche nous envisageons les divers modes d'approches associés à l'implémentation de ce principe, dont~: 
-\begin{itemize}
-    \item des approches par \textbf{instances} dont la méthode consiste à déterminer un hyperplan directement à partir des instances, sans considérer les annotation au niveau des ensembles~\cite{Andrews2003}. La séparation des ensembles découle de l'application du principe de base de la théorie des instances multiple, dans laquelle un ensemble est considéré positif si au moins l'une des instances qui le compose est considérée positive.
-    \item des approches par \textbf{ensembles} dont le principe repose sur les annotations des ensembles et consiste à opérer la séparation par hyperplan au niveau des ensembles à partir de noyaux d'ensembles~\cite{Gartner2002}.
-    \item des approches dites \textbf{hybrides} dont le principe se situe à mi-chemin des deux précédentes méthodes~\cite{Bunescu2007}.
-\end{itemize}\par 
-
-Ainsi, ces divers modes d'approches sont considérés dans les prochains paragraphes de ce travail. Dans le but de ne pas évaluer l'ensemble de ces modèles, ce travail ne se focalise que sur ceux jugées de manière empirique comme les plus pertinents au niveau de la classification d'ensembles par l'étude de Doran et al.~\cite{Doran2014}. Dans un premier temps, le modèle \gls{misvm} évalué dans ce travail suit une approche par \textit{instances}, dont le principe réside sur l'estimation de la meilleur instance représentative de chaque ensemble puis procède à une classification par \gls{svm}~\cite{Andrews2003}. Dans un second temps, le modèle \gls{nsk} employé suit une approche par \textbf{ensembles}, dont le principe consiste à projeter chaque ensemble et ses instances dans un nouvel espace de caractéristiques sur lequel sera réalisé la séparation par \gls{svm}~\cite{Gartner2002}. Enfin, le modèle \gls{sbmil} choisi dans ce travail suit une approche dites \textbf{hybride}, dans laquelle les instances d'ensemble négatifs sont considérées comme des ensembles négatifs à part entières et dans laquelle les ensembles positifs sont régis par une contrainte de balancement régit par une inconnue dont la totalité est projetée avant séparation par un modèle \gls{svm}~\cite{Bunescu2007}.\par
-
-Dans le but d'évaluer la pertinence de ces diverses méthodes, ce chapitre se consacre à l'évaluation de chacune d'entre elle combiné aux représentant des trois catégories d'extraction de caractéristiques formulés lors du \Cref{chap:chapter_4} et rappelées lors de la \Cref{sec:patient_decision_methodology}. De plus, suite aux résultats démontrant l'importance de la normalisation lors du \Cref{chap:chapter_4}, l'impact de la normalisation par Minimum et Maximum est évalué en combinaison de ces modèles faiblement supervisés.\par
-
-L'ensemble des modèles de prédiction exploitant le principe d'\gls{mil} que nous mettons en oeuvre dans ce chapitre sont listés en \Cref{tab:patient_decision_weak_hyperparameters}. Afin de mener à bien la réalisation de ces expériences, nous nous reposerons essentiellement sur la librairie logicielle “MISVM” prévue à cet effet~\cite{Doran2014}.\par
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{contents/chapter_6/resources/scheme_image_improvement_multiscale_decision.pdf}
+    \caption{Schéma de représentation du système par échelles multiples, sur la base d'extraction d'extractions et de prédictions à diverses échelles et par agrégation de ces décisions.}
+    \label{fig:scheme_image_improvement_multiscale_decision}
+\end{figure}\par
 
 \begin{table}[H]
     \centering
     \begin{tabular}{lll}
-    \toprule
-    \textbf{Méthode}    & \textbf{Paramètre}& \textbf{Valeurs}                                  \\ \midrule
-    \gls{misvm}         & \multirow{3}{*}{C}& \multirow{3}{*}{[0.01, 0.1, 1, 10, 100, 1000]}    \\ \cline{1-1}
-    \gls{nsk}           &                   &                                                   \\ \cline{1-1} 
-    \gls{sbmil}         &                   &                                                   \\ \bottomrule 
-    \end{tabular}    
-    \caption{Table reprenant les divers modèles utilisant le principe d'\gls{mil} pour attenter une classification au niveau lésionnel, ainsi que leurs hyperparamètres associés.}
-    \label{tab:patient_decision_weak_hyperparameters}
+        \toprule
+        \textbf{Modèle}                                 & \textbf{Hyperparamètres}  & \textbf{Valeurs}                          \\ \midrule
+        \gls{svm} - Noyau linéaire                      & C                         & [0.001, 0.01, 0.1, 1, 10, 100, 1000]      \\ 
+        \bottomrule 
+    \end{tabular} 
+    \caption{Table recensant les paramètres du modèle de classification employé pour réaliser la prédiction par échelles multiples sur caractéristiques spatiales ou par transfert de connaissances. Ce modèle et hyperparamètres sont employés pour la classification par échelle mais également pour l'agrégation des multiples échelles.}
+    \label{tab:parameters_image_improvement_models_multiscale_spatial}
 \end{table}\par
-\clearpage
 
-\section{Présentation des résultats}
-Les précédentes sections de ce travail se sont consacrées à décrire des méthodes pour tenter de résoudre la problématique de prédiction au niveau des lésions à partir de données \gls{rcm}. Cette nouvelle section se dédie à la présentation des résultats pour donner suite aux diverses expérimentations mentionnées lors de ces dernières. Dans une première sous partie, nous relatons le protocole d'expérimentation suivi pour permettre l'obtention des résultats et nous décrivons l'organisation de ceux-ci. Puis dans une seconde sous partie, nous développons les divers résultats issus des expériences mentionnées précédemment.\par
-
-\subsection{Protocole d'expérimentation}
-Afin de réaliser l'évaluation de ces expériences, nous emploierons une validation croisée imbriquée déjà discuté sur le \Cref{sec:models_settings}, pour ses avantages permettant ainsi l'obtention de métriques plus objectif sur les performances du système évalué~\cite{Cawley2010}. Ce type de structure de validation est plus robuste face au biais~\cite{Cawley2010} et est démontré empiriquement moins sensible au biais et à la variance lorsque celle-ci est couplée à des valeurs de $k$ comprises entre 5 et 10 pour l'évaluation~\cite{James2000}. La diversité de combinaisons relativement limité de cette partie, nous permet à l'instar des précédents chapitres, d'obtenir des résultats dans un temps raisonnable malgré des valeur de $k$ élevées. Ainsi une valeur de $k$ égale à 10 est utilisée pour l'évaluation, tandis qu'une valeur de 2 sera conservée pour la boucle interne suffisante pour déterminer la meilleure combinaison d'hyperparamètres. Bien que considéré, le schéma de validation de type \textit{leave-one-out} pour la boucle externe d'évaluation ne sera pas utilisé car plus sujet à une variance élevée lors des mesures notamment en présence de valeurs aberrantes~\cite{Bengio2004}. De plus, un tel schéma de validation est bien plus coûteux à entreprendre puisqu'il nécessite autant de phase d'entraînement et d'évaluation, que d'instances dans le jeu de données considéré soit 223 pour ce travail.\par
-
-Pour procéder au mieux au réglage des paramètres des modèles précédents et, d'autre part de retenir une évaluation objective de ces processus malgré les déséquilibres d'annotations il est nécessaire d'opter pour une métrique adaptée. Ces expériences emploient le \textbf{\fscore{}} permettant de représenter conjointement les mesures de précision et de rappel au sein d'une même métrique binaire. De plus, et afin de compléter l'analyse des résultats et de permettre un parallèle avec ceux des experts en dermatologie, les valeurs de \textbf{sensibilité} et de \textbf{spécificité} sont renseignées conjointement au \fscore{}. Comme pour l'article de \cite{Cinotti2016}, ce processus décompose la présentation des résultats en deux temps. Dans un premier temps, ce travail opte pour l'analyse des mesures précédentes sur l'ensemble des cas clinique du jeu de données, en adoptant comme classe positive les annotations des lésions dites \textit{malignes}. Puis dans un second temps, les même mesures sont extraites en ne considérant que les cas de \textbf{\gls{lm} / \gls{lmm}} parmi les annotations malignes et en adoptant comme classe positive les annotations des lésions dites \textit{malignes}.\par
-
-La partie dédiée aux résultats se décompose en diverses étapes, débutant dans un premier temps par une présentation des résultats obtenus au niveau lésionnel par les diverses propositions de méthodes supervisées présentée lors de la \Cref{sec:patient_decision_supervised}. Dans une second temps, ce travail procède à une présentation des résultats obtenus au niveau lésionnel par l'utilisation des méthodes faiblement supervisées listées lors de la \Cref{sec:patient_decision_weak}. En continuité de ces résultats sur les méthodes faiblement supervisées, ce travail procède à une analyse inversée par la méthode \gls{misvm}, dont le principe d'approche par instances permet de revenir à la prédiction d'annotations sur les données images de base de ce travail.\par
-\clearpage
-
-\subsection{Résultats des expérimentation}
-Dans cette section dédiée aux résultats, les diverses méthodes envisagées pour la prise de décision au niveau des lésions vont être traitées à l'aide de paragraphes respectifs. Cette première analyse à destination des méthodes supervisées se consacre aux résultats obtenus par ces diverses méthodes. Pour les méthodes spatiales, un \fscore{} maximal de 0,80 avec un écart-type de 0,11 sont obtenus à l'aide de la méthode "Décisions - Priorité" ; Pour les méthodes fréquentielles, un \fscore{} maximal de 0,83 avec un écart-type de 0,07 sont obtenus à l'aide de la méthode "Décisions - Dynamique" ; Pour les méthodes de transfert de connaissances, un \fscore{} maximal de 0,89 avec un écart-type de 0,08 sont obtenus à l'aide de la méthode "Scores - Moyenne". Ainsi, des différences significatives sont à remarquer entre les méthodes spatiales, fréquentielles et de transfert de connaissances, nettement à l'avantage de cette dernière méthode comme mise en avant lors du \Cref{chap:chapter_4}. L'utilisation du transfert de connaissances comme base d'extraction de caractéristiques et la méthode "Scores - Moyenne" permettent l'obtention d'une valeur de sensibilité de 0,95 et de spécificité de 0,70. Ces résultats peuvent être visualisés sur la \Cref{tab:results_lesion_classification_supervised_patient}.\par
+Ainsi, nous mènerons les diverses expériences de cette sous-section à l'aide des modes d'extraction précédemment étudié dans le \Cref{chap:chapter_5}. Nous emploierons dans un premier temps les caractéristiques d'Haralick~\cite{Haralick1973} extraites au nombre de 56 par image. Puis dans un second temps, le transfert de connaissances par l'utilisation de l'architecture de \gls{cnn} ResNet-50~\cite{He2016} pré-entrainé sur la base ImageNet~\cite{Canziani2016}, permettant l'extraction de 2048 d'entre elles par image. L'ensemble des expériences menées est recensé sur la \Cref{tab:parameters_spatial_transfer_multiscale_nb_features}.\par
 
 \begin{table}[H]
     \centering
-    \begin{tabular}{cllll}
+    \begin{tabular}{llll}
         \toprule
-        \multicolumn{1}{l}{}         &                              & Sensibilité           & Spécificité           & \fscore{}                         \\ \midrule
-        \multirow{4}{*}{Spatial}     & Décisions - Priorité         & \textbf{0.92$\pm$0.09}    & \textbf{0.40$\pm$0.16}    & \textbf{0.80$\pm$0.11}    \\
-                                     & Décisions - Dynamique        & 0.80$\pm$0.19             & 0.66$\pm$0.22             & 0.80$\pm$0.13             \\
-                                     & Scores - Maximum             & 0.83$\pm$0.18             & 0.57$\pm$0.25             & 0.79$\pm$0.12             \\
-                                     & Scores - Moyenne             & 0.83$\pm$0.20             & 0.58$\pm$0.30             & 0.79$\pm$0.13             \\ \midrule
-        \multirow{4}{*}{Fréquentiel} & Décisions - Priorité         & 0.93$\pm$0.06             & 0.37$\pm$0.25             & 0.80$\pm$0.11             \\
-                                     & Décisions - Dynamique        & \textbf{0.82$\pm$0.08}    & \textbf{0.77$\pm$0.10}    & \textbf{0.83$\pm$0.07}    \\
-                                     & Scores - Maximum             & 0.84$\pm$0.09             & 0.58$\pm$0.22             & 0.80$\pm$0.09             \\
-                                     & Scores - Moyenne             & 0.80$\pm$0.14             & 0.72$\pm$0.25             & 0.81$\pm$0.09             \\ \midrule
-        \multirow{4}{*}{Transfert}   & Décisions - Priorité         & 0.98$\pm$0.04             & 0.34$\pm$0.14             & 0.82$\pm$0.06             \\
-                                     & Décisions - Dynamique        & 0.91$\pm$0.13             & 0.71$\pm$0.24             & 0.87$\pm$0.09             \\
-                                     & Scores - Maximum             & 0.92$\pm$0.15             & 0.57$\pm$0.21             & 0.84$\pm$0.12             \\
-                                     & Scores - Moyenne             & \textbf{0.95$\pm$0.09}    & \textbf{0.70$\pm$0.22}    & \textbf{0.89$\pm$0.08}    \\ \bottomrule
+                                                    &          & \multicolumn{2}{l}{Nombre de caractéristiques} \\ \hline
+        \multirow{2}{*}{Fusion de caractéristiques} & Haralick & \multicolumn{2}{l}{224 (56$\times$4)}          \\ \cline{2-4}
+                                                    & ResNet-50& \multicolumn{2}{l}{8192 (2048$\times$4)}       \\ \hline
+        \multirow{2}{*}{Fusion de prédictions}      & Haralick & 56 / échelle   & \multirow{2}{*}{\begin{tabular}[c]{@{}l@{}}4 (1$\times$4) / Décisions\\ 12 (3$\times$4) / Scores\end{tabular}} \\ \cline{2-3}
+                                                    & ResNet-50& 2048 / échelle &                               \\
+        \bottomrule
     \end{tabular}
-    \caption{Table de résultats issus des processus de classification supervisés employés pour mener une classification au niveau lésionnel, exprimés selon la sensibilité, la spécificité et le \fscore{}.}
-    \label{tab:results_lesion_classification_supervised_patient}
-\end{table}
+    \caption{Listes des méthodes sur base de décomposition par échelles multiples et leur nombre de caractéristiques extraites associées.}
+    \label{tab:parameters_spatial_transfer_multiscale_nb_features}
+\end{table}\par
 
-Ce second paragraphe se focalise sur les cas de lésions de types \gls{lm} / \gls{lmm} par ces mêmes méthodes de prédiction supervisées. Pour les méthodes spatiales, un \fscore{} maximal de 0,80 avec un écart-type de 0,14 sont obtenus à l'aide de la méthode "Décisions - Dynamique" ; Pour les méthodes fréquentielles, un \fscore{} maximal de 0,83 avec un écart-type de 0,09 sont obtenus à l'aide de la méthode "Décisions - Dynamique" ; Pour les méthodes de transfert de connaissances, un \fscore{} maximal de 0,87 avec un écart-type de 0,11 sont obtenus à l'aide de la méthode "Scores - Moyenne". À nouveau, des différences significatives sont à remarquer entre les méthodes spatiales, fréquentielles et de transfert de connaissances, à l'avantage de cette dernière méthode comme mise en avant lors du \Cref{chap:chapter_4}. La mise en oeuvre du transfert de connaissances comme base d'extraction de caractéristiques et la méthode "Scores - Moyenne" permettent l'obtention d'une valeur de sensibilité de 0,95 et de spécificité de 0,70 sur les lésions de types \gls{lm} / \gls{lmm}. Les diverses valeurs peuvent être visualisés sur la \Cref{tab:results_lesion_classification_supervised_patient_lm}.\par
+
+\section{Approche par fenêtre glissante}
+Les hypothèses formulées lors du \Cref{chap:chapter_5} ne permettaient qu'une compréhension globale de l'image. Lors de la section précédente, nous avons évoqué des schémas par échelles multiples permettant une compréhension à divers niveaux. Cette nouvelle section va s'orienter vers une compréhension des données à basse échelle, en supposant qu'il existe un niveau de détail pour lesquels les tissus peuvent être caractérisés avec suffisamment de précision.\par
+
+Ce type d'approche est souvent qualifié d'approche par fenêtre glissante ou par miniatures (termes anglais de \textit{patchs}). Néanmoins le premier terme permet de visualiser le principe de fonctionnement consistant à balayer un espace de plus grande dimension par une fenêtre de dimension inférieure. Cette technique a permis des avancées pour de diverses applications, dont~: 
+\begin{itemize}
+    \item de la détection et localisation d'objets sur des images naturelles~\cite{Harzallah2009} ou encore de détection de cancer et de parties anatomiques sur image de radiologie~\cite{Helwan2017}, par motivation d'obtenir l'emplacement précis de certaines informations,
+    \item de la détection d'anomalies sur des images histologiques mais encore de la classification de données conséquentes~\cite{Hou2016,Alqudah2019,Wei2019}, motivées par la contrainte matérielle impliqué par la taille de ces images ou par manque d'annotations,
+    \item \ldots
+\end{itemize}\par
+
+Les données images en notre possession corroborent avec ce type de schéma, dans lequel chacune d'entre elle arbore une composition de tissus divers. Ces labels au niveau de l'image répondent à une hiérarchie mise en place pour qualifier les relations entre ces tissus. Pour rappel, un label malin qualifiera une donnée comportant au minimum des tissus typique d'une pathologie maligne mais pourra également comporter des tissus bénin et sain, et une annotation bénigne ne comportera que des tissus bénin ou sain.\par
+
+Ce travail se distingue des travaux de Hou et al.~\cite{Hou2016} ou encore de Alqudah et al.~\cite{Alqudah2019} dans la mesure où nous possédons une base d'images de petite taille, soit 250$\times$250 pixels, annotée par l'un des spécialistes en dermatologie pour le besoin de cette étude. Cette taille a été déterminé car elle correspond a un bon compromis entre le niveau de détail et les tissus observables, mais également suite aux travaux de Wiltgen et al.\cite{Wiltgen2008} proposant des résultats en ce sens. Afin de nous affranchir partiellement de l'hypothèse de l'influence de la taille de la fenêtre glissante, nous proposerons une augmentation de ces images vers une taille de 500$\times$500 pixels, par mosaïquage, pour les expériences portant sur cette taille.\par
 
 \begin{table}[H]
     \centering
-    \begin{tabular}{cllll}
+    \begin{tabular}{lll}
         \toprule
-        \multicolumn{1}{l}{}         &                              & Sensibilité           & Spécificité           & \fscore{}             \\ \midrule
-        \multirow{4}{*}{Spatial}     & Décisions - Priorité         & 0.93$\pm$0.11             & 0.40$\pm$0.16             & 0.78$\pm$0.13             \\
-                                     & Décisions - Dynamique        & \textbf{0.84$\pm$0.18}    & \textbf{0.66$\pm$0.22}    & \textbf{0.80$\pm$0.14}    \\
-                                     & Scores - Maximum             & 0.83$\pm$0.18             & 0.57$\pm$0.25             & 0.77$\pm$0.14             \\
-                                     & Scores - Moyenne             & 0.86$\pm$0.18             & 0.58$\pm$0.30             & 0.79$\pm$0.14             \\ \midrule
-        \multirow{4}{*}{Fréquentiel} & Décisions - Priorité         & 0.93$\pm$0.07             & 0.37$\pm$0.25             & 0.77$\pm$0.13             \\
-                                     & Décisions - Dynamique        & \textbf{0.84$\pm$0.12}    & \textbf{0.77$\pm$0.10}    & \textbf{0.83$\pm$0.09}    \\
-                                     & Scores - Maximum             & 0.87$\pm$0.09             & 0.58$\pm$0.22             & 0.80$\pm$0.11             \\
-                                     & Scores - Moyenne             & 0.82$\pm$0.14             & 0.72$\pm$0.25             & 0.81$\pm$0.12             \\ \midrule
-        \multirow{4}{*}{Transfert}   & Décisions - Priorité         & 0.97$\pm$0.05             & 0.34$\pm$0.14             & 0.79$\pm$0.07             \\
-                                     & Décisions - Dynamique        & 0.91$\pm$0.16             & 0.71$\pm$0.24             & 0.86$\pm$0.12             \\
-                                     & Scores - Maximum             & 0.90$\pm$0.18             & 0.57$\pm$0.21             & 0.81$\pm$0.16             \\
-                                     & Scores - Moyenne             & \textbf{0.95$\pm$0.11}    & \textbf{0.70$\pm$0.22}    & \textbf{0.87$\pm$0.11}    \\ \bottomrule
-    \end{tabular}
-    \caption{Table de résultats issus des processus de classification supervisés employés pour mener une classification au niveau lésionnel sur les pathologies de \gls{lm} / \gls{lmm}, exprimés selon la sensibilité, la spécificité et le \fscore{}.}
-    \label{tab:results_lesion_classification_supervised_patient_lm}
-\end{table}
+        \textbf{Modèle}                                 & \textbf{Hyperparamètres}  & \textbf{Valeurs}                          \\ \midrule
+        \gls{svm} - Noyau linéaire                      & C                         & [0.001, 0.01, 0.1, 1, 10, 100, 1000]      \\ 
+        \bottomrule 
+    \end{tabular} 
+    \caption{Table reprenant le modèle et les hyperparamètres du modèle de classification employé pour la détection à basse échelle des tissus dans le processus de fenêtre glissante.}
+    \label{tab:parameters_image_improvement_sliding_window_models}
+\end{table}\par
 
-\vspace{25pt}
-
-\begin{table}[H]
-    \centering
-    \begin{tabular}{cllll}
-        \toprule
-        \multicolumn{1}{l}{}         &                      & Sensibilité           & Spécificité           & \fscore{}             \\ \midrule
-        \multirow{6}{*}{Spatial}     & \gls{misvm}          & 0.69$\pm$0.13             & 0.57$\pm$0.22             & 0.70$\pm$0.12             \\
-                                     & \gls{nsk}            & \textbf{0.81$\pm$0.12}    & \textbf{0.70$\pm$0.12}    & \textbf{0.81$\pm$0.08}    \\
-                                     & \gls{sbmil}          & 0.10$\pm$0.08             & 0.99$\pm$0.06             & 0.18$\pm$0.13             \\
-                                     & MMS + \gls{misvm}    & 0.78$\pm$0.14             & 0.77$\pm$0.14             & 0.81$\pm$0.12             \\
-                                     & MMS + \gls{nsk}      & 0.78$\pm$0.11             & 0.69$\pm$0.13             & 0.79$\pm$0.08             \\
-                                     & MMS + \gls{sbmil}    & 0.88$\pm$0.30             & 0.07$\pm$0.30             & 0.72$\pm$0.24             \\ \midrule
-        \multirow{6}{*}{Fréquentiel} & \gls{misvm}          & 0.72$\pm$0.19             & 0.62$\pm$0.26             & 0.73$\pm$0.16             \\
-                                     & \gls{nsk}            & 0.78$\pm$0.15             & 0.59$\pm$0.21             & 0.77$\pm$0.12             \\
-                                     & \gls{sbmil}          & 0.27$\pm$0.28             & 0.84$\pm$0.29             & 0.39$\pm$0.23             \\
-                                     & MMS + \gls{misvm}    & \textbf{0.83$\pm$0.12}    & \textbf{0.69$\pm$0.16}    & \textbf{0.82$\pm$0.10}    \\
-                                     & MMS + \gls{nsk}      & 0.80$\pm$0.14             & 0.71$\pm$0.09             & 0.81$\pm$0.11             \\
-                                     & MMS + \gls{sbmil}    & 0.09$\pm$0.06             & 1.00$\pm$0.00             & 0.16$\pm$0.09             \\ \midrule
-        \multirow{6}{*}{Transfert}   & \gls{misvm}          & 0.83$\pm$0.12             & 0.76$\pm$0.17             & 0.84$\pm$0.10             \\
-                                     & \gls{nsk}            & \textbf{0.86$\pm$0.10}    & \textbf{0.77$\pm$0.19}    & \textbf{0.86$\pm$0.11}    \\
-                                     & \gls{sbmil}          & 0.17$\pm$0.11             & 0.90$\pm$0.09             & 0.28$\pm$0.15             \\
-                                     & MMS + \gls{misvm}    & 0.83$\pm$0.10             & 0.77$\pm$0.16             & 0.84$\pm$0.07             \\
-                                     & MMS + \gls{nsk}      & 0.86$\pm$0.10             & 0.72$\pm$0.19             & 0.85$\pm$0.09             \\
-                                     & MMS + \gls{sbmil}    & 0.21$\pm$0.12             & 0.91$\pm$0.10             & 0.33$\pm$0.17             \\ \bottomrule
-    \end{tabular}
-    \caption{Table de résultats issus des processus de classification faiblement supervisés par \gls{mil} employés pour mener une classification au niveau lésionnel, exprimés selon la sensibilité, la spécificité et le \fscore{}.}
-    \label{tab:results_lesion_classification_weakly_patient}
-\end{table}
-\clearpage
-
-Cette seconde partie à destination des méthodes faiblement supervisées par \gls{mil} va permettre de décrire les résultats obtenus par ces diverses méthodes. Pour les méthodes spatiales, un \fscore{} maximal de 0,81 avec un écart-type de 0,08 sont obtenus à l'aide de la méthode \gls{nsk} ; Pour les méthodes fréquentielles, un \fscore{} maximal de 0,82 avec un écart-type faible de 0,10 sont obtenus à l'aide de la méthode combinant normalisation par Minimum / Maximum et \gls{misvm} ; Pour les méthodes de transfert de connaissances, un \fscore{} maximal de 0,86 avec un écart-type assez important de 0,11 sont obtenus à l'aide de la méthode \gls{nsk}. Ainsi, de même que pour les méthode supervisées, des différences significatives sont à remarquer entre les méthodes spatiales, fréquentielles et de transfert de connaissances. Cette dernière méthode comme base d'extraction de caractéristiques et la méthode \gls{nsk} permettent l'obtention d'une valeur de sensibilité de 0,86 et de spécificité de 0,77. Les valeurs des résultats de techniques faiblement supervisées par \gls{mil} peuvent être visualisés sur la \Cref{tab:results_lesion_classification_weakly_patient}.\par
-
-Ce second paragraphe à l'intention des méthodes faiblement supervisées par \gls{mil} se focalise sur les cas de \gls{lm} / \gls{lmm}. Pour les méthodes spatiales, un \fscore{} maximal de 0,80 avec un écart-type de 0,11 sont obtenus à l'aide de la méthode \gls{nsk} ; Pour les méthodes fréquentielles, un \fscore{} maximal de 0,80 avec un écart-type de 0,11 sont obtenus à l'aide de la méthode combinant normalisation par Minimum / Maximum au modèle \gls{nsk} ; Pour les méthodes de transfert de connaissances, un \fscore{} maximal de 0,85 avec un écart-type de 0,13 sont obtenus par la méthode \gls{nsk}. La méthode d'extraction par transfert de connaissances permet l'obtention des résultats les plus pertinent en combinaison de la méthode \gls{nsk}, soit des valeurs de sensibilité de 0.87 et de spécificité de 0.77. Ces nouvelles valeurs liées à l'évaluation des méthodes faiblement supervisées sur les cas de \gls{lm} / \gls{lmm} peuvent être visualisés sur la \Cref{tab:results_lesion_classification_weakly_patient_lm}.\par
-
-\begin{table}[H]
-    \centering
-    \begin{tabular}{cllll}
-        \toprule
-        \multicolumn{1}{l}{}         &                          & Sensibilité           & Spécificité           & \fscore{}             \\ \midrule
-        \multirow{6}{*}{Spatial}     & \gls{misvm}              & 0.69$\pm$0.17             & 0.57$\pm$0.22             & 0.69$\pm$0.14             \\
-                                     & \gls{nsk}                & \textbf{0.82$\pm$0.15}    & \textbf{0.70$\pm$0.12}    & \textbf{0.80$\pm$0.11}    \\
-                                     & \gls{sbmil}              & 0.11$\pm$0.09             & 0.99$\pm$0.06             & 0.20$\pm$0.14             \\
-                                     & MMS + \gls{misvm}        & 0.78$\pm$0.17             & 0.77$\pm$0.14             & 0.80$\pm$0.16             \\
-                                     & MMS + \gls{nsk}          & 0.81$\pm$0.14             & 0.69$\pm$0.13             & 0.79$\pm$0.09             \\
-                                     & MMS + \gls{sbmil}        & 0.86$\pm$0.30             & 0.07$\pm$0.30             & 0.67$\pm$0.23             \\ \midrule
-        \multirow{6}{*}{Fréquentiel} & \gls{misvm}              & 0.71$\pm$0.21             & 0.62$\pm$0.26             & 0.71$\pm$0.19             \\
-                                     & \gls{nsk}                & 0.78$\pm$0.12             & 0.59$\pm$0.21             & 0.75$\pm$0.10             \\
-                                     & \gls{sbmil}              & 0.25$\pm$0.28             & 0.84$\pm$0.29             & 0.37$\pm$0.22             \\
-                                     & MMS + \gls{misvm}        & 0.82$\pm$0.13             & 0.69$\pm$0.16             & 0.80$\pm$0.12             \\
-                                     & MMS + \gls{nsk}          & \textbf{0.82$\pm$0.14}    & \textbf{0.71$\pm$0.09}    & \textbf{0.80$\pm$0.11}    \\
-                                     & MMS + \gls{sbmil}        & 0.11$\pm$0.06             & 1.00$\pm$0.00             & 0.19$\pm$0.10             \\ \midrule
-        \multirow{6}{*}{Transfert}   & \gls{misvm}              & 0.82$\pm$0.13             & 0.76$\pm$0.17             & 0.82$\pm$0.12             \\
-                                     & \gls{nsk}                & \textbf{0.87$\pm$0.09}    & \textbf{0.77$\pm$0.19}    & \textbf{0.85$\pm$0.13}    \\
-                                     & \gls{sbmil}              & 0.19$\pm$0.10             & 0.90$\pm$0.09             & 0.30$\pm$0.15             \\
-                                     & MMS + \gls{misvm}        & 0.85$\pm$0.10             & 0.77$\pm$0.16             & 0.84$\pm$0.08             \\
-                                     & MMS + \gls{nsk}          & 0.88$\pm$0.10             & 0.72$\pm$0.19             & 0.84$\pm$0.11             \\
-                                     & MMS + \gls{sbmil}        & 0.25$\pm$0.13             & 0.91$\pm$0.10             & 0.38$\pm$0.18             \\ \bottomrule
-    \end{tabular}
-    \caption{Table de résultats issus des processus de classification faiblement supervisés par \gls{mil} employés pour mener une classification au niveau lésionnel sur les pathologies de \gls{lm} / \gls{lmm}, exprimés selon la sensibilité, la spécificité et le \fscore{}.}
-    \label{tab:results_lesion_classification_weakly_patient_lm}
-\end{table}
-
-Pour finir, ce paragraphe se consacre à la présentation des courbes \gls{roc} au niveau lésionnel des divers méthodes mentionnées précédemment. Sur l'ensemble des cas cliniques, la méthode supervisé issues du modèle de prédiction "Scores - Moyenne" permet l'obtention d'un score \gls{auc} de 0,87 ; la méthode faiblement supervisée par utilisation du modèle \gls{nsk} permet quant à elle l'obtention d'un score \gls{auc} de 0,83. Sur les seuls cas de \gls{lm} / \gls{lmm}, la méthode supervisé issues du modèle de prédiction "Scores - Moyenne" permet l'obtention d'un score \gls{auc} similaire de 0,88 ; la méthode faiblement supervisée par utilisation du modèle \gls{nsk} permet quant à elle l'obtention d'un score \gls{auc} de 0,83 identique à celui sur l'ensemble des lésions. L'ensemble de ces courbes \gls{roc} et de ces scores \gls{auc} peuvent être visualisées sur la \Cref{fig:results_lesion_roc_lesions}.\par
+Dans le but de mettre en oeuvre le schéma de détection à basse échelle, nous appliquerons les techniques jugées les plus pertinentes du chapitre précédent, à savoir~: 
+\begin{inlinerate}
+    \item la méthode d'Haralick, comme représentant des méthodes spatiales,
+    \item la méthode en ondelette de Daubechies, comme représentant des méthodes fréquentielles,
+    \item et enfin une extraction selon l'architecture ResNet-50, comme représentant des méthodes par transfert de connaissances.
+\end{inlinerate}. La détection à basse échelle sera réalisée à l'aide d'un modèle \gls{svm} linéaire, jugée le plus pertinent lors du \Cref{chap:chapter_5}, dont les paramètres sont listés en \Cref{tab:parameters_image_improvement_sliding_window_models}.\par
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\linewidth]{contents/chapter_6/resources/results_lesion_roc_lesions.pdf}
-    \caption{Courbes \gls{roc} issues de la prédiction au niveau des lésions sur l'ensemble des cas, figurant à l'aide d'un trait orange estompé tracé en continu, et sur les cas de \gls{lm} / \gls{lmm}, figurant à l'aide d'un trait orange tracé en pointillés. A gauche, les courbes supervisés issues du modèle de prédiction employant la méthode "Scores - Moyenne" ; A droite, les courbes faiblement supervisés sur la base de la théorie \gls{mil} par utilisation du modèle \gls{nsk}.}
-    \label{fig:results_lesion_roc_lesions}
+    \includegraphics[width=\linewidth]{contents/chapter_6/resources/scheme_image_improvement_sliding_features.pdf}
+    \caption{Schéma de représentation du système de prédiction par fenêtre glissante. Ce schéma en deux temps propose de prédire sur une multitude de sous parties de l'image originale puis de fusionner les diverses prédictions afin de fournir une prédiction globale à la donnée originale.}
+    \label{fig:scheme_image_improvement_sliding_features}
 \end{figure}\par
 
-Cette dernière partie se dédie aux résultats de prédiction des méthodes faiblement supervisées par \gls{mil} dont l'approche se base sur les instances et permet de revenir à un niveau de prédiction sur les instances. A cet effet, seul le modèle \gls{misvm} permet de revenir à un tel niveau de prédiction au sein de ce travail. Pour les méthodes spatiales, un \fscore{} maximal de 0,56 avec un écart-type de 0,14 sont obtenus par combinaison de la normalisation Minimum / Maximum et du modèle \gls{misvm} ; Pour les méthodes fréquentielles, un \fscore{} maximal de 0,59 avec un écart-type de 0,15 sont obtenus par combinaison de la normalisation Minimum / Maximum et du modèle \gls{misvm} ; Pour les méthodes de transfert de connaissances, un \fscore{} maximal de 0,64 avec un écart-type de 0,16 sont obtenus avec le modèle \gls{misvm} seul. Les résultats de ce mode de prédiction sont visibles sur la \Cref{tab:results_lesion_classification_weakly_image}.\par
+Afin de gérer les prédictions obtenues au niveau de la fenêtre glissante, plusieurs stratégies sont envisagées sur les décisions et les scores. Ainsi, nous considérerons plusieurs approches, dont~:
+\begin{itemize}
+    \item   une approche au niveau des \textbf{décisions}, défini par l'ensemble $\mathbf{N}$. Cette approche abouti à un vecteur de taille 1$\times$n où n correspond au nombre d'éléments extrait dans l'image. Deux méthodes ont été définies, dont~: 
+            \begin{itemize}
+                \item par \textbf{priorité}, dans laquelle nous privilégions la détection d'un élément d'une classe hiérarchiquement supérieure comme décision globale à l'image,
+                \item par seuils \textbf{dynamiques}, dans laquelle nous déterminons des seuils optimaux d'éléments nécessaires à chaque classe pour décréter l'appartenance à l'une d'entre elle, combiné à un système hiérarchique privilégiant les classes prioritaires.
+            \end{itemize}
+    \item   une approche au niveau des \textbf{scores}, défini par l'ensemble $\mathbf{R}$. Cette approche aboutie à un vecteur de taille s$\times$n où s correspond au nombre de scores de classes extrait et n correspond au nombre d'éléments extrait dans l'image. Deux méthodes ont été définies, dont~: 
+            \begin{itemize}
+                \item par seuil \textbf{dynamique}, nous procédons dans un premier temps à une réduction de l'information à l'aide d'une fonction maximum, nous permettant de réduire celui-ci à vecteur de taille 1$\times$s focalisé sur la confiance maximum en chaque classe. Dans un second temps, des seuils optimaux représentant la confiance minimale nécessaire sont déterminé sur ces scores, combiné là encore à un système hiérarchique privilégiant les classes prioritaires.
+                \item par \textbf{classification}, le vecteur de scores est alors considéré comme un vecteur de caractéristiques fourni en entrée d'un modèle \gls{svm} linéaire, dont les hyperparamètres considérés sont ceux de la \Cref{tab:parameters_image_improvement_sliding_window_models}.
+            \end{itemize}
+\end{itemize}\par
+
+Nous n'envisagerons pas de scénario portant sur l'extraction de caractéristiques à l'aide la fenêtre de classification, c’est-à-dire sans l'étape de prédiction locale à chaque fenêtre, puis à la fusion de ces caractéristiques la dimension des données généré par une telle approche étant trop conséquente.\par
+ 
+Nous emploierons pour cela un schéma de classification comme sur la \Cref{fig:scheme_image_improvement_sliding_features}. De plus, n'ayant pas de critères de tailles optimum, nous feront varier ces paramètres afin d'étudier leur impact sur la classification. ces paramètres sont visible sur la \Cref{tab:parameters_image_improvement_sliding_window_parameters}.\par
 
 \begin{table}[H]
     \centering
-    \begin{tabular}{cllll}
+    \begin{tabular*}{0.6\linewidth}{l@{\extracolsep{\fill}}l}
         \toprule
-        \multicolumn{1}{l}{}         &                      & Sensibilité           & Spécificité           & \fscore{}             \\ \midrule
-        \multirow{2}{*}{Spatial}     & \gls{misvm}          & 0.29$\pm$0.13             & 0.90$\pm$0.08             & 0.42$\pm$0.14             \\
-                                     & MMS + \gls{misvm}    & \textbf{0.42$\pm$0.15}    & \textbf{0.93$\pm$0.05}    & \textbf{0.56$\pm$0.14}    \\ \midrule
-        \multirow{2}{*}{Fréquentiel} & \gls{misvm}          & 0.29$\pm$0.22             & 0.89$\pm$0.28             & 0.42$\pm$0.20             \\
-                                     & MMS + \gls{misvm}    & \textbf{0.45$\pm$0.15}    & \textbf{0.93$\pm$0.05}    & \textbf{0.59$\pm$0.15}    \\ \midrule
-        \multirow{2}{*}{Transfert}   & \gls{misvm}          & \textbf{0.48$\pm$0.16}    & \textbf{0.97$\pm$0.02}    & \textbf{0.64$\pm$0.16}    \\
-                                     & MMS + \gls{misvm}    & 0.42$\pm$0.14             & 0.97$\pm$0.02             & 0.57$\pm$0.14             \\ \bottomrule
-    \end{tabular}
-    \caption{Table de résultats issus de l'application du modèle \gls{misvm} employés pour mener une classification au niveau des instances, sur l'ensemble des images annotées, et exprimés selon la sensibilité, la spécificité et le \fscore{}.}
-    \label{tab:results_lesion_classification_weakly_image}
-\end{table}
+        \textbf{Résolution spatiale}& \textbf{Chevauchement}   \\ \hline
+        250$\times$250              & 0\%                      \\ \hline
+        250$\times$250              & 25\%                     \\ \hline
+        250$\times$250              & 50\%                     \\ \hline 
+        500$\times$500              & 0\%                      \\ \hline
+        500$\times$500              & 25\%                     \\ \hline
+        500$\times$500              & 50\%                     \\
+        \bottomrule
+    \end{tabular*}
+    \caption{Ensemble des paramètres d'expérimentations menées par l'approche de type fenêtre glissante. Nous mesurerons ainsi l'impact de la résolution spatiale limité aux valeurs de 250$\times$250e t 500$\times$500, mais également du chevauchement sur des valeurs de 0\%, 25\% et 50\%.}
+    \label{tab:parameters_image_improvement_sliding_window_parameters}
+\end{table}\par
 
-Ce second paragraphe se dédie à l'intention des résultats de prédiction des méthodes faiblement supervisées par \gls{mil} sur les images issues de lésion de type \gls{lm} / \gls{lmm}. Pour les méthodes spatiales, un \fscore{} maximal de 0,60 avec un écart-type de 0,14 sont obtenus par combinaison de la normalisation Minimum / Maximum et du modèle \gls{misvm} ; Pour les méthodes fréquentielles, un \fscore{} maximal de 0,62 avec un écart-type de 0,14 sont obtenus par combinaison de la normalisation Minimum / Maximum et du modèle \gls{misvm} ; Pour les méthodes de transfert de connaissances, un \fscore{} maximal de 0,65 avec un écart-type de 0,16 sont obtenus avec le modèle \gls{misvm} seul.  La totalité de ces résultats est disponible sur la \Cref{tab:results_lesion_classification_weakly_image_lm}.\par
+\section{Réglage fin de réseaux de convolution}
+Dans cette partie, nous considérerons l'utilisation du réglage fin des \gls{cnn} adapté à notre problématique de classification d'images \gls{rcm}. En effet, cette méthode à été employée à des fins de détection de plans d'intérêts sur des images par ultrasons~\cite{Chen2015}, mais également de plans cardiaques sur des images d'\gls{mri}~\cite{Margeta2017}. Ce type d'approches a également été sollicité dans des approches semblables visant à de la détection de pathologies sur des acquisitions de rayons X réalisées sur des seins~\cite{Lotter2017} ou encore sur des poumons~\cite{Gao2018} avec des résultats très encourageants.\par
+
+C'est donc de manière très naturelle que cette section s'oriente en ce sens, en se consacrant à ses divers aspects à l'aide de sous parties respectives propre à chaque concept. Nous débuterons par une présentation du réglage fin et du choix d'architecture considéré. Puis nous aborderons diverses techniques que nous mettrons en œuvre, dont~:
+\begin{inlinerate}
+    \item l'augmentation de données,
+    \item le programme d'apprentissage,
+    \item et la fonction de coût.
+\end{inlinerate}\par
+
+\subsection{Présentation et mise en oeuvre de la méthode}
+Le réglage fin est une extension de l'apprentissage par transfert dans laquelle sont substituées les couches de classification initiales du réseau par de nouvelles couches adaptée au problème. Cette approche se distingue dans la mesure où tout ou partie du réseau est réentraîné à partir des poids existants~\cite{Tajbakhsh2016}. Ce mode d'apprentissage est utilisé lorsque les données propres au nouveau problème sont suffisantes, et permet à l'instar du simple apprentissage par transfert d'obtenir un réseau plus adapté au problème cible. Néanmoins, ce mode d'apprentissage nécessite des ressources et un temps d'entraînement plus conséquent.\par
+
+Afin de procéder à ce réglage fin, il est nécessaire de déterminer une architecture cible permettant de gérer au mieux la complexité des données. Par exemple un travail récent lors de la rédaction du manuscrit~\cite{Park2019} privilégie dans cette démarche l'utilisation d'une architecture ResNet-50~\cite{He2016} pour la détection de lésions pulmonaires sur des images de rayons X et propose la localisation de ces dernières. Néanmoins, aucune justification n'est apportée sur l'utilisation de cette architecture et aucune information n'est stipulée sur le type de Global Pooling employé par ce travail.\par
+
+Lors du \Cref{chap:chapter_5} nous avons comparé les résultats des principales architectures de \gls{cnn} pre-éntrainés sur la base ImageNet, par application du principe d'apprentissage par transfert. Cette expérience nous a permis de déterminer de manière empirique que l'architecture de \gls{cnn} ResNet-50~\cite{He2016} est la plus adaptée en association à une couche de Global Pooling moyen. Ainsi, nous supposons que l'utilisation de l'architecture ResNet-50 et d'une couche de Global Pooling basé sur la moyenne, et couplé au principe du réglage fin est en mesure de spécialiser le réseau à la problématique de lésion de la peau sur images \gls{rcm}, et d'améliorer in fine ses performances.\par
+
+Suivant ce constat, nous procédons à l'initialisation d'une architecture ResNet-50 et employons les poids issus d'un entraînement sur la base ImageNet. Dans un premier temps, nous retirons la dernière couche totalement connectée de ce réseau sur base d'une activation \textit{softmax}, prévue pour supporter les 1000 classes de la base d'ImageNet. Dans un second temps, nous ajoutons une nouvelle couche totalement connectée de trois classes sur base d'une activation \textit{softmax} afin de supporter les annotations saines, bénignes et malignes. La fonction de coût est autre aspect que nous avons tenté de mener à bien dans ce travail. Dans la mesure où nous tentons de résoudre une problématique à plusieurs classes, nous utilisons un fonction de coût de type entropie-croisée également employée lors de travaux équivalents~\cite{Barbu2018,Park2019}.\par
+
+En termes de paramètres, nous limitons la taille des lots à 8 (\textit{batch size}) pour des limitations matérielles, une taille plus conséquente permettrais une meilleur stabilité de la convergence de ce dernier. Le nombres d'itérations (\textit{epochs}) est limité à 15 par procédure d'entraînement que nous réalisons. En effet, lors de nos tests nos observations ont permis de déterminer que la fonction de coût stagnait au-delà de cette valeur. Enfin, nous emploierons une combinaison de l'optimisation \textit{adam} et de \textit{gradient stochastic} à faible taux d'apprentissage tel que suggéré par de précédent travaux~\cite{Barbu2018,Park2019}.\par
+
+Pour finir sur ces aspects de mise en oeuvre, nous précisons que l'ensemble de ces éléments ont été réalisées à haut niveau à l'aide de la bibliothèque logicielle "Keras"~\cite{chollet2015} en association à la bibliothèque de bas niveau "Tensorflow"~\cite{tensorflow2015}.\par
+
+\subsection{Augmentation de données}
+L'augmentation de données est une technique qui permet de corriger de manière artificielle le nombre d'exemples d'une base de données par application de transformations aux données d'origine~\cite{Wong2016,Taylor2018}. Ce type de méthode peut permettre de corriger un non-balancement des annotations, mais est essentiellement employé dans le but d'enrichir le nombre d'exemples disponible en aidant le réseau à focaliser sur des éléments essentiels à ceux-ci. Cela permet d'éviter qu'un réseau ne se focalise sur des éléments non essentiels à la tâche visée.\par
+
+Nous envisageons dans cette sous-section cette technique comme le moyen d'enrichir notre base et ainsi d'éviter le sur-apprentissage potentiellement responsable de la dégradation des performances de prédiction. Les techniques considérées à cet effet ne correspondent uniquement qu'a des transformation géométriques linéaires~\cite{Taylor2018}, que nous opérerons de manière aléatoire à chaque étapes de l'entraînement(comprendre \textit{epochs}). Ces transformations ne sont appliquées que lors de l'entraînement, les images originales étant employées lors de l'évaluation. Les transformations considérées sont celles susceptibles de se produire dans un contexte clinique lors de l'acquisition des images, dont~:
+\begin{itemize}
+    \item la rotation,
+    \item la translation,
+    \item ou encore la symétrie.
+\end{itemize} De plus, nous opérerons à un repliement de l'information pour combler le vide généré par ces opérations, que nous jugerons plus "réaliste" sur les images que nous traitons qu'une unique valeur de remplissage.\par
+
+Nous parlerons dans cette partie d'augmentation de données au sens de traitements appliqués au données d'entrées et non de création d'échantillons virtuels à partir de l'espace des caractéristiques pour corriger les problèmes de balancements~\cite{Wong2016}. Ainsi, nous considérerons l'augmentation de données comme une technique permettant de contrer le sur-apprentissage dans ce travail.\par
+
+Ainsi, l'ensemble des paramètres appliqués à ces opérations sont décrit sur la \Cref{tab:parameters_image_improvement_data_augmentation}. Ces transformations sont appliquées aléatoirement et à la volée durant l'étape d'entraînement. Nous nous appuierons à cette fin sur le module d'augmentation de données de la bibliothèque logicielle "Keras"~\cite{chollet2015}.\par
 
 \begin{table}[H]
     \centering
-    \begin{tabular}{cllll}
+    \begin{tabular}{ll}
         \toprule
-        \multicolumn{1}{l}{}         &                      & Sensibilité           & Spécificité           & \fscore{}             \\ \midrule
-        \multirow{2}{*}{Spatial}     & \gls{misvm}          & 0.31$\pm$0.16             & 0.84$\pm$0.19             & 0.46$\pm$0.18             \\
-                                     & MMS + \gls{misvm}    & \textbf{0.44$\pm$0.14}    & \textbf{0.89$\pm$0.18}    & \textbf{0.60$\pm$0.14}    \\ \midrule
-        \multirow{2}{*}{Fréquentiel} & \gls{misvm}          & 0.28$\pm$0.23             & 0.87$\pm$0.32             & 0.42$\pm$0.24             \\
-                                     & MMS + \gls{misvm}    & \textbf{0.47$\pm$0.15}    & \textbf{0.86$\pm$0.25}    & \textbf{0.62$\pm$0.14}    \\ \midrule
-        \multirow{2}{*}{Transfert}   & \gls{misvm}          & \textbf{0.49$\pm$0.16}    & \textbf{0.94$\pm$0.07}    & \textbf{0.65$\pm$0.16}    \\
-                                     & MMS + \gls{misvm}    & 0.43$\pm$0.16             & 0.94$\pm$0.08             & 0.59$\pm$0.17             \\ \bottomrule
-    \end{tabular}
-    \caption{Table de résultats issus de l'application du modèle \gls{misvm} employés pour mener une classification au niveau des instances, sur les images annotées issues de pathologies de \gls{lm} / \gls{lmm}, et exprimés selon la sensibilité, la spécificité et le \fscore{}.}
-    \label{tab:results_lesion_classification_weakly_image_lm}
-\end{table}
+        \textbf{Nom}                            & \textbf{Valeurs}      \\ \midrule
+        Rotation (en degrés)                    & [0 à 45]              \\ 
+        Translation Horizontale (en pourcentage)& [0 à 20]              \\ 
+        Translation Verticale (en pourcentage)  & [0 à 20]              \\  
+        Symétrie Horizontale                    & [Désactivée, Activée]  \\  
+        Symétrie Verticale                      & [Désactivée, Activée]  \\ 
+        \bottomrule 
+    \end{tabular} 
+    \caption{Table recensant les paramètres de transformation appliqué aux données images de manière aléatoire lors de l'entraînement.}
+    \label{tab:parameters_image_improvement_data_augmentation}
+\end{table}\par
 
-Pour finir cette présentation des résultats de prédiction au niveau des images à partir de méthodes faiblement supervisées employant le principe de \gls{mil}, ce paragraphe présente les résultats des courbes \gls{roc} et \gls{auc}. Ainsi sur l'ensemble des cas cliniques, la méthode \gls{mil} permet l'obtention d'un score \gls{auc} de 0,87. Cette méthode focalisé sur les cas de \gls{lm} et \gls{lmm} permet l'obtention d'un score \gls{auc} de 0,82. L'ensemble des courbes \gls{roc} et de ces scores \gls{auc} provenant de la prédiction sur les instances peuvent être visualisées sur la \Cref{fig:results_lesion_roc_instances}.\par
+\subsection{Programme d'apprentissage}
+Le programme d'apprentissage ou \textit{Curriculum Learning} est une démarche visant par analogie à l'humain, à entraîner tout \gls{cnn} en proposant diverses tâches intermédiaires avec une difficulté croissante, afin d'accomplir avec une plus grande efficacité une tâche plus complexe. La raison technique recherché par cette méthode est de simplifier l'espace de recherche de la tâche recherchée, afin de trouver plus efficacement un meilleur minimum au sein de la fonction de coût, comme suggéré par ses auteurs~\cite{Bengio2009}.\par
+
+De récents travaux menés sur des images médicales, issue de rayons X, ont permis par cette approche d'augmenter les performance de détection de \gls{cnn} sur des cancer du sein~\cite{Lotter2017} ou encore des pathologies pulmonaires~\cite{Park2019}. La démarche suivie par ces deux travaux, est de procéder à l'extraction de sous images de taille restreinte autour des dites lésions avérées, en conservant la même propriété d'échelle que les images initiales. Cette extraction permet de réduire la résolution et la complexité du problème en proposant au réseau des images moins volumineuses et davantage focalisée sur des éléments clés afin d'éviter potentiellement des convergences non pertinentes. La gestion de donnée à échelles multiples sur \gls{cnn} ne donnant pas toujours lieu à des résultats suffisant~\cite{Noord2017}, une seconde étape d'entraînement est ensuite réalisée sur les images de taille réelles afin de former le réseau au problème que nous cherchons à résoudre.\par
+
+En complément de cette technique, nous optons lors de la première phase de l'entraînement, à un entraînement en deux temps du réseau. En effet, l'ajout de couches connectées en fin de réseaux sous-entend une initialisation aléatoire de celui-ci. Ce phénomène peut conduire à une mauvaise remise en question de certain poids issus du caractère aléatoire de l'étape d'initialisation. Ainsi, nous procéderons à l'immobilisation des couches liés à l'extraction des caractéristiques dans un premier temps (pré-entraînement), puis à l'entraînement du réseau dans sa totalité. Le processus est schématisé sur la \Cref{fig:scheme_image_fine_tune}.\par
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.7\linewidth]{contents/chapter_6/resources/results_lesion_roc_instances.pdf}
-    \caption{Courbes \gls{roc} issues de la prédiction au niveau des instances sur l'ensemble des cas, figurant à l'aide d'un trait orange estompé tracé en continu, et sur les cas de \gls{lm} / \gls{lmm}, figurant à l'aide d'un trait orange tracé en pointillés. Les courbes sont issues  du mode de prédiction faiblement supervisés sur la base de la théorie \gls{mil} par utilisation du modèle \gls{misvm}.}
-    \label{fig:results_lesion_roc_instances}
+    \includegraphics[width=\linewidth]{contents/chapter_6/resources/scheme_image_improvement_image_fine_tune.pdf}
+    \caption{Schéma de représentation du processus de réglage fin utilisé dans ce travail. Celui-ci se décompose d'une étape d'initialisation dans le but de substituer les couches de classification par de nouvelles, puis un pré-entraînement permet d'initialiser les poids avant de procéder à l'entraînement.}
+    \label{fig:scheme_image_fine_tune}
 \end{figure}\par
+
+\section{Analyse des résultats}
+Dans cette section, nous suivrons paragraphe par paragraphes la démarche méthodologique présentée un peu plus haut et débuterons par les résultats issus de la méthode \textbf{par résolutions multiples}. Dans cette première approche, nous avons pu obtenir un \fscore{} optimal à trois classes de 0,63$\pm$0,06 par l'utilisation par l'utilisation des caractéristiques proposé par Haralick et de la fusion de caractéristiques, et un \fscore{} de 0,67$\pm$0,07 par l'utilisation de ces même caractéristiques associées à la fusion des scores à l'aide de la méthode Moyenne+Maximum. Concernant les méthodes sur extraction en ondelettes, la proposition de Wiltgen et al.\cite{Wiltgen2008} employant une décomposition diadique à cinq échelles à recueilli les meilleurs valeurs, achevant un \fscore{} de 0,66$\pm$0,06 à trois classes et de 0,71$\pm$0,06 pour la détection d'images malignes. Enfin, le \fscore{} par échelle multiple est maximisé avec l'aide des caractéristiques par transfert de connaissance issues de l'architecture ResNet-50, nous permettant l'obtention d'un \fscore{} de 0,76$\pm$0,06 à trois classes et un score de 0,83$\pm$0,02 pour la détection de tissus malins. Les résultats de l'expérimentation menée sur la résolution multiple sont visible sur la \Cref{tab:results_image_improvement_multiresolution}.\par
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{llll}
+        \toprule
+        Catégories                  & Méthodes                  & 3 Classes         & Malin             \\ \midrule
+        \multirow{3}{*}{Ondelettes} & Haar                      & 0.65$\pm$0.08         & 0.70$\pm$0.06         \\
+                                    & Wiltgen~\cite{Wiltgen2008}& \textbf{0.66$\pm$0.06}& \textbf{0.71$\pm$0.06}\\
+                                    & Halimi~\cite{Halimi2017a} & 0.38$\pm$0.02         & 0.41$\pm$0.04         \\ \midrule
+        \multirow{5}{*}{Spatial}    & Fusion de caractéristiques& \textbf{0.63$\pm$0.06}& 0.66$\pm$0.07         \\
+                                    & Décisions - Maximum       & 0.60$\pm$0.10         & 0.64$\pm$0.08         \\
+                                    & Scores - Moyenne + Maximum& 0.60$\pm$0.10         & \textbf{0.67$\pm$0.07}\\
+                                    & Scores - Maximum + Maximum& 0.59$\pm$0.10         & 0.65$\pm$0.08         \\
+                                    & Scores - \gls{svm} Linéaire& 0.57$\pm$0.10        & 0.65$\pm$0.04         \\ \midrule
+        \multirow{5}{*}{Transfert}  & Fusion de caractéristiques& \textbf{0.76$\pm$0.06}& \textbf{0.83$\pm$0.02}\\
+                                    & Décisions - Maximum       & 0.69$\pm$0.10         & 0.78$\pm$0.05         \\
+                                    & Scores - Moyenne + Maximum& 0.69$\pm$0.11         & 0.79$\pm$0.06         \\
+                                    & Scores - Maximum + Maximum& 0.69$\pm$0.11         & 0.79$\pm$0.06         \\
+                                    & Scores - \gls{svm} Linéaire& 0.72$\pm$0.04        & 0.79$\pm$0.03         \\
+        \bottomrule
+    \end{tabular}
+    \caption{Résultats issus du processus de classification basé sur la classification multi-échelles exprimés à l'aide du \fscore.}
+    \vspace{-1em}
+    \label{tab:results_image_improvement_multiresolution}
+\end{table}
+
+Ce second paragraphe dédié aux résultats va nous permettre d'approfondir les performances de l'approche \textbf{par fenêtre glissante}. Dans un premier temps, l'étude va se porter sur les résultats obtenus à partir\textbf{ d'une taille de fenêtre de 250$\times$250 pixels}. Par cette approche, une extraction de caractéristiques spatiales basée sur les descripteurs proposé par Haralick permet d'atteindre sur la base d'imagettes un \fscore{} de 0,67$\pm$0,10 à trois classes et de 0,41$\pm$0,13 à deux classes. Ainsi, nous obtenons sur les images en taille réelle un \fscore{} de 0,62$\pm$0,02 à trois classes et de 0,68$\pm$0,05 sur la détection d'éléments malin. Ce score est maximisé par l'utilisation d'une combinaison de seuil dynamique sur les décisions sans chevauchements des images. La méthode des ondelettes de Daubechies appliquée aux imagettes permet l'obtention d'un \fscore{} de 0,67$\pm$0,10 à trois classes et de 0,41$\pm$0,13 pour de la détection d'élément malins. Lors de leur utilisation sur des images réelles, le \fscore{} est de 0,61$\pm$0,07 à trois classes et de 0,68$\pm$0,06 sur la détection des éléments malins par l'utilisation conjointe d'un chevauchement de 50\% associé à une prise de décision sur les scores à l'aide d'un modèle \gls{svm} à noyau linéaire. Pour finir sur cette taille de fenêtre, les résultats ont été maximisé lors de l'utilisation du transfert de connaissance à l'aide l'architecture ResNet-50, avec pour \fscore{} sur les imagettes 0,91$\pm$0,02 à trois classes et 0,82$\pm$0,02 pour la détection d'éléments malins. Malgré ce haut score obtenu sur les imagettes, le \fscore{} est de 0.78$\pm$0.03 à trois classes et de 0.82$\pm$0.02 pour la détection des éléments malins avec une assez bonne stabilité du processus vis-à-vis des données. Ce score est maximisé à l'aide d'un chevauchement de 50\% et d'une prise de décision sur les scores à l'aide d'un modèle \gls{svm} à noyau linéaire. Dans un second temps, l'analyse par fenêtre glissante à l'aide d'une fenêtre moins précise, \textbf{de 500$\times$500 pixels}, semble dégrader les résultats. Les résultats sur des imagettes 500$\times$500 pixels de sont constants avec ceux obtenus sur des imagettes de 250$\times$250 pixels. En termes d'extraction spatiale, le \fscore{} est réduit à 0,60$\pm$0,06 à trois classes et à 0,65$\pm$0,09 pour la problématique de détection des éléments malins. Ces résultats chutent dramatiquement sur la méthode d'extraction en ondelettes, malgré des résultats de prédiction convenables sur les imagettes. Le \fscore{} maximum est obtenus sur la méthode de fusion des score combinant maximum et seuil dynamique, avec pour résultat 0.55$\pm$0.07 à trois classes et 0.67$\pm$0.13 à deux classes. Pour finir, les résultats obtenus par transfert de connaissance ne sont que peu impactées, évoluant vers des valeurs de \fscore{} de 0,78$\pm$0,02 à trois classes et de 0,81$\pm$0,04 pour la détection d'images malignes. Les résultats par principe de fenêtre glissante ont été reporté sur la \Cref{tab:results_image_improvement_sliding_window}.\par
+
+\begin{landscape}
+\begin{table}[]
+    \centering
+    \begin{tabular}{lllllllll}
+		\toprule
+		\multirow{2}{*}{Taille}     & \multirow{2}{*}{Chevauchement}    & \multirow{2}{*}{Mode}     & \multicolumn{2}{c}{Spatial}       & \multicolumn{2}{c}{Fréquence}     & \multicolumn{2}{c}{Transfert}         \\
+		                            &                                   &                           & 3 Classes         & Malin         & 3 Classes         & Malin         & 3 Classes         & Malin             \\ \midrule
+		250                         & Aucune                            & Imagettes                 & 0.67$\pm$0.10         & 0.41$\pm$0.13     & 0.72$\pm$0.07         & 0.44$\pm$0.10     & \textbf{0.91$\pm$0.02}& \textbf{0.82$\pm$0.03}\\ \midrule
+		\multirow{12}{*}{250}       & \multirow{4}{*}{0}                & Décision - Priorité                    & 0.52$\pm$0.02         & 0.67$\pm$0.04     & 0.44$\pm$0.06         & 0.65$\pm$0.05     & 0.58$\pm$0.04         & 0.71$\pm$0.05         \\ 
+							        &                                   & Décision - Dynamique                    & 0.62$\pm$0.02         & 0.68$\pm$0.05     & 0.57$\pm$0.06         & 0.67$\pm$0.04     & 0.75$\pm$0.02         & 0.80$\pm$0.03         \\
+							        &                                   & Score - Dynamique               & 0.54$\pm$0.02         & 0.63$\pm$0.04     & 0.50$\pm$0.08         & 0.66$\pm$0.05     & 0.70$\pm$0.03         & 0.76$\pm$0.02         \\
+							        &                                   & Score - Classification                    & 0.60$\pm$0.05         & 0.66$\pm$0.04     & 0.59$\pm$0.08         & 0.65$\pm$0.07     & 0.78$\pm$0.03         & 0.81$\pm$0.03         \\ \cline{2-9}
+							        & \multirow{4}{*}{25}               & Décision - Priorité                    & 0.49$\pm$0.10         & 0.67$\pm$0.10     & 0.41$\pm$0.10         & 0.65$\pm$0.10     & 0.53$\pm$0.05         & 0.70$\pm$0.09         \\
+							        &                                   & Décision - Dynamique                    & 0.62$\pm$0.07         & 0.68$\pm$0.11     & 0.58$\pm$0.08         & 0.66$\pm$0.09     & 0.75$\pm$0.03         & 0.80$\pm$0.04         \\
+							        &                                   & Score - Dynamique               & 0.52$\pm$0.03         & 0.59$\pm$0.06     & 0.49$\pm$0.08         & 0.66$\pm$0.10     & 0.72$\pm$0.04         & 0.78$\pm$0.03         \\
+							        &                                   & Score - Classification                    & 0.62$\pm$0.06         & 0.71$\pm$0.06     & 0.57$\pm$0.10         & 0.66$\pm$0.08     & 0.78$\pm$0.03         & 0.81$\pm$0.03         \\ \cline{2-9}
+							        & \multirow{4}{*}{50}               & Décision - Priorité                    & 0.46$\pm$0.11         & 0.66$\pm$0.08     & 0.39$\pm$0.12         & 0.64$\pm$0.08     & 0.49$\pm$0.10         & 0.68$\pm$0.08         \\
+							        &                                   & Décision - Dynamique                    & 0.62$\pm$0.03         & 0.68$\pm$0.07     & 0.59$\pm$0.10         & 0.67$\pm$0.08     & 0.75$\pm$0.03         & 0.80$\pm$0.03         \\
+							        &                                   & Score - Dynamique               & 0.52$\pm$0.06         & 0.63$\pm$0.07     & 0.49$\pm$0.10         & 0.65$\pm$0.07     & 0.72$\pm$0.03         & 0.80$\pm$0.01         \\ 
+		                            &                                   & Score - Classification                    & 0.61$\pm$0.08         & 0.69$\pm$0.08     & 0.61$\pm$0.07         & 0.68$\pm$0.06     & \textbf{0.78$\pm$0.03}& \textbf{0.82$\pm$0.02}\\ \midrule
+		500                         & Aucune                            & Imagettes                 & 0.67$\pm$0.08         & 0.40$\pm$0.10     & 0.70$\pm$0.06         & 0.50$\pm$0.08     & \textbf{0.90$\pm$0.02}& \textbf{0.80$\pm$0.02}\\ \midrule
+		\multirow{12}{*}{500}       & \multirow{4}{*}{0}                & Décision - Priorité                    & 0.58$\pm$0.08         & 0.63$\pm$0.05     & 0.23$\pm$0.11         & 0.00$\pm$0.00     & 0.74$\pm$0.05         & 0.76$\pm$0.05         \\
+							        &                                   & Décision - Dynamique                    & 0.59$\pm$0.04         & 0.63$\pm$0.05     & 0.28$\pm$0.05         & 0.63$\pm$0.05     & 0.72$\pm$0.05         & 0.76$\pm$0.05         \\
+							        &                                   & Score - Dynamique               & 0.50$\pm$0.05         & 0.56$\pm$0.15     & 0.53$\pm$0.08         & 0.66$\pm$0.04     & 0.70$\pm$0.03         & 0.78$\pm$0.04         \\
+							        &                                   & Score - Classification                    & 0.59$\pm$0.08         & 0.67$\pm$0.07     & 0.36$\pm$0.04         & 0.55$\pm$0.17     & 0.69$\pm$0.13         & 0.74$\pm$0.08         \\ \cline{2-9}
+							        & \multirow{4}{*}{25}               & Décision - Priorité                    & 0.55$\pm$0.08         & 0.64$\pm$0.07     & 0.23$\pm$0.11         & 0.00$\pm$0.00     & 0.77$\pm$0.05         & 0.80$\pm$0.04         \\
+							        &                                   & Décision - Dynamique                    & 0.55$\pm$0.10         & 0.63$\pm$0.05     & 0.28$\pm$0.05         & 0.63$\pm$0.05     & 0.76$\pm$0.04         & 0.80$\pm$0.04         \\
+							        &                                   & Score - Dynamique               & 0.53$\pm$0.03         & 0.55$\pm$0.09     & 0.54$\pm$0.07         & 0.67$\pm$0.05     & 0.73$\pm$0.03         & 0.80$\pm$0.04         \\
+							        &                                   & Score - Classification                    & 0.58$\pm$0.07         & 0.67$\pm$0.06     & 0.37$\pm$0.04         & 0.55$\pm$0.18     & 0.77$\pm$0.05         & 0.81$\pm$0.04         \\ \cline{2-9}
+							        & \multirow{4}{*}{50}               & Décision - Priorité                    & 0.57$\pm$0.08         & 0.67$\pm$0.11     & 0.23$\pm$0.07         & 0.00$\pm$0.00     & 0.77$\pm$0.03         & 0.81$\pm$0.05         \\
+							        &                                   & Décision - Dynamique                    & 0.58$\pm$0.07         & 0.67$\pm$0.11     & 0.28$\pm$0.12         & 0.63$\pm$0.12     & 0.76$\pm$0.03         & 0.80$\pm$0.05         \\
+							        &                                   & Score - Dynamique               & 0.52$\pm$0.05         & 0.55$\pm$0.06     & 0.55$\pm$0.07         & 0.67$\pm$0.13     & 0.73$\pm$0.04         & 0.80$\pm$0.05         \\
+		                            &                                   & Score - Classification                    & 0.60$\pm$0.06         & 0.65$\pm$0.09     & 0.34$\pm$0.05         & 0.39$\pm$0.23     & \textbf{0.78$\pm$0.02}& \textbf{0.81$\pm$0.04}\\
+		\bottomrule
+    \end{tabular}
+    \caption{Résultats issus du processus de classification basé sur le principe de fenêtre glissante exprimés à l'aide du \fscore. La première partie de ce tableau reprend les résultats obtenu à l'aide d'une fenêtre glissante de taille de 250$\times$250 pixels tandis que la seconde partie se concentre sur les résultats d'une fenêtre glissante de taille de 500$\times$500 pixels.}
+    \label{tab:results_image_improvement_sliding_window}
+\end{table}
+\end{landscape}
+
+La présentation des résultats de réglage fin constitue l'essence de ce troisième paragraphe. Pour cela, nous avons évalué dans un premier temps la mise en place d'un processus de réglage fin simple, pour lequel les meilleures performances ont été obtenues par la combinaison de l'architecture ResNet-50 et d'une couche de Global Pooling sur la base d'une fonction de moyenne. Cette méthode permet l'obtention d'un \fscore{} lors de la prédiction sur les données de test de 0,56$\pm$0,05 sur 3 classes et nettement supérieure de 0,78$\pm$0,05. Dans un second temps, nous avons réalisé l'évaluation du réglage fin conjointement associé à un programme d'apprentissage sur l'architecture ResNet-50 et d'une couche de Global Pooling sur la base d'une fonction de moyenne. Les résultats de cette méthode sont dégradés par rapport à la version simple par réglage fin, recueillant un \fscore{} de 0,51$\pm$0,07 sur 3 classes et de 0,67$\pm$0,05 lors d'une prédiction des éléments malins. L'ensemble de ces résultats est disponible sur la \Cref{tab:parameters_image_improvement_fine}.\par
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{llll}
+        \toprule
+        Catégorie                               & Global Pooling    & 3 Classes         & Malin             \\ \midrule
+        \multirow{2}{*}{Réglage fin}            & Fonction maximum  & 0.44$\pm$0.05         & 0.69$\pm$0.06         \\ \cline{2-4}
+                                                & Fonction moyenne  & \textbf{0.56$\pm$0.05}& \textbf{0.78$\pm$0.05}\\ \midrule
+        Réglage fin + Programme d'apprentissage & Fonction moyenne  & 0.51$\pm$0.07         & 0.67$\pm$0.05         \\
+        \bottomrule
+    \end{tabular}
+    
+    \caption{Résultats issus du processus de classification basé sur les \gls{cnn} par réglages fin et programme d'apprentissage exprimés à l'aide du \fscore.}
+    \label{tab:parameters_image_improvement_fine}
+\end{table}
+
+Nous finirons cette section dédiée aux résultats par la proposition d'extensions aux principes de fenêtre glissante mais aussi de réglage fin de \gls{cnn}. En effet, ces deux techniques possèdent par leur nature la capacité de localiser précisément l'origine d'une information. Dans le cadre de l'approche par fenêtre glissante, c'est de manière directe que ce principe permet de remonter l'emplacement d'une décision, nous proposons ainsi deux modes de visualisation l'un basé sur les décisions en utilisant un code couleur propre à chacune ou sur les scores en utilisant l'intensité de la transparence comme indicateur dans la confiance de la prédiction. Ces deux propositions sont visibles sur la \Cref{fig:exemple_image_improvement_well}. Ainsi, une taille de fenêtre glissante la plus fine permettra par cette technique d'obtenir une information visuelle de meilleure qualité, dualité que nous pouvons observer entre les tailles de 250$\times$250 et 500$\times$500.\par
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{contents/chapter_6/resources/exemple_image_improvement_well.pdf}
+    \caption{Exemple d'image correctement classifiées à l'aide du principe de fenêtre glissante. A gauche, résultats issus d'une fenêtre de classification de 250 par 250 pixels ; A droite, résultats issu d'une fenêtre de classification de 500 par 500 pixels.}
+    \label{fig:exemple_image_improvement_well}
+\end{figure}\par
+
+Le second et dernier principe de visualisation que nous présenterons pour finir cette section dédiée aux résultats se base sur les \gls{cnn} en exploitant le principe même de la convolution. De nombreux travaux se sont portés sur la résolution de la boîte noire que représentent les \gls{cnn} et propose une compréhension des décisions issues de \gls{cnn}, avec la mise en évidence des filtres de convolution auto déterminées~\cite{Zeiler2014} ou encore la mise en lumière des zones responsables de l'activation d'une classe par le principe des \gls{cam}~\cite{Zhou2015}. Ce principe est présenté sur le schéma présent sur la \Cref{fig:scheme_image_improvement_cam} et, consiste à pondérer le résultat de la dernière couche convolutive par les poids issus de la décision d'une classe. Ces recherches sur les \gls{cam} ont abouties à divers travaux de détections sur images naturelles dont résultent YOLO~\cite{Redmon2016} ou encore SSD~\cite{Liu2016}. Suite à ces divers travaux, diverses applications ont vues le jour sur de l'imagerie médicale afin de fournir une visualisation~\cite{jia2017} mais également des zones clés de diagnostic~\cite{Park2019}.\par 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{contents/chapter_6/resources/scheme_image_improvement_cam.pdf}
+    \caption{Schéma d'explication du principe de \gls{cam} employé à but de segmentation des images \gls{rcm} en notre possession. Le réseau est ajusté à notre problématique, puis nous employons la ou les couches de classification dans le but d'obtenir les zones responsables de la décision par pondération des poids de chaque noeud de la classe considérée.}
+    \label{fig:scheme_image_improvement_cam}
+\end{figure}\par
+
+Dans ce dernier aspect de notre travail nous reprenons la méthode des \gls{cam} combiné à l'application d'un seuil sur ces valeurs, permettant de définir un masque de segmentation de la zone d'intérêt. Le seuil a été défini de manière arbitraire à une valeur de 85\% du rang entre la valeur minimum et maximum issue des \gls{cam}. Par une telle valeur, nous sommes en mesure d'obtenir les divers résultats de segmentation présentés sur la \Cref{fig:example_image_improvement_ft}. Sur cette figure, nous représentons des exemples de tissus malins correctement détecté par la méthode, mais également non pertinent sur la partie basse de cette même figure. Les intérêts de cette méthode sont multiples, puisque le principe de \gls{cam} permet par le seul passage d'une image de revenir aux zones d'activations à partir d'une tâche initiale de classification. De plus nous ne dépendons pas de paramètres tel que la taille ou le chevauchement comme cela peux être le cas pour le principe de fenêtre glissante.\par
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}{.45\textwidth}
+      \includegraphics[width=\textwidth]{contents/chapter_6/resources/example_image_improvement_ft_well_1.png}
+    \end{subfigure}
+    \begin{subfigure}{.45\textwidth}
+      \includegraphics[width=\textwidth]{contents/chapter_6/resources/example_image_improvement_ft_well_2.png}
+    \end{subfigure}
+    
+    \begin{subfigure}{.45\textwidth}
+      \includegraphics[width=\textwidth]{contents/chapter_6/resources/example_image_improvement_ft_misclassified_1.png}
+    \end{subfigure}
+    \begin{subfigure}{.45\textwidth}
+      \includegraphics[width=\textwidth]{contents/chapter_6/resources/example_image_improvement_ft_misclassified_2.png}
+    \end{subfigure}
+    
+    \caption{Exemples de l'extraction de zones d'activations par principe de \gls{cam}, avec application d'un seuil arbitraire à 85\% du minimum/maximum. En haut, exemples d'images malignes correctement gérées par ce principe ; En bas, exemples d'images malignes partiellement segmentée ou incorrectement gérées par ce principe.}
+    \label{fig:example_image_improvement_ft}
+\end{figure}\par
+\clearpage
 
 \section{Discussion}
-Cette partie de discussion se dédie à l'analyse des résultats de la précédente section. Ce premier paragraphe détaille les observations issues des méthodes de prédiction supervisées au niveau lésionnel. Les \fscore{} sont pour la plupart homogènes si l'on considère chaque méthode d'extraction indépendamment, mais les mesures de sensibilité et spécificité propre à chacune varient fortement entre méthode. Ainsi, la méthode de "Décisions - Priorité" bénéficie d'une forte sensibilité liée à son principe privilégiant la moindre détection de la classe prioritaire / positive, mais se contente d'une faible spécificité. Ce principe est ainsi plus nuance par la méthode "Décisions - Dynamique" qui apporte un seuil dynamique d'activation, et dont résultent des valeurs de sensibilité et spécificité plus équilibrés et supérieure en terme de \fscore{}. Néanmoins, cette méthode nécessite de laisser de côté certaines détections jusqu'à atteindre un certain seuil d'activation, ce principe peux être difficile à utiliser en milieu clinique. Afin de modérer ces deux méthodes, ont été proposées deux approches par scores. La première de ces méthodes "Scores - Maximum" initialement conçue pour conserver la sensibilité la méthode "Décisions - Priorité", perd une forte partie de celle-ci mais améliore nettement sa spécificité. La seconde de ces méthodes "Scores - Moyenne" initialement conçue pour affiner la décision de la méthode "Décisions - Dynamique", restes-en deçà de celle-ci avec néanmoins un score important sur les caractéristiques issues de l'extraction par transfert de connaissance. En ce qui concerne les résultats sur les pathologies malignes toutes confondues et sur les cas de \gls{lm} / \gls{lmm}, peu de différences sont à remarquer entre ces deux situations, ces méthodes semblent ainsi robustes au type de pathologie traitée.\par
-\clearpage
+Dans cette section dédiée à la discussion, nous commenterons les précédents résultats obtenus. En premier lieu, les résultats issus de la méthode par échelles multiples par ondelettes sont sensiblement identiques à ceux présentés lors du \Cref{chap:chapter_5} à trois classes. Une amélioration significative des performances sur la détection d'élément malin est à noter par la méthode en ondelettes de Wiltgen et al., permettant l'obtention d'un \fscore{} de 0.71$\pm$0.06, initialement à 0.68$\pm$0.03. L'utilisation de l'ondelette mère de Haar par cette technique ne dégrade que très peu les résultats à deux et trois classes. En revanche, la méthode proposée par Halimi et al. n'a pas été concluante, proche de l'aléatoire sur nos données. Des diverses méthodes que nous avons proposé pour l'utilisation de caractéristiques spatiales et par transfert de connaissance, seule la fusion de caractéristiques s'est réellement avérée fonctionnelle. Cette technique à recueilli par l'utilisation du transfert de connaissances un \fscore{} de 0,76$\pm$0,06 à trois classes et de 0,83$\pm$0,02 pour la détection d'éléments malins.\par
 
-Ce second paragraphe propose l'analyse des méthode faiblement supervisées par \gls{mil} dont les résultats sont très hétérogènes, par contraste aux méthodes supervisées. Ainsi, ce paragraphe procède à une analyse méthode par méthode. Dans un premier temps, la méthode \gls{misvm} permet l'obtention de modèle plus sensible que spécifique et dont le score global semble assez dépendant du type d'extraction employé, les résultats étant maximisé par l'utilisation du transfert de connaissances. Néanmoins, l'utilisation d'une normalisation par Minimum / Maximum semble bénéfique en moyenne et contribue à baisse cette dépendance à la méthode d'extraction de caractéristiques. Dans un second temps, la méthode \gls{nsk} est choisie pour représenter la catégorie des approches par noyaux d'ensembles, et semble être la méthode la plus adaptée dans ce schéma faiblement supervisé avec le jeu de données en notre possession. Ainsi, cette méthode achève des résultats assez proches quelques soit le mode d'extraction de caractéristiques choisi, et possède une bonne sensibilité bien que les valeurs de spécificité soient assez proche. Dans un dernier temps, la méthode \gls{sbmil} est utilisée comme représentante des approche hybride, non concluante dans ce cadre. En effet, ces méthodes ont une grande spécificité mais une sensibilité quasi-inexistante. Pour finir, les conclusions qui régissent les résultats sur les pathologies malignes toutes confondues et sur les cas de \gls{lm} / \gls{lmm} sont similaires à celle des méthodes supervisées, ces méthodes semblent ainsi robustes au type de pathologie traitée.\par
+En second lieu, une approche par fenêtre glissante a été employée afin d'améliorer la qualité des résultats. Par cette approche, la classification à trois classes obtenues par les diverses techniques d'extraction n'a pas ou peu été améliorée. Sur la détection d'éléments malins, seule la technique employant les descripteurs proposés par Haralick semble avoir recueilli de meilleurs résultats, voyant passer ceux-ci de valeurs de \fscore{} 0.68$\pm$0.03 à 0.71$\pm$0.06. D'une part, des deux méthodes employant un principe de prédiction sur les décisions, la proposition de méthode sur la base de seuil dynamique semble comme espéré la plus judicieuse, mais risque de délaisser certains cas cliniques selon la tolérance de ce seuil. D'autres part, des deux méthodes employant un principe de prédiction sur les scores, la proposition de méthode utilisant un modèle \gls{svm} linéaire semble la plus adaptée. Néanmoins, cette méthode risque néanmoins de favoriser par une pondération plus grande certaines positions de la fenêtre glissante, tandis que la méthode sur seuil dynamique est invariante à cette position. Concernant les hypothèses de la fenêtre glissante, l'une d'entre elles avait été formulée sur le rôle important de la taille de fenêtre dans cette approche, et la tendance des résultats semble meilleure à l'aide d’une fenêtre de taille restreinte de 250$\times$250 mais ces résultats de ne sont pas significatifs. Une autre hypothèse supposait l'importance d'un chevauchement des acquisitions en provenance de la fenêtre glissante, et également la tendance des résultats semble plus optimiste sans chevauchement, cependant là encore ces résultats ne sont pas significatifs. Les résultats de cette expérience sont maximisés par l'utilisation de transfert de connaissance avec l'architecture ResNet-50, dans le cadre d'un chevauchement de 50\% mais là encore les résultats ne sont pas suffisamment significatifs pour affirmer l'utilité de ce chevauchement. En addition, nous avons pu montrer qu'il était possible d'obtenir assez facilement de revenir aux décisions à basse échelle par l'utilisation d'un code de couleur ou par transparence. Ce type d'approche pourrait permettre d'expliquer les décisions du système prédicatif et d'aiguiller le spécialiste vers les zones les plus importantes. Il convient néanmoins de solutionner les performances de prédiction de ce système.\par 
 
-Ainsi, les deux approches proposées, c'est à dire par entraînement supervisé et faiblement supervisée, sont adaptées à la problématique actuelle bien que l'approche supervisé soit sensiblement supérieure. Cette supériorité des méthodes supervisée se traduit notamment sur les valeurs \gls{auc} avec des valeurs de 0,87 pour le modèle "Scores - Moyenne" et de 0,83 pour \gls{nsk}. Il est à remarquer que toutes ces approches possède un écart-type assez élevé situé entre 0,08 et 0,15, à l'exception de \gls{sbmil} dont les valeurs sont plus conséquentes. Cette tendance assez forte montre une certaine dépendance aux données mais peut être la conséquence du nombre restreint d'échantillons au niveau lésionnel du jeu de données, soit 223 lésions. Un élément supplémentaire à considérer est la complexité nécessaire à l'obtention des résultats supervisées, dont le nombre de paramètres est supérieur aux méthodes faiblement supervisées présentées. Par ailleurs, les méthodes supervisées utilisées ici nécessitent un processus en deux temps (voir trois si l'on considère l'extraction de caractéristiques), tandis que ces méthodes faiblement supervisées nécessitent une étape en moins. Le dernier argument en faveur des méthodes faiblement supervisées est celui de la très faible quantité d'annotations sollicité pour parvenir à de tel résultats, soit 223 annotations.\par
-
-Afin de mesurer, d'une part la compréhension au niveau lésionnel de ces modèles faiblement supervisés et d'autre part d'évaluer la qualité d'un système permettant de revenir à des prédiction bas niveau, une évaluation des prédiction au niveau des instance à été réalisée. Ces tests sont menés sur le modèle \gls{misvm}, et on permis d'obtenir une valeur de \fscore{} de 0,64 et \gls{auc} de 0,87 sur l'ensemble des cas cliniques. Cette valeur était en comparaison respectivement à un \fscore{} de 0,82 et \gls{auc} au 0,90 sein du \Cref{chap:chapter_4} avec des valeurs d'écart-type beaucoup plus restreintes. Il existe de ce fait une différence notable entre ces méthodes, pouvant rendre la prédiction au niveau des instances difficile pour la méthode \gls{misvm}.\par
-
-Pour finir cette discussion, ce paragraphe réalise un parallèle entre les résultats expérimentaux de chapitre et ceux des spécialistes en dermatologie. Pour rappel, les  18 experts en \gls{rcm} de l’étude de référence~\cite{Cinotti2016} obtiennent une sensibilité de 0,84$\pm$0,05 et une spécificité de 0,75$\pm$0,06 ainsi qu'une \gls{auc} de 0,86 sur l'ensemble des cas d'études. Sur ce même ensemble de cas cliniques, la méthode supervisé "Scores - Moyenne" parvient à accomplir une sensibilité de 0,95$\pm$0,09 et une spécificité de 0,70$\pm$0,22 ainsi qu'une \gls{auc} de 0,87 et la méthode faiblement supervisée \gls{nsk} parvient à accomplir une sensibilité de 0,86$\pm$0,10 et une spécificité de 0,77$\pm$0,19 ainsi qu'une \gls{auc} de 0,83. Sur les données malignes de lésions \gls{lm}/\gls{lmm}, les même experts obtiennent une sensibilité de 0,80$\pm$0,07 et et une spécificité de 0.81$\pm$0,05 ainsi qu'une \gls{auc} de 0,88. Sur ces même cas cliniques, la méthode supervisé "Scores - Moyenne" parvient à accomplir une sensibilité de 0,95$\pm$0,11 et une spécificité de 0,70$\pm$0,22 ainsi qu'une \gls{auc} de 0,88 et la méthode faiblement supervisée \gls{nsk} parvient à accomplir une sensibilité de 0,87$\pm$0,09 et une spécificité de 0,77$\pm$0,19 ainsi qu'une \gls{auc} de 0,83.\par
+Enfin, nous terminons cette discussion par l'étude des résultats lié au réglages fin dont les expériences ont été réalisées en deux temps, avec un simple réglage fin puis la réalisation d'un programme d'apprentissage à l'aide des vignettes en notre possession. A notre surprise les résultats ont été fortement impacté dans les deux cas, avec un \fscore{} par apprentissage par transfert initialement sur ResNet-50 de 0.77$\pm$0.04 à trois classes et 0.82$\pm$0.02 à deux classes~: par réglages fin ces résultats descendent à des valeurs de 0.77$\pm$0.04 à trois classes et 0.82$\pm$0.02 à deux classes ; par programme d'apprentissage ces valeurs ne sont plus que de 0.51$\pm$0.07 à trois classes et 0.67$\pm$0.05. Nous supposons un fort sur-apprentissage de ce réseau malgré l'augmentation de données, en effet les diverses phases d'apprentissage réalisées ont accomplies un \fscore{} compris entre 0.90 et 0.97 sur les données d'entraînement. L'un des aspects qui nous conduit à persévérer en ce sens est l'apport du principe des \gls{cam} permettant l'obtention de cartes des zones d'activation indépendamment du choix d'une taille ou d'un chevauchement (contrairement à la fenêtre glissante) en un seul passage dans le réseau de l'image. Néanmoins à ce stade, de nombreuses de ces cartes d'activation sont incorrectes et nous supposons les faibles performances de notre apprentissage responsable de ces erreurs.\par
