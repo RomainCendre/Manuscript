@@ -4,32 +4,32 @@
 \chapter{Prise de décision au niveau lésionnel ou patient}
 \label{chap:chapter_6}
 \chapterintro
-Lors des deux précédents chapitres, nous nous sommes consacrés aux données \gls{rcm} en notre possession et à la problématique de la prise en charge qui leur est associée. Nous avons apporté des solutions diverses permettant la gestion de chacune d'entre elles comme des entités à part entière, à l'aide de techniques propre à la globalité de l'image, puis d'approches à diverses échelles ou par instances multiples.\par
+Les deux précédents chapitres se sont consacrés aux diagnostic des images \acrlong {rcm} mise à la disposition de ce travail. Diverses solutions permettant la gestion de ces images comme des entités à part entière sont proposées, d'une part à l'aide de techniques propre à la globalité de l'image, et d'autre part à l'aide d'approches à diverses échelles ou par instances multiples.\par
 
-Par ce nouveau chapitre, nous tenterons de mettre en place une méthodologie permettant une aide à la prise de décision au niveau patient, utile pour aider l'expert sur une modalité complexe mais aussi dans le but de mettre en place un processus multimodal, finalité de ce manuscrit. Pour cela, nous utiliserons les précédentes expérimentations et présenterons diverses techniques permettant d'une part de renforcer la fiabilité des prédictions et d'autre part des moyens qui permettrons d'obtenir une décision pour l'ensemble des images d'un patient.\par
+Par ce nouveau chapitre, une méthodologie est mise en place permettant d'aider les experts lors de la prise de décision au niveau patient sur cette modalité complexe. Cette prise de décision au niveau patient est également nécessaire afin de mettre en place le processus multimodal, finalité de ce manuscrit. Pour cela, les précédentes expérimentations sont sollicitées afin d'extraire l'information des images, et diverses méthodes sont proposées pour permettre l'obtention d'une décision à partir d'un ensemble d'images d'un même patient.\par
 
-Ces diverses techniques seront évaluées à l'aide du \fscore{} sur une problématique à deux classes, les lésions ne comportant que des annotations bénignes ou malignes. Le point de vue adopté sera celui de la classe maligne, puisque la détection de ces éléments figure finalité que ce chapitre tente de résoudre.\par
+Les résultats de ces expérimentations sont présentés en fin de chapitre, sur l'ensemble des lésions mais également sur les lésions malignes ne comportant que des types \acrlong{lm} et \acrlong{lmm}. Ces résultats sont également exprimés en termes de sensibilité et spécificité afin d'être confrontés à ceux des spécialistes sur cette même base de données.\par
 
 \newpage
 
 \section{Méthodologie}
 \label{sec:patient_decision_methodology}
-Durant les deux précédents chapitres, la classification des images \gls{rcm} a été la principale tâche de ce manuscrit en proposant des traitements permettant leur gestion comme des entités à part entière. Lors du \Cref{chap:chapter_4} ces images ont été abordées dans leur intégralité à l'aide des méthodes d'extraction de caractéristiques sur la totalité de l'image, mais également lors du \Cref{chap:chapter_5} à l'aide de méthodes proposant diverses échelles et niveaux de compréhension.\par
+Lors des deux précédents chapitres, la classification des images \gls{rcm} a été la principale tâche de ce manuscrit en proposant des traitements permettant leur gestion comme des entités à part entière. Lors du \Cref{chap:chapter_4}, ces images ont été abordées dans leur intégralité à l'aide des méthodes d'extraction de caractéristiques sur la totalité de l'image, mais également lors du \Cref{chap:chapter_5} à l'aide de méthodes proposant diverses échelles et niveaux de compréhension.\par
 
-Néanmoins, ces méthodes dans leur état actuel ne permettent que le diagnostic des images, dont le nombre varie fortement d'une lésion à l'autre soit d'une dizaine à plusieurs centaines d'images. La tâche reste donc en l'état complexe et difficile à trancher par un spécialiste et ne permet pas une aide à la prise de décisions. De plus, la finalité de ce travail est en l'état impossible, cette information étant inexploitable dans le cadre d'un processus à multiples modalités.\par
+Néanmoins, ces méthodes dans leur état actuel ne permettent que le diagnostic des images, dont le nombre varie fortement d'une lésion à l'autre soit d'une dizaine à plusieurs centaines d'images pour un même patient. La tâche reste donc en l'état complexe et difficile à trancher par un spécialiste et ne permet pas une aide réaliste à la prise de décisions. De plus, la finalité de ce travail est en l'état impossible, cette information étant inexploitable dans le cadre d'un processus à multiples modalités.\par
 
-Ce chapitre se dédiera à la problématique de la classification des lésions, assimilable à une classification du patient lorsque celui-ci n'est associé qu'a une unique lésion, dont l'objectif est schématisé sur la \Cref{fig:scheme_patient_decision_objectives}. A cette fin, les conclusions formulées lors des précédents chapitres propres aux images et à leur compréhension seront employées pour résoudre cette nouvelle problématique. Ainsi, comme lors du précédent chapitre seront considérés les méthodes d'extraction suivantes~:
+Ce chapitre se dédie à la problématique de la classification des lésions, assimilable à une classification du patient lorsque celui-ci n'est associé qu'à une unique lésion, dont l'objectif est schématisé sur la \Cref{fig:scheme_patient_decision_objectives}. À cette fin, les conclusions formulées lors des précédents chapitres propres aux images et à leur compréhension sont employées pour résoudre cette nouvelle problématique. Ainsi, comme lors du précédent chapitre sont considérés les méthodes d'extraction suivantes~:
 \begin{itemize}
     \item pour la \textbf{catégorie de méthodes spatiales}, les caractéristiques définies par Haralick et al.\cite{Haralick1973},
     \item pour la \textbf{catégorie de méthodes fréquentielles}, les caractéristiques sur base d'extraction en ondelettes,
     \item pour la \textbf{catégorie de méthodes de transfert de connaissances}, nous utiliserons l'architecture ResNet-50.
 \end{itemize}\par\par
 
-Ce chapitre proposera diverses méthodes dans le but d'extraire une décision au niveau patient. Dans cette optique, la première partie de ce travail se consacrera à la mise en place d'une classification patient par mécanisme de prédiction supervisé. Puis, dans la seconde partie de ce travail nous élaborerons diverses pistes de prédiction au niveau des lésions employant des principes qualifiés de faiblement supervisé par l'utilisation d'\gls{mil}. Les dernières sections se consacrerons à l'analyse des résultats de ces expériences et aboutirons à la discussion de ceux-ci.\par
+Ce chapitre propose diverses méthodes dans le but d'extraire une décision au niveau patient. Dans cette optique, la première partie de ce travail se consacre à la mise en place d'une classification patient par des mécanismes de prédiction supervisée. Puis, dans la seconde partie de ce travail sont élaborées diverses pistes de prédiction au niveau des lésions employant des principes qualifiés de faiblement supervisé par l'utilisation d'\gls{mil}. Les dernières sections sont consacrées à l'analyse et une discussion des résultats de ces expériences.\par
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.75\linewidth]{contents/chapter_6/resources/scheme_patient_decision_objectives.pdf}
+    \includegraphics[width=0.65\linewidth]{contents/chapter_6/resources/scheme_patient_decision_objectives.pdf}
     \caption{Schéma récapitulatif de la problématique de l'inconsistance du nombres d'images constituant les lésions et de l'obtention de décisions et scores pour chacune de ces lésions.}
     \label{fig:scheme_patient_decision_objectives}
 \end{figure}\par
@@ -37,15 +37,15 @@ Ce chapitre proposera diverses méthodes dans le but d'extraire une décision au
 
 \section{Approches supervisées}
 \label{sec:patient_decision_supervised}
-Cette section dédiée aux approches supervisées se consacre à des schémas d'apprentissages permettant de déterminer la relation entre l'aide d'annotation directes entre les données d'entrée et la sortie attendue. Les données \gls{rcm} exploitées dans ce travail possèdent~:
+Cette section dédiée aux approches supervisées se consacre à des schémas d'apprentissages supervisés, c'est-à-dire dont la relation entre les instances et annotations est directe. Les données \gls{rcm} exploitées dans ce travail possèdent~:
 \begin{inlinerate}
     \item d'une part des annotations à bas niveau ou niveau image,
     \item d'autre part des annotations à haut niveau ou niveau lésionnel. 
-\end{inlinerate}. L'une des contraintes majeures associées à ces données est l'inconsistance du nombre d'images entre les lésions composant le jeu de données. Ainsi, une lésion peut comporter un nombre d'image compris entre une dizaine et une centaine d'entre elles. Il est donc nécessaire de gérer cette variabilité au sein du processus de classification mis en place.\par
+\end{inlinerate} L'une des contraintes majeures associées à ces données est l'inconsistance du nombre d'images entre les lésions composant le jeu de données. Ainsi, une lésion peut comporter un nombre d'image compris entre une dizaine et une centaine d'entre elles. Il est donc nécessaire de gérer cette variabilité au sein du processus de classification mis en place.\par
 
 Afin de résoudre cette tâche de manière supervisée, cette section propose un mécanisme de prédiction en deux temps~: 
 \begin{itemize}
-    \item une première étape de prédiction \textbf{au niveau image} dont le but consiste à déterminer le contenu des images,
+    \item une première étape de prédiction \textbf{au niveau image}, dont le but consiste à émettre une étiquette à chaque image,
     \item une seconde étape de prédiction \textbf{au niveau lésionnel} dont la finalité est d'évaluer la lésion à partir de l'information résultant du processus de classification au niveau image.
 \end{itemize} A cette fin, les données d'entraînement sont divisées en deux parts~:
 \begin{inlinerate}

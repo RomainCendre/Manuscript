@@ -73,8 +73,8 @@ Cet apprentissage, schématisé sur la \Cref{fig:scheme_supervised_classificatio
 
 Ces approches dites supervisées se regroupent ainsi au travers de deux catégories majeures~:
 \begin{itemize}
-    \item La \textbf{classification}, c'est à dire la prédiction de valeurs discrètes, soit l’ensemble des entiers relatifs noté $\pmb{\mathbb{Z}}$. Sont également utilisés les compléments de \textit{classification binaire} lorsque le problème formulé ne comporte que deux classes, et de \textit{classification multi-classes} lorsque la situation nécessite de prédire $N$ classes avec $N$ > 2.
-    \item La \textbf{régression}, c'est à dire la prédiction de valeurs continues, soit l’ensemble des nombres réels noté $\pmb{\mathbb{R}}$.
+    \item La \textbf{classification}, c’est-à-dire la prédiction de valeurs discrètes, soit l’ensemble des entiers relatifs noté $\pmb{\mathbb{Z}}$. Sont également utilisés les compléments de \textit{classification binaire} lorsque le problème formulé ne comporte que deux classes, et de \textit{classification multi-classes} lorsque la situation nécessite de prédire $N$ classes avec $N$ > 2.
+    \item La \textbf{régression}, c’est-à-dire la prédiction de valeurs continues, soit l’ensemble des nombres réels noté $\pmb{\mathbb{R}}$.
 \end{itemize}\par
 
 Les travaux de ce manuscrit portent sur les méthodes de classification, traduit par la catégorisation de données images cliniques pathologiques selon divers niveau de dangerosité. En prenant appui sur l'un des travaux~\cite{Kotsiantis2007}, un échantillon de ces méthodes et de leur principe respectif est fourni, dont~:
@@ -149,8 +149,8 @@ Les techniques d'apprentissage semi-supervisé tentent de combiner les deux prin
 
 Ainsi, l'apprentissage semi-supervisé se base sur plusieurs hypothèses auxquelles doivent se confronter les données~\cite{Zhu2009}, dont~:
 \begin{itemize}
-	\item un critère \textbf{d'homogénéité}, c'est à dire que des données issues d'une zone de haute densité partagent les mêmes annotations, 
-	\item un critère \textbf{de séparation par faible densité}, c'est à dire que s'il existe une  séparation entre plusieurs types d'annotations, celle-ci se situant dans une zone à faible densité~\cite{chapelle2005}.
+	\item un critère \textbf{d'homogénéité}, c’est-à-dire que des données issues d'une zone de haute densité partagent les mêmes annotations, 
+	\item un critère \textbf{de séparation par faible densité}, c’est-à-dire que s'il existe une  séparation entre plusieurs types d'annotations, celle-ci se situant dans une zone à faible densité~\cite{chapelle2005}.
 \end{itemize}
 En pratique, il est difficile de s'assurer que les données en notre possession respectent bien ces engagements. Afin de mieux visualiser ce concept, l'exemple en \Cref{fig:example_semi_supervised} démontre l'intérêt de telles approches. Ce principe permet d'éviter d'extrapoler des frontières difficilement définissables dans une situation de faible densité de l'information étiquetée.\par
  
@@ -246,8 +246,8 @@ Cette partie se concentre sur l'évaluation de modèles de prédiction et prése
 \label{subsec:generalized_models}
 A l'aide de couples d'entrée/sortie à notre disposition, ces modèles d’apprendre une relation capable de \textbf{généraliser} et d’estimer de nouvelles sorties sur de nouvelles données. Il est pour cela nécessaire de parvenir à isoler l'information responsable de ce cheminement, plus ou moins séparable, en cause souvent la qualité de~:
 \begin{inlinerate}
-    \item l'hypothèse formulée, c'est à dire si la relation qui lie l'observation et sa conséquence est directe et vraie dans toute circonstance,
-    \item l'information possédée, c'est à dire si l'information est juste pour répondre à la problématique cible (qualité de l'observation, rapport signal sur bruit, etc.),
+    \item l'hypothèse formulée, c’est-à-dire si la relation qui lie l'observation et sa conséquence est directe et vraie dans toute circonstance,
+    \item l'information possédée, c’est-à-dire si l'information est juste pour répondre à la problématique cible (qualité de l'observation, rapport signal sur bruit, etc.),
     \item \ldots.
 \end{inlinerate}\par 
 
@@ -373,7 +373,7 @@ Ces deux méthodes répondent à la problématique de l'évaluation, mais n'appo
 \label{sec:fusion_information}
 Dernier aspect de notre sujet, la fusion d’informations se définit comme l’action de « combiner des informations issues de plusieurs sources afin d’améliorer la prise de décision »~\cite{Bloch2003}. Cette fusion se retrouve dans de nombreux domaines d'applications dont celui de la santé ou encore de la biométrie, et peut être considérée comme un moyen d'augmenter la fiabilité de systèmes. L'intérêt croissant pour ce domaine correspond, entre autres, à une réponse de l'augmentation et de la diversification du nombre de capteurs présents. L'ouvrage de Bloch~\cite{Bloch2003} justifie la fusion d'informations, par différentes notions auxquelles sont soumises chaque capteur, dont~:
 \begin{itemize}
-    \item \textbf{l'incertitude}~: c'est à dire son « degré de conformité avec la réalité ».
+    \item \textbf{l'incertitude}~: c’est-à-dire son « degré de conformité avec la réalité ».
     \item \textbf{l'imprécision}~: définie comme une « mesure du défaut quantitatif de connaissance, sur une mesure ».
     \item \textbf{l'incomplétude}~: correspond à « l'absence d'information d'une source sur des aspects du problème ».
 \end{itemize}\par
@@ -407,15 +407,15 @@ Il est nécessaire également de caractériser le résultat de la fusion d'infor
 
 La fusion à \textbf{bas niveau} s'exerce au niveau du capteur, quand celui-ci bénéficie de plusieurs relevés d'informations physiques, ou après l'acquisition de données provenant de plusieurs capteurs. Cela va nécessiter une cohérence entre ces modalités~: un référentiel, un repère commun permettant la mise en parallèle de ces dernières. La fusion à ce niveau consiste essentiellement à fournir une cohérence de ces modalités d'information, voire à réduire cette dernière afin de n'obtenir que celle jugée pertinente dans le cadre de son utilisation.\par
 
-La fusion à \textbf{moyen niveau} s'exerce au niveau de caractéristiques, c'est à dire après un premier traitement de chacune des modalités pour n'extraire que les éléments nécessaires à la réalisation du processus. Il s'agit d'une mise en commun des vecteurs d'information dans leur totalité ou réduite nécessitant dans ce second cas une sélection de l'information pertinente.\par
+La fusion à \textbf{moyen niveau} s'exerce au niveau de caractéristiques, c’est-à-dire après un premier traitement de chacune des modalités pour n'extraire que les éléments nécessaires à la réalisation du processus. Il s'agit d'une mise en commun des vecteurs d'information dans leur totalité ou réduite nécessitant dans ce second cas une sélection de l'information pertinente.\par
 
-Enfin, la fusion à \textbf{haut niveau} s'exerce après les mécanismes de prise de décision. C'est à dire que les branches correspondant à chaque modalité exercent indépendemment leur prise de décision. Il est donc nécessaire de définir une stratégie permettant de privilégier une décision ou d'extraire une décision à partir de l'information. Deux catégories sont ainsi identifiables~: 
+Enfin, la fusion à \textbf{haut niveau} s'exerce après les mécanismes de prise de décision. C’est-à-dire que les branches correspondant à chaque modalité exercent indépendemment leur prise de décision. Il est donc nécessaire de définir une stratégie permettant de privilégier une décision ou d'extraire une décision à partir de l'information. Deux catégories sont ainsi identifiables~: 
 \begin{inlinerate}
     \item la \textbf{sélection dynamique de modèle} de prédiction dans lequel l'objectif est de définir le modèle pertinent,
     \item et la \textbf{fusion de modèles} de prédiction dans lequel le but est d'obtenir une décision globale tenant compte des différentes décisions.
 \end{inlinerate}\par
 
-Plus particulièrement, dans le cadre de problématique binaire, la fusion de modèle comporte deux niveaux conceptuels de décision basés sur le type d'information mise à disposition par ces modèles. D'une part, au plus haut niveau~: la fusion appliquée au \textbf{niveau décisionnel}. Seules les décisions issues de chaque modèle sont alors considérées selon diverses stratégies~: le vote à la majorité ou encore la pondération des votes en sont deux représentants. D'autre part, au plus bas niveau~: la fusion appliquée aux scores~\cite{Kittler1998}. Dans le cadre de problématiques à plusieurs classes, il est possible possible d'évoquer une troisième prise de décision au niveau du rang, c'est à dire en considérant la position de chaque classe prédite issue des divers modèles.\par
+Plus particulièrement, dans le cadre de problématique binaire, la fusion de modèle comporte deux niveaux conceptuels de décision basés sur le type d'information mise à disposition par ces modèles. D'une part, au plus haut niveau~: la fusion appliquée au \textbf{niveau décisionnel}. Seules les décisions issues de chaque modèle sont alors considérées selon diverses stratégies~: le vote à la majorité ou encore la pondération des votes en sont deux représentants. D'autre part, au plus bas niveau~: la fusion appliquée aux scores~\cite{Kittler1998}. Dans le cadre de problématiques à plusieurs classes, il est possible possible d'évoquer une troisième prise de décision au niveau du rang, c’est-à-dire en considérant la position de chaque classe prédite issue des divers modèles.\par
 
 
 % \subsection{Équilibrage de données}
