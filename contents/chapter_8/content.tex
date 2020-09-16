@@ -1,15 +1,21 @@
 \renewcommand{\thechapter}{\arabic{chapter}}
-\setcounter{chapter}{8}
+\setcounter{chapter}{7}
 
 \chapter{Approche multimodale}
 \label{chap:chapter_8}
 \chapterintro
-Les travaux de la précédente partie ont porté sur le diagnostic de données malignes sur la modalité de \acrlong{rcm}, plus particulièrement de pathologies de \acrlong{lm} et de \acrlong{lmm}. Au premier niveau hiérarchique, soit celui des images, ces chapitres ont permis la mise en avant de méthodes de séparation des tissus sain, bénin et malin. Au second niveau hiérarchique, soit celui des lésions, ces méthodes permettent la prédiction des pathologies bénignes et malignes.\par
+Les travaux de la précédente partie ont porté sur le diagnostic de données malignes sur la modalité de \acrlong{rcm}, plus particulièrement de pathologies de \acrlong{lm} et de \acrlong{lmm}. Au premier niveau hiérarchique, soit celui des images, ces chapitres ont permis la mise en avant de méthodes de séparation des tissus sains, bénins et malins. Au second niveau hiérarchique, soit celui des lésions, ces méthodes permettent la prédiction des pathologies bénignes et malignes.\par
 
 Ce nouveau chapitre rempli l'objectif de ce manuscrit en intégrant une dimension multimodale au processus de prise de décision. Tout d'abord, les aspects d'extraction de caractéristiques et de diagnostic par le biais de modèles de prédiction est traité pour chacune des modalités présentes dans le jeu de données utilisé. De plus, la calibration de ces modèles de prédiction est envisagée afin de rendre cohérent les décisions entre chacun d’entre eux. Puis, les systèmes multimodaux envisagés dans ce travail sont présentés selon deux axes~: une première méthode qualifiée comme sans mémoire, puis une seconde méthode qualifiée sous le terme d’avec mémoire. Finalement, les résultats obtenus à l'aide de ces méthodes sont présentés et discutés.\par
 \newpage
 
 \section{Méthodologie}
+Lors de la \Cref{part:microscopy}, diverses méthodes de classification ont été proposées afin de gérer les données issues de la modalité \gls{rcm} soit au niveau des images, soit au niveau des lésions. Outre le besoin de lever un certains nombre de verrous scientifiques, cette étape est nécessaire à la réalisation du processus multimodal de ce manuscrit.\par
+
+Néanmoins, les diverses méthodes actuelles permettent une prédiction indépendemment pour chacune des modalités sans considérer un potentiel diagnostic 
+
+Ce dernier chapitre propose une méthodologie en plusieurs temps pour mettre
+
 \section{Diagnostic des modalités}
 \subsection{Diagnostic sur photographie clinique}
 \subsection{Diagnostic sur dermatoscopie}
@@ -42,14 +48,14 @@ Sigmoid,\cite{kull2017b}
     \begin{tabular}{llllll}
         \toprule 
         Type                    & Modalité                          & Seuil             & Sans                  & Isotonic              & Sigmoid               \\ \midrule
-        \multirow{4}{*}{Simple} & \multirow{2}{*}{Croissant}        & Croissant         & 0.72$\pm$0.14         & 0.65$\pm$0.14         & 0.66$\pm$0.10         \\ \cline{3-6}
-                                &                                   & Décroissant       & 0.72$\pm$0.14         & 0.64$\pm$0.12         & 0.65$\pm$0.09         \\ \cline{2-6}
-                                & \multirow{2}{*}{Décroissant}      & Croissant         & \textbf{0.81$\pm$0.08}& 0.61$\pm$0.11         & 0.79$\pm$0.10         \\ \cline{3-6}
-                                &                                   & Décroissant       & 0.81$\pm$0.11         & 0.60$\pm$0.13         & 0.79$\pm$0.10         \\ \cline{1-6}
-        \multirow{4}{*}{Double} & \multirow{2}{*}{Croissant}        & Croissant         & 0.71$\pm$0.09         & 0.64$\pm$0.18         & 0.71$\pm$0.13         \\ \cline{3-6}
-                                &                                   & Décroissant       & 0.71$\pm$0.09         & 0.63$\pm$0.17         & 0.70$\pm$0.14         \\ \cline{2-6}
-                                & \multirow{2}{*}{Décroissant}      & Croissant         & 0.77$\pm$0.13         & 0.71$\pm$0.16         & 0.77$\pm$0.12         \\ \cline{3-6}
-                                &                                   & Décroissant       & 0.77$\pm$0.13         & 0.68$\pm$0.14         & 0.77$\pm$0.12         \\ \bottomrule
+        \multirow{4}{*}{Simple} & \multirow{2}{*}{Croissant}        & Croissant         & 0,72$\pm$0,14         & 0,65$\pm$0,14         & 0,66$\pm$0,10         \\ \cline{3-6}
+                                &                                   & Décroissant       & 0,72$\pm$0,14         & 0,64$\pm$0,12         & 0,65$\pm$0,09         \\ \cline{2-6}
+                                & \multirow{2}{*}{Décroissant}      & Croissant         & \textbf{0,81$\pm$0,08}& 0,61$\pm$0,11         & 0,79$\pm$0,10         \\ \cline{3-6}
+                                &                                   & Décroissant       & 0,81$\pm$0,11         & 0,60$\pm$0,13         & 0,79$\pm$0,10         \\ \cline{1-6}
+        \multirow{4}{*}{Double} & \multirow{2}{*}{Croissant}        & Croissant         & 0,71$\pm$0,09         & 0,64$\pm$0,18         & 0,71$\pm$0,13         \\ \cline{3-6}
+                                &                                   & Décroissant       & 0,71$\pm$0,09         & 0,63$\pm$0,17         & 0,70$\pm$0,14         \\ \cline{2-6}
+                                & \multirow{2}{*}{Décroissant}      & Croissant         & 0,77$\pm$0,13         & 0,71$\pm$0,16         & 0,77$\pm$0,12         \\ \cline{3-6}
+                                &                                   & Décroissant       & 0,77$\pm$0,13         & 0,68$\pm$0,14         & 0,77$\pm$0,12         \\ \bottomrule
     \end{tabular}
 \end{table}
 
@@ -58,14 +64,14 @@ Sigmoid,\cite{kull2017b}
     \begin{tabular}{llllll}
         \toprule 
         Type                    & Modalité                          & Seuil             & Sans                  & Isotonic              & Sigmoid               \\ \midrule
-        \multirow{4}{*}{Simple} & \multirow{2}{*}{Croissant}        & Croissant         & 0.79$\pm$0.10         & 0.76$\pm$0.09         & 0.79$\pm$0.07         \\ \cline{3-6}
-                                &                                   & Décroissant       & 0.79$\pm$0.10         & 0.76$\pm$0.09         & 0.79$\pm$0.07         \\ \cline{2-6}
-                                & \multirow{2}{*}{Décroissant}      & Croissant         & 0.85$\pm$0.11         & 0.74$\pm$0.07         & 0.85$\pm$0.10         \\ \cline{3-6}
-                                &                                   & Décroissant       & 0.85$\pm$0.10         & 0.75$\pm$0.08         & \textbf{0.85$\pm$0.08}\\ \cline{1-6}
-        \multirow{4}{*}{Double} & \multirow{2}{*}{Croissant}        & Croissant         & 0.80$\pm$0.07         & 0.77$\pm$0.11         & 0.78$\pm$0.10         \\ \cline{3-6}
-                                &                                   & Décroissant       & 0.80$\pm$0.07         & 0.76$\pm$0.11         & 0.79$\pm$0.09         \\ \cline{2-6}
-                                & \multirow{2}{*}{Décroissant}      & Croissant         & 0.83$\pm$0.11         & 0.80$\pm$0.11         & 0.83$\pm$0.09         \\ \cline{3-6}
-                                &                                   & Décroissant       & 0.83$\pm$0.10         & 0.79$\pm$0.11         & 0.84$\pm$0.09         \\ \bottomrule    
+        \multirow{4}{*}{Simple} & \multirow{2}{*}{Croissant}        & Croissant         & 0,79$\pm$0,10         & 0,76$\pm$0,09         & 0,79$\pm$0,07         \\ \cline{3-6}
+                                &                                   & Décroissant       & 0,79$\pm$0,10         & 0,76$\pm$0,09         & 0,79$\pm$0,07         \\ \cline{2-6}
+                                & \multirow{2}{*}{Décroissant}      & Croissant         & 0,85$\pm$0,11         & 0,74$\pm$0,07         & 0,85$\pm$0,10         \\ \cline{3-6}
+                                &                                   & Décroissant       & 0,85$\pm$0,10         & 0,75$\pm$0,08         & \textbf{0,85$\pm$0,08}\\ \cline{1-6}
+        \multirow{4}{*}{Double} & \multirow{2}{*}{Croissant}        & Croissant         & 0,80$\pm$0,07         & 0,77$\pm$0,11         & 0,78$\pm$0,10         \\ \cline{3-6}
+                                &                                   & Décroissant       & 0,80$\pm$0,07         & 0,76$\pm$0,11         & 0,79$\pm$0,09         \\ \cline{2-6}
+                                & \multirow{2}{*}{Décroissant}      & Croissant         & 0,83$\pm$0,11         & 0,80$\pm$0,11         & 0,83$\pm$0,09         \\ \cline{3-6}
+                                &                                   & Décroissant       & 0,83$\pm$0,10         & 0,79$\pm$0,11         & 0,84$\pm$0,09         \\ \bottomrule    
     \end{tabular}
 \end{table}
 
@@ -75,14 +81,14 @@ Sigmoid,\cite{kull2017b}
     \begin{tabular}{llllll}
         \toprule 
         Type                    & Modalité                          & Seuil             & Sans                  & Isotonic              & Sigmoid               \\ \midrule
-        \multirow{4}{*}{Simple} & \multirow{2}{*}{Croissant}        & Croissant         & 0.74$\pm$0.08         & 0.72$\pm$0.13         & 0.72$\pm$0.12         \\ \cline{3-6}
-                                &                                   & Décroissant       & 0.72$\pm$0.09         & 0.74$\pm$0.14         & 0.70$\pm$0.13         \\ \cline{2-6}
-                                & \multirow{2}{*}{Décroissant}      & Croissant         & 0.83$\pm$0.10         & 0.82$\pm$0.08         & 0.82$\pm$0.09         \\ \cline{3-6}
-                                &                                   & Décroissant       & 0.82$\pm$0.10         & 0.81$\pm$0.08         & 0.80$\pm$0.12         \\ \cline{1-6}
-        \multirow{4}{*}{Double} & \multirow{2}{*}{Croissant}        & Croissant         & 0.69$\pm$0.11         & 0.73$\pm$0.14         & 0.68$\pm$0.11         \\ \cline{3-6}
-                                &                                   & Décroissant       & 0.68$\pm$0.12         & 0.72$\pm$0.12         & 0.68$\pm$0.13         \\ \cline{2-6}
-                                & \multirow{2}{*}{Décroissant}      & Croissant         & \textbf{0.83$\pm$0.08}& 0.82$\pm$0.08         & 0.78$\pm$0.11         \\ \cline{3-6}
-                                &                                   & Décroissant       & 0.82$\pm$0.08         & 0.81$\pm$0.08         & 0.78$\pm$0.12         \\ \bottomrule
+        \multirow{4}{*}{Simple} & \multirow{2}{*}{Croissant}        & Croissant         & 0,74$\pm$0,08         & 0,72$\pm$0,13         & 0,72$\pm$0,12         \\ \cline{3-6}
+                                &                                   & Décroissant       & 0,72$\pm$0,09         & 0,74$\pm$0,14         & 0,70$\pm$0,13         \\ \cline{2-6}
+                                & \multirow{2}{*}{Décroissant}      & Croissant         & 0,83$\pm$0,10         & 0,82$\pm$0,08         & 0,82$\pm$0,09         \\ \cline{3-6}
+                                &                                   & Décroissant       & 0,82$\pm$0,10         & 0,81$\pm$0,08         & 0,80$\pm$0,12         \\ \cline{1-6}
+        \multirow{4}{*}{Double} & \multirow{2}{*}{Croissant}        & Croissant         & 0,69$\pm$0,11         & 0,73$\pm$0,14         & 0,68$\pm$0,11         \\ \cline{3-6}
+                                &                                   & Décroissant       & 0,68$\pm$0,12         & 0,72$\pm$0,12         & 0,68$\pm$0,13         \\ \cline{2-6}
+                                & \multirow{2}{*}{Décroissant}      & Croissant         & \textbf{0,83$\pm$0,08}& 0,82$\pm$0,08         & 0,78$\pm$0,11         \\ \cline{3-6}
+                                &                                   & Décroissant       & 0,82$\pm$0,08         & 0,81$\pm$0,08         & 0,78$\pm$0,12         \\ \bottomrule
     \end{tabular}
 \end{table}
 
@@ -91,14 +97,14 @@ Sigmoid,\cite{kull2017b}
     \begin{tabular}{llllll}
         \toprule 
         Type                    & Modalité                          & Seuil             & Sans                  & Isotonic              & Sigmoid               \\ \midrule
-        \multirow{4}{*}{Simple} & \multirow{2}{*}{Croissant}        & Croissant         & 0.82$\pm$0.06         & 0.81$\pm$0.09         & 0.81$\pm$0.09         \\ \cline{3-6}
-                                &                                   & Décroissant       & 0.80$\pm$0.06         & 0.82$\pm$0.09         & 0.80$\pm$0.09         \\ \cline{2-6}
-                                & \multirow{2}{*}{Décroissant}      & Croissant         & \textbf{0.87$\pm$0.06}& 0.86$\pm$0.06         & 0.85$\pm$0.08         \\ \cline{3-6}
-                                &                                   & Décroissant       & 0.86$\pm$0.07         & 0.85$\pm$0.06         & 0.84$\pm$0.08         \\ \cline{1-6}
-        \multirow{4}{*}{Double} & \multirow{2}{*}{Croissant}        & Croissant         & 0.79$\pm$0.08         & 0.81$\pm$0.10         & 0.78$\pm$0.08         \\ \cline{3-6}
-                                &                                   & Décroissant       & 0.79$\pm$0.08         & 0.81$\pm$0.08         & 0.78$\pm$0.09         \\ \cline{2-6}
-                                & \multirow{2}{*}{Décroissant}      & Croissant         & 0.86$\pm$0.06         & 0.86$\pm$0.06         & 0.83$\pm$0.09         \\ \cline{3-6}
-                                &                                   & Décroissant       & 0.86$\pm$0.07         & 0.86$\pm$0.06         & 0.82$\pm$0.09         \\ \bottomrule
+        \multirow{4}{*}{Simple} & \multirow{2}{*}{Croissant}        & Croissant         & 0,82$\pm$0,06         & 0,81$\pm$0,09         & 0,81$\pm$0,09         \\ \cline{3-6}
+                                &                                   & Décroissant       & 0,80$\pm$0,06         & 0,82$\pm$0,09         & 0,80$\pm$0,09         \\ \cline{2-6}
+                                & \multirow{2}{*}{Décroissant}      & Croissant         & \textbf{0,87$\pm$0,06}& 0,86$\pm$0,06         & 0,85$\pm$0,08         \\ \cline{3-6}
+                                &                                   & Décroissant       & 0,86$\pm$0,07         & 0,85$\pm$0,06         & 0,84$\pm$0,08         \\ \cline{1-6}
+        \multirow{4}{*}{Double} & \multirow{2}{*}{Croissant}        & Croissant         & 0,79$\pm$0,08         & 0,81$\pm$0,10         & 0,78$\pm$0,08         \\ \cline{3-6}
+                                &                                   & Décroissant       & 0,79$\pm$0,08         & 0,81$\pm$0,08         & 0,78$\pm$0,09         \\ \cline{2-6}
+                                & \multirow{2}{*}{Décroissant}      & Croissant         & 0,86$\pm$0,06         & 0,86$\pm$0,06         & 0,83$\pm$0,09         \\ \cline{3-6}
+                                &                                   & Décroissant       & 0,86$\pm$0,07         & 0,86$\pm$0,06         & 0,82$\pm$0,09         \\ \bottomrule
     \end{tabular}
 \end{table}
 
