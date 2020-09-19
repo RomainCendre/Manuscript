@@ -10,15 +10,14 @@ Ce nouveau chapitre rempli l'objectif de ce manuscrit en intégrant une dimensio
 \newpage
 
 \section{Méthodologie}
-Lors de la \Cref{part:microscopy}, diverses méthodes de classification ont été proposées afin de gérer les données issues de la modalité \gls{rcm} soit au niveau des images, soit au niveau des lésions. Outre le besoin de lever un certains nombre de verrous scientifiques, cette étape est nécessaire à la réalisation du processus multimodal de ce manuscrit.\par
+Lors de la \Cref{part:microscopy}, diverses méthodes de classification ont été proposées afin de gérer les données issues de la modalité \gls{rcm} soit au niveau des images, soit au niveau des lésions. Outre le besoin de lever un certains nombre de verrous scientifiques, la réalisation de ces travaux a constitué une étape nécessaire à la réalisation du processus multimodal de ce manuscrit. Néanmoins à ce stade des travaux, les diverses méthodes proposées par ce manuscrit et par la littérature ne permettent que la prédiction au niveau d'une modalité et indépendemment de chacune d'entre elles.\par
 
-Néanmoins, les diverses méthodes actuelles permettent une prédiction indépendemment pour chacune des modalités sans considérer un potentiel diagnostic 
+Ce dernier chapitre propose une méthodologie en plusieurs temps pour permettre la mise en place d'un processus d'aide au diagnostic multimodal.
 
-Ce dernier chapitre propose une méthodologie en plusieurs temps pour mettre
+Pour parvenir à la réalisation de ce processus de décision multimodal, ce manuscrit propose de détailler les divers étapes qui le compose. Dans un premier temps, ce chapitre propose une mise au point sur les techniques permettant un diagnostic sur les modalités employé dans ce manuscrit. Dans un second temps, le principe de la calibration de modèle est présenté, dont l'utilisation est recommandé dans des contextes impliquant la collaboration de multiples modèles de prédiction. Dans un troisième temps, les processus multimodaux de prise de décision élaborés pour le besoin de cette problématique sont présentés, avec d'une part la considération d'un processus sans mémoire et d'autre d'un processus avec mémoire. Pour finir, ce chapitre se termine par une présentation des résultats issues des méthodes proposées, suivi d'une discussion sur ceux-ci.\par 
 
 \section{Diagnostic des modalités}
-\subsection{Diagnostic sur photographie clinique}
-\subsection{Diagnostic sur dermatoscopie}
+\subsection{Diagnostic sur photographie clinique et de dermatoscopie}
 \subsection{Diagnostic sur microscopie confocale}
 \clearpage
 
@@ -40,7 +39,18 @@ Sigmoid,\cite{kull2017b}
 \subsection{Système séquentiel avec mémoire}
 
 \section{Présentation des résultats}
+Cette section se destine à la présentation des résultats issus des méthodes précédemment énoncées. Dans un premier temps, 
+
+Les précédentes sections de ce travail se sont consacrées à décrire des méthodes pour tenter de résoudre la problématique de prédiction au niveau des lésions à partir de données \gls{rcm}. Cette nouvelle section se dédie à la présentation des résultats pour donner suite aux diverses expérimentations mentionnées précédemment. Dans une première sous-section, le protocole d'expérimentation suivi pour permettre l'obtention des résultats est relaté et l'organisation de ces résultats est décrite. Puis dans une seconde sous-section, les divers résultats issus des expériences mentionnées précédemment sont développées.\par
+
 \subsection{Protocole d’expérimentation}
+Afin de réaliser l'évaluation de ces expériences, une \textbf{validation croisée imbriquée} est employée, déjà discutée lors de la \Cref{sec:models_settings}, pour ses avantages permettant ainsi l'obtention de métriques plus objectives sur les performances du système évalué~\cite{Cawley2010}. Ce type de structure de validation est plus robuste face au biais~\cite{Cawley2010} et est démontré empiriquement moins sensible au biais et à la variance lorsque celle-ci est couplée à des valeurs de $k$ comprises entre 5 et 10 pour l'évaluation~\cite{James2000}. La diversité de combinaisons relativement limitée de cette partie, permet à l'instar des précédents chapitres, d'obtenir des résultats dans un temps raisonnable malgré des valeur de $k$ élevées. Ainsi \textbf{une valeur de $k$ égale à 10} est utilisée pour l'évaluation, tandis qu'une valeur de 2 est conservée pour la boucle interne suffisante pour déterminer la meilleure combinaison d'hyperparamètres. Bien que considéré comme une possibilité, le schéma de validation de type \textit{leave-one-out} pour la boucle externe d'évaluation n'est pas utilisé car plus sujet à une variance élevée lors des mesures notamment en présence de valeurs aberrantes~\cite{Bengio2004}. De plus, un tel schéma de validation est bien plus coûteux à entreprendre puisqu'il nécessite autant de phases d'entraînement et d'évaluation, que d'instances dans le jeu de données considérée, soit 223 pour ce travail.\par
+
+D'une part, pour procéder au mieux au réglage des paramètres des modèles précédents et, d'autre part, pour retenir une évaluation objective de ces processus malgré les déséquilibres d'annotations, il est nécessaire d'opter pour une métrique adaptée. Ces expériences emploient le \textbf{\fscore{}} permettant de représenter conjointement les mesures de précision et de rappel au sein d'une même métrique binaire. De plus, et afin de compléter l'analyse des résultats et de permettre un parallèle avec ceux des experts en dermatologie, les valeurs de \textbf{sensibilité} et de \textbf{spécificité} sont renseignées conjointement au \fscore{}. Comme pour l'article de Cinotti et al.~\cite{Cinotti2016}, ce processus décompose la présentation des résultats en deux temps. Dans un premier temps, est présentée l'analyse des mesures précédentes \textbf{sur l'ensemble des cas clinique} du jeu de données, en adoptant comme classe positive les annotations des lésions dites \textit{malignes}. Puis dans un second temps, les même mesures sont extraites \textbf{en ne considérant que les cas de \textbf{\gls{lm} / \gls{lmm}} parmi les annotations malignes} et en adoptant comme classe positive les annotations des lésions dites \textit{malignes}.\par
+
+La partie dédiée aux résultats se décompose en diverses étapes, débutant dans un premier temps par une présentation des résultats obtenus \textbf{au niveau lésionnel par les diverses méthodes supervisées} présentée lors de la \Cref{sec:patient_decision_supervised}. Dans un second temps, ce travail procède à une présentation des résultats obtenus \textbf{au niveau lésionnel par l'utilisation des méthodes faiblement supervisées} listées lors de la \Cref{sec:patient_decision_weak}. En continuité de ces résultats sur les méthodes faiblement supervisées, ce travail procède à une analyse inversée par la méthode \gls{misvm}. Ainsi, ce travail évalue la qualité des prédictions au niveau des instances images, afin de déterminer la compréhension du phénomène à bas niveau par cette méthode.\par
+\clearpage
+
 \subsection{Résultats des expérimentation}
 
 % Sequential - Pondéré
