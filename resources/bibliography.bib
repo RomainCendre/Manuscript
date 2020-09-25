@@ -1001,13 +1001,18 @@ title = {{ImageNet Classification with Deep Convolutional Neural Networks}},
 url = {http://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf},
 year = {2012}
 }
-@misc{tensorflow2015,
-annote = {Software available from tensorflow.org},
-author = {Mart$\backslash$'$\backslash$in{\~{}}Abadi and Ashish{\~{}}Agarwal and Paul{\~{}}Barham and Eugene{\~{}}Brevdo and Zhifeng{\~{}}Chen and Craig{\~{}}Citro and Greg{\~{}}S.{\~{}}Corrado and Andy{\~{}}Davis and Jeffrey{\~{}}Dean and Matthieu{\~{}}Devin and Sanjay{\~{}}Ghemawat and Ian{\~{}}Goodfellow and Andrew{\~{}}Harp and Geoffrey{\~{}}Irving and Michael{\~{}}Isard and Jia, Yangqing and Rafal{\~{}}Jozefowicz and Lukasz{\~{}}Kaiser and Manjunath{\~{}}Kudlur and Josh{\~{}}Levenberg and Dandelion{\~{}}Man{\'{e}} and Rajat{\~{}}Monga and Sherry{\~{}}Moore and Derek{\~{}}Murray and Chris{\~{}}Olah and Mike{\~{}}Schuster and Jonathon{\~{}}Shlens and Benoit{\~{}}Steiner and Ilya{\~{}}Sutskever and Kunal{\~{}}Talwar and Paul{\~{}}Tucker and Vincent{\~{}}Vanhoucke and Vijay{\~{}}Vasudevan and Fernanda{\~{}}Vi{\'{e}}gas and Oriol{\~{}}Vinyals and Pete{\~{}}Warden and Martin{\~{}}Wattenberg and Martin{\~{}}Wicke and Yuan{\~{}}Yu and Xiaoqiang{\~{}}Zheng},
-title = {{{\{}TensorFlow{\}}: Large-Scale Machine Learning on Heterogeneous Systems}},
-url = {https://www.tensorflow.org/},
-year = {2015}
+@article{Tensorflow2016,
+archivePrefix = {arXiv},
+arxivId = {1603.04467},
+author = {Abadi, Martin and Agarwal, Ashish and Barham, Paul and Brevdo, Eugene and Chen, Zhifeng and Citro, Craig and Corrado, Gregory S and Davis, Andy and Dean, Jeffrey and Devin, Matthieu and Ghemawat, Sanjay and Goodfellow, Ian J and Harp, Andrew and Irving, Geoffrey and Isard, Michael and Jia, Yangqing and J{\'{o}}zefowicz, Rafal and Kaiser, Lukasz and Kudlur, Manjunath and Levenberg, Josh and Man{\'{e}}, Dan and Monga, Rajat and Moore, Sherry and Murray, Derek Gordon and Olah, Chris and Schuster, Mike and Shlens, Jonathon and Steiner, Benoit and Sutskever, Ilya and Talwar, Kunal and Tucker, Paul A and Vanhoucke, Vincent and Vasudevan, Vijay and Vi{\'{e}}gas, Fernanda B and Vinyals, Oriol and Warden, Pete and Wattenberg, Martin and Wicke, Martin and Yu, Yuan and Zheng, Xiaoqiang},
+eprint = {1603.04467},
+journal = {CoRR},
+title = {{TensorFlow: Large-Scale Machine Learning on Heterogeneous Distributed Systems}},
+url = {http://arxiv.org/abs/1603.04467},
+volume = {abs/1603.0},
+year = {2016}
 }
+
 @misc{chollet2015,
   title={Keras},
   author={Chollet, Fran\c{c}ois and others},
@@ -2620,4 +2625,97 @@ pages = {408--421},
 title = {{Asymptotic Properties of Nearest Neighbor Rules Using Edited Data}},
 volume = {SMC-2},
 year = {1972}
+}
+@inproceedings{Platt2000,
+author = {Platt, J},
+booktitle = {Advances in Large Margin Classifiers},
+keywords = {2000 svm},
+title = {{Probabilistic outputs for support vector machines and comparison to regularized likelihood methods}},
+year = {2000}
+}
+@article{Friedman2000,
+author = {Friedman, Jerome and Hastie, Trevor and Tibshirani, Robert},
+doi = {10.1214/aos/1016218223},
+journal = {Ann. Statist.},
+number = {2},
+pages = {337--407},
+publisher = {The Institute of Mathematical Statistics},
+title = {{Additive logistic regression: a statistical view of boosting (With discussion and a rejoinder by the authors)}},
+url = {https://doi.org/10.1214/aos/1016218223},
+volume = {28},
+year = {2000}
+}
+@article{Xiao2019,
+abstract = {Autonomous vehicles (AVs) are key for the intelligent mobility of the future. A crucial component of an AV is the artificial intelligence (AI) able to drive towards a desired destination. Today, there are different paradigms addressing the development of AI drivers. On the one hand, we find modular pipelines, which divide the driving task into sub-tasks such as perception (object detection, semantic segmentation, depth estimation, tracking) and maneuver control (local path planing and control). On the other hand, we find end-to-end driving approaches that try to learn a direct mapping from input raw sensor data to vehicle control signals (the steering angle). The later are relatively less studied, but are gaining popularity since they are less demanding in terms of sensor data annotation. This paper focuses on end-to-end autonomous driving. So far, most proposals relying on this paradigm assume RGB images as input sensor data. However, AVs will not be equipped only with cameras, but also with active sensors providing accurate depth information (traditional LiDARs, or new solid state ones). Accordingly, this paper analyses if RGB and depth data, RGBD data, can actually act as complementary information in a multimodal end-to-end driving approach, producing a better AI driver. Using the CARLA simulator functionalities, its standard benchmark, and conditional imitation learning (CIL), we will show how, indeed, RGBD gives rise to more successful end-to-end AI drivers. We will compare the use of RGBD information by means of early, mid and late fusion schemes, both in multisensory and single-sensor (monocular depth estimation) settings.},
+archivePrefix = {arXiv},
+arxivId = {1906.03199},
+author = {Xiao, Yi and Codevilla, Felipe and Gurram, Akhil and Urfalioglu, Onay and L{\'{o}}pez, Antonio M.},
+eprint = {1906.03199},
+number = {201808390010},
+pages = {1--15},
+title = {{Multimodal End-to-End Autonomous Driving}},
+url = {http://arxiv.org/abs/1906.03199},
+year = {2019}
+}
+@article{Liu2015a,
+abstract = {The accurate diagnosis of Alzheimer's disease (AD) is essential for patient care and will be increasingly important as disease modifying agents become available, early in the course of the disease. Although studies have applied machine learning methods for the computer-aided diagnosis of AD, a bottleneck in the diagnostic performance was shown in previous methods, due to the lacking of efficient strategies for representing neuroimaging biomarkers. In this study, we designed a novel diagnostic framework with deep learning architecture to aid the diagnosis of AD. This framework uses a zero-masking strategy for data fusion to extract complementary information from multiple data modalities. Compared to the previous state-of-the-art workflows, our method is capable of fusing multimodal neuroimaging features in one setting and has the potential to require less labeled data. A performance gain was achieved in both binary classification and multiclass classification of AD. The advantages and limitations of the proposed framework are discussed.},
+author = {Liu, Siqi and Liu, Sidong and Cai, Weidong and Che, Hangyu and Pujol, Sonia and Kikinis, Ron and Feng, Dagan and Fulham, Michael J.},
+doi = {10.1109/TBME.2014.2372011},
+file = {::},
+isbn = {0018-9294 VO - PP},
+issn = {15582531},
+journal = {IEEE Transactions on Biomedical Engineering},
+keywords = {Alzheimer's Disease,Classification,Deep Learning,MRI,Neuroimaging,PET},
+number = {4},
+pages = {1132--1140},
+pmid = {25423647},
+title = {{Multimodal Neuroimaging Feature Learning for Multiclass Diagnosis of Alzheimer's Disease}},
+volume = {62},
+year = {2015}
+}
+@article{Lupu2008,
+abstract = {Biometric systems allow automatic person recognition based on physical or behavioral features which belong to a certain person. Each biometric feature has its limits and no biometric system is perfect so unimodal biometric systems raise a variety of problems. To over fulfilling some of the mentioned inconvenient and limitations and to increase the level of security the multimodal biometric systems are used. This paper discusses the main features of the multimodal biometric system: architecture, level of fusion, methodology used for integrating the multiple verifiers and normalization techniques. The main applications of the multimodal biometric systems are also presented},
+author = {Lupu, Eugen and Pop, Petre G},
+journal = {ACTA TECHNICA NAPOCENSIS Electronics and Telecommunications},
+keywords = {access control,authentication,biometric,fusion,multimodal,normalization,security},
+number = {3},
+pages = {39--44},
+title = {{Multimodal biometric systems overview}},
+volume = {49},
+year = {2008}
+}
+@article{Lim2014,
+abstract = {The goal of this study was to determine the diagnostic capability of a multimodal spectral diagnosis (SD) for in vivo noninvasive disease diagnosis of melanoma and nonmelanoma skin cancers. We acquired reflectance, fluorescence, and Raman spectra from 137 lesions in 76 patients using custom-built optical fiber-based clinical systems. Biopsies of lesions were classified using standard histopathology as malignant melanoma (MM), nonmelanoma pigmented lesion (PL), basal cell carcinoma (BCC), actinic keratosis (AK), and squamous cell carcinoma (SCC). Spectral data were analyzed using principal component analysis. Using multiple diagnostically relevant principal components, we built leave-one-out logistic regression classi-fiers. Classification results were compared with histopathology of the lesion. Sensitivity/specificity for classifying MM versus PL (12 versus 17 lesions) was 100{\%}/100{\%}, for SCC and BCC versus AK (57 versus 14 lesions) was 95{\%}/71{\%}, and for AK and SCC and BCC versus normal skin (71 versus 71 lesions) was 90{\%}/85{\%}. The best classification for nonmelanoma skin cancers required multiple modalities; however, the best melanoma classi-fication occurred with Raman spectroscopy alone. The high diagnostic accuracy for classifying both melanoma and nonmelanoma skin cancer lesions demonstrates the potential for SD as a clinical diagnostic device.},
+author = {Lim, Liang and Nichols, Brandon and Migden, Michael R. and Rajaram, Narasimhan and Reichenberg, Jason S. and Markey, Mia K. and Ross, Merrick I. and Tunnell, James W.},
+doi = {10.1117/1.JBO.19.11.117003},
+file = {::},
+issn = {1083-3668},
+journal = {Journal of Biomedical Optics},
+keywords = {2,2014,21,6,accepted for publication oct,diagnosis,in vivo,melanoma,online nov,paper 140323rr received may,published,raman,revised manuscript received sep,skin cancer,spectroscopy},
+number = {11},
+pages = {117003},
+title = {{Clinical study of noninvasive {\textless}i{\textgreater}in vivo{\textless}/i{\textgreater} melanoma and nonmelanoma skin cancers using multimodal spectral diagnosis}},
+url = {http://biomedicaloptics.spiedigitallibrary.org/article.aspx?doi=10.1117/1.JBO.19.11.117003},
+volume = {19},
+year = {2014}
+}
+@article{Krishneswari2012,
+abstract = {Problem statement: Biometric is a unique, measurable physiological or behavioral characteristic of a person and finds extensive applications in authentication and authorization. Fingerprint, palm print, iris, voice, are some of the most widely used biometric for personal identification. To reduce the error rates and enhance the usability of biometric system, multimodal biometric systems are used where more than one biometric characteristic are used. Approach: In this study it is proposed to investigate the performance of multimodal biometrics using palm print and fingerprint. Features are extracted using Discrete Cosine Transform (DCT) and attributes selected using Information Gain (IG). Results and Conclusion: The proposed technique shows an average improvement of 8.52{\%} compared to using palmprint technique alone. The processing time does not increase for verification compared to palm print techniques.},
+author = {Krishneswari, K and Arumugam, S},
+doi = {10.3844/jcssp.2012.431.435},
+journal = {Journal of Computer Science},
+month = {jan},
+number = {3 SE - Research Article},
+title = {{Multimodal Biometrics using Feature Fusion}},
+url = {https://thescipub.com/abstract/jcssp.2012.431.435},
+volume = {8},
+year = {2012}
+}
+@software{Pandas2020,
+author = {Pandas development team, The},
+doi = {10.5281/zenodo.3509134},
+publisher = {Zenodo},
+title = {{pandas-dev/pandas: Pandas}},
+url = {https://doi.org/10.5281/zenodo.3509134},
+year = {2020}
 }

@@ -1,20 +1,24 @@
 \renewcommand{\thechapter}{\arabic{chapter}}
 \setcounter{chapter}{3}
 
-\chapter{État de l'art}
+\chapter{Données et méthodes cliniques}
 \label{chap:chapter_4}
 \chapterintro
-Lors des précédents chapitres ont été présentés les trois domaines sollicités par ce travail. Ce nouveau chapitre se consacre à la présentation des données utilisées pour évaluer ces travaux et procède à une analyse de la littérature sur le sujet de ce manuscrit.\par
+Lors des précédents chapitres ont été présentés les trois domaines sollicités par ce travail. Ce nouveau chapitre se consacre à la présentation des données utilisées pour évaluer ces travaux et procède aux recensement des méthodes cliniques sur les modalités concernées.\par
 
-Dans un premier temps, la \textit{matière} utilisée afin de mener cette recherche est détaillée dans la \Cref{sec:clinical_data}. En effet, l'ensemble de ce travail prend appui sur une base de données mise à disposition initialement pour la réalisation d'une étude clinique menée sur la pertinence de la dermatoscopie et de la \acrlong{rcm} en milieu clinique~\cite{Cinotti2018}. Cette étude clinique est décrite point par point en décrivant d'une part les conditions d'inclusion des patients et d'autre part le protocole d'évaluation des experts. Enfin, les aspects liés à la structuration de la base de données et donc nécessaires pour permettre son utilisation dans ces expériences sont présentés à la fin de cette section.\par
+Dans un premier temps, la \textit{matière} utilisée afin de mener cette recherche est détaillée dans la \Cref{sec:clinical_data}. En effet, l'ensemble de ce travail prend appui sur une base de données mise à disposition initialement pour la réalisation d'une étude clinique menée sur la pertinence de la dermatoscopie et de la \acrlong{rcm} en milieu clinique. Cette étude clinique est décrite point par point en décrivant d'une part les conditions d'inclusion des patients et d'autre part le protocole d'évaluation des experts. Enfin, les aspects liés à la structuration de la base de données et donc nécessaires pour permettre son utilisation dans ces expériences sont présentés à la fin de cette section.\par
 
-Dans un second temps, un état de l'art de la littérature est réalisé sur les trois modalités employées avec d'une part les dernière avancées cliniques dans la \Cref{sec:clinical_methods} et d'autre part les méthodes d'aide au diagnostic par ordinateur dans la \Cref{sec:cad_methods}.\par
+Dans un second temps, un état de l'art de la littérature est réalisé sur les trois modalités employées dans la \Cref{sec:clinical_methods}.\par
 \newpage
 
 \section{Données de travail}
 \label{sec:clinical_data}
-Pour commencer, il est nécessaire de souligner que cette base a reçu un agrément de la part du comité d'éthique du \acrfull{chuste} pour son exploitation au sein de l'étude clinique mentionnée précédemment mais également pour ce travail universitaire (numéro du comité d'examen institutionnel 672016/CHUSTE). Par ailleurs, cette étude est conforme aux recommandations de la déclaration de Helsinky.\par
+Pour commencer, il est nécessaire de souligner que \textbf{cette base a reçue un agrément de la part du comité d'éthique du \acrfull{chuste}} pour son exploitation au sein de l'étude clinique mentionnée précédemment mais également pour ce travail universitaire (\textbf{numéro du comité d'examen institutionnel 672016/CHUSTE}). Par ailleurs, cette étude \textbf{est conforme aux recommandations de la déclaration de Helsinky}.\par
 
+Par cette section, divers aspect de ces données de travail sont présentés. Dans un premier temps, une présentation de sa constitution et des données recueillies est amenée par la \Cref{sec:dataset_introduction}. Puis dans un second temps, les aspects liés à son organisation sont présentés dans la \Cref{sec:dataset_organisation}. Pour finir, cette section s'achève par la description de l'interface logicielle permettant l'interaction avec ces données dans la \Cref{sec:dataset_api}.
+
+\subsection{Présentation des données}
+\label{sec:dataset_introduction}
 Cette base de données compile diverses \textbf{lésions faciales} possédant les critères d'inclusions suivants~:
 \begin{itemize}
     \item les images proviennent de patients inclus entre les \textbf{années 2011 et 2015}, dont les données ont exclusivement été acquises au \textbf{\gls{chuste}},
@@ -22,22 +26,29 @@ Cette base de données compile diverses \textbf{lésions faciales} possédant le
     \item les lésions considérées dans cette base sont celles dont le diagnostic différentiel, c’est-à-dire par élimination méthodique des causes (voir \Cref{subsec:lentigo}), était \textbf{fortement controversé} et \textbf{supposé comme appartenant à un \gls{lm} ou \gls{lmm}}.
 \end{itemize}\par
 
-En terme de composition, la base regroupe 201 patients répartis entre 96 femmes et 105 hommes d'un âge moyen égal à 70 ans compris entre 29 et 97 ans comme présenté sur la \Cref{fig:statistics_age_sex}. Cette base comporte 223 lésions uniques dont le diagnostic que nous utiliserons comme référence provient de l'histologie. Ainsi, nous avons à notre disposition~:
+En terme de composition, la base regroupe 201 patients répartis entre 96 femmes et 105 hommes d'un âge moyen égal à 70 ans compris entre 29 et 97 ans comme présenté sur la \Cref{fig:statistics_age_sex}. Cette base comporte 223 lésions uniques avec pour diagnostic de référence l'histologie. Ainsi, sont mis à la disposition de ce travail~:
 \begin{itemize}
     \item 115 \textbf{lésions malignes}, scindée en 92 \gls{lm} et 23 \gls{lmm},
     \item 108 \textbf{lésions bénignes}, dont 20 \gls{bcc}, 37 \gls{sl}, 23 \gls{sk}, 15 \gls{pak}, 8 nævus, 2 kératoses lichénoïde, 2 cicatrices et 1 maladie de Bowen pigmentée.
 \end{itemize}\par
 
+Les acquisitions sont réalisées par l'un des trois experts investigateurs de l'étude clinique~\cite{Cinotti2018}. \textbf{Tout cas de collisions de tumeurs au sein est exclu de cette étude}. D'une part, les données de dermatoscopie sont produites à l'aide d'une caméra \textit{PowerShot® G7}~\textsuperscript{\ref{footnote:device_powershot}} couplée au dispositif proposé par \textit{Fotofinder}~\textsuperscript{\ref{footnote:device_fotofinder}}. D'autres part, les données de \gls{rcm} sont produites à l'aide d'un \textit{VivaScope 3000®}~\textsuperscript{\ref{footnote:device_mavig}}. En revanche, aucune information liée à l'acquisition des données de photographie clinique n'a été mentionnée.\par
+
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\linewidth]{contents/chapter_4/resources/statistics_age_sex.pdf}
+    \includegraphics[width=\linewidth]{contents/chapter_4/resources/statistics_age_sex.pdf}
     \caption{A gauche, répartition en fonction de l'âge et du sexe. A droite, répartition entre l'âge et le sexe en tenant compte du diagnostic binaire.}
     \label{fig:statistics_age_sex}
 \end{figure}\par
 
-Les acquisitions ont été à chaque fois réalisées par l'un des trois experts investigateurs de l'étude clinique~\cite{Cinotti2018}. Tout cas de collisions de tumeurs au sein d'un même groupe a été exclu de cette étude. En ce qui concerne la modalité de dermatoscopie, les données ont été produites à l'aide d'une caméra PowerShot® G7~\textsuperscript{\ref{footnote:device_powershot}} couplée au dispositif proposé par Fotofinder~\textsuperscript{\ref{footnote:device_fotofinder}}. Pour ce qui est de la modalité de \gls{rcm}, les données proviennent d'un VivaScope 3000®~\textsuperscript{\ref{footnote:device_mavig}}. En revanche, aucune information liée à l'acquisition des données de photographie clinique n'a été mentionnée.\par
+L'intérêt de ces trois modalités est grand dans le contexte de la dermatologie, puisqu'elles représentent le processus \textit{classique} de prise en charge clinique, de la modalité la moins onéreuse avec la \textbf{photographie clinique} mais également la moins précise, à des modalités plus onéreuses, également plus riches en information, avec la \textbf{\gls{rcm}}. Ainsi, chaque modalité permet au praticien de réduire, \textbf{si nécessaire}, la zone d'incertitude chez un patient souffrant d'une pathologie de la peau. Ce processus type de prise en charge peut être visualisé sur la \Cref{fig:scheme_devices_location}.\par
 
-L'intérêt de ces trois modalités est grand dans le contexte de la dermatologie puisqu'elles représentent le processus \textit{classique} de prise en charge clinique, de la modalité la moins onéreuse avec la \textbf{photographie clinique} mais également la moins précise, à des modalités plus onéreuses, également plus riches en information, avec la \textbf{\gls{rcm}}. Ainsi, chaque modalité permet au praticien de réduire la zone d'incertitude chez un patient souffrant d'une pathologie de la peau.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{contents/chapter_4/resources/scheme_devices_location.pdf}
+    \caption{Schéma de représentation du processus type de dermatologie, allant de la modalité la plus incertaine mais également la moins onéreuse, à la modalité la précise mais également la plus coûteuse.}
+    \label{fig:scheme_devices_location}
+\end{figure}\par
 
 \addtocounter{footnote}{1}
 \footnotetext[\thefootnote]{Source~:~Canon Powershot®, Canon, Tokyo, Japon. \label{footnote:device_powershot}}
@@ -46,20 +57,13 @@ L'intérêt de ces trois modalités est grand dans le contexte de la dermatologi
 \addtocounter{footnote}{1}
 \footnotetext[\thefootnote]{Source~:~Distribué en Europe par MAVIG GmbH, Munich, Allemagne. \label{footnote:device_mavig}}
 
-Afin d'évaluer les performances de praticiens face à ces lésions, les investigateurs ont eu recours à 21 dermatologues détenant une expertise des modalités d'imagerie non-invasives. Ces experts sont répartis de manière homogène selon leurs compétences respectives pour chacun des dispositifs. Ainsi, le panel d'évaluation se décompose de la façon suivante~:~
+Afin d'évaluer les performances de praticiens face à ces lésions, les investigateurs de l'étude Cinotti et al. ont eu recours à 21 dermatologues détenant une expertise des modalités d'imagerie non-invasives. Ces experts sont répartis de manière homogène selon leurs compétences respectives pour chacun des dispositifs. Ainsi, le panel d'évaluation se décompose de la façon suivante~:~
 \begin{inlinerate}
     \item 6 experts sont soumis à l'ensemble des modalités,
     \item 15 experts sont soumis à l'évaluation de la photographie clinique et de la dermatoscopie (dont 9 uniquement dédiés a ces deux modalités),
     \item et 12 sont soumis à la \gls{rcm} (dont 6 uniquement dédiés à la \gls{rcm})~\cite{Cinotti2018}.
 \end{inlinerate}
 La répartition de ces experts est résumée en \Cref{fig:experts_evaluation}.\par
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.6\linewidth]{contents/chapter_4/resources/experts_evaluation.pdf}
-    \caption{Répartition du panel de 21 dermatologues sur l'évaluation des diverses modalités~\cite{Cinotti2018}.}
-    \label{fig:experts_evaluation}
-\end{figure}\par
 
 Ces experts ont évalué la gravité des lésions selon les termes \textbf{bénin} et \textbf{malin} pour chaque cas clinique présenté. Afin d'éviter un biais de la part des experts soumis à l'évaluation des trois modalités différentes, ceux-ci ont été sollicités sur trois journées séparées~:
 \begin{inlinerate}
@@ -69,7 +73,17 @@ Ces experts ont évalué la gravité des lésions selon les termes \textbf{béni
 \end{inlinerate}
 Par ailleurs, les cas cliniques ont été présentés dans un ordre différent entre chaque journée d'évaluation afin d'éviter des biais liés à l'activité précédente des experts.\par
 
-La base d'images utilisée pour cette évaluation nous été remise, et ses données sensibles ont été anonymisées afin de ne pas pouvoir ré-identifier les patients. La structure de cette base peut être appréhendée sur la \Cref{fig:db_structure} - Gauche, et se compose~:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{contents/chapter_4/resources/experts_evaluation.pdf}
+    \caption{Répartition du panel de 21 dermatologues sur l'évaluation des diverses modalités~\cite{Cinotti2018}.}
+    \label{fig:experts_evaluation}
+\end{figure}\par
+\clearpage
+
+\subsection{Organisation des données}
+\label{sec:dataset_organisation}
+Les données sensibles de cette base sont anonymisées afin de ne pas pouvoir ré-identifier les patients. Sa structure initiale peut être appréhendée sur la \Cref{fig:db_structure} - Haut, et se compose~:
 \begin{itemize}
     \item d'un \textbf{tableau de lésions}, sous forme de fichier \gls{csv} et contenant~:
     \begin{itemize}
@@ -79,20 +93,26 @@ La base d'images utilisée pour cette évaluation nous été remise, et ses donn
     \item d'un \textbf{répertoire d'images} comprenant les divers cas clinique recensés dans l'étude sous divers formats image.
 \end{itemize}\par
 
-Afin d'exploiter au mieux cette base, quelques modifications ont été apportées. D'une part, la diversité des formats images est un frein quant à la gestion de ces données et nous avons opté pour un format matriciel sans perte de type bitmap. D'autre part, la structure de la base dans l'état ne permettait pas l'utilisation d'annotations au niveau des images ou supplémentaires à d'autres niveaux. Afin de rendre plus dynamique cette partie, nous avons opté pour une structure reprenant le tableau des lésions initial, lié à des répertoires associés à chaque lésion. Ce procédé est ainsi répété de manière récursive, chaque dossier de lésion se compose lui même de tableaux d'annotations propre au type d'annotations stockées. Par ailleurs, certains apports d'informations ont été réalisés pour permettre un bon déroulement de la suite de notre travail, tel que l'appartenance à un patient afin de ne pas proposer des données d'un même patient lors de l'entraînement et du test. La \Cref{fig:db_structure} - Droite synthétise la structure de cette base après modification.\par
+Afin d'exploiter au mieux cette base, quelques modifications sont apportées. D'une part, la diversité des formats images est un frein quant à la gestion de ces données, ainsi \textbf{un format matriciel sans perte de type bitmap} est adopté. D'autre part, la structure de la base dans l'état ne permet pas l'utilisation d'annotations au niveau des images ou des niveaux supplémentaires. Afin de rendre cet aspect plus dynamique, une structure reprenant les données de manière imbriquée est choisie. La racine de cette nouvelle structure reprend le tableau des lésions initial, dont chaque ligne est associé à une unique lésion. Ce procédé est ainsi répété de manière récursive, chaque dossier de lésion se compose lui même de tableaux d'annotations propre au type d'annotations stockées. Par ailleurs, certains apports d'informations ont été réalisés pour permettre un bon déroulement de la suite de ce travail, tel que l'appartenance à un patient afin de ne pas proposer des données d'un même patient lors de l'entraînement et du test. Cette nouvelle structure est synthétisée sur la \Cref{fig:db_structure} - Bas.\par
 
 \begin{figure}[H]
-\centering
-    \begin{subfigure}{.6\textwidth}
-      \centering
-      \includegraphics[width=\linewidth]{contents/chapter_4/resources/scheme_dbstructure_old.pdf}
-    \end{subfigure}
-    \begin{subfigure}{.6\textwidth}
-      \centering
-      \includegraphics[width=\linewidth]{contents/chapter_4/resources/scheme_dbstructure_new.pdf}
-    \end{subfigure}
-    \caption{Schéma de l'organisation de la base de ressources employée. En haut, la base initiale ; En bas, la base restructurée afin de supporter de nouvelles annotations.}
+    \centering
+    \includegraphics[width=0.9\linewidth]{contents/chapter_4/resources/scheme_data_structure.pdf}
+    \caption{Schéma organisationnel de la base de données. En haut, la base initiale~;~En bas, la base restructurée afin de supporter de nouvelles annotations.}
     \label{fig:db_structure}
+\end{figure}\par
+\clearpage
+
+\subsection{Interface logicielle}
+\label{sec:dataset_api}
+L'exploitation en l'état de cette base de données
+Afin de mettre à disposition des structures de données, cette interface logicielle fait appel à la librairie \textit{Pandas}~\cite{Pandas2020}.\par 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{contents/chapter_4/resources/schema_database_api.pdf}
+    \caption{Schéma de représentation de l'interface logicielle mise en place pour permettre les divers accès à la base mise à disposition. Par cette interface, trois méthodes sont mises à disposition des expérimentations qui suivent.}
+    \label{fig:schema_database_api}
 \end{figure}\par
 \clearpage
 

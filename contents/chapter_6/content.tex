@@ -58,7 +58,7 @@ La seconde méthode sur lequel ce travail prend appui est une extension de la tr
     \label{eq:image_improvement_ggd}
 \end{equation}
 
-Afin de gérer ces diverses caractéristiques, ce travail s'emploie à l'utilisation d'un \textbf{modèle de type \gls{svm} à noyau linéaire}, démontré empiriquement efficace pour la classification de données fréquentielles lors du \Cref{chap:chapter_5}. Les hyperparamètres employés afin de tirer le meilleur parti de ce modèle sont listés sur la \Cref{tab:parameters_image_improvement_multiscale_frequency}.\par
+Afin de gérer ces diverses caractéristiques, ce travail s'emploie à l'utilisation d'un \textbf{modèle de type \gls{svm} à noyau linéaire}, démontré empiriquement efficace pour la classification de données fréquentielles lors du \Cref{chap:chapter_5}. Les hyperparamètres employés afin de tirer le meilleur parti de ce modèle sont listés sur la \Cref{tab:parameters_image_improvement_multiscale_frequency}. L'implémentation du modèle \gls{svm} utilisée provient de la bibliothèque logicielle \textit{Scikit-learn}~\cite{pedregosa2011}.\par
 
 \begin{table}[H]
     \centering
@@ -92,11 +92,11 @@ Les étapes de transformée en ondelettes et la décomposition à différentes �
 \subsection{Décomposition spatiale par échelles multiples}
 Lors de la précédente sous-section, les approches par échelles multiples sur base d'extraction en ondelettes ont été présentées. Toujours dans cette optique d'approche d'échelles multiples, divers travaux se sont orientés afin de permettre une classification d'images médicales sur la base d'extraction de caractéristiques spatiales~\cite{Alsaih2016,Tzalavra2016}. Les prochaines étapes s'inspirent de ces travaux mais également des conclusions apportées par le \Cref{chap:chapter_5} sur l'extraction de caractéristiques spatiales et par transfert de connaissances. Ainsi, sont mis en œuvre deux processus par échelles multiples dans ce chapitre, présentés lors des prochains paragraphes.\par
 
-La première méthode proposée se base sur une approche de type fusion de caractéristiques avant l'étape de classification, déjà rencontrée dans des travaux à but similaire~\cite{Pedersoli2011,Alsaih2016}. Afin de permettre l'agrégation de ces caractéristiques, une \textbf{normalisation par Minimum / Maximum} associé à un \textbf{modèle \gls{svm} à noyau linéaire} est employé, démontré efficace de manière empirique lors du \Cref{chap:chapter_5} et robuste dans des contextes à fortes dimensions. Les hyperparamètres utilisés par ce modèle sont recensés dans la \Cref{tab:parameters_image_improvement_models_multiscale_spatial}. Le principe de fonctionnement de cette première méthode est schématisé sur la \Cref{fig:scheme_image_improvement_multiscale_features}.\par
+La première méthode proposée se base sur une approche de type fusion de caractéristiques avant l'étape de classification, déjà rencontrée dans des travaux à but similaire~\cite{Pedersoli2011,Alsaih2016}. Afin de permettre l'agrégation de ces caractéristiques, une \textbf{normalisation par Minimum / Maximum} associé à un \textbf{modèle \gls{svm} à noyau linéaire} est employé, démontré efficace de manière empirique lors du \Cref{chap:chapter_5} et robuste dans des contextes à fortes dimensions. À nouveau, l'implémentation du modèle \gls{svm} employée dans ce travail provient de la bibliothèque logicielle \textit{Scikit-learn}~\cite{pedregosa2011} et les hyperparamètres utilisés par ce modèle sont recensés dans la \Cref{tab:parameters_image_improvement_models_multiscale_spatial}. Le principe de fonctionnement de cette première méthode est schématisé sur la \Cref{fig:scheme_image_improvement_multiscale_features}.\par
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.95\linewidth]{contents/chapter_6/resources/scheme_image_improvement_multiscale_features.pdf}
+    \includegraphics[width=0.9\linewidth]{contents/chapter_6/resources/scheme_image_improvement_multiscale_features.pdf}
     \caption{Schéma de représentation du système par échelles multiples, sur la base d'une extraction à diverses échelles puis par l'agrégation des caractéristiques avant la procédure de classification.}
     \label{fig:scheme_image_improvement_multiscale_features}
 \end{figure}\par
@@ -121,7 +121,7 @@ La seconde méthode correspond à un schéma en deux temps, dans lequel chaque m
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.95\linewidth]{contents/chapter_6/resources/scheme_image_improvement_multiscale_decision.pdf}
+    \includegraphics[width=0.85\linewidth]{contents/chapter_6/resources/scheme_image_improvement_multiscale_decision.pdf}
     \caption{Schéma de représentation du système par échelles multiples, sur la base d'extraction d'extractions et de prédictions à diverses échelles et par agrégation de ces décisions.}
     \label{fig:scheme_image_improvement_multiscale_decision}
 \end{figure}\par
@@ -147,7 +147,7 @@ Ainsi, les diverses expériences de cette sous-section sont menées à l'aide de
 \section{Approche par fenêtre glissante}
 Lors de la section précédente, des schémas par échelles multiples permettant une compréhension à divers niveaux ont été évoqués. Cette nouvelle section va s'orienter vers une compréhension des données à basse échelle, en partant de l'hypothèse qu'il existe un niveau de détail pour lequel les tissus peuvent être caractérisés avec suffisamment de précision.\par
 
-Ce type d'approche est qualifié d'approche \textbf{par fenêtre glissante} ou par \textit{patchs}. Néanmoins, le premier terme permet de visualiser le principe de fonctionnement consistant à balayer un espace de plus grande dimension par une fenêtre de dimension inférieure. Cette technique a permis des avancées pour diverses applications, dont~: 
+Ce type d'approche est qualifié d'approche \textbf{par fenêtre glissante} ou par \textit{sliding window}. Néanmoins, le premier terme permet de visualiser le principe de fonctionnement consistant à balayer un espace de plus grande dimension par une fenêtre de dimension inférieure. Cette technique a permis des avancées pour diverses applications, dont~: 
 \begin{itemize}
     \item de la détection et localisation d'objets sur des images naturelles~\cite{Harzallah2009} ou encore de détection de cancer et de parties anatomiques sur images de radiologie~\cite{Helwan2017}, par motivation d'obtenir l'emplacement précis de certaines informations,
     \item de la détection d'anomalies sur des images histologiques mais encore de la classification de données conséquentes~\cite{Hou2016,Alqudah2019,Wei2019}, motivée par la contrainte matérielle impliquée par la taille de ces images ou par manque d'annotations.
@@ -240,7 +240,7 @@ Suivant ce constat, l'initialisation de cette architecture \textit{ResNet-50} es
 
 En termes de paramètres, la taille des lots ou \textit{batch size} \textbf{est réglée à une valeur de 8} pour des raisons de limitations matérielles. Néanmoins, une taille plus conséquente permet une meilleur stabilité de la convergence de ce dernier. De plus, il est utile de préciser que l'ensemble des données \gls{rcm} dédié à l'entraînement sont utilisées lors de chacune de ces \textit{epochs}. Le nombre d'itérations ou \textit{epochs} n'est pas stipulé, \textbf{un critère d'arrêt en cas de convergence insuffisante après 5 itérations} dont l'estimation est réalisée sur les données d'entraînement est jugée suffisant dans ce contexte. Enfin, ce travail emploie une optimisation de type \textit{adam} tel que suggéré par de précédents travaux~\cite{Barbu2018,Park2019}, et dont \textbf{le taux d'apprentissage est réglé à une valeur de 0,001} faute de détails sur l'implémentation.\par
 
-Pour finir sur ces aspects de mise en oeuvre, l'ensemble de ces éléments ont été réalisés à haut niveau à l'aide de la bibliothèque logicielle \textit{Keras}~\cite{chollet2015} en association à la bibliothèque de bas niveau \textit{Tensorflow}~\cite{tensorflow2015}.\par
+Pour finir sur ces aspects de mise en oeuvre, l'ensemble de ces éléments ont été réalisés à haut niveau à l'aide de la bibliothèque logicielle \textit{Keras}~\cite{chollet2015} en association à la bibliothèque de bas niveau \textit{Tensorflow}~\cite{Tensorflow2016}.\par
 
 \subsection{Augmentation de données}
 L'augmentation de données est une technique qui permet de corriger de manière artificielle le nombre d'exemples d'une base de données par application de transformations aux données d'origine~\cite{Wong2016,Taylor2018}. Cette technique est à ne pas confondre avec les méthodes de création d'échantillons virtuels à partir de l'espace des caractéristiques pour corriger les problèmes de balancements. L'augmentation de données, au sens de cette section, permet de corriger un non-balancement des annotations, mais est essentiellement employée dans le but d'enrichir le nombre d'exemples disponibles en contraignant le \gls{cnn} à se focaliser sur des éléments jugés essentiels à la résolution de la tâche visée.\par
