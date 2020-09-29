@@ -98,7 +98,7 @@ Devant ces nombreuses méthodes, il est difficile de déterminer un modèle opti
 
 Pour cela, la \Cref{tab:model_comparison} recense la plupart des critères importants évoqués par ce travail de recherche. La performance de classification notamment, qui semble indéniable dans le champ que ce travail tente d'évaluer avec une emphase forte en termes de performances pour les \gls{svm}. La vitesse d'apprentissage a également été précisée à titre indicatif. En effet, bien que contraignante lors des expérimentations de ce manuscrit, elle ne constitue pas un frein et reste le principal inconvénient des \gls{svm}. Enfin, ces derniers sont reconnus comme robustes face à des situations pouvant comporter des caractéristiques non pertinentes ou redondantes.\par
 
-A la vue de ces éléments, il semble plus que nécessaire de considérer l'utilisation des \gls{svm} au sein de ces travaux. De même, il est nécessaire de considérer l'utilisation des deux méthodes d'approches par ensemble mentionnées, les \gls{rf} et l'\gls{gb}, pour lesquelles aucun travail comparatif généraliste n'a été trouvé. Néanmoins, une étude génomique semble plaider dans le sens des \gls{svm} et de l'\gls{gb}~\cite{Ogutu2011}. Pour finir, il est également nécessaire de considérer ces modèles de classification au sein de processus proposés par des travaux proches de notre thématique. Ces éléments sont abordés plus en détail dans leur partie respective.\par
+À la vue de ces éléments, il semble plus que nécessaire de considérer l'utilisation des \gls{svm} au sein de ces travaux. De même, il est nécessaire de considérer l'utilisation des deux méthodes d'approches par ensemble mentionnées, les \gls{rf} et l'\gls{gb}, pour lesquelles aucun travail comparatif généraliste n'a été trouvé. Néanmoins, une étude génomique semble plaider dans le sens des \gls{svm} et de l'\gls{gb}~\cite{Ogutu2011}. Pour finir, il est également nécessaire de considérer ces modèles de classification au sein de processus proposés par des travaux proches de notre thématique. Ces éléments sont abordés plus en détail dans leur partie respective.\par
 
 \begin{table}[H]
   \small
@@ -160,7 +160,7 @@ En pratique, il est difficile de s'assurer que les données en notre possession 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{contents/chapter_3/resources/example_semi_supervised.pdf}
-    \caption{Exemple fréquemment employé pour démontrer l'intérêt de l'apprentissage semi-supervisé du point de vue du principe de densité. A gauche, une classification obtenue à partir de deux données étiquetées ; A droite, la même situation avec l’ajout de données non étiquetées.}
+    \caption{Exemple fréquemment employé pour démontrer l'intérêt de l'apprentissage semi-supervisé du point de vue du principe de densité. À gauche, une classification obtenue à partir de deux données étiquetées ; À droite, la même situation avec l’ajout de données non étiquetées.}
     \label{fig:example_semi_supervised}
 \end{figure}
 
@@ -247,19 +247,19 @@ Cette partie se concentre sur l'évaluation de modèles de prédiction et prése
 
 \subsection{Généralisation de modèles}
 \label{subsec:generalized_models}
-A l'aide de couples d'entrée/sortie à notre disposition, ces modèles d’apprendre une relation capable de \textbf{généraliser} et d’estimer de nouvelles sorties sur de nouvelles données. Il est pour cela nécessaire de parvenir à isoler l'information responsable de ce cheminement, plus ou moins séparable, en cause souvent la qualité de~:
+À l'aide de couples d'entrée/sortie à notre disposition, ces modèles d’apprendre une relation capable de \textbf{généraliser} et d’estimer de nouvelles sorties sur de nouvelles données. Il est pour cela nécessaire de parvenir à isoler l'information responsable de ce cheminement, plus ou moins séparable, en cause souvent la qualité de~:
 \begin{inlinerate}
     \item l'hypothèse formulée, c’est-à-dire si la relation qui lie l'observation et sa conséquence est directe et vraie dans toute circonstance,
     \item l'information possédée, c’est-à-dire si l'information est juste pour répondre à la problématique cible (qualité de l'observation, rapport signal sur bruit, etc.),
     \item \ldots.
 \end{inlinerate}\par 
 
-Ce problème, évoqué dans la littérature porte le nom de « dilemme biais / variance », dans lequel le biais représente le manque de relation pertinente entre données d’entrée et de sortie et où la variance représente l’influence du modèle au petites fluctuations souvent issues de bruit. Ces termes sont intrinsèquement liés aux problématiques respectives de \textbf{sous-apprentissage} et \textbf{sur-apprentissage}. La \Cref{fig:example_underfit_overfit} reprend de manière visuelle ces problématiques, et les exprime selon un jeu d’entraînement et de test. A noter que le sur-apprentissage peut être limité par l’utilisation de termes de régularisation, de schémas de validation de modèle adaptés ou l’utilisation d’ensembles de données suffisantes.\par
+Ce problème, évoqué dans la littérature porte le nom de « dilemme biais / variance », dans lequel le biais représente le manque de relation pertinente entre données d’entrée et de sortie et où la variance représente l’influence du modèle au petites fluctuations souvent issues de bruit. Ces termes sont intrinsèquement liés aux problématiques respectives de \textbf{sous-apprentissage} et \textbf{sur-apprentissage}. La \Cref{fig:example_underfit_overfit} reprend de manière visuelle ces problématiques, et les exprime selon un jeu d’entraînement et de test. À noter que le sur-apprentissage peut être limité par l’utilisation de termes de régularisation, de schémas de validation de modèle adaptés ou l’utilisation d’ensembles de données suffisantes.\par
  
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\linewidth]{contents/chapter_3/resources/example_underfit_overfit.pdf}
-    \caption{Exemple de dilemme Biais/Variance. A gauche, un cas de sous-apprentissage, ce modèle est une sous approximation du phénomène observé. A droite, un cas de sur-apprentissage, le modèle ne généralise pas suffisamment le phénomène observé.}
+    \caption{Exemple de dilemme Biais/Variance. À gauche, un cas de sous-apprentissage, ce modèle est une sous approximation du phénomène observé. À droite, un cas de sur-apprentissage, le modèle ne généralise pas suffisamment le phénomène observé.}
     \label{fig:example_underfit_overfit}
 \end{figure}
 
@@ -337,7 +337,7 @@ La seconde technique consiste à définir un \textit{espace} de recherche dont l
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{contents/chapter_3/resources/example_hyperparameter_selection.pdf}
-    \caption{Exemple de recherche sur deux hyperparamètres $X_1$ et $X_2$. A gauche, une recherche sous forme de grille rigide, dans laquelle chaque combinaison est évaluée. A droite, une recherche aléatoire de ces hyperparamètres.}
+    \caption{Exemple de recherche sur deux hyperparamètres $X_1$ et $X_2$. À gauche, une recherche sous forme de grille rigide, dans laquelle chaque combinaison est évaluée. À droite, une recherche aléatoire de ces hyperparamètres.}
     \label{fig:example_hyperparameter_selection}
 \end{figure}
 
@@ -351,7 +351,7 @@ La méthode de \textbf{validation croisée} permet d'étendre la méthode préc�
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{contents/chapter_3/resources/scheme_holdout_cv.pdf}
-    \caption{Schéma des principes des deux approches majeures d'évaluation de modèles. A gauche, la méthode de \textit{holdout} ; A droite, la méthode de \textit{validation croisée}.}
+    \caption{Schéma des principes des deux approches majeures d'évaluation de modèles. À gauche, la méthode de \textit{holdout} ; À droite, la méthode de \textit{validation croisée}.}
     \label{fig:scheme_holdout_cv}
 \end{figure}
 

@@ -37,7 +37,7 @@ Les acquisitions sont réalisées par l'un des trois experts investigateurs de l
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{contents/chapter_4/resources/statistics_age_sex.pdf}
-    \caption{A gauche, répartition en fonction de l'âge et du sexe. A droite, répartition entre l'âge et le sexe en tenant compte du diagnostic binaire.}
+    \caption{À gauche, répartition en fonction de l'âge et du sexe. À droite, répartition entre l'âge et le sexe en tenant compte du diagnostic binaire.}
     \label{fig:statistics_age_sex}
 \end{figure}\par
 
@@ -105,8 +105,14 @@ Afin d'exploiter au mieux cette base, quelques modifications sont apportées. D'
 
 \subsection{Interface logicielle}
 \label{sec:dataset_api}
-L'exploitation en l'état de cette base de données
-Afin de mettre à disposition des structures de données, cette interface logicielle fait appel à la librairie \textit{Pandas}~\cite{Pandas2020}.\par 
+Malgré l'état actuelle de la base de données, celui-ci ne permet pas son exploitation en l'état. Ainsi, un second aspect de la gestion de cette base de donnée à consisté à mettre en oeuvre une interface logicielle permettant d'accéder à ses diverses données.\par
+
+Les données de cette base au format image représente un volume non négligeable impossible à charger en mémoire vive avec la capacité à disposition de ce travail. Afin de ne pas excéder cette capacité, les données images sont chargées et maintenues en mémoire sous forme d'emplacement sur le disque dur jusqu'à leur utilisation définitive. Diverses méthodes d'accès à ces données sont mise à disposition, dont~:
+\begin{itemize}
+    \item une méthode \textit{get\_images()} avec pour objectif de retourner une structure de données sous forme de table contenant les méta-données et références aux images.
+    \item une méthode \textit{get\_sliding\_window()} avec pour objectif de retourner une structure de données sous forme de table contenant les méta-données et références pré-extraites par balayage d'une fenêtre glissante \textit{en zone temporaire}.
+    \item une méthode \textit{get\_multiple\_resolution()} avec pour objectif de retourner une structure de données sous forme de table contenant les méta-données et références pré-extraites par redimensionnement des images  \textit{en zone temporaire}.
+\end{itemize} Chacune de ces méthodes met à disposition des arguments permettant de choisir d'une part la modalité ou encore le type d'annotations désirés et d'autres part des paramètres complémentaires liés au type d'extraction pour les principe de \textit{fenêtre glissante} et de \textit{résolutions multiples}. Cette interface logicielle mise à disposition peut être visualisée sur la \Cref{fig:schema_database_api}. Par ailleurs, les structures de données renvoyées par ces méthodes sont générées à l'aide de la librairie \textit{Pandas}~\cite{Pandas2020}.\par 
 
 \begin{figure}[H]
     \centering
@@ -118,13 +124,18 @@ Afin de mettre à disposition des structures de données, cette interface logici
 
 \section{Méthodes clinique}
 \label{sec:clinical_methods}
-Pour permettre l'identification de pathologie en dermatologie plus routinière, la mise en avant de critères de diagnostic est une démarche clé mise en place pour rendre cette tâche plus efficace. Ces méthodes de mise en avant de critères ont démarré au milieu des années 1980 pour améliorer la prise en charge du mélanome, sous la forme~:
+Pour permettre l'identification de pathologies en dermatologie plus routinière, la mise en avant de critères de diagnostic est une démarche clé mise en place pour rendre cette tâche plus efficace. Ces méthodes de mise en avant de critères ont démarré au milieu des années 1980 pour améliorer la prise en charge du mélanome, sous la forme~:
 \begin{itemize}
     \item d'\textbf{acronyme}~:~l'idée est de proposer une méthode de diagnostic facile à mémoriser. Le précurseur de ces méthodes est le travail de Friedman, qui propose l'acronyme \textbf{ABCD} pour une observation à l'oeil nu de lésions pigmentées et est utilisable par de nombreuses personnes expertes ou non~\cite{Friedman1985}. Ainsi, cette première version insiste sur l'importance de quatre critères, dont~:~l'\textbf{A}symétrie, la \textbf{B}ordure (irrégularités), la \textbf{C}ouleur (variations) et le \textbf{D}iamètre (supérieur à 6mm). Cet acronyme s'est étendu à un cinquième critère d'\textbf{É}volution~\cite{Abbasi2004}.
     \item de \textbf{liste}~:~de critères positifs et négatifs, correspondant à des caractéristiques rédhibitoires ou non, et amenant à un score final. Ce score varie selon la pathologie considérée et permettra d'en déduire une décision à prendre. L'un des exemple dans le cadre de lésions pigmentées est celui de MacKie en 1986~\cite{mackie1986}. Ces critères ont été révisés et se destinent néanmoins à un public expert. 
 \end{itemize}\par
 
-Ces démarches \textit{algorithmiques} de diagnostic, ainsi nommées, se sont progressivement étendues à d'autre pathologies et dispositifs d'analyse médicaux. Ils permettent de se référer à des critères essentiels en cas de doute. Le \gls{rcm} n'est pas exempt de ces démarches simplifiées, notamment pour le diagnostic du \gls{lm} avec les travaux de Pellacani et Guitera~\cite{Pellacani2007, Guitera2010}. Ces deux travaux proposent sous forme de table de critères ceux jugés positifs et négatifs, dont la \Cref{tab:rcm_algorithm_lentigo} donne un aperçu de la production de ces articles. Leur étude comptabilise 81 cas de \gls{lm} et 203 lésions bénignes, sur lesquels une valeur de seuil de 2 a été jugé comme pertinente au regard de l'étude statistique menée. Celui-ci a permis de détecter avec 85\% de sensibilité et 76\% de spécificité les \gls{lm}.\par
+Ces démarches \textit{algorithmiques} de diagnostic, ainsi nommées, se sont progressivement étendues à d'autre pathologies et dispositifs d'analyse médicaux. Ils permettent de se référer à des critères essentiels en cas de doute.
+
+Photo
+Dermato
+
+La modalité \gls{rcm} n'est pas exempt de ces démarches simplifiées, notamment pour le diagnostic du \gls{lm} avec les travaux de Pellacani et Guitera~\cite{Pellacani2007, Guitera2010}. Ces deux travaux proposent sous forme de table de critères ceux jugés positifs et négatifs, dont la \Cref{tab:rcm_algorithm_lentigo} donne un aperçu de la production de ces articles. Leur étude comptabilise 81 cas de \gls{lm} et 203 lésions bénignes, sur lesquels une valeur de seuil de 2 a été jugé comme pertinente au regard de l'étude statistique menée. Celui-ci a permis de détecter avec 85\% de sensibilité et 76\% de spécificité les \gls{lm}.\par
 
 \begin{table}[H]
 \centering
@@ -143,7 +154,7 @@ Ces démarches \textit{algorithmiques} de diagnostic, ainsi nommées, se sont pr
 \label{tab:rcm_algorithm_lentigo}
 \end{table}\par
  
-Ainsi, une caractéristique a été déterminée comme pertinente par leurs auteurs lorsque celle-ci s'exprimait de manière plus significative dans l'un des deux groupes pathologiques (\gls{lm} ou bénin). L'un de ces travaux~\cite{Guitera2010} procède à une analyse de ces caractéristiques par profondeur croissante de la peau, dont nous listons quelques uns des éléments majeurs~:
+Ainsi, une caractéristique a été déterminée comme pertinente par leurs auteurs lorsque celle-ci s'exprimait de manière plus significative dans l'un des deux groupes pathologiques (\gls{lm} ou bénin). L'un de ces travaux~\cite{Guitera2010} procède à une analyse de ces caractéristiques par profondeur croissante de la peau, dont peuvent être cités les éléments majeurs suivants~:
 \begin{itemize}
     \item au niveau de \textbf{l'épiderme}, les auteurs ont constaté que les pathologies de \gls{lm} comportent un désordre des cellules de l'épiderme (56\% des lésions \gls{lm} contre 18\% des lésions bénignes). Également, une infiltration pagétoïde a été reportée dans la plupart des cas de \gls{lm} (75\% des lésions \gls{lm} contre 28\% des lésions bénignes). En opposition, un épiderme homogène, caractérisé par des motifs en nids d'abeille, a été constatés dans 92\% des cas bénins. Ces éléments peuvent être observées sur la \Cref{fig:example_rcm_pattern_1}.
     \item au niveau de la \textbf{\gls{dej}}, les auteurs ont constaté que les papilles non démarquées étaient observées dans la majorité des \gls{lm} (68\% \gls{lm} and in 17\% des cas bénins). Ces éléments peuvent être observées sur la  \Cref{fig:example_rcm_pattern_2}.

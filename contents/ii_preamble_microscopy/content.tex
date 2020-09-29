@@ -17,17 +17,17 @@ Chaque lésion contient des images \gls{rcm} jugées pertinentes par deux des tr
 Du point de vue des caractéristiques, ces images arborent une taille constante de \SI{1000}{\px} $\times$ \SI{1000}{\px} pour une section mesurée de \SI{920}{\micro\metre} $\times$ \SI{920}{\micro\metre} et une résolution en profondeur comprise entre \SI{3}{\micro\metre} et \SI{5}{\micro\metre}. Ces données fournissent ainsi une résolution de \SI{1}{\micro\metre}. Les informations d'acquisition (profondeur, longueur d'onde, \ldots) contenues dans les images ne pourront être utilisées car non exploitables (procédure de calibration non réalisée, informations manquantes, \ldots).\par
 \clearpage
 
-A partir de ces données, les 18 experts en \gls{rcm} de l'étude~\cite{Cinotti2018} ont obtenu en moyenne une sensibilité de 0,84$\pm$0,05 et une spécificité de 0,75$\pm$0,06 sur l'évaluation des pathologies malignes toutes confondues. Sur l'évaluation des données de \gls{lm} et \gls{lmm}, ces scores deviennent plus homogènes avec une valeur de sensibilité de 0,80$\pm$0,07 et de spécificité de 0.81$\pm$0,05. Les courbes \gls{roc} associées à ces performances sont représentées sur la \Cref{fig:results_roc_rcm_experts}.\par
+À partir de ces données, les 12 experts en \gls{rcm} de l'étude~\cite{Cinotti2018} ont obtenu en moyenne une sensibilité de 0,84$\pm$0,05 et une spécificité de 0,75$\pm$0,06 sur l'évaluation des pathologies malignes toutes confondues. Sur l'évaluation des données de \gls{lm} et \gls{lmm}, ces scores deviennent plus homogènes avec une valeur de sensibilité de 0,80$\pm$0,07 et de spécificité de 0.81$\pm$0,05. Les courbes \gls{roc} associées à ces performances sont représentées sur la \Cref{fig:results_roc_rcm_experts}.\par
 
 \begin{figure}[H]
     \begin{center}
         \includegraphics[width=\linewidth]{contents/ii_preamble_microscopy/resources/results_roc_rcm_experts.pdf}
-        \caption{Courbes \gls{roc} issues de l'évaluation des données \gls{rcm} par les 18 experts~\cite{Cinotti2018}. A gauche, le résultat des experts mené sur la détection d'éléments malins ; A droite, le résultat des experts mené sur la détection de \gls{lm} et \gls{lmm}.}
+        \caption{Courbes \gls{roc} issues de l'évaluation des données \gls{rcm} par les 12 experts~\cite{Cinotti2018}. À gauche, le résultat des experts mené sur la détection d'éléments malins ; À droite, le résultat des experts mené sur la détection de \gls{lm} et \gls{lmm}.}
         \label{fig:results_roc_rcm_experts}
     \end{center} 
 \end{figure}\par
 
-L'objectif visé par cette partie est d'égaler ces scores à l'aide de méthodes de diagnostic sur base d'images issues de \gls{rcm}. A ce titre, les méta-données issues des informations patient (telles que l'âge, le sexe ou encore l'emplacement de la lésion) ne sont pas exploitées bien que utilisées par les dermatologues experts en \gls{rcm} durant leur évaluation. Ce choix est justifié car contrairement aux connaissances des experts, ces méta-données ne sont pas représentatives de la population réelle et peuvent induire des biais de corrélations sur des données extérieures à la base employée. Ainsi, les évaluation des méthodes ne portent que sur \textbf{l'aspect vision} de ces données \gls{rcm}.\par
+L'objectif visé par cette partie est d'égaler ces scores à l'aide de méthodes de diagnostic sur base d'images issues de \gls{rcm}. À ce titre, les méta-données issues des informations patient (telles que l'âge, le sexe ou encore l'emplacement de la lésion) ne sont pas exploitées bien que certaines comme l'âge aient été mises à disposition des experts en \gls{rcm} durant leur évaluation. Ce choix est justifié car contrairement aux connaissances des experts, ces méta-données ne sont pas représentatives de la population réelle et peuvent induire des biais de corrélations sur des données extérieures à la base employée. Ainsi, les évaluation des méthodes ne portent que sur \textbf{l'aspect vision} de ces données \gls{rcm}.\par
 
 Ainsi, diverses ressources d'intelligence artificielle évoquées lors du \Cref{chap:chapter_3} sont mobilisées lors de ce travail. Des apports ont été réalisés pour permettre le déroulement des expériences présentées lors des chapitres suivants. En effet, la base d'images actuelle ne possède que des annotations au niveau des patients, ce qui limite fortement l'étendue des travaux essentiellement basés sur des méthodes d'apprentissage supervisé. À l'aide d'un outil graphique réalisé pour cette étude (\Cref{fig:example_gui_annotation}) et grâce au travail de l'un des dermatologues investigateur, divers niveaux d'annotations supplémentaires sont obtenus, dont~:
 \begin{itemize}
@@ -46,7 +46,7 @@ Ainsi, diverses ressources d'intelligence artificielle évoquées lors du \Cref{
       \centering
       \includegraphics[width=\linewidth]{contents/ii_preamble_microscopy/resources/example_gui_annotation_2.png}
     \end{subfigure}
-    \caption{Interface logicielle mise à disposition du spécialiste, afin de procéder aux annotations au niveau des images et des sous-images. A gauche, l'onglet permettant l'annotation au niveau des images ; A droite, l'onglet permettant la création et l'annotation de sous-images.}
+    \caption{Interface logicielle mise à disposition du spécialiste, afin de procéder aux annotations au niveau des images et des sous-images. À gauche, l'onglet permettant l'annotation au niveau des images ; À droite, l'onglet permettant la création et l'annotation de sous-images.}
     \label{fig:example_gui_annotation}
 \end{figure}
 

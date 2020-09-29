@@ -16,12 +16,68 @@ Néanmoins, à ce stade les méthodes proposées lors des précédents chapitres
 
 Ainsi, ce dernier chapitre propose une méthodologie en plusieurs étapes pour permettre la mise en place d'un processus d'aide au diagnostic multimodal en milieu clinique. Ce chapitre ne se focalise pas sur la robustesse des diverses modalités, pour lesquelles d'une part sont repris les propositions de la littérature propres aux modalités de photographie clinique et de dermatoscopie et d'autre part celle de ce manuscrit sur la \gls{rcm} formulés lors du \Cref{chap:chapter_7}. Par ailleurs, ce travail s'inspire pour certaines étapes de travaux réalisées sur la fusion de données.
 
-Pour parvenir à la réalisation de ce processus de décision multimodal, ce manuscrit propose de détailler les diverses étapes qui le compose. Dans un premier temps, ce chapitre propose une mise au point sur les techniques permettant un diagnostic sur les modalités employé dans ce manuscrit. Dans un second temps, le principe de la calibration de modèle est présenté, dont l'utilisation est recommandée dans des contextes impliquant la collaboration de multiples modèles de prédiction. Dans un troisième temps, les processus multimodaux de prise de décision élaborés pour le besoin de cette problématique sont présentés, avec d'une part la considération d'un processus sans mémoire et d'autre d'un processus avec mémoire. Pour finir, ce chapitre se termine par une présentation des résultats issues des méthodes proposées, suivi d'une discussion sur ceux-ci.\par 
-
+Pour parvenir à la réalisation de ce processus de décision multimodal, ce manuscrit propose de détailler les diverses étapes qui le compose. Dans un premier temps, ce chapitre propose une mise au point sur les techniques permettant un diagnostic sur les modalités employé dans ce manuscrit. Dans un second temps, le principe de la calibration de modèle est présenté, dont l'utilisation est recommandée dans des contextes impliquant la collaboration de multiples modèles de prédiction. Dans un troisième temps, les processus multimodaux de prise de décision élaborés pour le besoin de cette problématique sont présentés, avec d'une part la considération d'un processus sans mémoire et d'autre d'un processus avec mémoire. Pour finir, ce chapitre se termine par une présentation des résultats issues des méthodes proposées, suivi d'une discussion sur ceux-ci.\par
 \clearpage
 
 \section{Diagnostic des modalités}
 \label{sec:modality_diagnosis}
+Cette section se destine à la présentation des méthodes de diagnostic propre à chaque modalité. L'information brute n'étant pas utilisable en l'état, il est nécessaire de procéder à d'une part à sa réduction par l'extraction de caractéristiques pertinentes et d'autres part à la détection de données malignes à partir de cette information. La première sous-section décrit brièvement les méthodes employées tandis que la seconde sous-section apporte une pré-analyse de ces méthodes.\par
+
+\subsection{Méthodes d'extraction et de détection}
+Cette sous-section dédiée aux méthodes d'extraction et de détection des lésions débute par une brève étude des travaux menés sur la photographie clinique et sur la dermatoscopie. Ainsi, la plupart des travaux récent s'orientent autour de mécanismes d'apprentissage profond, dont certains travaux préconisent le recadrage des données employées~\cite{Li2018}. Dans ce travail, ce recadrage n'est réalisé que sur les données de photographie clinique jugées moins homogènes, que le reste des données mise à disposition. En termes de gestion de ces modalités d'imagerie, des travaux suggèrent l'utilisation d'architectures telles que Inception-V3~\cite{Esteva2017,Fan2020} ou encore ResNet-50~\cite{Xie2018, Alantari2018} associé à des couches de Global Pooling - Moyen. Ces travaux orientés vers de la classification de lésions de la peau, procèdent à de l'extraction de caractéristiques ou à de la prédiction à partir de ces architectures. En ce qui concerne les méthodes d'extraction et de détection sur la modalité de \gls{rcm}, les méthodes de la \Cref{part:microscopy} sont mises à contribution dans ce chapitre. Ainsi, la méthode par transfert de connaissances par utilisation de l'architecture ResNet-50 entraîné sur ImageNet et couplé à une couche de Globale Pooling - Moyen permet les meilleurs résultats dans ces conditions. Afin d'uniformiser l'extraction de caractéristiques de ces diverses modalités et par contraintes matérielles, le transfert de connaissance est préféré pour permettre l'extraction de caractéristiques, avec pour choix d'architecture ResNet-50.\par
+
+D'une part, pour permettre une prédiction sur les données de photographie clinique et de dermatoscopie, ce travail privilégie l'utilisation d'un modèle \gls{svm} à noyau linéaire à la fois stable et robuste dans la plupart des situations. Ces modalités ne mettant à disposition qu’une unique image, ces deux modalités mettent à disposition un vecteur de taille 1$\times$2048. D'autre part, pour permettre une prédiction sur les données de \gls{rcm} ce travail reprend les méthodes de prédiction de la \Cref{part:microscopy}, et notamment l'utilisation d'un modèle par instance multiple de type \gls{nsk} considérée comme le plus performant dans un contexte ou le nombre de données est variable. En addition, afin de conserver une dimension de vecteur de caractéristique régulière pour certains besoins à venir, ce travail a eu recours aux méthodes de type moyenne, maximum ou de norme $p$ avec des valeurs arbitraire de 4, 6 et 8 comme suggéré par certains travaux de la littérature~\cite{Li2016,Xu2017}.\par
+
+Les hyperparamètres associés au modèles de prédiction cités sont listés dans la \Cref{tab:multimodal_models_parameters}. Par ailleurs, le modèles \gls{svm} employés par ce travail provient de la bibliothèque logicielle \textit{Scikit-learn}~\cite{pedregosa2011}, tandis que l'implémentation de modèles \gls{nsk} utilise la librairie logicielle \textit{MISVM}~\cite{Doran2014}.\par
+\begin{table}[H]
+    \centering
+    \begin{tabular}{lll}
+    \toprule
+    \textbf{Méthode}    & \textbf{Paramètre}& \textbf{Valeurs}                                  \\ \midrule
+    \gls{svm}           & \multirow{2}{*}{C}& \multirow{2}{*}{[0,01, 0,1, 1, 10, 100, 1000]}    \\ \cline{1-1}
+    \gls{nsk}           &                   &                                                   \\ \bottomrule 
+    \end{tabular}    
+    \caption{Table reprenant les divers modèles utilisant le principe d'\gls{mil} pour réaliser une classification au niveau lésionnel, ainsi que leurs hyperparamètres associés.}
+    \label{tab:multimodal_models_parameters}
+\end{table}\par
+\clearpage
+
+\subsection{Pré-analyse}
+Cette pré-analyse des méthodes de classification permet d'obtenir une vision des performances obtenues à chaque modalité. Pour cela, les évaluations ci-dessous sont réalisées à l'aide d'une valeur de validation croisée de $k$ égale à 10, comme utilisé dans les prochaines expérimentations de ce chapitre et dont les termes sont décrits plus en détail dans la section résultats.\par
+
+Ainsi, la \Cref{tab:results_multimodality_modalities} permet de mettre en avant une capacité de discrimination des deux classes croissante pour les diverses modalités sollicitées dans cette étude. Par cette méthode de prise en charge, un \fscore{} pondérée entre les classes bénigne et maligne de 0,62 associé à un écart-type de 0,08 est obtenu sur la photographie clinique, de 0,74 associé à un écart-type de 0,11 sur la dermatoscopie et de 0,80 associé à un écart-type de 0,12 sur la \gls{rcm} ; un \fscore{} sur la classe maligne de 0,68 associé à un écart-type de 0,09 est obtenu sur la photographie clinique, de 0,79 associé à un écart-type de 0,09 sur la dermatoscopie et de 0,84 associé à un écart-type de 0,11 sur la \gls{rcm}. Cette pertinence croissante du diagnostic est exploitée au sein des processus multimodaux proposé dans les prochaines sections.\par
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{llccc} \toprule
+        \multicolumn{1}{l}{}     & Modalité      & Précision    & Rappel        & \Fscore{}     \\ \midrule
+        \multirow{3}{*}{Pondéré} & Photographie  & 0,63$\pm$0,08& 0,62$\pm$0,07 & 0,62$\pm$0,08 \\
+                                 & Dermatoscopie & 0,74$\pm$0,11& 0,74$\pm$0,10 & 0,74$\pm$0,11 \\
+                                 & Microscopie   & 0,80$\pm$0,11& 0,80$\pm$0,12 & 0,80$\pm$0,12 \\ \midrule
+        \multirow{3}{*}{Malin}   & Photographie  & 0,71$\pm$0,12& 0,66$\pm$0,09 & 0,68$\pm$0,09 \\
+                                 & Dermatoscopie & 0,79$\pm$0,13& 0,79$\pm$0,12 & 0,79$\pm$0,09 \\
+                                 & Microscopie   & 0,85$\pm$0,11& 0,83$\pm$0,12 & 0,84$\pm$0,11 \\ \bottomrule
+    \end{tabular}
+    \caption{Pré-résultats obtenus à partir des méthodes de classification employées sur chacune des modalité utilisée dans ce processus.}
+    \label{tab:results_multimodality_modalities}
+\end{table}
+
+Enfin, la \Cref{tab:results_multimodality_weighted_microscopy} permet de mesurer l'efficacité des méthodes de réduction employées \textbf{par l'utilisation d'un modèle \gls{svm} à noyau linéaire}. Cette table met en évidence les résultats par pondération sur les deux classes, la méthode de réduction par la moyenne est à la fois plus performante et plus stable que les autres méthodes avec un \fscore{} de 0,84 associé à un écart-type de 0,07. Dans la suite des travaux nécessitant l'utilisation des caractéristiques issue de la modalité \gls{rcm}, cette \textbf{méthode de réduction par la moyenne} est privilégiée afin d'obtenir un vecteur de caractéristiques constant.\par
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{lccc} \toprule
+        Réduction           & Précision             & Rappel                & \Fscore{}             \\ \midrule
+        \textbf{Moyenne}    & \textbf{0,84$\pm$0,07}& \textbf{0,83$\pm$0,07}& \textbf{0,84$\pm$0,07}\\
+        Maximum             & 0,83$\pm$0,12         & 0,83$\pm$0,12         & 0,83$\pm$0,12         \\
+        Norme $p$ - 4       & 0,82$\pm$0,12         & 0,82$\pm$0,12         & 0,82$\pm$0,12         \\
+        Norme $p$ - 6       & 0,83$\pm$0,12         & 0,83$\pm$0,13         & 0,83$\pm$0,13         \\
+        Norme $p$ - 8       & 0,83$\pm$0,12         & 0,83$\pm$0,12         & 0,83$\pm$0,12         \\ \bottomrule
+    \end{tabular}
+    \caption{Pré-résultats pondérés sur la classe bénigne et maligne, permettant de mesurer l'efficacité des méthodes de réduction des caractéristiques par classification à l'aide d'un modèle \gls{svm}.}
+    \label{tab:results_multimodality_weighted_microscopy}
+\end{table}
+
 \clearpage
 
 \section{Calibration de modèles}
@@ -109,7 +165,7 @@ Au \textbf{niveau des modalités}, l'identification de ces seuils peut être ré
         \toprule 
         Paramètre                   & Valeurs                   \\ \midrule
         Seuil                       & [Unique, Multiple]        \\ \midrule
-        Modalités                   & [Croissante, Décroissante]  \\ \midrule
+        Modalités                   & [Croissante, Décroissante]\\ \midrule
         Détection                   & [Croissante, Décroissante]\\ \bottomrule
     \end{tabular}
     \caption{Table de recensement des divers paramètres évalués pour la détermination des seuils de confiance optimaux au sein du processus multimodal.}
@@ -122,7 +178,9 @@ Au \textbf{niveau des modalités}, l'identification de ces seuils peut être ré
 Cette section se destine à la présentation des résultats issus des méthodes précédemment énoncées. Dans un premier temps, cette section procède à la présentation du protocole d'expérimentation, comprenant le processus de validation et métrique associé ainsi que l'organisation des résultats. Puis dans un second temps, les divers résultats issus des expériences mentionnées précédemment sont développées.\par
 
 \subsection{Protocole d’expérimentation}
-Les diverses résultats d'évaluations présentés par la suite sont obtenus par l'utilisation d'une \textbf{validation croisée imbriquée} dont le principe favorise l'obtention de métriques plus objectives sur les performances du système évalué~\cite{Cawley2010}. De plus, cette structure de validation est démontré empiriquement moins sensible au biais et à la variance lorsque celle-ci est couplée à des valeurs de $k$ comprises entre 5 et 10 pour l'évaluation~\cite{James2000}. Lors du précédent chapitre, une valeur de $k$ égale à 10 avait été choisie dû à la faible diversité de combinaisons de méthodes proposées. Similairement, ce chapitre opte également \textbf{pour une valeur de $k$ égale à 10 pour la boucle d'évaluation} pour ces mêmes raisons. Une \textbf{valeur de $k$ égale à 2 est utilisée pour la boucle de validation}, jugée suffisante afin de déterminer la meilleure combinaison d'hyperparamètres.\par
+Les diverses résultats d'évaluations présentés par la suite sont obtenus par l'utilisation d'une \textbf{validation croisée imbriquée} dont le principe favorise l'obtention de métriques plus objectives sur les performances du système évalué~\cite{Cawley2010}. De plus, cette structure de validation est démontré empiriquement moins sensible au biais et à la variance lorsque celle-ci est couplée à des valeurs de $k$ comprises entre 5 et 10 pour l'évaluation~\cite{James2000}. Lors du précédent chapitre, une valeur de $k$ égale à 10 avait été choisie dû à la faible diversité de combinaisons de méthodes proposées. De manière similaire, ce chapitre opte également \textbf{pour une valeur de $k$ égale à 10 pour la boucle d'évaluation} pour ces mêmes raisons. Une \textbf{valeur de $k$ égale à 2 est utilisée pour la boucle de validation}, jugée suffisante afin de déterminer la meilleure combinaison d'hyperparamètres.\par
+
+En termes d'apprentissage, l'entraînement des modèles de prédiction au niveau des modalités est jugé plus coûteux que l'entraînement nécessaire à la définition des seuils de confiance sur les modèles proposées. Ainsi, sur les 9 lots mis à disposition du processus d'entraînement, \textbf{8 lots sont attribués à l'étape d'entraînement des modalités} tandis que \textbf{le dernier lot est attribué au modèle d"optimisation des seuils de confiance}.\par
 
 Afin de régler au mieux les modèles présentés dans ce chapitre et de donner une évaluation objective malgré les déséquilibres d'annotations, le choix se porte sur le \textbf{\fscore{}}. Cette métrique permet une représentation conjointe des mesures de précision et de rappel au sein d'une même métrique binaire. Dans un premier temps, une valeur pondérée de ce \fscore{} selon les classes bénignes et malignes est recensé lors de la présentation des résultats pour chacune des expérimentations. Dans un second temps, la valeur de ce \fscore{} selon la classe maligne est relevées pour les systèmes jugés les plus pertinents. Conjointement, les valeurs de \textbf{sensibilité} et de \textbf{spécificité} sont renseignées de manière complémentaire au \fscore{} afin d'obtenir une vision plus complète des performances réelles de ces systèmes. Ces valeurs permettent une mise en parallèle avec les mesures de l'article de Cinotti et al.~\cite{Cinotti2016}.\par
 
@@ -228,12 +286,10 @@ Pour finir, les résultats de prise en charge sont l'aboutissement de ce chapitr
 \end{figure}\par
 
 \section{Discussion}
+Ainsi, différentes propositions de méthodes sont réalisés dans ce chapitre dédié à la prise en charge de lésions de la peau par multimodalité. Lors de la \Cref{sec:modality_diagnosis} dédiée aux méthodes de diagnostic des modalités, le choix s'est porté sur un processus uniforme à l'ensemble des modalités mise à disposition de ce travail. La pertinence de ces modalité s'est avéré suivre le processus de prise en charge clinique, avec un \fscore{} dont la valeur s'accroît pour chaque évaluation réalisée selon ce processus. Néanmoins, la stabilité de prédiction semble suivre une démarche opposée, avec une valeur de 0,08 pour la photographie clinique qui atteint 0,12 avec la \gls{rcm} par les résultats de l'évaluation pondérée.\par
 
-Parler de modalité de + en + précises
+Cette pertinence croissante dans la qualité du diagnostic donne lieu à deux type de processus, le premier sans mémoire et le second avec mémoire, dans lesquels une modalité ultérieure est sollicité tant que la confiance dans un diagnostic est jugée insuffisante. Plusieurs principes de prise en charge sont ainsi proposés pour répondre à cette tâche. Dans un premier temps, aucune différence notable n'est à reporter en termes de \fscore{} entre la proposition à seuil unique et à seuils multiples, avec initialement un risque de sur-apprentissage plus grand pour cette seconde proposition qui ne s'est pas manifesté lors de ces expérimentations. Dans un second temps, plusieurs hypothèses ont été formulées pour permettre la recherche des seuils de confiance. La première de ces hypothèses consiste à rechercher les seuils soit par amélioration en partant de la modalité la moins précise, soit par dégradation des résultats en partant de la modalité la plus précise. Les mesures obtenues par dégradation des résultats sont ainsi sensiblement supérieures à celles obtenue par amélioration des résultats. La seconde de ces hypothèses consiste à déterminer le sens de recherche des seuils de confiance, aboutissant à déterminer ces seuils par la haut ou par le bas. Cette seconde hypothèse n'amène aucune différence dans le cadre du processus sans mémoire, tandis que sont influence peut être remarquée dans le processus avec mémoire.\par
 
-Le score n'augmente pas
+Afin d'apporter une plus grande signification aux scores issus de la classification, le principe de la calibration est également exploré dans ce chapitre. Les méthodes de calibration isotonique et sigmoïde sont ainsi appliquée aux modèles de prédiction composants les deux processus de prise en charge. Quelque soit le processus considéré, l'utilisation de ces méthodes à fortement dégradé les résultats obtenus, dont l'une des causes probable est entre autre le nombre d'échantillons mis à disposition des méthodes de photographie clinique et de dermatoscopie. Il est nécessaire d'améliorer cet aspect des processus dans des travaux ultérieurs soit par l'utilisation de méthodes autres, soit par l'utilisation de modèles de classification dont le score prédit est moins décorrélé des probabilités.\par
 
-Un détection croissante est le plus ouvent positif
-
-LA dégradation des résultats plus performante, mais on reste sur la modalité la plus précise
-
+En définitive, bien que le processus avec mémoire soit supérieure au processus sans mémoire, la différence entre ces deux modes de prise en charge n'est pas notable, avec respectivement un \fscore{} pondéré de 0,82 et de 0,80. Néanmoins, il est important de souligner que ce ne processus n'augmente pas la qualité des prédictions réalisées. En effet, l'une des hypothèses formulée initialement était qu'une restriction des cas les plus confiant pouvait permettre d'augmenter la qualité du diagnostic final, ce que ce travail ne parvient pas à accomplir. Ainsi, dans leur état actuel ces processus de prise en charge multimodaux peuvent être davantage perçu comme un compromis entre l'exactitude des détections et la répartition des cas cliniques tout au long du processus. Comparativement, le processus sans mémoire retenu gère mieux la répartition des lésions tout au long des modalités que celui avec mémoire, mais avec un compromis sur le \fscore{} dont la valeur pondérée est de 0,80 contre une valeur de 0,82.\par
