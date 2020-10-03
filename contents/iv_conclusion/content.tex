@@ -2,12 +2,67 @@
 \setcounter{chapter}{5}
 \setcounter{figure}{0}
 
-\unchapter{Conclusion}
+\unchapter{Conclusion et perspectives}
 \label{chap:conclusion}
-\todo[inline,color=red, caption={}]{
-    \begin{itemize}  
-        \item A faire en fin de rédaction 
-    \end{itemize}
-}
-\section{État d'avancement}
-\section{Perspectives}
+
+\section*{État d'avancement}
+Le travail présenté tout au long ce manuscrit propose une réponse à la problématique de diagnostic des lésions de la peau en dermatologie, par l'utilisation de la multimodalité. Plus spécifiquement, les méthodes proposées dans ce travail sont orientées autour de la détection des pathologies de \gls{lm} et de \gls{lmm} dont le taux d'incidence ne cesse de croître au fil des années, et pour lesquelles la réalisation d'un diagnostic est difficile. Pour parvenir à cet objectif, la \Cref{part:contexte} propose ainsi une présentation des éléments essentiels à la réalisation de ce sujet dont une explication clinique ces pathologies, des modalités d'imagerie existantes mais également des méthodes d'apprentissage pour permettre la mise en place de méthodes de diagnostic. Cette partie sert également à présenter les données mise à disposition de ce travail sur lesquelles sont évaluées les méthodes proposées et de comprendre la démarche intellectuelle réalisée par les spécialistes afin de caractériser des désordres au sein de ces données. Toujours dans le but d'accomplir l'objectif de manuscrit, la \Cref{part:microscopy} met en avant diverses méthode diagnostic sur les données de \gls{mcr} au niveau des images avant de parvenir au diagnostic d'une lésion de cette modalité. Cette étape du manuscrit est nécessaire à la réalisation du processus multimodal dans son ensemble, cette modalité étant relativement complexe à traiter en l'état. Enfin, la \Cref{part:multimodal} répond à la problématique de ce manuscrit en mettant à la disposition du lecteur diverses méthodes permettant une prise en charge séquentielle d'une lésion à l'aide des diverses modalités mises à la disposition de ce manuscrit et utilisées couramment en clinique. Les résultats issus des deux parties de contribution de ce manuscrit sont commentés lors de ces prochains paragraphes.\par
+
+Dans un premier temps, la \Cref{part:microscopy} permet l'obtention de résultats dédiée au données de la modalité de \gls{mcr}. D'une part au niveau des images, cette thématique a été peu débattue dans la littérature en ces conditions et les méthodes sont reprises afin de servir de base de référence en terme de performances aux méthodes proposées. Le processus de classification retenu permet d'associer qualité du diagnostic et simplicité de mise en place est obtenu à l'aide~:
+\begin{inlinerate}
+    \item d'une extraction de caractéristiques par de transfert de connaissances basé sur l'architecture ResNet-50 pré-entraînée sur ImageNet associé à une couche de Global Pooling - Moyen,
+    \item d'une mise à l'échelle des caractéristiques par Minimimum / Maximum,
+    \item et d'un modèle \gls{svm} à noyau linéaire.
+\end{inlinerate} Cette combinaison permet l'obtention de valeurs de \fscore{} pondérée sur les classe saine, bénigne et maligne de 0,77 associé à un écart-type de 0,04 et de \fscore{} sur la classe maligne de 0,82 associé à un écart-type de 0,02. Des améliorations non significative sont apportées à l'aide de méthodes exploitant le principe d'échelle multiples ou encore de fenêtre glissante couplées au précédent processus de classification. De ce fait, ces méthodes n'ont pas été considérées dans la suite de ce manuscrit. D'autre part au niveau des lésions, les résultats les plus pertinents sont obtenus à l'aide d'une extraction de caractéristiques par transfert de connaissances basé sur l'architecture ResNet-50 pré-entraînée sur ImageNet associé à une couche de Global Pooling - Moyen et du modèle \gls{nsk} basé sur un principe de \gls{mil}. Une mise à l'échelle étant déjà réalisée par ce modèle, son utilisation en dehors est rendue caduque. Cette nouvelle méthode permet d'obtenir des performances proches de ceux obtenus par les dermatologues experts en \gls{mcr}.\par
+
+Dans un second temps, la \Cref{part:multimodal} permet l'obtention de résultats sur le sujet principal de ce manuscrit.\par
+
+Ces résultats sont bien évidemment perfectibles et ces méthodes ne se substituent pas à l'avis du dermatologue. Bien que de nombreuses dispositions soient prises pour permettre l'obtention de résultats objectifs, les résultats des évaluations sont issus des données de l'étude de Cinotti et al.~\cite{Cinotti2016}. Ainsi, ces données sont une fraction infime des situations cliniques et de la diversité de tissus pouvant être rencontrées.\par
+\clearpage
+
+\section*{Perspectives}
+Les divers résultats obtenus doivent être nuancés par diverses limites pour lesquelles des perspectives sont émises. Tout d'abord, la classification des lésions \gls{mcr} est encore imprécise, et bien que les performances obtenues par réglage fin de \gls{cnn} ne soit pas suffisantes avec la proposition de ce manuscrit, ce type de solution semble adaptée à ce type de tâche et permet de localiser efficacement des pathologies responsables au sein des images de manière efficiente. En addition, les travaux actuellement proposés et ceux de la littérature ne considèrent à ce jour qu'une détection des tissus pathologique au sein des images, pourtant les lésions de \gls{lm} et \gls{lmm} se définissent par une prolifération de ces tissus autour des follicules pileux. Une des pistes que ce travail envisage est une identification des follicules pileux par des techniques de traitement d'images traditionnelles ou par l'utilisation de \gls{cnn} spécialisés dans de la détection d'objets, combiné à l'identification de tissus pathologiques aux alentours de ceux-ci. Une autre limitation de la modalité de \gls{mcr} concerne l'acquisition des données à disposition. Dans l'état actuelle, aucune information de localisation spatiale n'est mise à disposition, ainsi une piste possible est de travailler avec les données brutes fournies par l'appareil afin d'accéder à ces données de localisation et envisager des méthodes 3D par exemple.\par
+
+Enfin, de nombreux éléments d'améliorations peuvent être apportés au processus multimodal actuel. Les processus d'extraction de caractéristiques et de prédiction proposés ne sont pas suffisamment spécifiques à la photographique clinique et à la dermatoscopie. De plus, certains travaux préconisent un recadrage autour des lésions réalisé manuellement pour la photographie clinique et non considéré pour la dermatoscopie, l'utilisation de méthodes automatique de recadrage peut être envisagé pour améliorer ces performances. À ce même titre, les principes de calibration employé sont à revoir, leur utilisation s'étant révélée inefficace et ayant conduit à une dégradation des résultats. Un dernier point d'amélioration du processus multimodal concerne la détermination des seuils de confiance. La proposition actuelle ne parvient à concilier l'optimisation que d'une seule contrainte à savoir d'une métrique au choix de l'utilisateur, et délaisse une seconde contrainte liée à l'optimisation du processus de prise en charge des lésions au fil des modalités. De plus, la recherche des seuils de confiance est réalisée de manière itérative dont l'optimalité peut être contestée.\par
+\clearpage
+
+\section*{Valorisations scientifiques}
+Pour finir, ces travaux ont donné lieu à de multiples valorisations scientifiques par la publication d'articles de revue, par la participation à des conférences mais également à des groupes de travail. Au moment de l'écriture de ce manuscrit, un article sur la valorisation des travaux de multimodalité présenté dans ce manuscrit est en cours de rédaction. Par ailleurs, un article à orientation médicale sur un projet connexe est prévu sur le thème de la classification de tumeurs des parois buccales et de la gorge par spectrométrie.\par
+
+\textbf{Article de revue~:}
+\vspace{-0.1cm}
+\begin{itemize}
+    \item \bibentry{CendreMdpi}
+\end{itemize}
+
+\textbf{Conférence internationale~:}
+\vspace{-0.2cm}
+\begin{itemize}
+    \item \bibentry{CendreIcsip}
+\end{itemize}
+
+\textbf{Conférence nationale~:}
+\vspace{-0.2cm}
+\begin{itemize}
+    \item \bibentry{CendreGretsi}
+\end{itemize}
+
+\textbf{Groupe de travail international~:}
+\vspace{-0.2cm}
+\begin{itemize}
+    \item \bibentry{CendreCost}
+    \item \bibentry{CendreColourlab}
+\end{itemize}
+
+\textbf{Article de revue - En cours~:}
+\vspace{-0.1cm}
+\begin{itemize}
+    \item \bibentry{CendreMultimodal}
+    \item \bibentry{CendreMultispectral}
+\end{itemize}
+
+\textbf{Codes source~:}
+\vspace{-0.2cm}
+\begin{itemize}
+    \item \href{https://github.com/RomainCendre/classification}{https://github.com/RomainCendre/classification}
+\end{itemize}
