@@ -6,14 +6,14 @@
 \chapterintro
 Lors des précédents chapitres ont été présentés les trois domaines sollicités par ce travail. Ce nouveau chapitre se consacre à la présentation des données utilisées pour évaluer ces travaux et procède aux recensement des méthodes cliniques sur les modalités concernées.\par
 
-Dans un premier temps, la \textit{matière} utilisée afin de mener cette recherche est détaillée dans la \Cref{sec:clinical_data}. En effet, l'ensemble de ce travail prend appui sur une base de données mise à disposition initialement pour la réalisation d'une étude clinique menée sur la pertinence de la dermatoscopie et de la \acrlong{mcr} en milieu clinique. Cette étude clinique est décrite point par point en décrivant d'une part les conditions d'inclusion des patients et d'autre part le protocole d'évaluation des experts. Enfin, les aspects liés à la structuration de la base de données et donc nécessaires pour permettre son utilisation dans ces expériences sont présentés à la fin de cette section.\par
+Dans un premier temps, la \textit{matière} utilisée afin de mener cette recherche est détaillée dans la \Cref{sec:clinical_data}. En effet, les expérimentations et résultats de ce manuscrit prennent appui sur une base de données initialement conçue pour la réalisation d'une étude clinique.  D’une part, cette étude clinique est décrite point par point en reprenant ses objectifs, les conditions d'inclusion permettant la constitution de la base de données, mais également les conclusions sur lesquelles ce travail s'appuie. D’autres part, une structuration de cette base de données est nécessaire ainsi que la mise à disposition d’une interface logicielle permettant l’accès à ses informations, présentés à la fin de cette section.\par
 
-Dans un second temps, un état de l'art de la littérature est réalisé sur les trois modalités employées dans la \Cref{sec:clinical_methods}.\par
+Dans un second temps, la \Cref{sec:clinical_methods} est dédiée à l’analyse de critères pertinents sur les trois modalités cliniques mises à disposition de ce travail. L'objectif de cette section est de comprendre les éléments importants recensés par les dermatologues lors d'un examen clinique.\par
 \newpage
 
 \section{Données de travail}
 \label{sec:clinical_data}
-Pour commencer, il est nécessaire de souligner que \textbf{cette base a reçue un agrément de la part du comité d'éthique du \acrfull{chuste}} pour son exploitation au sein de l'étude clinique mentionnée précédemment mais également pour ce travail universitaire (\textbf{numéro du comité d'examen institutionnel 672016/CHUSTE}). Par ailleurs, cette étude \textbf{est conforme aux recommandations de la déclaration de Helsinky}.\par
+Pour commencer, il est nécessaire de souligner que \textbf{cette base a reçu un agrément de la part du comité d'éthique du \acrfull{chuste}} pour son exploitation au sein de l'étude clinique mentionnée précédemment mais également pour ce travail universitaire (\textbf{numéro du comité d'examen institutionnel 672016/CHUSTE}). Par ailleurs, cette étude \textbf{est conforme aux recommandations de la déclaration de Helsinky}.\par
 
 Par cette section, divers aspect de ces données de travail sont présentés. Dans un premier temps, une présentation de sa constitution et des données recueillies est amenée par la \Cref{sec:dataset_introduction}. Puis dans un second temps, les aspects liés à son organisation sont présentés dans la \Cref{sec:dataset_organisation}. Pour finir, cette section s'achève par la description de l'interface logicielle permettant l'interaction avec ces données dans la \Cref{sec:dataset_api}.
 
@@ -46,7 +46,7 @@ L'intérêt de ces trois modalités est grand dans le contexte de la dermatologi
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{contents/chapter_4/resources/scheme_devices_location.pdf}
-    \caption{Schéma de représentation du processus type de dermatologie, allant de la modalité la plus incertaine mais également la moins onéreuse, à la modalité la précise mais également la plus coûteuse.}
+    \caption{Schéma de représentation du processus type de dermatologie, allant de la modalité la plus incertaine mais également la moins onéreuse, à la modalité la plus précise mais également la plus coûteuse.}
     \label{fig:scheme_devices_location}
 \end{figure}\par
 
@@ -81,16 +81,16 @@ Par ailleurs, les cas cliniques ont été présentés dans un ordre différent e
 \end{figure}\par
 \clearpage
 
-\subsection{Organisation des données}
+\subsection{Structuration des données}
 \label{sec:dataset_organisation}
 Les données sensibles de cette base sont anonymisées afin de ne pas pouvoir ré-identifier les patients. Sa structure initiale peut être appréhendée sur la \Cref{fig:db_structure} - Haut, et se compose~:
 \begin{itemize}
     \item d'un \textbf{tableau de lésions}, sous forme de fichier \gls{csv} et contenant~:
     \begin{itemize}
         \item \textbf{en colonne}, les diverses informations relatives au patient, soit \textit{l'âge, le sexe, la zone, son diagnostic binaire issu de l'histologie (malin ou bénin) et diagnostic précis},
-        \item \textbf{en ligne}, les divers enregistrements liés à chaque lésion respectant les champs précisé en colonne.
+        \item \textbf{en ligne}, les divers enregistrements liés à chaque lésion respectant les champs précisés en colonne.
     \end{itemize}
-    \item d'un \textbf{répertoire d'images} comprenant les divers cas clinique recensés dans l'étude sous divers formats image.
+    \item d'un \textbf{répertoire d'images} comprenant les divers cas cliniques recensés dans l'étude sous divers formats d'image.
 \end{itemize}\par
 
 Afin d'exploiter au mieux cette base, quelques modifications sont apportées. D'une part, la diversité des formats images est un frein quant à la gestion de ces données, ainsi \textbf{un format matriciel sans perte de type bitmap} est adopté. D'autre part, la structure de la base dans l'état ne permet pas l'utilisation d'annotations au niveau des images ou des niveaux supplémentaires. Afin de rendre cet aspect plus dynamique, une structure reprenant les données de manière imbriquée est choisie. La racine de cette nouvelle structure reprend le tableau des lésions initial, dont chaque ligne est associé à une unique lésion. Ce procédé est ainsi répété de manière récursive, chaque dossier de lésion se compose lui même de tableaux d'annotations propre au type d'annotations stockées. Par ailleurs, certains apports d'informations ont été réalisés pour permettre un bon déroulement de la suite de ce travail, tel que l'appartenance à un patient afin de ne pas proposer des données d'un même patient lors de l'entraînement et du test. Cette nouvelle structure est synthétisée sur la \Cref{fig:db_structure} - Bas.\par
@@ -105,14 +105,14 @@ Afin d'exploiter au mieux cette base, quelques modifications sont apportées. D'
 
 \subsection{Interface logicielle}
 \label{sec:dataset_api}
-Malgré l'état actuelle de la base de données, celui-ci ne permet pas son exploitation en l'état. Ainsi, un second aspect de la gestion de cette base de donnée à consisté à mettre en oeuvre une interface logicielle permettant d'accéder à ses diverses données.\par
+Malgré l'état actuel de la base de données, celui-ci ne permet pas son exploitation en l'état. Ainsi, un second aspect de la gestion de cette base de données à consisté à mettre en oeuvre une interface logicielle permettant d'accéder à celles-ci.\par
 
-Les données de cette base au format image représente un volume non négligeable impossible à charger en mémoire vive avec la capacité à disposition de ce travail. Afin de ne pas excéder cette capacité, les données images sont chargées et maintenues en mémoire sous forme d'emplacement sur le disque dur jusqu'à leur utilisation définitive. Diverses méthodes d'accès à ces données sont mise à disposition, dont~:
+Les données de cette base au format image représente un volume non négligeable impossible à charger en mémoire vive avec la capacité à disposition de ce travail. Afin de ne pas excéder cette capacité, les données images sont chargées et maintenues en mémoire sous forme d'emplacement sur le disque dur jusqu'à leur utilisation définitive. Diverses méthodes d'accès à ces données sont mises à disposition, dont~:
 \begin{itemize}
     \item une méthode \textit{get\_images()} avec pour objectif de retourner une structure de données sous forme de table contenant les méta-données et références aux images.
     \item une méthode \textit{get\_sliding\_window()} avec pour objectif de retourner une structure de données sous forme de table contenant les méta-données et références pré-extraites par balayage d'une fenêtre glissante \textit{en zone temporaire}.
     \item une méthode \textit{get\_multiple\_resolution()} avec pour objectif de retourner une structure de données sous forme de table contenant les méta-données et références pré-extraites par redimensionnement des images  \textit{en zone temporaire}.
-\end{itemize} Chacune de ces méthodes met à disposition des arguments permettant de choisir d'une part la modalité ou encore le type d'annotations désirés et d'autres part des paramètres complémentaires liés au type d'extraction pour les principe de \textit{fenêtre glissante} et de \textit{résolutions multiples}. Cette interface logicielle mise à disposition peut être visualisée sur la \Cref{fig:schema_database_api}. Par ailleurs, les structures de données renvoyées par ces méthodes sont générées à l'aide de la librairie \textit{Pandas}~\cite{Pandas2020}.\par 
+\end{itemize} Chacune de ces méthodes met à disposition des arguments permettant de choisir d'une part la modalité ou encore le type d'annotations désiré et d'autre part des paramètres complémentaires liés au type d'extraction pour les principes de \textit{fenêtre glissante} et de \textit{résolutions multiples}. Cette interface logicielle mise à disposition peut être visualisée sur la \Cref{fig:schema_database_api}. Par ailleurs, les structures de données renvoyées par ces méthodes sont générées à l'aide de la librairie \textit{Pandas}~\cite{Pandas2020}.\par 
 
 \begin{figure}[H]
     \centering
@@ -160,7 +160,7 @@ Dans certains travaux, l'utilisation de la dermatoscopie à permis une prise en 
     \end{center} 
 \end{figure}\par
 
-La modalité de \gls{mcr} n'est pas exempte de ces démarches simplifiées, notamment pour le diagnostic du \gls{lm} avec les travaux de Pellacani et al. et de Guitera et al.~\cite{Pellacani2007, Guitera2010}. Ces deux travaux proposent sous forme de table de critères ceux jugés positifs et négatifs, dont la \Cref{tab:rcm_algorithm_lentigo} donne un aperçu de la production de ces articles. Leur étude comptabilise 81 cas de \gls{lm} et 203 lésions bénignes, sur lesquels une valeur de seuil de 2 a été jugé comme pertinente au regard de l'étude statistique menée. Celui-ci a permis de détecter avec 85\% de sensibilité et 76\% de spécificité les \gls{lm}.\par
+La modalité de \gls{mcr} n'est pas exempte de ces démarches simplifiées, notamment pour le diagnostic du \gls{lm} avec les travaux de Pellacani et al. et de Guitera et al.~\cite{Pellacani2007, Guitera2010}. Ces deux travaux proposent sous forme de table de critères ceux jugés positifs et négatifs, dont la \Cref{tab:rcm_algorithm_lentigo} donne un aperçu de la production de ces articles. Leur étude comptabilise 81 cas de \gls{lm} et 203 lésions bénignes, sur lesquels une valeur de seuil de 2 a été jugé comme pertinente au regard de l'étude statistique menée. Celui-ci a permis de détecter avec 85~\% de sensibilité et 76~\% de spécificité les \gls{lm}.\par
 
 \begin{table}[H]
 \centering
@@ -180,16 +180,16 @@ La modalité de \gls{mcr} n'est pas exempte de ces démarches simplifiées, nota
  
 Ainsi, une caractéristique a été déterminée comme pertinente par leurs auteurs lorsque celle-ci s'exprimait de manière plus significative dans l'un des deux groupes pathologiques (\gls{lm} ou bénin). L'un de ces travaux~\cite{Guitera2010} procède à une analyse de ces caractéristiques par profondeur croissante de la peau, dont peuvent être cités les éléments majeurs suivants~:
 \begin{itemize}
-    \item au niveau de \textbf{l'épiderme}, les auteurs ont constaté que les pathologies de \gls{lm} comportent un désordre des cellules de l'épiderme (56\% des lésions \gls{lm} contre 18\% des lésions bénignes). Également, une infiltration pagétoïde a été reportée dans la plupart des cas de \gls{lm} (75\% des lésions \gls{lm} contre 28\% des lésions bénignes). En opposition, un épiderme homogène, caractérisé par des motifs en nids d'abeille, a été constatés dans 92\% des cas bénins. Ces éléments peuvent être observées sur la \Cref{fig:example_rcm_pattern_1}.
-    \item au niveau de la \textbf{\gls{jde}}, les auteurs ont constaté que les papilles non démarquées étaient observées dans la majorité des \gls{lm} (68\% \gls{lm} and in 17\% des cas bénins). Ces éléments peuvent être observées sur la  \Cref{fig:example_rcm_pattern_2}.
-    \item au niveau du \textbf{derme}, 15\% des cas de \gls{lm} présentent des cellules nucléées large contre 2\% des lésions bénignes. Ces éléments peuvent être observées sur la \Cref{fig:example_rcm_pattern_3}.
+    \item au niveau de \textbf{l'épiderme}, les auteurs ont constaté que les pathologies de \gls{lm} comportent un désordre des cellules de l'épiderme (56~\% des lésions \gls{lm} contre 18~\% des lésions bénignes). Également, une infiltration pagétoïde a été reportée dans la plupart des cas de \gls{lm} (75~\% des lésions \gls{lm} contre 28~\% des lésions bénignes). En opposition, un épiderme homogène, caractérisé par des motifs en nids d'abeille, a été constatés dans 92~\% des cas bénins. Ces éléments peuvent être observées sur la \Cref{fig:example_rcm_pattern_1}.
+    \item au niveau de la \textbf{\gls{jde}}, les auteurs ont constaté que les papilles non démarquées étaient observées dans la majorité des \gls{lm} (68~\% \gls{lm} and in 17~\% des cas bénins). Ces éléments peuvent être observées sur la  \Cref{fig:example_rcm_pattern_2}.
+    \item au niveau du \textbf{derme}, 15~\% des cas de \gls{lm} présentent des cellules nucléées large contre 2~\% des lésions bénignes. Ces éléments peuvent être observées sur la \Cref{fig:example_rcm_pattern_3}.
 \end{itemize}\par
 
 Dans l'étude menée par Cinotti et al.~\cite{Cinotti2018}, les auteurs investigateurs ont demandé d'évaluer certaines caractéristiques récurrentes de la littérature, parmi lesquelles~:
 \begin{itemize}
-    \item la présence de grandes cellules pagétoïdes arrondies, présentes dans 37\% des \gls{lm} et seulement 5\% des pathologies bénignes,
-    \item la présence de grandes cellules dendritiques dans l'épiderme, présentes dans 81\% des \gls{lm} contre 13\% des pathologies bénignes,
-    \item la localisation au niveau des follicules pileux des cellules atypiques, dans 62\% des \gls{lm} et seulement 7\% des pathologies bénignes.
+    \item la présence de grandes cellules pagétoïdes arrondies, présentes dans 37~\% des \gls{lm} et seulement 5~\% des pathologies bénignes,
+    \item la présence de grandes cellules dendritiques dans l'épiderme, présentes dans 81~\% des \gls{lm} contre 13~\% des pathologies bénignes,
+    \item la localisation au niveau des follicules pileux des cellules atypiques, dans 62~\% des \gls{lm} et seulement 7~\% des pathologies bénignes.
 \end{itemize}\par
 
 \begin{figure}[p]
@@ -225,7 +225,7 @@ Dans l'étude menée par Cinotti et al.~\cite{Cinotti2018}, les auteurs investig
 % Au titre de ce travail, nous pouvons remarquer que l’un des aspects peux consister à modifier l’espace de couleur utilisé, dans le but de rendre les données moins dépendantes du capteur dont elles sont issues, l’une des caractéristiques type selon le critères ABCD pouvant être la couleur. Nous pouvons citer à titre d’exemple, l’utilisation de patches de référence afin de « calibrer » les capteurs [69].
 % Certaines approches tentent d’apporter des solutions aux problématiques d’éclairage souvent présentes en photographie clinique. Ainsi ce second travail tente de répondre aux problèmes de réflectance dans l’image grâce aux travaux de Yang, puis apporte une correction de l’illumination afin d’homogénéiser cette dernière [70]. Ces corrections permettent d’optimiser le processus de segmentation et d’améliorer le retour d’information lié aux chromophores tels que l’hémoglobine et la mélanine.
 % Notamment dans le cadre de lésions non pigmentaires, certains travaux laissent le travail de segmentation à l’opérateur et se concentrent sur les aspects de classification [71]. La plupart de ces travaux s’accordent sur l’extraction de caractéristiques de couleurs mais essentiellement de textures plus pertinentes, au travers de classifieurs traditionnels tels que SVM.
-% D’autres approches plus poussées consistent à miser sur la masse de données disponible. C’est souvent sur cette vision que s’appuient des travaux basés sur les mécanismes d’apprentissage profond. L’une d’entre elles propose de reprendre un réseau pré entrainé sur des images génériques et donc composés de filtres également génériques, et de spécifier par un nouvel entrainement la couche de classification, moins couteux en ressources. Cette prouesse a permis l’obtention de résultat probants soit 72.1\% de précision globale sur une classification à 3 classes : bénin, malin et non néoplasique [26]. Ce score a été obtenu à partir de données issues de photographie clinique mais également de dermatoscopie, composé de diverses pathologies visibles au travers de la Figure 51.
+% D’autres approches plus poussées consistent à miser sur la masse de données disponible. C’est souvent sur cette vision que s’appuient des travaux basés sur les mécanismes d’apprentissage profond. L’une d’entre elles propose de reprendre un réseau pré entrainé sur des images génériques et donc composés de filtres également génériques, et de spécifier par un nouvel entrainement la couche de classification, moins couteux en ressources. Cette prouesse a permis l’obtention de résultat probants soit 72.1~\% de précision globale sur une classification à 3 classes : bénin, malin et non néoplasique [26]. Ce score a été obtenu à partir de données issues de photographie clinique mais également de dermatoscopie, composé de diverses pathologies visibles au travers de la Figure 51.
 
 % \subsection{Dermatoscopie}
 % Modalité la plus traitée dans le domaine de l’imagerie de la peau, le dermatoscope est 	aujourd’hui la modalité en vogue. En effet, la qualité de l’information fournie et sa faible altération par l’environnement en font une modalité fiable.  
@@ -242,8 +242,8 @@ Dans l'étude menée par Cinotti et al.~\cite{Cinotti2018}, les auteurs investig
 % Figure 55 : Synthétisation des processus de traitement proposées au travers de trois articles  [73], [74], [76].
 % Enfin, l’un des travaux de recherche mené s’est basés sur une approche par apprentissage profond pour déterminer de manière automatique l’appartenance de l’image à l’une des couche de l’épiderme [77]. L’auteur utilise au préalable une approche par Texton combinée à un système de codebook afin d’obtenir un histogramme de fréquences [78] représentatif de chacune des couches
 
-% \cite{Wiltgen2008}
-% \cite{Halimi2017a}
+%~\cite{Wiltgen2008}
+%~\cite{Halimi2017a}
 
 
 
