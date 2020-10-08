@@ -8,7 +8,7 @@ Lors du précédent chapitre, les interactions entre la peau et la lumière ont 
 
 Actuellement, l’informatique est une ressource omniprésente dans de nombreux domaines d’application. Ses facultés à divertir ou encore à guider ses usagers dans leurs choix quotidiens personnels et professionnels en font un précieux allié. De nouvelles pratiques font leurs apparitions, intégrant la machine au cœur des processus décisionnels. Les disciplines médicales évoluent largement et l’ordinateur permet de répondre aux besoins croissants de précision, de reproductibilité intra et inter opérateur, et permet un gain de temps au sein des milieux cliniques. Dans un cadre bien défini, il s’agit également d’un moyen de formaliser la connaissance au travers d’un outil pouvant être utilisé par des non-initiés.\par
 
-Cette nouvelle partie permet de dérouler un peu plus le plan de ce manuscrit, en abordant cette fois-ci les systèmes d'intelligence artificielle et leur utilité vis à vis des données médicales de ce manuscrit.\par
+Cette nouvelle partie permet de dérouler un peu plus le plan de ce manuscrit, en abordant cette fois-ci les systèmes d'intelligence artificielle et leur utilité vis-à-vis des données médicales de ce manuscrit.\par
 \newpage
 
 \section{Généralités sur l'intelligence artificielle}
@@ -18,7 +18,7 @@ La notion \textbf{d’\gls{ia}} est assez souvent contestée, mais se définit p
 Une vision plus complète de ce terme consiste à décomposer l'\gls{ia} en une discipline organisée en sous domaines possédant chacun leurs spécificités, comme schématisé sur la \Cref{fig:scheme_overview_ia}. Ainsi, le terme \textbf{d'apprentissage automatique} ou de \textit{machine learning} caractérise un premier sous champ de l'\gls{ia} et est employé pour qualifier l'utilisation de mécanismes statistiques dans le but de générer des règles, à partir de données d'apprentissage. Ces données étant souvent complexes, il est souvent nécessaire de laisser l'humain intervenir pour extraire l'information pertinente à l'accomplissement de la tâche souhaitée. Enfin, le terme \textbf{d'apprentissage profond} ou de \textit{Deep Learning} désigne un sous champ de l'apprentissage automatique, dans lequel des couches succesives de prises de décision vont permettre d'augmenter la complexité des relations entre les données d'entrée et les tâches.\par
 
 \addtocounter{footnote}{1}
-\footnotetext[\thefootnote]{Source~: Encyclopédie Larousse. \label{footnote:ia_larousse}}
+\footnotetext[\thefootnote]{Source~:~Encyclopédie Larousse. \label{footnote:ia_larousse}}
 
 \begin{figure}[H]
     \centering
@@ -35,7 +35,7 @@ Ce courant a été \textit{évoqué} en 1948 par Alan Turing ; son idée était 
 
 Les approches par apprentissage automatique peuvent être résumées aux techniques permettant à un système informatique d’adapter son analyse et son comportement en fonction de ses données d’entrée. Une définition plus formelle et récente de ce domaine proposée par Tom Michael Mitchell est qu’un «~programme informatique apprend d’une expérience $E$, en adéquation avec des tâches $T$ et une mesure de performance $P$, si sa performance sur les tâches $T$, mesurée par $P$, s’améliore avec l’expérience $E$~».\par
 
-Ainsi au sein des courants d’apprentissage, deux grandes sous catégories synthétisées dans la \Cref{fig:scheme_machine_learning} peuvent être distinguées, dont~: 
+Ainsi au sein des courants d’apprentissage, deux grandes sous catégories synthétisées dans la \Cref{fig:scheme_machine_learning} peuvent être distinguées, dont~:~
 \begin{itemize}
     \item l'apprentissage \textbf{supervisé} correspond aux techniques visant à faire correspondre les données d'entrée avec des sorties de valeurs discrètes (on parle aussi de classification) ou continues (on parle alors de régression),
     \item l'apprentissage \textbf{non-supervisé} correspond à des approches exploratoires, dans lesquelles l'ordinateur tente d'identifier des corrélations au sein des données (désigné par le terme de \textit{clustering}),
@@ -188,14 +188,14 @@ Néanmoins, cet exemple met également en avant que ce même modèle pourrait ê
 \end{equation}\par
 
 \addtocounter{footnote}{1}
-\footnotetext[\thefootnote]{Source~: Plateforme de cours en ligne \href{https://www.deeplearning.ai/}{Deep Learning AI}, démonstration par Andrew Ng. \label{footnote:equation_andrewng}}
+\footnotetext[\thefootnote]{Source~:~Plateforme de cours en ligne \href{https://www.deeplearning.ai/}{Deep Learning AI}, démonstration par Andrew Ng. \label{footnote:equation_andrewng}}
 
 Un très bon représentant de ces types de réseaux est le \gls{mlp} utilisé à des fins de classification. Par ailleurs, un inconvénient majeur de ces réseaux est le grand nombre d'hyperparamètres à disposition. Il est ainsi délicat de procéder au choix du nombre de neurones ou même de celui des fonctions d'activation.\par
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{contents/chapter_3/resources/scheme_deep_understanding.pdf}
-    \caption{Exemple simplifié d'une structure d’apprentissage profond. Ce modèle se compose de deux couches intermédiaires cachées~: la première couche extrait des caractéristiques linéaires simples, tandis que la seconde couche par combinaison avec la première couche conduit à une extraction de caractéristiques plus complexes. Ainsi, la première couche s'apparente à un polynôme de degré 1, tandis que la seconde couche représente des fonctions de degré 2 et ainsi de suite.}
+    \caption{Exemple simplifié d'une structure d’apprentissage profond. Ce modèle se compose de deux couches intermédiaires cachées~:~la première couche extrait des caractéristiques linéaires simples, tandis que la seconde couche par combinaison avec la première couche conduit à une extraction de caractéristiques plus complexes. Ainsi, la première couche s'apparente à un polynôme de degré 1, tandis que la seconde couche représente des fonctions de degré 2 et ainsi de suite.}
     \label{fig:scheme_deep_understanding}
 \end{figure}
 
@@ -203,7 +203,7 @@ Un très bon représentant de ces types de réseaux est le \gls{mlp} utilisé à
 \label{sec:convolutionnal_neural_network}
 Les \gls{cnn} sont une extension des réseaux de neurones profond, essentiellement utilisés dans un but de traitement de l'image. Moins développé par la littérature, ce principe de réseaux peut être étendu à des données telles que des signaux (1D) ou des volumes (3D).\par
 
-Ces \gls{cnn} sont une réponse à l'application des \gls{ann} à des problématiques impliquant des données images et des contraintes multiples qu'ils comportent. Parmi ces contraintes de l'application des \gls{ann} aux images, peuvent être évoqués~: 
+Ces \gls{cnn} sont une réponse à l'application des \gls{ann} à des problématiques impliquant des données images et des contraintes multiples qu'ils comportent. Parmi ces contraintes de l'application des \gls{ann} aux images, peuvent être évoqués~:~
 \begin{inlinerate}
     \item les \textbf{nombreuses connexions et paramètres requis},
     \item l'\textbf{absence d'utilisation de la cohérence de l'information spatiale},
@@ -262,7 +262,7 @@ Ce problème, évoqué dans la littérature porte le nom de « dilemme de biais 
 \label{subsec:metrics}
 Le choix des métriques représente une part importante de la problématique de ce manuscrit pour la mise en place de modèles d’apprentissage. D'une part, ce choix permet d'orienter la sélection d'un modèle en particulier et d'autre part, permet de retenir les performances attendues par ce dernier sur des données extérieures au jeu de données employé.\par
 
-L’un des principaux outils à disposition afin d'évaluer la performance est la matrice de confusion, schématisé sur la \Cref{fig:scheme_confusion_matrix}. Elle permet de faire correspondre les classes réelles et prédites~: la diagonale de cette matrice fait figurer les prédictions correctement réalisées par le modèle, tandis que les éléments restants renseignent sur les prédictions erronées. Dans une situation à deux classes ou \textit{binaire}, cette matrice fait ainsi ressortir quatre mesures~:
+L’un des principaux outils à disposition afin d'évaluer la performance est la matrice de confusion, schématisé sur la \Cref{fig:scheme_confusion_matrix}. Elle permet de faire correspondre les classes réelles et prédites~:~la diagonale de cette matrice fait figurer les prédictions correctement réalisées par le modèle, tandis que les éléments restants renseignent sur les prédictions erronées. Dans une situation à deux classes ou \textit{binaire}, cette matrice fait ainsi ressortir quatre mesures~:
 \begin{itemize}
 	\item les \textbf{vrais positifs}, les éléments de la classe positive détectés comme positif,
 	\item les \textbf{vrais négatifs}, les éléments de la classe négative détectés comme négatif,
@@ -282,7 +282,7 @@ Bien que déjà réduite, l'information de cette matrice est encore très riche 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{contents/chapter_3/resources/scheme_confusion_metrics.pdf}
-    \caption{Schéma représentatif des principaux métriques obtenues à partir de la matrice de confusion~: la \textit{précision}, le \textit{rappel} ou la \textit{sensibilité} et la \textit{specificité}.}
+    \caption{Schéma représentatif des principaux métriques obtenues à partir de la matrice de confusion~:~la \textit{précision}, le \textit{rappel} ou la \textit{sensibilité} et la \textit{specificité}.}
     \label{fig:scheme_confusion_metrics}
 \end{figure}
 
@@ -304,7 +304,7 @@ Dans ce cas, il peut être préférable de privilégier des métriques plus robu
     \label{eq:metrics_fscore}
 \end{equation}
  
-Une autre métrique permettant de se prémunir de ces effets de non balancement de l'information et celui de l'\acs{auc} et découlant de la courbe \gls{roc} dont le principe est résumé sur le schéma \Cref{fig:scheme_roc_curve}). La courbe \gls{roc} est tracée à partir des informations de spécificité / sensibilité et par variation d'une valeur seuil appliquée au modèle de prédiction, tandis que l'\gls{auc} correspond à l'intégration de l'aire de cette courbe. Ainsi, l'\gls{auc} est robuste au non-balancement de données mais ses valeurs sont optimistes sur des modèles de prédiction dont la variation du seuil est homogène vis à vis des résultats.\par
+Une autre métrique permettant de se prémunir de ces effets de non balancement de l'information et celui de l'\acs{auc} et découlant de la courbe \gls{roc} dont le principe est résumé sur le schéma \Cref{fig:scheme_roc_curve}). La courbe \gls{roc} est tracée à partir des informations de spécificité / sensibilité et par variation d'une valeur seuil appliquée au modèle de prédiction, tandis que l'\gls{auc} correspond à l'intégration de l'aire de cette courbe. Ainsi, l'\gls{auc} est robuste au non-balancement de données mais ses valeurs sont optimistes sur des modèles de prédiction dont la variation du seuil est homogène vis-à-vis des résultats.\par
 
 \begin{figure}[H]
     \centering
@@ -314,7 +314,6 @@ Une autre métrique permettant de se prémunir de ces effets de non balancement 
 \end{figure}
 
 D'autres alternatives moins biaisées ont également été formulées~\cite{Sokolova2006}. Néanmoins le \fscore{} et l'\gls{auc} sont couramment utilisés dans des articles cliniques et constituent une des bases de ce travail.\par
-
 \clearpage
 
 \subsection{Réglages des hyperparamètres}
@@ -361,7 +360,7 @@ Ces deux méthodes répondent à la problématique de l'évaluation, mais n'appo
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\linewidth]{contents/chapter_3/resources/scheme_hyperparameter_process.pdf}
-    \caption{Schéma de la validation croisée imbriquée assurant le choix de la meilleur combinaison d'hyperparamètres et assurant une évaluation robuste des performances du modèle.}
+    \caption{Schéma de la validation croisée imbriquée assurant le choix de la meilleure combinaison d'hyperparamètres et assurant une évaluation robuste des performances du modèle.}
     \label{fig:scheme_hyperparameter_process}
 \end{figure}\par
 
@@ -369,21 +368,21 @@ Ces deux méthodes répondent à la problématique de l'évaluation, mais n'appo
 
 \section{Fusion d’informations}
 \label{sec:fusion_information}
-Dernier aspect de ce sujet, la fusion d’informations se définit comme l’action de « combiner des informations issues de plusieurs sources afin d’améliorer la prise de décision »~\cite{Bloch2003}. Cette fusion se retrouve dans de nombreux domaines d'applications dont celui de la santé ou encore de la biométrie, et peut être considérée comme un moyen d'augmenter la fiabilité de systèmes. L'intérêt croissant pour ce domaine correspond, entre autres, à une réponse de l'augmentation et de la diversification du nombre de capteurs présents. L'ouvrage de Bloch~\cite{Bloch2003} justifie la fusion d'informations, par différentes notions auxquelles sont soumises chaque capteur, dont~:
+Dernier aspect de ce sujet, la fusion d’informations se définit comme l’action de « combiner des informations issues de plusieurs sources afin d’améliorer la prise de décision »~\cite{Bloch2003}. Cette fusion se retrouve dans de nombreux domaines d'application dont celui de la santé ou encore de la biométrie, et peut être considérée comme un moyen d'augmenter la fiabilité de systèmes. L'intérêt croissant pour ce domaine correspond, entre autres, à une réponse de l'augmentation et de la diversification du nombre de capteurs présents. L'ouvrage de Bloch~\cite{Bloch2003} justifie la fusion d'informations, par différentes notions auxquelles sont soumises chaque capteur, dont~:
 \begin{itemize}
-    \item \textbf{l'incertitude}~: c’est-à-dire son « degré de conformité avec la réalité ».
-    \item \textbf{l'imprécision}~: définie comme une « mesure du défaut quantitatif de connaissance, sur une mesure ».
-    \item \textbf{l'incomplétude}~: correspond à « l'absence d'information d'une source sur des aspects du problème ».
+    \item \textbf{l'incertitude}~:~c’est-à-dire son « degré de conformité avec la réalité ».
+    \item \textbf{l'imprécision}~:~définie comme une « mesure du défaut quantitatif de connaissance, sur une mesure ».
+    \item \textbf{l'incomplétude}~:~correspond à « l'absence d'information d'une source sur des aspects du problème ».
 \end{itemize}\par
 
 Cette fusion est indispensable pour permettre la réalisation de certaines tâches, l'effet de McGurk est un exemple concret de la \textit{complémentarité} de la vision et de l'audition dans le rôle de la perception de la parole, mais également de la difficulté à gérer les \textit{conflits} d'informations sur ces deux sources séparées~\cite{Mcgurk1976}. L'ouvrage de Bloch~\cite{Bloch2003} définit trois termes propres à cette fusion~:
 \begin{itemize}
-    \item \textbf{le conflit}~: l'une des notions pouvant conduire à une mauvaise interprétation du système lorsque plusieurs informations contradictoires sont reçues.
-    \item \textbf{la redondance}~: l'apport multiple d'une même information, pouvant dans l'idéal permettre de réduire les incertitudes et les imprécisions.
-    \item \textbf{la complémentarité}~: généralement des sources, liée à un apport de caractéristiques différentes permettant l'accès à une information globale et de lever des ambiguïtés.
+    \item \textbf{le conflit}~:~l'une des notions pouvant conduire à une mauvaise interprétation du système lorsque plusieurs informations contradictoires sont reçues.
+    \item \textbf{la redondance}~:~l'apport multiple d'une même information, pouvant dans l'idéal permettre de réduire les incertitudes et les imprécisions.
+    \item \textbf{la complémentarité}~:~généralement des sources, liée à un apport de caractéristiques différentes permettant l'accès à une information globale et de lever des ambiguïtés.
 \end{itemize}\par
 
-Il est nécessaire également de caractériser le résultat de la fusion d'informations. Il est relativement difficile d'obtenir une vision commune sur les divers niveaux et termes associés. Ainsi, ce travail se réfère à l'une d'entre elles~\cite{Dasarathy1997} proche de cette problématique. Trois niveaux de fusion y sont décris~:
+Il est nécessaire également de caractériser le résultat de la fusion d'informations. Il est relativement difficile d'obtenir une vision commune sur les divers niveaux et termes associés. Ainsi, ce travail se réfère à l'une d'entre elles~\cite{Dasarathy1997} proche de cette problématique. Trois niveaux de fusion y sont décrits~:
 \begin{itemize}
     \item le \textbf{niveau bas}, considéré comme étant la fusion sur les données,
     \item le \textbf{niveau moyen}, considéré comme la fusion des caractéristiques ou données plus abstraites,
@@ -403,17 +402,17 @@ Il est nécessaire également de caractériser le résultat de la fusion d'infor
     \label{fig:scheme_overview_fusion}
 \end{figure}\par
 
-La fusion à \textbf{bas niveau} s'exerce au niveau du capteur, quand celui-ci bénéficie de plusieurs relevés d'informations physiques, ou après l'acquisition de données provenant de plusieurs capteurs. Cela va nécessiter une cohérence entre ces modalités~: un référentiel, un repère commun permettant la mise en parallèle de ces dernières. La fusion à ce niveau consiste essentiellement à fournir une cohérence de ces modalités d'information, voire à réduire cette dernière afin de n'obtenir que celle jugée pertinente dans le cadre de son utilisation.\par
+La fusion à \textbf{bas niveau} s'exerce au niveau du capteur, quand celui-ci bénéficie de plusieurs relevés d'informations physiques, ou après l'acquisition de données provenant de plusieurs capteurs. Cela va nécessiter une cohérence entre ces modalités~:~un référentiel, un repère commun permettant la mise en parallèle de ces dernières. La fusion à ce niveau consiste essentiellement à fournir une cohérence de ces modalités d'information, voire à réduire cette dernière afin de n'obtenir que celle jugée pertinente dans le cadre de son utilisation.\par
 
 La fusion à \textbf{moyen niveau} s'exerce au niveau de caractéristiques, c’est-à-dire après un premier traitement de chacune des modalités pour n'extraire que les éléments nécessaires à la réalisation du processus. Il s'agit d'une mise en commun des vecteurs d'information dans leur totalité ou réduite nécessitant dans ce second cas une sélection de l'information pertinente.\par
 
-Enfin, la fusion à \textbf{haut niveau} s'exerce après les mécanismes de prise de décision. C’est-à-dire que les branches correspondant à chaque modalité exercent indépendemment leur prise de décision. Il est donc nécessaire de définir une stratégie permettant de privilégier une décision ou d'extraire une décision à partir de l'information. Deux catégories sont ainsi identifiables~: 
+Enfin, la fusion à \textbf{haut niveau} s'exerce après les mécanismes de prise de décision. C’est-à-dire que les branches correspondant à chaque modalité exercent indépendamment leur prise de décision. Il est donc nécessaire de définir une stratégie permettant de privilégier une décision ou d'extraire une décision à partir de l'information. Deux catégories sont ainsi identifiables~:
 \begin{inlinerate}
     \item la \textbf{sélection dynamique de modèle} de prédiction dans lequel l'objectif est de définir le modèle pertinent,
     \item et la \textbf{fusion de modèles} de prédiction dans lequel le but est d'obtenir une décision globale tenant compte des différentes décisions.
 \end{inlinerate}\par
 
-Plus particulièrement, dans le cadre de problématique binaire, la fusion de modèle comporte deux niveaux conceptuels de décision basés sur le type d'information mise à disposition par ces modèles. D'une part, au plus haut niveau~: la fusion appliquée au \textbf{niveau décisionnel}. Seules les décisions issues de chaque modèle sont alors considérées selon diverses stratégies~: le vote à la majorité ou encore la pondération des votes en sont deux représentants. D'autre part, au plus bas niveau~: la fusion appliquée aux scores~\cite{Kittler1998}. Dans le cadre de problématiques à plusieurs classes, il est possible possible d'évoquer une troisième prise de décision au niveau du rang, c’est-à-dire en considérant la position de chaque classe prédite issue des divers modèles.\par
+Plus particulièrement, dans le cadre de problématique binaire, la fusion de modèle comporte deux niveaux conceptuels de décision basés sur le type d'information mise à disposition par ces modèles. D'une part, au plus haut niveau~:~la fusion appliquée au \textbf{niveau décisionnel}. Seules les décisions issues de chaque modèle sont alors considérées selon diverses stratégies~:~le vote à la majorité ou encore la pondération des votes en sont deux représentants. D'autre part, au plus bas niveau~:~la fusion appliquée aux scores~\cite{Kittler1998}. Dans le cadre de problématiques à plusieurs classes, il est possible d'évoquer une troisième prise de décision au niveau du rang, c’est-à-dire en considérant la position de chaque classe prédite issue des divers modèles.\par
 
 
 % \subsection{Équilibrage de données}
