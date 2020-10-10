@@ -4,16 +4,16 @@
 \chapter{Prise de décision au niveau lésionnel ou patient}
 \label{chap:chapter_7}
 \chapterintro
-Les deux précédents chapitres se sont consacrés aux diagnostics des images \acrlong {mcr} mises à la disposition de ce travail. Diverses solutions permettant la gestion de ces images comme des entités à part entière sont proposées, d'une part à l'aide de techniques propres à la globalité de l'image, et d'autre part à l'aide d'approches à diverses échelles ou par instances multiples.\par
+Les deux précédents chapitres se sont consacrés aux diagnostics des images de \acrlong {mcr} mises à la disposition de ce travail. Diverses solutions permettant la gestion de ces images comme des entités à part entière sont proposées, d'une part à l'aide de techniques propres à la globalité de l'image, et d'autre part à l'aide d'approches multi-échelle ou par instances multiples.\par
 
-Par ce nouveau chapitre, une méthodologie est mise en place permettant d'aider les experts lors de la prise de décision au niveau patient sur cette modalité complexe. Cette prise de décision au niveau patient est également nécessaire afin de mettre en place le processus multimodal, finalité de ce manuscrit. Pour cela, les précédentes expérimentations sont sollicitées afin d'extraire l'information des images, et diverses méthodes sont proposées pour permettre l'obtention d'une décision à partir d'un ensemble d'images d'un même patient.\par
+Dans ce nouveau chapitre, une méthodologie est mise en place permettant d'aider les experts lors de la prise de décision au niveau patient sur cette modalité complexe. Cette prise de décision au niveau patient est également nécessaire afin de mettre en place le processus multimodal, finalité de ce manuscrit. Pour cela, les précédentes expérimentations sont sollicitées afin d'extraire l'information des images, et diverses méthodes sont proposées pour permettre l'obtention d'une décision à partir d'un ensemble d'images d'un même patient.\par
 
 Les résultats de ces expérimentations sont présentés en fin de chapitre, sur l'ensemble des lésions mais également sur les lésions malignes ne comportant que des types \acrlong{lm} et \acrlong{lmm}. Ces résultats sont également exprimés en termes de sensibilité et spécificité afin d'être confrontés à ceux des spécialistes sur cette même base de données.\par
 \newpage
 
 \section{Méthodologie}
 \label{sec:patient_decision_methodology}
-Lors des deux précédents chapitres, la classification des images \gls{mcr} a été la principale tâche de ce manuscrit en proposant des traitements permettant leur gestion comme des entités à part entière. Lors du \Cref{chap:chapter_5}, ces images ont été abordées dans leur intégralité à l'aide des méthodes d'extraction de caractéristiques sur la totalité de l'image, mais également lors du \Cref{chap:chapter_6} à l'aide de méthodes proposant diverses échelles et niveaux de compréhension.\par
+Lors des deux précédents chapitres, la classification des images \gls{mcr} a été la principale tâche de ce manuscrit en proposant des traitements permettant leur gestion comme des entités à part entière. Lors du \Cref{chap:chapter_5}, ces images ont été abordées dans leur intégralité à l'aide des méthodes d'extraction de caractéristiques sur la totalité de l'image, mais également lors du \Cref{chap:chapter_6} à l'aide de méthodes multi-échelle et niveaux de compréhension.\par
 
 Néanmoins, ces méthodes dans leur état actuel ne permettent que le diagnostic des images, dont le nombre varie fortement d'une lésion à l'autre soit d'une dizaine à plusieurs centaines d'images pour un même patient. La tâche reste donc en l'état complexe et difficile à trancher par un spécialiste et ne permet pas une aide réaliste à la prise de décisions. De plus, la finalité de ce travail est en l'état impossible, cette information étant inexploitable dans le cadre d'un processus à multiples modalités.\par
 
@@ -29,7 +29,7 @@ Ce chapitre propose diverses méthodes dans le but d'extraire une décision au n
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.65\linewidth]{contents/chapter_7/resources/scheme_patient_decision_objectives.pdf}
-    \caption{Schéma récapitulatif de la problématique de l'inconsistance du nombres d'images constituant les lésions et de l'obtention de décisions et scores pour chacune de ces lésions.}
+    \caption{Schéma récapitulatif de la problématique de l'inconsistance du nombre d'images constituant les lésions et de l'obtention de décisions et scores pour chacune de ces lésions.}
     \label{fig:scheme_patient_decision_objectives}
 \end{figure}\par
 \clearpage
@@ -40,9 +40,9 @@ Cette section dédiée aux approches supervisées se consacre à des schémas d'
 \begin{inlinerate}
     \item d'une part des annotations à bas niveau ou \textbf{niveau image},
     \item d'autre part des annotations à haut niveau ou \textbf{niveau lésionnel}. 
-\end{inlinerate} L'une des contraintes majeures associées à ces données est l'inconsistance du nombre d'images entre les lésions composant le jeu de données. Ainsi, une lésion peut comporter un nombre d'image compris entre une dizaine et une centaine d'entre elles. Il est donc nécessaire de gérer cette variabilité au sein du processus de classification mis en place.\par
+\end{inlinerate} L'une des contraintes majeures associées à ces données est l'inconsistance du nombre d'images entre les lésions composant le jeu de données. Ainsi, une lésion peut comporter un nombre d'images compris entre une dizaine et une centaine. Il est donc nécessaire de gérer cette variabilité au sein du processus de classification mis en place.\par
 
-Afin de résoudre cette tâche de manière supervisée, cette section propose un mécanisme de prédiction en deux temps~: 
+Afin de résoudre ce problème de manière supervisée, cette section propose un mécanisme de prédiction en deux temps~: 
 \begin{itemize}
     \item une première étape de prédiction \textbf{au niveau image}, dont le but consiste à émettre une étiquette à chaque image,
     \item une seconde étape de prédiction \textbf{au niveau lésionnel} dont la finalité est d'évaluer la lésion à partir de l'information résultant du processus de classification au niveau image.
@@ -60,7 +60,7 @@ Cette séparation des données d'entraînement en deux sous-ensembles permet de 
     \label{fig:scheme_patient_decision}
 \end{figure}\par
 
-Ainsi, la \textbf{prédiction au niveau image} de ce processus exploite les méthodes issues des \Cref{chap:chapter_5,chap:chapter_6}, dont les expérimentations reposent sur la mise en place d'un processus de détection des images. Cette prédiction est assurée dans un premier temps par les méthodes d'extraction de caractéristiques jugées les plus pertinentes de ces parties, rappelées en \Cref{sec:patient_decision_methodology}. Ainsi, sont utilisées \textbf{des méthodes manuelles spatiales et fréquentielles} dont le nombre de caractéristiques extraites est de l'ordre de la dizaine, et \textbf{par transfert de connaissances sur des \gls{cnn}} pré-entraînés dont le nombre de caractéristiques dépasse la centaine. Dans un second temps, ces caractéristiques sont mises à l'échelle par \textbf{une normalisation de type Minimum / Maximum} puis séparées à l'aide d'\textbf{un modèle \gls{svm} à noyau linéaire}. Les hyperparamètres de ce dernier sont rappelés au niveau de la  \Cref{tab:parameters_lesion_classification_image_supervised}.\par
+Ainsi, la \textbf{prédiction au niveau image} de ce processus exploite les méthodes issues des \Cref{chap:chapter_5} et \Cref{chap:chapter_6}, dont les expérimentations reposent sur la mise en place d'un processus de détection des images. Cette prédiction est assurée dans un premier temps par les méthodes d'extraction de caractéristiques jugées les plus pertinentes de ces parties, rappelées en \Cref{sec:patient_decision_methodology}. Ainsi, sont utilisées \textbf{des méthodes manuelles spatiales et fréquentielles} dont le nombre de caractéristiques extraites est de l'ordre de la dizaine, et \textbf{par transfert de connaissances sur des \gls{cnn}} pré-entraînés dont le nombre de caractéristiques dépasse la centaine. Dans un second temps, ces caractéristiques sont mises à l'échelle par \textbf{une normalisation de type Minimum / Maximum} puis séparées à l'aide d'\textbf{un modèle \gls{svm} à noyau linéaire}. Les hyperparamètres de ce dernier sont rappelés au niveau de la  \Cref{tab:parameters_lesion_classification_image_supervised}.\par
 
 \begin{table}[H]
     \centering
@@ -127,7 +127,7 @@ L'ensemble des modèles de prédiction exploitant le principe d'\gls{mil} mis en
     \gls{nsk}           &                   &                                                   \\ \cline{1-1} 
     \gls{sbmil}         &                   &                                                   \\ \bottomrule 
     \end{tabular}    
-    \caption{Table reprenant les divers modèles utilisant le principe d'\gls{mil} pour réaliser une classification au niveau lésionnel, ainsi que leurs hyperparamètres associés.}
+    \caption{Table reprenant les divers modèles utilisant le principe de \gls{mil} pour réaliser une classification au niveau lésionnel, ainsi que leurs hyperparamètres associés.}
     \label{tab:patient_decision_weak_hyperparameters}
 \end{table}\par
 \clearpage
@@ -151,18 +151,18 @@ Dans cette section dédiée aux résultats, les diverses méthodes envisagées p
     \begin{tabular}{cllll}
         \toprule
         \multicolumn{1}{l}{}         &                              & Sensibilité               & Spécificité               & \Fscore{}                 \\ \midrule
-        \multirow{4}{*}{Spatial}     & Décisions - Priorité         & \textbf{0,92$\pm$0,09}    & \textbf{0,40$\pm$0,16}    & \textbf{0,80$\pm$0,11}    \\
-                                     & Décisions - Dynamique        & 0,80$\pm$0,19             & 0,66$\pm$0,22             & 0,80$\pm$0,13             \\
-                                     & Scores - Maximum             & 0,83$\pm$0,18             & 0,57$\pm$0,25             & 0,79$\pm$0,12             \\
-                                     & Scores - Moyenne             & 0,83$\pm$0,20             & 0,58$\pm$0,30             & 0,79$\pm$0,13             \\ \midrule
-        \multirow{4}{*}{Fréquentiel} & Décisions - Priorité         & 0,93$\pm$0,06             & 0,37$\pm$0,25             & 0,80$\pm$0,11             \\
-                                     & Décisions - Dynamique        & \textbf{0,82$\pm$0,08}    & \textbf{0,77$\pm$0,10}    & \textbf{0,83$\pm$0,07}    \\
-                                     & Scores - Maximum             & 0,84$\pm$0,09             & 0,58$\pm$0,22             & 0,80$\pm$0,09             \\
-                                     & Scores - Moyenne             & 0,80$\pm$0,14             & 0,72$\pm$0,25             & 0,81$\pm$0,09             \\ \midrule
-        \multirow{4}{*}{Transfert}   & Décisions - Priorité         & 0,98$\pm$0,04             & 0,34$\pm$0,14             & 0,82$\pm$0,06             \\
-                                     & Décisions - Dynamique        & 0,91$\pm$0,13             & 0,71$\pm$0,24             & 0,87$\pm$0,09             \\
-                                     & Scores - Maximum             & 0,92$\pm$0,15             & 0,57$\pm$0,21             & 0,84$\pm$0,12             \\
-                                     & Scores - Moyenne             & \textbf{0,95$\pm$0,09}    & \textbf{0,70$\pm$0,22}    & \textbf{0,89$\pm$0,08}    \\ \bottomrule
+        \multirow{4}{*}{Spatial}     & Décisions - Priorité         & \textbf{0,92 $\pm$ 0,09}    & \textbf{0,40 $\pm$ 0,16}    & \textbf{0,80 $\pm$ 0,11}    \\
+                                     & Décisions - Dynamique        & 0,80 $\pm$ 0,19             & 0,66 $\pm$ 0,22             & 0,80 $\pm$ 0,13             \\
+                                     & Scores - Maximum             & 0,83 $\pm$ 0,18             & 0,57 $\pm$ 0,25             & 0,79 $\pm$ 0,12             \\
+                                     & Scores - Moyenne             & 0,83 $\pm$ 0,20             & 0,58 $\pm$ 0,30             & 0,79 $\pm$ 0,13             \\ \midrule
+        \multirow{4}{*}{Fréquentiel} & Décisions - Priorité         & 0,93 $\pm$ 0,06             & 0,37 $\pm$ 0,25             & 0,80 $\pm$ 0,11             \\
+                                     & Décisions - Dynamique        & \textbf{0,82 $\pm$ 0,08}    & \textbf{0,77 $\pm$ 0,10}    & \textbf{0,83 $\pm$ 0,07}    \\
+                                     & Scores - Maximum             & 0,84 $\pm$ 0,09             & 0,58 $\pm$ 0,22             & 0,80 $\pm$ 0,09             \\
+                                     & Scores - Moyenne             & 0,80 $\pm$ 0,14             & 0,72 $\pm$ 0,25             & 0,81 $\pm$ 0,09             \\ \midrule
+        \multirow{4}{*}{Transfert}   & Décisions - Priorité         & 0,98 $\pm$ 0,04             & 0,34 $\pm$ 0,14             & 0,82 $\pm$ 0,06             \\
+                                     & Décisions - Dynamique        & 0,91 $\pm$ 0,13             & 0,71 $\pm$ 0,24             & 0,87 $\pm$ 0,09             \\
+                                     & Scores - Maximum             & 0,92 $\pm$ 0,15             & 0,57 $\pm$ 0,21             & 0,84 $\pm$ 0,12             \\
+                                     & Scores - Moyenne             & \textbf{0,95 $\pm$ 0,09}    & \textbf{0,70 $\pm$ 0,22}    & \textbf{0,89 $\pm$ 0,08}    \\ \bottomrule
     \end{tabular}
     \caption{Table de résultats issus des processus de classification supervisée employés pour mener une classification au niveau lésionnel, exprimés selon la sensibilité, la spécificité et le \fscore{}.}
     \label{tab:results_lesion_classification_supervised_patient}
@@ -175,18 +175,18 @@ Ce second paragraphe se focalise sur les cas de lésions de types \gls{lm} et \g
     \begin{tabular}{cllll}
         \toprule
         \multicolumn{1}{l}{}         &                              & Sensibilité               & Spécificité               & \Fscore{}                 \\ \midrule
-        \multirow{4}{*}{Spatial}     & Décisions - Priorité         & 0,93$\pm$0,11             & 0,40$\pm$0,16             & 0,78$\pm$0,13             \\
-                                     & Décisions - Dynamique        & \textbf{0,84$\pm$0,18}    & \textbf{0,66$\pm$0,22}    & \textbf{0,80$\pm$0,14}    \\
-                                     & Scores - Maximum             & 0,83$\pm$0,18             & 0,57$\pm$0,25             & 0,77$\pm$0,14             \\
-                                     & Scores - Moyenne             & 0,86$\pm$0,18             & 0,58$\pm$0,30             & 0,79$\pm$0,14             \\ \midrule
-        \multirow{4}{*}{Fréquentiel} & Décisions - Priorité         & 0,93$\pm$0,07             & 0,37$\pm$0,25             & 0,77$\pm$0,13             \\
-                                     & Décisions - Dynamique        & \textbf{0,84$\pm$0,12}    & \textbf{0,77$\pm$0,10}    & \textbf{0,83$\pm$0,09}    \\
-                                     & Scores - Maximum             & 0,87$\pm$0,09             & 0,58$\pm$0,22             & 0,80$\pm$0,11             \\
-                                     & Scores - Moyenne             & 0,82$\pm$0,14             & 0,72$\pm$0,25             & 0,81$\pm$0,12             \\ \midrule
-        \multirow{4}{*}{Transfert}   & Décisions - Priorité         & 0,97$\pm$0,05             & 0,34$\pm$0,14             & 0,79$\pm$0,07             \\
-                                     & Décisions - Dynamique        & 0,91$\pm$0,16             & 0,71$\pm$0,24             & 0,86$\pm$0,12             \\
-                                     & Scores - Maximum             & 0,90$\pm$0,18             & 0,57$\pm$0,21             & 0,81$\pm$0,16             \\
-                                     & Scores - Moyenne             & \textbf{0,95$\pm$0,11}    & \textbf{0,70$\pm$0,22}    & \textbf{0,87$\pm$0,11}    \\ \bottomrule
+        \multirow{4}{*}{Spatial}     & Décisions - Priorité         & 0,93 $\pm$ 0,11             & 0,40 $\pm$ 0,16             & 0,78 $\pm$ 0,13             \\
+                                     & Décisions - Dynamique        & \textbf{0,84 $\pm$ 0,18}    & \textbf{0,66 $\pm$ 0,22}    & \textbf{0,80 $\pm$ 0,14}    \\
+                                     & Scores - Maximum             & 0,83 $\pm$ 0,18             & 0,57 $\pm$ 0,25             & 0,77 $\pm$ 0,14             \\
+                                     & Scores - Moyenne             & 0,86 $\pm$ 0,18             & 0,58 $\pm$ 0,30             & 0,79 $\pm$ 0,14             \\ \midrule
+        \multirow{4}{*}{Fréquentiel} & Décisions - Priorité         & 0,93 $\pm$ 0,07             & 0,37 $\pm$ 0,25             & 0,77 $\pm$ 0,13             \\
+                                     & Décisions - Dynamique        & \textbf{0,84 $\pm$ 0,12}    & \textbf{0,77 $\pm$ 0,10}    & \textbf{0,83 $\pm$ 0,09}    \\
+                                     & Scores - Maximum             & 0,87 $\pm$ 0,09             & 0,58 $\pm$ 0,22             & 0,80 $\pm$ 0,11             \\
+                                     & Scores - Moyenne             & 0,82 $\pm$ 0,14             & 0,72 $\pm$ 0,25             & 0,81 $\pm$ 0,12             \\ \midrule
+        \multirow{4}{*}{Transfert}   & Décisions - Priorité         & 0,97 $\pm$ 0,05             & 0,34 $\pm$ 0,14             & 0,79 $\pm$ 0,07             \\
+                                     & Décisions - Dynamique        & 0,91 $\pm$ 0,16             & 0,71 $\pm$ 0,24             & 0,86 $\pm$ 0,12             \\
+                                     & Scores - Maximum             & 0,90 $\pm$ 0,18             & 0,57 $\pm$ 0,21             & 0,81 $\pm$ 0,16             \\
+                                     & Scores - Moyenne             & \textbf{0,95 $\pm$ 0,11}    & \textbf{0,70 $\pm$ 0,22}    & \textbf{0,87 $\pm$ 0,11}    \\ \bottomrule
     \end{tabular}
     \caption{Table de résultats issus des processus de classification supervisée employés pour mener une classification au niveau lésionnel sur les pathologies de \gls{lm} et \gls{lmm}, exprimés selon la sensibilité, la spécificité et le \fscore{}.}
     \label{tab:results_lesion_classification_supervised_patient_lm}
@@ -199,24 +199,24 @@ Ce second paragraphe se focalise sur les cas de lésions de types \gls{lm} et \g
     \begin{tabular}{cllll}
         \toprule
         \multicolumn{1}{l}{}         &                      & Sensibilité               & Spécificité               & \Fscore{}                 \\ \midrule
-        \multirow{6}{*}{Spatial}     & \gls{misvm}          & 0,69$\pm$0,13             & 0,57$\pm$0,22             & 0,70$\pm$0,12             \\
-                                     & \gls{nsk}            & \textbf{0,81$\pm$0,12}    & \textbf{0,70$\pm$0,12}    & \textbf{0,81$\pm$0,08}    \\
-                                     & \gls{sbmil}          & 0,10$\pm$0,08             & 0,99$\pm$0,06             & 0,18$\pm$0,13             \\
-                                     & MMS + \gls{misvm}    & 0,78$\pm$0,14             & 0,77$\pm$0,14             & 0,81$\pm$0,12             \\
-                                     & MMS + \gls{nsk}      & 0,78$\pm$0,11             & 0,69$\pm$0,13             & 0,79$\pm$0,08             \\
-                                     & MMS + \gls{sbmil}    & 0,88$\pm$0,30             & 0,07$\pm$0,30             & 0,72$\pm$0,24             \\ \midrule
-        \multirow{6}{*}{Fréquentiel} & \gls{misvm}          & 0,72$\pm$0,19             & 0,62$\pm$0,26             & 0,73$\pm$0,16             \\
-                                     & \gls{nsk}            & 0,78$\pm$0,15             & 0,59$\pm$0,21             & 0,77$\pm$0,12             \\
-                                     & \gls{sbmil}          & 0,27$\pm$0,28             & 0,84$\pm$0,29             & 0,39$\pm$0,23             \\
-                                     & MMS + \gls{misvm}    & \textbf{0,83$\pm$0,12}    & \textbf{0,69$\pm$0,16}    & \textbf{0,82$\pm$0,10}    \\
-                                     & MMS + \gls{nsk}      & 0,80$\pm$0,14             & 0,71$\pm$0,09             & 0,81$\pm$0,11             \\
-                                     & MMS + \gls{sbmil}    & 0,09$\pm$0,06             & 1.00$\pm$0,00             & 0,16$\pm$0,09             \\ \midrule
-        \multirow{6}{*}{Transfert}   & \gls{misvm}          & 0,83$\pm$0,12             & 0,76$\pm$0,17             & 0,84$\pm$0,10             \\
-                                     & \gls{nsk}            & \textbf{0,86$\pm$0,10}    & \textbf{0,77$\pm$0,19}    & \textbf{0,86$\pm$0,11}    \\
-                                     & \gls{sbmil}          & 0,17$\pm$0,11             & 0,90$\pm$0,09             & 0,28$\pm$0,15             \\
-                                     & MMS + \gls{misvm}    & 0,83$\pm$0,10             & 0,77$\pm$0,16             & 0,84$\pm$0,07             \\
-                                     & MMS + \gls{nsk}      & 0,86$\pm$0,10             & 0,72$\pm$0,19             & 0,85$\pm$0,09             \\
-                                     & MMS + \gls{sbmil}    & 0,21$\pm$0,12             & 0,91$\pm$0,10             & 0,33$\pm$0,17             \\ \bottomrule
+        \multirow{6}{*}{Spatial}     & \gls{misvm}          & 0,69 $\pm$ 0,13             & 0,57 $\pm$ 0,22             & 0,70 $\pm$ 0,12             \\
+                                     & \gls{nsk}            & \textbf{0,81 $\pm$ 0,12}    & \textbf{0,70 $\pm$ 0,12}    & \textbf{0,81 $\pm$ 0,08}    \\
+                                     & \gls{sbmil}          & 0,10 $\pm$ 0,08             & 0,99 $\pm$ 0,06             & 0,18 $\pm$ 0,13             \\
+                                     & MMS + \gls{misvm}    & 0,78 $\pm$ 0,14             & 0,77 $\pm$ 0,14             & 0,81 $\pm$ 0,12             \\
+                                     & MMS + \gls{nsk}      & 0,78 $\pm$ 0,11             & 0,69 $\pm$ 0,13             & 0,79 $\pm$ 0,08             \\
+                                     & MMS + \gls{sbmil}    & 0,88 $\pm$ 0,30             & 0,07 $\pm$ 0,30             & 0,72 $\pm$ 0,24             \\ \midrule
+        \multirow{6}{*}{Fréquentiel} & \gls{misvm}          & 0,72 $\pm$ 0,19             & 0,62 $\pm$ 0,26             & 0,73 $\pm$ 0,16             \\
+                                     & \gls{nsk}            & 0,78 $\pm$ 0,15             & 0,59 $\pm$ 0,21             & 0,77 $\pm$ 0,12             \\
+                                     & \gls{sbmil}          & 0,27 $\pm$ 0,28             & 0,84 $\pm$ 0,29             & 0,39 $\pm$ 0,23             \\
+                                     & MMS + \gls{misvm}    & \textbf{0,83 $\pm$ 0,12}    & \textbf{0,69 $\pm$ 0,16}    & \textbf{0,82 $\pm$ 0,10}    \\
+                                     & MMS + \gls{nsk}      & 0,80 $\pm$ 0,14             & 0,71 $\pm$ 0,09             & 0,81 $\pm$ 0,11             \\
+                                     & MMS + \gls{sbmil}    & 0,09 $\pm$ 0,06             & 1.00 $\pm$ 0,00             & 0,16 $\pm$ 0,09             \\ \midrule
+        \multirow{6}{*}{Transfert}   & \gls{misvm}          & 0,83 $\pm$ 0,12             & 0,76 $\pm$ 0,17             & 0,84 $\pm$ 0,10             \\
+                                     & \gls{nsk}            & \textbf{0,86 $\pm$ 0,10}    & \textbf{0,77 $\pm$ 0,19}    & \textbf{0,86 $\pm$ 0,11}    \\
+                                     & \gls{sbmil}          & 0,17 $\pm$ 0,11             & 0,90 $\pm$ 0,09             & 0,28 $\pm$ 0,15             \\
+                                     & MMS + \gls{misvm}    & 0,83 $\pm$ 0,10             & 0,77 $\pm$ 0,16             & 0,84 $\pm$ 0,07             \\
+                                     & MMS + \gls{nsk}      & 0,86 $\pm$ 0,10             & 0,72 $\pm$ 0,19             & 0,85 $\pm$ 0,09             \\
+                                     & MMS + \gls{sbmil}    & 0,21 $\pm$ 0,12             & 0,91 $\pm$ 0,10             & 0,33 $\pm$ 0,17             \\ \bottomrule
     \end{tabular}
     \caption{Table de résultats issus des processus de classification faiblement supervisée par \gls{mil} employés pour mener une classification au niveau lésionnel, exprimés selon la sensibilité, la spécificité et le \fscore{}.}
     \label{tab:results_lesion_classification_weakly_patient}
@@ -232,24 +232,24 @@ Ce second paragraphe à l'intention des méthodes faiblement supervisées par \g
     \begin{tabular}{cllll}
         \toprule
         \multicolumn{1}{l}{}         &                          & Sensibilité               & Spécificité               & \Fscore{}                 \\ \midrule
-        \multirow{6}{*}{Spatial}     & \gls{misvm}              & 0,69$\pm$0,17             & 0,57$\pm$0,22             & 0,69$\pm$0,14             \\
-                                     & \gls{nsk}                & \textbf{0,82$\pm$0,15}    & \textbf{0,70$\pm$0,12}    & \textbf{0,80$\pm$0,11}    \\
-                                     & \gls{sbmil}              & 0,11$\pm$0,09             & 0,99$\pm$0,06             & 0,20$\pm$0,14             \\
-                                     & MMS + \gls{misvm}        & 0,78$\pm$0,17             & 0,77$\pm$0,14             & 0,80$\pm$0,16             \\
-                                     & MMS + \gls{nsk}          & 0,81$\pm$0,14             & 0,69$\pm$0,13             & 0,79$\pm$0,09             \\
-                                     & MMS + \gls{sbmil}        & 0,86$\pm$0,30             & 0,07$\pm$0,30             & 0,67$\pm$0,23             \\ \midrule
-        \multirow{6}{*}{Fréquentiel} & \gls{misvm}              & 0,71$\pm$0,21             & 0,62$\pm$0,26             & 0,71$\pm$0,19             \\
-                                     & \gls{nsk}                & 0,78$\pm$0,12             & 0,59$\pm$0,21             & 0,75$\pm$0,10             \\
-                                     & \gls{sbmil}              & 0,25$\pm$0,28             & 0,84$\pm$0,29             & 0,37$\pm$0,22             \\
-                                     & MMS + \gls{misvm}        & 0,82$\pm$0,13             & 0,69$\pm$0,16             & 0,80$\pm$0,12             \\
-                                     & MMS + \gls{nsk}          & \textbf{0,82$\pm$0,14}    & \textbf{0,71$\pm$0,09}    & \textbf{0,80$\pm$0,11}    \\
-                                     & MMS + \gls{sbmil}        & 0,11$\pm$0,06             & 1.00$\pm$0,00             & 0,19$\pm$0,10             \\ \midrule
-        \multirow{6}{*}{Transfert}   & \gls{misvm}              & 0,82$\pm$0,13             & 0,76$\pm$0,17             & 0,82$\pm$0,12             \\
-                                     & \gls{nsk}                & \textbf{0,87$\pm$0,09}    & \textbf{0,77$\pm$0,19}    & \textbf{0,85$\pm$0,13}    \\
-                                     & \gls{sbmil}              & 0,19$\pm$0,10             & 0,90$\pm$0,09             & 0,30$\pm$0,15             \\
-                                     & MMS + \gls{misvm}        & 0,85$\pm$0,10             & 0,77$\pm$0,16             & 0,84$\pm$0,08             \\
-                                     & MMS + \gls{nsk}          & 0,88$\pm$0,10             & 0,72$\pm$0,19             & 0,84$\pm$0,11             \\
-                                     & MMS + \gls{sbmil}        & 0,25$\pm$0,13             & 0,91$\pm$0,10             & 0,38$\pm$0,18             \\ \bottomrule
+        \multirow{6}{*}{Spatial}     & \gls{misvm}              & 0,69 $\pm$ 0,17             & 0,57 $\pm$ 0,22             & 0,69 $\pm$ 0,14             \\
+                                     & \gls{nsk}                & \textbf{0,82 $\pm$ 0,15}    & \textbf{0,70 $\pm$ 0,12}    & \textbf{0,80 $\pm$ 0,11}    \\
+                                     & \gls{sbmil}              & 0,11 $\pm$ 0,09             & 0,99 $\pm$ 0,06             & 0,20 $\pm$ 0,14             \\
+                                     & MMS + \gls{misvm}        & 0,78 $\pm$ 0,17             & 0,77 $\pm$ 0,14             & 0,80 $\pm$ 0,16             \\
+                                     & MMS + \gls{nsk}          & 0,81 $\pm$ 0,14             & 0,69 $\pm$ 0,13             & 0,79 $\pm$ 0,09             \\
+                                     & MMS + \gls{sbmil}        & 0,86 $\pm$ 0,30             & 0,07 $\pm$ 0,30             & 0,67 $\pm$ 0,23             \\ \midrule
+        \multirow{6}{*}{Fréquentiel} & \gls{misvm}              & 0,71 $\pm$ 0,21             & 0,62 $\pm$ 0,26             & 0,71 $\pm$ 0,19             \\
+                                     & \gls{nsk}                & 0,78 $\pm$ 0,12             & 0,59 $\pm$ 0,21             & 0,75 $\pm$ 0,10             \\
+                                     & \gls{sbmil}              & 0,25 $\pm$ 0,28             & 0,84 $\pm$ 0,29             & 0,37 $\pm$ 0,22             \\
+                                     & MMS + \gls{misvm}        & 0,82 $\pm$ 0,13             & 0,69 $\pm$ 0,16             & 0,80 $\pm$ 0,12             \\
+                                     & MMS + \gls{nsk}          & \textbf{0,82 $\pm$ 0,14}    & \textbf{0,71 $\pm$ 0,09}    & \textbf{0,80 $\pm$ 0,11}    \\
+                                     & MMS + \gls{sbmil}        & 0,11 $\pm$ 0,06             & 1.00 $\pm$ 0,00             & 0,19 $\pm$ 0,10             \\ \midrule
+        \multirow{6}{*}{Transfert}   & \gls{misvm}              & 0,82 $\pm$ 0,13             & 0,76 $\pm$ 0,17             & 0,82 $\pm$ 0,12             \\
+                                     & \gls{nsk}                & \textbf{0,87 $\pm$ 0,09}    & \textbf{0,77 $\pm$ 0,19}    & \textbf{0,85 $\pm$ 0,13}    \\
+                                     & \gls{sbmil}              & 0,19 $\pm$ 0,10             & 0,90 $\pm$ 0,09             & 0,30 $\pm$ 0,15             \\
+                                     & MMS + \gls{misvm}        & 0,85 $\pm$ 0,10             & 0,77 $\pm$ 0,16             & 0,84 $\pm$ 0,08             \\
+                                     & MMS + \gls{nsk}          & 0,88 $\pm$ 0,10             & 0,72 $\pm$ 0,19             & 0,84 $\pm$ 0,11             \\
+                                     & MMS + \gls{sbmil}        & 0,25 $\pm$ 0,13             & 0,91 $\pm$ 0,10             & 0,38 $\pm$ 0,18             \\ \bottomrule
     \end{tabular}
     \caption{Table de résultats issus des processus de classification faiblement supervisée par \gls{mil} employés pour mener une classification au niveau lésionnel sur les pathologies de \gls{lm} et \gls{lmm}, exprimés selon la sensibilité, la spécificité et le \fscore{}.}
     \label{tab:results_lesion_classification_weakly_patient_lm}
@@ -271,12 +271,12 @@ Cette dernière partie se dédie aux résultats de prédiction des méthodes fai
     \begin{tabular}{cllll}
         \toprule
         \multicolumn{1}{l}{}         &                      & Sensibilité               & Spécificité               & \Fscore{}                 \\ \midrule
-        \multirow{2}{*}{Spatial}     & \gls{misvm}          & 0,29$\pm$0,13             & 0,90$\pm$0,08             & 0,42$\pm$0,14             \\
-                                     & MMS + \gls{misvm}    & \textbf{0,42$\pm$0,15}    & \textbf{0,93$\pm$0,05}    & \textbf{0,56$\pm$0,14}    \\ \midrule
-        \multirow{2}{*}{Fréquentiel} & \gls{misvm}          & 0,29$\pm$0,22             & 0,89$\pm$0,28             & 0,42$\pm$0,20             \\
-                                     & MMS + \gls{misvm}    & \textbf{0,45$\pm$0,15}    & \textbf{0,93$\pm$0,05}    & \textbf{0,59$\pm$0,15}    \\ \midrule
-        \multirow{2}{*}{Transfert}   & \gls{misvm}          & \textbf{0,48$\pm$0,16}    & \textbf{0,97$\pm$0,02}    & \textbf{0,64$\pm$0,16}    \\
-                                     & MMS + \gls{misvm}    & 0,42$\pm$0,14             & 0,97$\pm$0,02             & 0,57$\pm$0,14             \\ \bottomrule
+        \multirow{2}{*}{Spatial}     & \gls{misvm}          & 0,29 $\pm$ 0,13             & 0,90 $\pm$ 0,08             & 0,42 $\pm$ 0,14             \\
+                                     & MMS + \gls{misvm}    & \textbf{0,42 $\pm$ 0,15}    & \textbf{0,93 $\pm$ 0,05}    & \textbf{0,56 $\pm$ 0,14}    \\ \midrule
+        \multirow{2}{*}{Fréquentiel} & \gls{misvm}          & 0,29 $\pm$ 0,22             & 0,89 $\pm$ 0,28             & 0,42 $\pm$ 0,20             \\
+                                     & MMS + \gls{misvm}    & \textbf{0,45 $\pm$ 0,15}    & \textbf{0,93 $\pm$ 0,05}    & \textbf{0,59 $\pm$ 0,15}    \\ \midrule
+        \multirow{2}{*}{Transfert}   & \gls{misvm}          & \textbf{0,48 $\pm$ 0,16}    & \textbf{0,97 $\pm$ 0,02}    & \textbf{0,64 $\pm$ 0,16}    \\
+                                     & MMS + \gls{misvm}    & 0,42 $\pm$ 0,14             & 0,97 $\pm$ 0,02             & 0,57 $\pm$ 0,14             \\ \bottomrule
     \end{tabular}
     \caption{Table de résultats issus de l'application du modèle \gls{misvm} employé pour mener une classification au niveau des instances, sur l'ensemble des images annotées, et exprimés selon la sensibilité, la spécificité et le \fscore{}.}
     \label{tab:results_lesion_classification_weakly_image}
@@ -289,12 +289,12 @@ Ce second paragraphe reprend les résultats de prédiction des méthodes faiblem
     \begin{tabular}{cllll}
         \toprule
         \multicolumn{1}{l}{}         &                      & Sensibilité               & Spécificité               & \Fscore{}                 \\ \midrule
-        \multirow{2}{*}{Spatial}     & \gls{misvm}          & 0,31$\pm$0,16             & 0,84$\pm$0,19             & 0,46$\pm$0,18             \\
-                                     & MMS + \gls{misvm}    & \textbf{0,44$\pm$0,14}    & \textbf{0,89$\pm$0,18}    & \textbf{0,60$\pm$0,14}    \\ \midrule
-        \multirow{2}{*}{Fréquentiel} & \gls{misvm}          & 0,28$\pm$0,23             & 0,87$\pm$0,32             & 0,42$\pm$0,24             \\
-                                     & MMS + \gls{misvm}    & \textbf{0,47$\pm$0,15}    & \textbf{0,86$\pm$0,25}    & \textbf{0,62$\pm$0,14}    \\ \midrule
-        \multirow{2}{*}{Transfert}   & \gls{misvm}          & \textbf{0,49$\pm$0,16}    & \textbf{0,94$\pm$0,07}    & \textbf{0,65$\pm$0,16}    \\
-                                     & MMS + \gls{misvm}    & 0,43$\pm$0,16             & 0,94$\pm$0,08             & 0,59$\pm$0,17             \\ \bottomrule
+        \multirow{2}{*}{Spatial}     & \gls{misvm}          & 0,31 $\pm$ 0,16             & 0,84 $\pm$ 0,19             & 0,46 $\pm$ 0,18             \\
+                                     & MMS + \gls{misvm}    & \textbf{0,44 $\pm$ 0,14}    & \textbf{0,89 $\pm$ 0,18}    & \textbf{0,60 $\pm$ 0,14}    \\ \midrule
+        \multirow{2}{*}{Fréquentiel} & \gls{misvm}          & 0,28 $\pm$ 0,23             & 0,87 $\pm$ 0,32             & 0,42 $\pm$ 0,24             \\
+                                     & MMS + \gls{misvm}    & \textbf{0,47 $\pm$ 0,15}    & \textbf{0,86 $\pm$ 0,25}    & \textbf{0,62 $\pm$ 0,14}    \\ \midrule
+        \multirow{2}{*}{Transfert}   & \gls{misvm}          & \textbf{0,49 $\pm$ 0,16}    & \textbf{0,94 $\pm$ 0,07}    & \textbf{0,65 $\pm$ 0,16}    \\
+                                     & MMS + \gls{misvm}    & 0,43 $\pm$ 0,16             & 0,94 $\pm$ 0,08             & 0,59 $\pm$ 0,17             \\ \bottomrule
     \end{tabular}
     \caption{Table de résultats issus de l'application du modèle \gls{misvm} employés pour mener une classification au niveau des instances, sur les images annotées issues de pathologies de \gls{lm} et \gls{lmm}, et exprimés selon la sensibilité, la spécificité et le \fscore{}.}
     \label{tab:results_lesion_classification_weakly_image_lm}
@@ -308,14 +308,15 @@ Pour finir cette présentation des résultats de prédiction au niveau des image
     \caption{Courbes \gls{roc} issues de la prédiction au niveau des instances sur l'ensemble des cas, figurant à l'aide d'un trait orange estompé tracé en continu, et en ne considérant que les cas de \gls{lm} et \gls{lmm} parmi les annotations malignes, figurant à l'aide d'un trait orange tracé en pointillés. Les courbes sont issues du mode de prédiction faiblement supervisé sur la base de la théorie \gls{mil} par utilisation du modèle \gls{misvm}.}
     \label{fig:results_lesion_roc_instances}
 \end{figure}\par
+\clearpage
 
 \section{Discussion}
-Cette discussion se dédie à l'analyse des résultats de la précédente section. Ce premier paragraphe détaille les observations issues des méthodes de prédiction supervisées au niveau lésionnel. Les \fscore{} sont pour la plupart homogènes si l'on considère chaque méthode d'extraction indépendamment, mais les mesures de sensibilité et spécificité propres à chacune varient fortement entre méthodes. Ainsi, la méthode de \textbf{Décisions - Priorité} bénéficie d'une forte sensibilité liée à son principe privilégiant la moindre détection de la classe prioritaire / positive, mais se contente d'une faible spécificité. Ce principe est ainsi plus nuancé par la méthode \textbf{Décisions - Dynamique} qui apporte un seuil dynamique d'activation, et dont résultent des valeurs de sensibilité et spécificité plus équilibrées et supérieures en terme de \fscore{}. Néanmoins, cette méthode nécessite de laisser de côté certaines détections jusqu'à atteindre un certain seuil d'activation ; ce principe peux être difficile à utiliser en milieu clinique. Afin de modérer ces deux méthodes, ont été proposées deux approches par scores. La première de ces méthodes \textbf{Scores - Maximum} initialement conçue pour conserver la sensibilité de la méthode \textbf{Décisions - Priorité}, perd une forte partie de celle-ci mais améliore nettement sa spécificité. La seconde de ces méthodes \textbf{Scores - Moyenne} initialement conçue pour affiner la décision de la méthode \textbf{Décisions - Dynamique}, reste en deçà de celle-ci avec néanmoins un score important sur les caractéristiques issues de l'extraction par transfert de connaissances. En ce qui concerne les résultats sur les pathologies malignes toutes confondues et sur les cas de \gls{lm} et \gls{lmm}, peu de différences sont à remarquer entre ces deux situations, ces méthodes semblent ainsi robustes au type de pathologie traitée.\par
+Cette discussion se dédie à l'analyse des résultats de la précédente section. Ce premier paragraphe détaille les observations issues des méthodes de prédiction supervisées au niveau lésionnel. Les \fscore{} sont pour la plupart homogènes si l'on considère chaque méthode d'extraction indépendamment, mais les mesures de sensibilité et spécificité propres à chacune varient fortement entre méthodes. Ainsi, la méthode de \textbf{Décisions - Priorité} bénéficie d'une forte sensibilité liée à son principe privilégiant la moindre détection de la classe prioritaire / positive, mais se contente d'une faible spécificité. Ce principe est ainsi plus nuancé par la méthode \textbf{Décisions - Dynamique} qui apporte un seuil dynamique d'activation, et dont résultent des valeurs de sensibilité et spécificité plus équilibrées et supérieures en terme de \fscore{}. Néanmoins, cette méthode nécessite de laisser de côté certaines détections jusqu'à atteindre un certain seuil d'activation ; ce principe peut être difficile à utiliser en milieu clinique. Afin de modérer ces deux méthodes, ont été proposées deux approches par scores. La première de ces méthodes \textbf{Scores - Maximum} initialement conçue pour conserver la sensibilité de la méthode \textbf{Décisions - Priorité}, perd une forte partie de celle-ci mais améliore nettement sa spécificité. La seconde de ces méthodes \textbf{Scores - Moyenne} initialement conçue pour affiner la décision de la méthode \textbf{Décisions - Dynamique}, reste en deçà de celle-ci avec néanmoins un score important sur les caractéristiques issues de l'extraction par transfert de connaissances. En ce qui concerne les résultats sur les pathologies malignes toutes confondues et sur les cas de \gls{lm} et \gls{lmm}, peu de différences sont à remarquer entre ces deux situations, ces méthodes semblent ainsi robustes au type de pathologie traitée.\par
 
-Ce second paragraphe propose une analyse des méthodes faiblement supervisées par \gls{mil} dont les résultats sont très hétérogènes, par contraste aux méthodes supervisées. Ainsi, ce paragraphe procède à une analyse méthode par méthode. Dans un premier temps, \textbf{le modèle \gls{misvm}} permet l'obtention de modèle modèles plus sensibles que spécifiques et dont le score global semble assez dépendant du type d'extraction employé, les résultats étant maximisés par l'utilisation du transfert de connaissances. Néanmoins, l'utilisation d'une \textbf{normalisation par Minimum / Maximum} semble bénéfique dans la plupart des situations et contribue à baisser cette dépendance à la méthode d'extraction de caractéristiques. Dans un second temps, \textbf{le modèle \gls{nsk}} est choisi pour représenter la catégorie des approches par noyaux d'ensembles, et semble être la méthode la plus adaptée dans ce schéma faiblement supervisé avec le jeu de données en notre possession. Ainsi, cette méthode apporte des résultats assez proches quel que soit le mode d'extraction de caractéristiques choisi, et possède une bonne sensibilité bien que les valeurs de spécificité soient assez proches. Dans un dernier temps, \textbf{le modèle \gls{sbmil}} est utilisé comme représentant des approches \gls{mil} de type hybride, mais dont les performances sont non concluantes dans ce cadre. En effet, ces méthodes ont une grande spécificité mais une sensibilité quasi-inexistante. Pour finir, les conclusions qui régissent les résultats sur les pathologies malignes toutes confondues et sur les cas de \gls{lm} et \gls{lmm} sont similaires à celle des méthodes supervisées ; ces méthodes semblent ainsi robustes au type de pathologie traitée.\par
+Ce second paragraphe propose une analyse des méthodes faiblement supervisées par \gls{mil} dont les résultats sont très hétérogènes, par contraste aux méthodes supervisées. Ainsi, ce paragraphe procède à une analyse méthode par méthode. Dans un premier temps, \textbf{le modèle \gls{misvm}} permet l'obtention de modèles plus sensibles que spécifiques et dont le score global semble assez dépendant du type d'extraction employé, les résultats étant maximisés par l'utilisation du transfert de connaissances. Néanmoins, l'utilisation d'une \textbf{normalisation par Minimum / Maximum} semble bénéfique dans la plupart des situations et contribue à baisser cette dépendance à la méthode d'extraction de caractéristiques. Dans un second temps, \textbf{le modèle \gls{nsk}} est choisi pour représenter la catégorie des approches par noyaux d'ensembles, et semble être la méthode la plus adaptée dans ce schéma faiblement supervisé avec le jeu de données en notre possession. Ainsi, cette méthode apporte des résultats assez proches quel que soit le mode d'extraction de caractéristiques choisi, et possède une bonne sensibilité bien que les valeurs de spécificité soient assez proches. Dans un dernier temps, \textbf{le modèle \gls{sbmil}} est utilisé comme représentant des approches \gls{mil} de type hybride, mais dont les performances sont non concluantes dans ce cadre. En effet, ces méthodes ont une grande spécificité mais une sensibilité quasi-inexistante. Pour finir, les conclusions qui régissent les résultats sur les pathologies malignes toutes confondues et sur les cas de \gls{lm} et \gls{lmm} sont similaires à celle des méthodes supervisées ; ces méthodes semblent ainsi robustes au type de pathologie traitée.\par
 
 Ainsi, les deux approches proposées, c'est à dire par entraînement supervisé et faiblement supervisée, sont adaptées à la problématique actuelle bien que l'approche supervisée soit sensiblement supérieure. Cette supériorité des méthodes supervisées se traduit notamment sur les valeurs \gls{auc} avec des valeurs de 0,87 pour \textbf{le modèle Scores - Moyenne} et de 0,83 pour \textbf{le modèle \gls{nsk}}. Il est à remarquer que toutes ces approches possèdent un écart-type assez élevé situé entre 0,08 et 0,15, à l'exception de \textbf{la méthode \gls{sbmil}} dont les valeurs sont encore plus conséquentes. Cette tendance assez forte montre une certaine dépendance aux données mais peut être la conséquence du nombre restreint d'échantillons au niveau lésionnel du jeu de données, soit 223 lésions. Un élément supplémentaire à considérer est la complexité nécessaire à l'obtention des résultats supervisés, dont le nombre de paramètres est supérieur aux méthodes faiblement supervisées présentées. Par ailleurs, les méthodes supervisées utilisées ici nécessitent un processus en deux temps (voir trois si l'on considère l'extraction de caractéristiques), tandis que les méthodes faiblement supervisées nécessitent une étape de moins. Le dernier argument en faveur des méthodes faiblement supervisées est celui de la très faible quantité d'annotations sollicitée pour parvenir à de tel résultats, soit 223 annotations.\par
 
 Afin de mesurer, d'une part la compréhension au niveau lésionnel de ces modèles faiblement supervisé et d'autre part d'évaluer la qualité d'un système permettant de revenir à des prédictions bas niveau, une évaluation des prédictions au niveau des instances à été réalisée. Ces tests sont menés sur \textbf{le modèle \gls{misvm}}, et on permis d'obtenir une valeur de \fscore{} de 0,64 et \gls{auc} de 0,87 sur l'ensemble des cas cliniques. Cette valeur était en comparaison respectivement à un \fscore{} de 0,82 et \gls{auc} au 0,90 sein du \Cref{chap:chapter_5} avec des valeurs d'écart-type beaucoup plus restreintes. Il existe de ce fait une différence notable entre ces méthodes, pouvant rendre la prédiction au niveau des instances difficile pour la méthode \gls{misvm}.\par
 
-Pour finir cette discussion, ce paragraphe réalise un parallèle entre les résultats expérimentaux de ce chapitre et ceux des spécialistes en dermatologie. Pour rappel, les 18 experts en \gls{mcr} de l’étude de référence~\cite{Cinotti2016} obtiennent une sensibilité de 0,84$\pm$0,05 et une spécificité de 0,75$\pm$0,06 ainsi qu'une \gls{auc} de 0,86 sur l'ensemble des cas d'études. Sur ce même ensemble de cas cliniques, la méthode supervisé \textbf{Scores - Moyenne} parvient à accomplir une sensibilité de 0,95$\pm$0,09 et une spécificité de 0,70$\pm$0,22 ainsi qu'une \gls{auc} de 0,87 et \textbf{le modèle \gls{nsk}} parvient à accomplir une sensibilité de 0,86$\pm$0,10 et une spécificité de 0,77$\pm$0,19 ainsi qu'une \gls{auc} de 0,83. Sur les données malignes de lésions \gls{lm}/\gls{lmm}, les même experts obtiennent une sensibilité de 0,80$\pm$0,07 et et une spécificité de 0,81$\pm$0,05 ainsi qu'une \gls{auc} de 0,88. Sur ces mêmes cas cliniques, la méthode supervisée \textbf{Scores - Moyenne} parvient à accomplir une sensibilité de 0,95$\pm$0,11 et une spécificité de 0,70$\pm$0,22 ainsi qu'une \gls{auc} de 0,88 et \textbf{le modèle \gls{nsk}} parvient à accomplir une sensibilité de 0,87$\pm$0,09 et une spécificité de 0,77$\pm$0,19 ainsi qu'une \gls{auc} de 0,83.\par
+Pour finir cette discussion, ce paragraphe réalise un parallèle entre les résultats expérimentaux de ce chapitre et ceux des spécialistes en dermatologie. Pour rappel, les 18 experts en \gls{mcr} de l’étude de référence~\cite{Cinotti2016} obtiennent une sensibilité de 0,84 $\pm$ 0,05 et une spécificité de 0,75 $\pm$ 0,06 ainsi qu'une \gls{auc} de 0,86 sur l'ensemble des cas d'études. Sur ce même ensemble de cas cliniques, la méthode supervisé \textbf{Scores - Moyenne} parvient à accomplir une sensibilité de 0,95 $\pm$ 0,09 et une spécificité de 0,70 $\pm$ 0,22 ainsi qu'une \gls{auc} de 0,87 et \textbf{le modèle \gls{nsk}} parvient à accomplir une sensibilité de 0,86 $\pm$ 0,10 et une spécificité de 0,77 $\pm$ 0,19 ainsi qu'une \gls{auc} de 0,83. Sur les données malignes de lésions \gls{lm}/\gls{lmm}, les même experts obtiennent une sensibilité de 0,80 $\pm$ 0,07 et et une spécificité de 0,81 $\pm$ 0,05 ainsi qu'une \gls{auc} de 0,88. Sur ces mêmes cas cliniques, la méthode supervisée \textbf{Scores - Moyenne} parvient à accomplir une sensibilité de 0,95 $\pm$ 0,11 et une spécificité de 0,70 $\pm$ 0,22 ainsi qu'une \gls{auc} de 0,88 et \textbf{le modèle \gls{nsk}} parvient à accomplir une sensibilité de 0,87 $\pm$ 0,09 et une spécificité de 0,77 $\pm$ 0,19 ainsi qu'une \gls{auc} de 0,83.\par

@@ -36,7 +36,7 @@ Cette section se destine à la présentation des méthodes de diagnostic propres
 \subsection{Méthodes d'extraction et de détection}
 Cette sous-section dédiée aux méthodes d'extraction et de détection des lésions débute par une brève étude des travaux menés sur la photographie clinique et sur la dermatoscopie. Ainsi, la plupart des travaux récents s'orientent autour de mécanismes d'apprentissage profond, dont certains travaux préconisent le recadrage des données employées~\cite{Li2018}. Dans ce travail, ce recadrage n'est réalisé que sur les données de photographie clinique jugées moins homogènes, que le reste des données mises à disposition. En termes de gestion de ces modalités d'imagerie, des travaux suggèrent l'utilisation d'architectures telles que Inception-V3~\cite{Esteva2017,Fan2020} ou encore ResNet-50~\cite{Xie2018, Alantari2018} associée à des couches de Global Pooling - Moyenne. Ces travaux orientés vers de la classification de lésions de la peau, procèdent à de l'extraction de caractéristiques ou à de la prédiction à partir de ces architectures. En ce qui concerne les méthodes d'extraction et de détection sur la modalité de \gls{mcr}, les méthodes de la \Cref{part:microscopy} sont mises à contribution dans ce chapitre. Ainsi, la méthode par transfert de connaissances par utilisation de l'architecture ResNet-50 entraîné sur ImageNet et couplé à une couche de Globale Pooling - Moyenne permet les meilleurs résultats dans ces conditions. Afin d'uniformiser l'extraction de caractéristiques de ces diverses modalités et par contraintes matérielles, le transfert de connaissance est préféré pour permettre l'extraction de caractéristiques, avec pour choix d'architecture ResNet-50.\par
 
-D'une part, pour permettre une prédiction sur les données de photographie clinique et de dermatoscopie, ce travail privilégie l'utilisation d'un modèle \gls{svm} à noyau linéaire à la fois stable et robuste dans la plupart des situations. Ces modalités ne mettant à disposition qu’une unique image, ces deux modalités mettent à disposition un vecteur de taille 1$\times$2048. D'autre part, pour permettre une prédiction sur les données de \gls{mcr} ce travail reprend les méthodes de prédiction de la \Cref{part:microscopy}, et notamment l'utilisation d'un modèle par instance multiple de type \gls{nsk} considéré comme le plus performant dans un contexte ou le nombre de données est variable. En addition, afin de conserver une dimension de vecteur de caractéristique régulière pour certains besoins à venir, ce travail a eu recours aux méthodes de type moyenne, maximum ou de norme $p$ avec des valeurs arbitraires de 4, 6 et 8 comme suggéré par certains travaux de la littérature~\cite{Li2016,Xu2017}.\par
+D'une part, pour permettre une prédiction sur les données de photographie clinique et de dermatoscopie, ce travail privilégie l'utilisation d'un modèle \gls{svm} à noyau linéaire à la fois stable et robuste dans la plupart des situations. Ces modalités ne mettant à disposition qu’une unique image, ces deux modalités mettent à disposition un vecteur de taille 1 $\pm$ 2048. D'autre part, pour permettre une prédiction sur les données de \gls{mcr} ce travail reprend les méthodes de prédiction de la \Cref{part:microscopy}, et notamment l'utilisation d'un modèle par instance multiple de type \gls{nsk} considéré comme le plus performant dans un contexte ou le nombre de données est variable. En addition, afin de conserver une dimension de vecteur de caractéristique régulière pour certains besoins à venir, ce travail a eu recours aux méthodes de type moyenne, maximum ou de norme $p$ avec des valeurs arbitraires de 4, 6 et 8 comme suggéré par certains travaux de la littérature~\cite{Li2016,Xu2017}.\par
 
 Les hyperparamètres associés au modèles de prédiction cités sont listés dans la \Cref{tab:multimodal_models_parameters}. Par ailleurs, le modèles \gls{svm} employés par ce travail provient de la bibliothèque logicielle \textit{Scikit-learn}~\cite{pedregosa2011}, tandis que l'implémentation de modèles \gls{nsk} utilise la librairie logicielle \textit{MISVM}~\cite{Doran2014}.\par
 \begin{table}[H]
@@ -61,12 +61,12 @@ Ainsi, la \Cref{tab:results_multimodality_modalities} permet de mettre en avant 
     \centering
     \begin{tabular}{llccc} \toprule
         \multicolumn{1}{l}{}     & Modalité      & Précision    & Rappel        & \Fscore{}     \\ \midrule
-        \multirow{3}{*}{Pondéré} & Photographie  & 0,63$\pm$0,08& 0,62$\pm$0,07 & 0,62$\pm$0,08 \\
-                                 & Dermatoscopie & 0,74$\pm$0,11& 0,74$\pm$0,10 & 0,74$\pm$0,11 \\
-                                 & Microscopie   & 0,80$\pm$0,11& 0,80$\pm$0,12 & 0,80$\pm$0,12 \\ \midrule
-        \multirow{3}{*}{Malin}   & Photographie  & 0,71$\pm$0,12& 0,66$\pm$0,09 & 0,68$\pm$0,09 \\
-                                 & Dermatoscopie & 0,79$\pm$0,13& 0,79$\pm$0,12 & 0,79$\pm$0,09 \\
-                                 & Microscopie   & 0,85$\pm$0,11& 0,83$\pm$0,12 & 0,84$\pm$0,11 \\ \bottomrule
+        \multirow{3}{*}{Pondéré} & Photographie  & 0,63 $\pm$ 0,08& 0,62 $\pm$ 0,07 & 0,62 $\pm$ 0,08 \\
+                                 & Dermatoscopie & 0,74 $\pm$ 0,11& 0,74 $\pm$ 0,10 & 0,74 $\pm$ 0,11 \\
+                                 & Microscopie   & 0,80 $\pm$ 0,11& 0,80 $\pm$ 0,12 & 0,80 $\pm$ 0,12 \\ \midrule
+        \multirow{3}{*}{Malin}   & Photographie  & 0,71 $\pm$ 0,12& 0,66 $\pm$ 0,09 & 0,68 $\pm$ 0,09 \\
+                                 & Dermatoscopie & 0,79 $\pm$ 0,13& 0,79 $\pm$ 0,12 & 0,79 $\pm$ 0,09 \\
+                                 & Microscopie   & 0,85 $\pm$ 0,11& 0,83 $\pm$ 0,12 & 0,84 $\pm$ 0,11 \\ \bottomrule
     \end{tabular}
     \caption{Pré-résultats obtenus à partir des méthodes de classification employées sur chacune des modalités utilisées dans ce processus.}
     \label{tab:results_multimodality_modalities}
@@ -78,11 +78,11 @@ Enfin, la \Cref{tab:results_multimodality_weighted_microscopy} permet de mesurer
     \centering
     \begin{tabular}{lccc} \toprule
         Réduction           & Précision             & Rappel                & \Fscore{}             \\ \midrule
-        \textbf{Moyenne}    & \textbf{0,84$\pm$0,07}& \textbf{0,83$\pm$0,07}& \textbf{0,84$\pm$0,07}\\
-        Maximum             & 0,83$\pm$0,12         & 0,83$\pm$0,12         & 0,83$\pm$0,12         \\
-        Norme $p$ - 4       & 0,82$\pm$0,12         & 0,82$\pm$0,12         & 0,82$\pm$0,12         \\
-        Norme $p$ - 6       & 0,83$\pm$0,12         & 0,83$\pm$0,13         & 0,83$\pm$0,13         \\
-        Norme $p$ - 8       & 0,83$\pm$0,12         & 0,83$\pm$0,12         & 0,83$\pm$0,12         \\ \bottomrule
+        \textbf{Moyenne}    & \textbf{0,84 $\pm$ 0,07}& \textbf{0,83 $\pm$ 0,07}& \textbf{0,84 $\pm$ 0,07}\\
+        Maximum             & 0,83 $\pm$ 0,12         & 0,83 $\pm$ 0,12         & 0,83 $\pm$ 0,12         \\
+        Norme $p$ - 4       & 0,82 $\pm$ 0,12         & 0,82 $\pm$ 0,12         & 0,82 $\pm$ 0,12         \\
+        Norme $p$ - 6       & 0,83 $\pm$ 0,12         & 0,83 $\pm$ 0,13         & 0,83 $\pm$ 0,13         \\
+        Norme $p$ - 8       & 0,83 $\pm$ 0,12         & 0,83 $\pm$ 0,12         & 0,83 $\pm$ 0,12         \\ \bottomrule
     \end{tabular}
     \caption{Pré-résultats pondérés sur la classe bénigne et maligne, permettant de mesurer l'efficacité des méthodes de réduction des caractéristiques par classification à l'aide d'un modèle \gls{svm}.}
     \label{tab:results_multimodality_weighted_microscopy}
@@ -213,14 +213,14 @@ Cette section débute par la présentation des résultats du \textbf{processus m
     \begin{tabular}{lllccc}
         \toprule 
         Seuil                       & Modalités                         & Détection         & Sans                          & Isotonique            & Sigmoïde                      \\ \midrule
-        \multirow{4}{*}{Unique}     & \multirow{2}{*}{Croissante}       & Croissante        & 0,72$\pm$0,14                 & 0,65$\pm$0,14         & 0,66$\pm$0,10                 \\ \cline{3-6}
-                                    &                                   & Décroissante      & 0,72$\pm$0,14                 & 0,64$\pm$0,12         & 0,65$\pm$0,09                 \\ \cline{2-6}
-                                    & \multirow{2}{*}{Décroissante}     & \hcell Croissante & \hcell \textbf{0,80$\pm$0,10} & \hcell 0,61$\pm$0,11  & \hcell \textbf{0,79$\pm$0,10} \\ \cline{3-6}
-                                    &                                   & Décroissante      & 0,80$\pm$0,11                 & 0,60$\pm$0,13         & \textbf{0,79$\pm$0,10}        \\ \cline{1-6}
-        \multirow{4}{*}{Multiple}   & \multirow{2}{*}{Croissante}       & Croissante        & 0,71$\pm$0,09                 & 0,64$\pm$0,18         & 0,71$\pm$0,13                 \\ \cline{3-6}
-                                    &                                   & Décroissante      & 0,71$\pm$0,09                 & 0,63$\pm$0,17         & 0,70$\pm$0,14                 \\ \cline{2-6}
-                                    & \multirow{2}{*}{Décroissante}     & Croissante        & 0,77$\pm$0,13                 & \textbf{0,71$\pm$0,16}& 0,77$\pm$0,12                 \\ \cline{3-6}
-                                    &                                   & Décroissante      & 0,77$\pm$0,13                 & 0,68$\pm$0,14         & 0,77$\pm$0,12                 \\ \bottomrule
+        \multirow{4}{*}{Unique}     & \multirow{2}{*}{Croissante}       & Croissante        & 0,72 $\pm$ 0,14                 & 0,65 $\pm$ 0,14         & 0,66 $\pm$ 0,10                 \\ \cline{3-6}
+                                    &                                   & Décroissante      & 0,72 $\pm$ 0,14                 & 0,64 $\pm$ 0,12         & 0,65 $\pm$ 0,09                 \\ \cline{2-6}
+                                    & \multirow{2}{*}{Décroissante}     & \hcell Croissante & \hcell \textbf{0,80 $\pm$ 0,10} & \hcell 0,61 $\pm$ 0,11  & \hcell \textbf{0,79 $\pm$ 0,10} \\ \cline{3-6}
+                                    &                                   & Décroissante      & 0,80 $\pm$ 0,11                 & 0,60 $\pm$ 0,13         & \textbf{0,79 $\pm$ 0,10}        \\ \cline{1-6}
+        \multirow{4}{*}{Multiple}   & \multirow{2}{*}{Croissante}       & Croissante        & 0,71 $\pm$ 0,09                 & 0,64 $\pm$ 0,18         & 0,71 $\pm$ 0,13                 \\ \cline{3-6}
+                                    &                                   & Décroissante      & 0,71 $\pm$ 0,09                 & 0,63 $\pm$ 0,17         & 0,70 $\pm$ 0,14                 \\ \cline{2-6}
+                                    & \multirow{2}{*}{Décroissante}     & Croissante        & 0,77 $\pm$ 0,13                 & \textbf{0,71 $\pm$ 0,16}& 0,77 $\pm$ 0,12                 \\ \cline{3-6}
+                                    &                                   & Décroissante      & 0,77 $\pm$ 0,13                 & 0,68 $\pm$ 0,14         & 0,77 $\pm$ 0,12                 \\ \bottomrule
     \end{tabular}
     \caption{Table de résultats issus de l'application du processus multimodal sans mémoire. Ces résultats sont exprimés à l'aide du \fscore{} et sont issus d'une prise en charge de l'ensemble des cas cliniques mis à disposition de ce manuscrit.}
     \label{tab:results_multimodal_process_without}
@@ -233,14 +233,14 @@ Ce second paragraphe procède à la présentation des résultats du \textbf{proc
     \begin{tabular}{lllccc}
         \toprule 
         Seuil                       & Modalités                         & Détection         & Sans                          & Isotonique                    & Sigmoïde              \\ \midrule
-        \multirow{4}{*}{Unique}     & \multirow{2}{*}{Croissante}       & Croissante        & 0,74$\pm$0,08                 & 0,72$\pm$0,13                 & 0,72$\pm$0,12         \\ \cline{3-6}
-                                    &                                   & Décroissante      & 0,72$\pm$0,09                 & 0,74$\pm$0,14                 & 0,70$\pm$0,13         \\ \cline{2-6}
-                                    & \multirow{2}{*}{Décroissante}     & Croissante        & 0,82$\pm$0,10                 & \textbf{0,82$\pm$0,10}        & \textbf{0,82$\pm$0,11}\\ \cline{3-6}
-                                    &                                   & Décroissante      & 0,82$\pm$0,10                 & 0,81$\pm$0,08                 & 0,80$\pm$0,12         \\ \cline{1-6}
-        \multirow{4}{*}{Multiple}   & \multirow{2}{*}{Croissante}       & Croissante        & 0,69$\pm$0,11                 & 0,73$\pm$0,14                 & 0,68$\pm$0,11         \\ \cline{3-6}
-                                    &                                   & Décroissante      & 0,68$\pm$0,12                 & 0,72$\pm$0,12                 & 0,68$\pm$0,13         \\ \cline{2-6}
-                                    & \multirow{2}{*}{Décroissante}     & \hcell Croissante & \hcell \textbf{0,82$\pm$0,08} & \hcell \textbf{0,82$\pm$0,10} & \hcell 0,78$\pm$0,11  \\ \cline{3-6}
-                                    &                                   & Décroissante      & 0,82$\pm$0,08                 & 0,81$\pm$0,08                 & 0,78$\pm$0,12         \\ \bottomrule
+        \multirow{4}{*}{Unique}     & \multirow{2}{*}{Croissante}       & Croissante        & 0,74 $\pm$ 0,08                 & 0,72 $\pm$ 0,13                 & 0,72 $\pm$ 0,12         \\ \cline{3-6}
+                                    &                                   & Décroissante      & 0,72 $\pm$ 0,09                 & 0,74 $\pm$ 0,14                 & 0,70 $\pm$ 0,13         \\ \cline{2-6}
+                                    & \multirow{2}{*}{Décroissante}     & Croissante        & 0,82 $\pm$ 0,10                 & \textbf{0,82 $\pm$ 0,10}        & \textbf{0,82 $\pm$ 0,11}\\ \cline{3-6}
+                                    &                                   & Décroissante      & 0,82 $\pm$ 0,10                 & 0,81 $\pm$ 0,08                 & 0,80 $\pm$ 0,12         \\ \cline{1-6}
+        \multirow{4}{*}{Multiple}   & \multirow{2}{*}{Croissante}       & Croissante        & 0,69 $\pm$ 0,11                 & 0,73 $\pm$ 0,14                 & 0,68 $\pm$ 0,11         \\ \cline{3-6}
+                                    &                                   & Décroissante      & 0,68 $\pm$ 0,12                 & 0,72 $\pm$ 0,12                 & 0,68 $\pm$ 0,13         \\ \cline{2-6}
+                                    & \multirow{2}{*}{Décroissante}     & \hcell Croissante & \hcell \textbf{0,82 $\pm$ 0,08} & \hcell \textbf{0,82 $\pm$ 0,10} & \hcell 0,78 $\pm$ 0,11  \\ \cline{3-6}
+                                    &                                   & Décroissante      & 0,82 $\pm$ 0,08                 & 0,81 $\pm$ 0,08                 & 0,78 $\pm$ 0,12         \\ \bottomrule
     \end{tabular}
     \caption{Table de résultats issus de l'application du processus multimodal avec mémoire. Ces résultats sont exprimés à l'aide du \fscore{} et sont issus d'une prise en charge de l'ensemble des cas cliniques mis à disposition de ce manuscrit.}
     \label{tab:results_multimodal_process_with}
@@ -253,8 +253,8 @@ Dans ce troisième paragraphe, les résultats de la prise en charge de la classe
     \begin{tabular}{lllll}
         \toprule 
         Type de processus   & Précision             & Sensibilité           & Spécificité           & \Fscore{}             \\ \midrule
-        Sans mémoire        & 0,75$\pm$0,11 	    & 0,85$\pm$0,13 	    & 0,55$\pm$0,17 	    & 0,80$\pm$0,10         \\ \midrule
-        Avec mémoire        & 0,74$\pm$0,13 	    & 0,91$\pm$0,09 	    & 0,48$\pm$0,19 	    & 0,82$\pm$0,08         \\ \bottomrule
+        Sans mémoire        & 0,75 $\pm$ 0,11 	    & 0,85 $\pm$ 0,13 	    & 0,55 $\pm$ 0,17 	    & 0,80 $\pm$ 0,10         \\ \midrule
+        Avec mémoire        & 0,74 $\pm$ 0,13 	    & 0,91 $\pm$ 0,09 	    & 0,48 $\pm$ 0,19 	    & 0,82 $\pm$ 0,08         \\ \bottomrule
     \end{tabular}
     \caption{Table reprenant les résultats de la classe maligne, issus de l'application des processus multimodaux sans mémoire et avec mémoire sur l'ensemble des lésions.}
     \label{tab:results_multimodal_process_malignant}
@@ -265,8 +265,8 @@ Dans ce troisième paragraphe, les résultats de la prise en charge de la classe
     \begin{tabular}{lllll}
         \toprule 
         Type de processus   & Précision             & Sensibilité           & Spécificité           & \Fscore{}             \\ \midrule
-        Sans mémoire        & 0,71$\pm$0,12 	    & 0,85$\pm$0,13 	    & 0,55$\pm$0,17 	    & 0,78$\pm$0,11         \\ \midrule
-        Avec mémoire        & 0,70$\pm$0,13 	    & 0,93$\pm$0,07 	    & 0,48$\pm$0,19 	    & 0,80$\pm$0,08         \\ \bottomrule
+        Sans mémoire        & 0,71 $\pm$ 0,12 	    & 0,85 $\pm$ 0,13 	    & 0,55 $\pm$ 0,17 	    & 0,78 $\pm$ 0,11         \\ \midrule
+        Avec mémoire        & 0,70 $\pm$ 0,13 	    & 0,93 $\pm$ 0,07 	    & 0,48 $\pm$ 0,19 	    & 0,80 $\pm$ 0,08         \\ \bottomrule
     \end{tabular}
     \caption{Table reprenant les résultats de la classe maligne, issus de l'application des processus multimodaux sans mémoire et avec mémoire avec pour seules pathologies malignes les cas de \gls{lm} et \gls{lm}.}
     \label{tab:results_multimodal_process_lm}
