@@ -12,17 +12,25 @@ Afin de limiter l’incidence de ces tumeurs, de nombreuses campagnes de préven
 
 Néanmoins, les mesures de sensibilisation tendent aujourd’hui à dépasser la prévention. En effet, certaines publications scientifiques proposent une auto-surveillance régulière par des gestes simples, permettant une prise en charge des pathologies dans un meilleur délai par les dermatologues~\cite{Friedman1985}. En parallèle, de plus en plus de campagnes de dépistage sont mises en place par les gouvernements. Ces diverses actions sont particulièrement efficaces pour permettre la détection de mélanomes à des stades moins avancés, et donc plus susceptibles d'être correctement pris en charges et traités par les services cliniques.\par
 
-Malgré ces nombreuses démarches, le taux d’occurrence de ces cancers ne cesse de progresser dans le monde. Ces dernières années, l'\gls{oms} dénombre entre 2 et 3 millions de cancers de la peau par an, dont environ 360 000 sont des mélanomes. Ces chiffres sont corroborés par ceux d'études épidémiologiques réalisés en 2015~\cite{Vos2016}, dont la \Cref{tab:introduction_cancer_incidence} reprend les diverses données. Ainsi, certaines régions du globe comme l'Australasia ou encore l'Amérique du Nord sont particulièrement touchées par cette recrudescence des maladies de la peau avec de fortes incidences~\cite{Karimkhani2017}. De même, au niveau des populations touchées, le facteur d'âge semble être un critère de risque important~\cite{Karimkhani2017}.\par 
-
+Malgré ces nombreuses démarches, le taux d’occurrence de ces cancers ne cesse de progresser dans le monde. Ces dernières années, l'\gls{oms} dénombre entre 2 et 3 millions de cancers de la peau par an, dont environ \SI{360000} sont des mélanomes. Ces chiffres sont corroborés par ceux d'études épidémiologiques réalisés en 2015~\cite{Vos2016}, dont la \Cref{tab:introduction_cancer_incidence} reprend les diverses données. Ainsi, certaines régions du globe comme l'Australasia ou encore l'Amérique du Nord sont particulièrement touchées par cette recrudescence des maladies de la peau avec de fortes incidences~\cite{Karimkhani2017}. De même, au niveau des populations touchées, le facteur d'âge semble être un critère de risque important~\cite{Karimkhani2017}.\par 
+    
 \begin{table}[H]
+    \sisetup{table-number-alignment=right,
+             table-text-alignment=right,
+             detect-weight,
+             mode=text}
+    \renewcommand{\bfseries}{\fontseries{b}\selectfont}
+    \newrobustcmd{\B}{\bfseries}   
     \centering
-    \begin{tabular}{lll} \toprule
+    \begin{tabular}{lSS} \toprule
         \textbf{Organe ou dénomination}         & \textbf{Incidence (milliers)} & \textbf{Décès (milliers)} \\ \midrule
         Tous                                    & 17481                         & 8713                      \\
         Autre pharynx                           & 161                           & 64                        \\
         Autres néoplasmes                       & 756                           & 372                       \\
         Côlon et rectum                         & 1653                          & 832                       \\
         Col utérin                              & 526                           & 239                       \\
+        Estomac                                 & 1313                          & 819                       \\
+        Foie                                    & 854                           & 810                       \\
         Larynx                                  & 238                           & 106                       \\
         Leucémie                                & 606                           & 353                       \\
         Leucémie lymphoïde aiguë                & 161                           & 110                       \\
@@ -32,7 +40,7 @@ Malgré ces nombreuses démarches, le taux d’occurrence de ces cancers ne cess
         Lèvre et cavité buccale                 & 410                           & 146                       \\
         Lymphome de Hodgkin                     & 78                            & 24                        \\
         Lymphome non hodgkinien                 & 666                           & 231                       \\
-        \textbf{Mélanome}                       & \textbf{352}                  & \textbf{60}               \\
+        \textbf{Mélanome}                       &\B 352                         &\B 60                      \\
         Mélyome multiple                        & 154                           & 101                       \\
         Mésothéliome                            & 37                            & 32                        \\
         Nasopharynx                             & 123                           & 63                        \\
@@ -50,11 +58,11 @@ Malgré ces nombreuses démarches, le taux d’occurrence de ces cancers ne cess
         Vésicule et voies biliaires             & 188                           & 140                       \\
         Vessie                                  & 541                           & 188                       \\ \bottomrule
     \end{tabular}
-    \caption{Statistiques mondiales d’incidence et de mortalité des cancers par organe touché ou par dénomination~\cite{Karimkhani2017}. Les chiffres indiqués dans le tableau (incidence et décès) sont exprimés en milliers.}
+    \caption{Statistiques mondiales d’incidence et de mortalité des 32 groupes de cancers (selon \gls{cim10} de l'\gls{oms}) pour l'année 2015~\cite{Fitzmaurice2017}. Ces chiffres sont exprimés en milliers et ne recensent pas les cancers de la peau hors mélanome.}
     \label{tab:introduction_cancer_incidence}
 \end{table}
 
-Pour la France, ce n’est pas moins de 80 000 nouveaux cas de cancers de la peau estimés en 2015, dont 70~\% d'entre eux sont des carcinomes basocellulaires~\textsuperscript{\ref{footnote:number_dermatologists}}, soit la 6ème cause de cancer en France. Pour leur part, les mélanomes sont eux estimés à 14 300 cas par an dont 1 773 engendrent un décès~\cite{Thuret2012}. Une détection précoce de ces tumeurs est donc nécessaire en matière de santé publique mais aussi économique, bien qu'il soit difficile d'obtenir des chiffres sur les coûts engendrés par ces pathologies pour la France. Néanmoins à titre d'exemple, les soins générés par les pathologies de la peau se chiffrent annuellement à 8 milliards de dollars aux États-Unis~\cite{Farberg2017a}.\par
+Pour la France, ce n’est pas moins de \SI{80000} nouveaux cas de cancers de la peau estimés en 2015, dont 70~\% d'entre eux sont des carcinomes basocellulaires~\textsuperscript{\ref{footnote:number_dermatologists}}, soit la 6ème cause de cancer en France. Pour leur part, les mélanomes sont eux estimés à \SI{14300} cas par an dont \SI{1773} engendrent un décès~\cite{Thuret2012}. Une détection précoce de ces tumeurs est donc nécessaire en matière de santé publique mais aussi économique, bien qu'il soit difficile d'obtenir des chiffres sur les coûts engendrés par ces pathologies pour la France. Néanmoins à titre d'exemple, les soins générés par les pathologies de la peau se chiffrent annuellement à 8 milliards de dollars aux États-Unis~\cite{Farberg2017a}.\par
 
 \addtocounter{footnote}{1}
 \footnotetext[\thefootnote]{Source~:~Chiffres issus du site de la \href{https://www.frm.org/}{Fondation pour la Recherche Médicale}. \label{footnote:number_skin_france}}
@@ -83,13 +91,13 @@ Ce travail s'inscrit dans une démarche d'aide au diagnostic des lésions de la 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{contents/i_introduction/resources/evolution_publications.pdf}
-    \caption{Graphique représentant l'évolution du nombre de publications recensées par le moteur \href{https://scholar.google.fr/}{Google Scholar}~\textsuperscript{\ref{footnote:evolution_publications}} autour des termes de « skin computer diagnosis » lors de ces trente dernières années.}
+    \caption{Graphique représentant l'évolution du nombre de publications recensées par le moteur de recherche \href{https://scholar.google.fr/}{Google Scholar}~\textsuperscript{\ref{footnote:evolution_publications}} autour des termes de « skin computer diagnosis » entre les années 1990 et 2020.}
     \label{fig:evolution_publications}
 \end{figure}\par
 \addtocounter{footnote}{1}
 \footnotetext[\thefootnote]{Source image~:~Graphique généré à partir du site \href{https://www.dimensions.ai/}{Dimensions.}  \label{footnote:evolution_publications}}
 
-La matière première mise à notre disposition permet une orientation de ces travaux dans le sens de la multimodalité. En effet, l'une des problématiques majeures aujourd'hui en dermatologie est ce que les médecins qualifient de zone d'indécision, également appelée \textit{zone grise}. Il s'agit d'une catégorie de cas cliniques pour lesquels le médecin n'a pas à un instant $t$ suffisamment d'informations ou de connaissances pour prendre une décision. Ces cas nécessitent souvent une prise en charge plus importante, avec l'aide d'autres spécialistes ou encore avec notamment de nouveaux examens plus spécifiques.\par
+La matière première mise à la disposition de ce travail permet une orientation de ces travaux dans le sens de la multimodalité. En effet, l'une des problématiques majeures aujourd'hui en dermatologie est ce que les médecins qualifient de zone d'indécision, également appelée \textit{zone grise}. Il s'agit d'une catégorie de cas cliniques pour lesquels le médecin n'a pas à un instant $t$ suffisamment d'informations ou de connaissances pour prendre une décision. Ces cas nécessitent souvent une prise en charge plus importante, avec l'aide d'autres spécialistes ou encore avec notamment de nouveaux examens plus spécifiques.\par
 
 La finalité de ce travail est de proposer diverses méthodes et outils permettant une aide à la décision dans la gestion de cette zone grise, et ainsi améliorer la prise en charge clinique en service de dermatologie. À l'instar des travaux existants, cette gestion de la zone grise passe d'une part par l'implémentation de méthodes propres à certaines des modalités de ce travail et d'autre part par la mise en place d'un schéma multimodal. Ainsi, un schéma résumant ce l'objectif de ce processus est visible sur la \Cref{fig:scheme_reduce_indecision}.\par
 \clearpage
@@ -99,7 +107,7 @@ Dans ce schéma idéal représenté sur la \Cref{fig:scheme_reduce_indecision}, 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{contents/i_introduction/resources/scheme_reduce_indecision.pdf}
-    \caption{Représentation du processus de réduction de l'indécision du médecin ou \textit{zone grise}. L'objectif de ce travail consiste à réduire cette indécision des divers cas d'études en notre possession, par l'ajout de modalités d'imagerie en s'inspirant du processus cognitif des dermatologues.}
+    \caption{Schéma de représentation du processus de réduction de l'indécision, également surnommée zone grise. Ce travail s'inspire du processus cognitif des dermatologues et consiste à réduire l'indécision propre à chacune des modalités clinique par l'ajout de nouvelles modalités d'imagerie.}
     \label{fig:scheme_reduce_indecision}
 \end{figure}\par
 
@@ -113,7 +121,7 @@ Dans ce schéma idéal représenté sur la \Cref{fig:scheme_reduce_indecision}, 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\linewidth]{contents/i_introduction/resources/scheme_our_work.pdf}
-    \caption{Schéma de représentation des domaines impliqués de cette thématique de recherche. Notre travail se retrouve ainsi au confluent de connaissances de la peau, des modalités d'imagerie et des domaines de l'intelligence artificielle.}
+    \caption{Schéma de représentation des divers domaines impliqués dans cette thématique de recherche. Ce travail est au confluent de connaissances de la peau, des modalités d'imagerie et des domaines de l'intelligence artificielle.}
     \label{fig:scheme_our_work}
 \end{figure}\par
 

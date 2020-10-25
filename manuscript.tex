@@ -31,7 +31,7 @@
 %% The forth mandatory parameter is the reference number given by
 %% the University Library after the PhD defense.
 
-\newcommand{\titleref}{Aide au diagnostic du lentigo malin en dermatologie par analyse d’images multimodales}
+\newcommand{\titleref}{Classification par méthodes d'apprentissage supervisé et faiblement supervisé d'images multimodales pour l’aide au diagnostic du lentigo malin en dermatologie}
 % \newcommand{\title}{Aide au diagnostic du lentigo malin en dermatologie par analyse d’images multimodales}
 \declarethesis[]{\titleref}{Date de soutenance}{Dijon}{XXX}
 
@@ -52,10 +52,13 @@
 %%            President, Reviewer(s), Examiner(s), Director(s),
 %%            Other supervisor(s), Invited person(s).
 %% \addjury{Firstname}{Lastname}{Role in the jury}{Position}
-\addjury{Prenom}{Nom}{Rapporteur}{Professeur, Université XXX}
-\addjury{Prenom}{Nom}{Rapporteur}{Professeur, Université XXX}
-\addjury{Franck}{MARZANI}{Directeur de thèse}{Professeur des Universités, Université de Bourgogne}
-\addjury{Alamin}{MANSOURI}{Co-encadrant}{Professeur des Universités, Université Bourgogne}
+\addjury{Abderrahim}{EL MOATAZ}{Rapporteur}{Professeur, Université de Caen Normandie}
+\addjury{Mohamed}{QUAFAFOU}{Rapporteur}{Professeur, Université d'Aix Marseille}
+\addjury{Elisa}{CINOTTI}{Examinateur}{Professeur, Université de Sienne}
+\addjury{Christian}{DAUL}{Examinateur}{Professeur, Université de Lorraine}
+\addjury{Jean-Luc}{PERROT}{Examinateur}{Professeur, CHU de Saint-Etienne}
+\addjury{Franck}{MARZANI}{Directeur de thèse}{Professeur, Université de Bourgogne}
+\addjury{Alamin}{MANSOURI}{Co-directeur de thèse}{Professeur, Université de Bourgogne}
 
 %%--------------------
 %% Change style of the table of the jury
@@ -75,7 +78,7 @@ Secondly, the proposed multimodal process resumes the clinical path, starting wi
 %%--------------------
 %% Set the English keywords. They only appear if
 %% there is an English abstract
-\thesiskeywords[english]{Dermatology, Lentigo Maligna, Lentigo Maligna Melanoma, Machine Learning, Deep Learning, Image classification, Multimodality, Data fusion, Dermoscopy, Reflectance Confocal Microscopy}
+\thesiskeywords[english]{Supervised learning, Weakly supervised learning, Deep learning, Multimodality, Dermatology, Lentigo Maligna, Lentigo Maligna Melanoma, Image classification, Data fusion, Dermatoscopy, Confocal reflectance microscopy}
 
 %%-------------------- 
 %% Set the French abstract
@@ -90,7 +93,7 @@ Dans un second temps, le processus multimodal proposé reprend le cheminement cl
 %%--------------------
 %% Set the French keywords. They only appear if
 %% there is an French abstract
-\thesiskeywords[french]{Dermatologie, Lentigo Maligna, Lentigo Maligna Melanoma, Apprentissage automatique, Apprentissage profond, Classification d'images, Multimodalité, Fusion de données, Dermatoscopie, Microscopie confocale par réflectance}
+\thesiskeywords[french]{Apprentissage supervisé, Apprentissage faiblement supervisé, Apprentissage profond, Multimodalité, Dermatologie, Lentigo Maligna, Lentigo Maligna Melanoma,  Classification d'images, Fusion de données, Dermatoscopie, Microscopie confocale par réflectance}
 
 %%--------------------
 %% Change the layout and the style of the text of the "primary" abstract.
@@ -245,6 +248,7 @@ Bien évidemment, je ne peux finir ces remerciements sans oublier mes proches qu
 %%--------------------
 %% Bibliography
 \cleardoublepage
+\phantomsection
 \renewcommand{\bibname}{Bibliographie}
 \addcontentsline{toc}{chapter}{\bibname}
 \bibliographystyle{plain}
@@ -255,12 +259,14 @@ Bien évidemment, je ne peux finir ces remerciements sans oublier mes proches qu
 
 %% Include a chapter with a list of all the figures (French).
 \cleardoublepage
+\phantomsection
 \renewcommand*\listfigurename{Liste des figures}
 \addcontentsline{toc}{chapter}{\listfigurename}
 \listoffigures
 
 %% Include a chapter with a list of all the tables (French).
 \cleardoublepage
+\phantomsection
 \addcontentsline{toc}{chapter}{\listtablename}
 \listoftables
 
