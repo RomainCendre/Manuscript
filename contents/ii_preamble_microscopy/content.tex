@@ -17,12 +17,12 @@ Chaque lésion contient des images \gls{mcr} jugées pertinentes par deux des tr
 Du point de vue des caractéristiques, ces images arborent une taille constante de \SI{1000}{\px} $\times$ \SI{1000}{\px} pour une section mesurée de \SI{920}{\micro\metre} $\times$ \SI{920}{\micro\metre} et une résolution en profondeur comprise entre \SI{3}{\micro\metre} et \SI{5}{\micro\metre}. Ces données fournissent ainsi une résolution de \SI{1}{\micro\metre}. Les informations d'acquisition (profondeur, longueur d'onde, \ldots) contenues dans les images ne pourront être utilisées car non exploitables (procédure de calibration non réalisée, informations manquantes, \ldots).\par
 \clearpage
 
-À partir de ces données, les 12 experts en \gls{mcr} de l'étude~\cite{Cinotti2018} ont obtenu en moyenne une sensibilité de 0,84 $\pm$ 0,05 et une spécificité de 0,75 $\pm$ 0,06 sur l'évaluation des pathologies malignes toutes confondues. Sur l'évaluation des données de \gls{lm} et \gls{lmm}, ces scores deviennent plus homogènes avec une valeur de sensibilité de 0,80 $\pm$ 0,07 et de spécificité de 0,81 $\pm$ 0,05. Les courbes \gls{roc} associées à ces performances sont représentées sur la \Cref{fig:results_roc_rcm_experts}.\par
+À partir de ces données, l'analyse menée par les 12 experts en \gls{mcr} de l'étude~\cite{Cinotti2018} permet d'obtenir une valeur moyenne de sensibilité de 0,84 $\pm$ 0,05 et une valeur moyenne de spécificité de 0,75 $\pm$ 0,06 sur l'évaluation des pathologies malignes toutes confondues. Sur l'évaluation des données de \gls{lm} et \gls{lmm}, ces scores deviennent plus homogènes avec une valeur moyenne de sensibilité de 0,80 $\pm$ 0,07 et une valeur moyenne de spécificité de 0,81 $\pm$ 0,05. Les courbes \gls{roc} associées à ces performances sont représentées sur la \Cref{fig:results_roc_rcm_experts}.\par
 
 \begin{figure}[H]
     \begin{center}
-        \includegraphics[width=\linewidth]{contents/ii_preamble_microscopy/resources/results_roc_rcm_experts.pdf}
-        \caption{Courbes \gls{roc} issues de l'évaluation des données \gls{mcr} par les 12 experts~\cite{Cinotti2018}. À gauche, le résultat des experts mené sur la détection d'éléments malins ; À droite, le résultat des experts mené sur la détection de \gls{lm} et \gls{lmm}.}
+        \includegraphics[width=0.95\linewidth]{contents/ii_preamble_microscopy/resources/results_roc_rcm_experts.pdf}
+        \caption{Courbes \gls{roc} issues de l'évaluation des données \gls{mcr} par les 12 experts~\cite{Cinotti2018}. À gauche, le résultat de l'analyse des experts, mené sur la détection d'éléments malins~;~À droite, le résultat de l'analyse des experts, mené sur la détection de \gls{lm} et \gls{lmm}.}
         \label{fig:results_roc_rcm_experts}
     \end{center} 
 \end{figure}\par
@@ -46,14 +46,14 @@ Ainsi, diverses ressources d'intelligence artificielle évoquées lors du \Cref{
       \centering
       \includegraphics[width=\linewidth]{contents/ii_preamble_microscopy/resources/example_gui_annotation_2.png}
     \end{subfigure}
-    \caption{Interface logicielle mise à disposition du spécialiste, afin de procéder aux annotations au niveau des images et des sous-images. À gauche, l'onglet permettant l'annotation au niveau des images ; À droite, l'onglet permettant la création et l'annotation de sous-images.}
+    \caption{Interface logicielle mise à disposition du spécialiste, afin de procéder aux annotations au niveau des images et des sous-images. À gauche, l'onglet permettant l'annotation au niveau des images~;~À droite, l'onglet permettant la création et l'annotation de sous-images.}
     \label{fig:example_gui_annotation}
 \end{figure}
 
 Les annotations au niveau des lésions bien que initialement sur deux classes, donnent naturellement lieu au niveau des images à des annotations sur \textbf{trois classes}. Ces annotations, dont des exemples sont visibles sur la \Cref{fig:example_rcm_data}, sont les suivantes~:
 \begin{itemize}
-    \item Un premier type d'annotation du nom de \textit{malin} a été apposé \textit{sur des images} contenant \textbf{au moins} du tissu de type malin et \textit{sur des sous-images} contenant essentiellement ce type de tissus. 
-    \item Un second type d'annotation du nom de \textit{bénin} a été apposé \textit{sur des images} ne contenant \textbf{aucun} tissus malin mais \textbf{au moins} du tissu bénin et \textit{sur des sous-images} composées de ce type de tissus. 
+    \item Un premier type d'annotation du nom de \textit{malin} a été apposé \textit{sur des images} contenant \textbf{au moins} du tissu de type malin et \textit{sur des sous-images} contenant essentiellement celui-ci.
+    \item Un second type d'annotation du nom de \textit{bénin} a été apposé \textit{sur des images} ne contenant \textbf{aucun} tissus malin mais \textbf{au moins} du tissu bénin et \textit{sur des sous-images} composées de celui-ci.
     \item  Enfin, un troisième type d'annotation du nom \textit{sain} a été renseigné \textit{sur des images} ne contenant \textbf{aucun} des deux types de tissus précédents et \textit{sur des sous-images} composées de tissus sains. 
 \end{itemize}\par
 
@@ -70,7 +70,7 @@ La répartition complète de cette base annotée est disponible sur la \Cref{fig
 \begin{figure}[H]
     \begin{center}
         \includegraphics[width=0.8\linewidth]{contents/ii_preamble_microscopy/resources/scheme_rcm_statistics.pdf}
-        \caption{Répartition des annotations réalisées par l'expert sur lésions, les images et sous-images. En bleu foncé, la base initiale de Cinotti~\cite{Cinotti2018} ; En bleu clair, les données additionnelles.}
+        \caption{Répartition des annotations réalisées par l'expert sur lésions, les images et sous-images. En bleu foncé, la base initiale de Cinotti~\cite{Cinotti2018}~;~En bleu clair, les données additionnelles.}
         \label{fig:scheme_rcm_statistics}
     \end{center} 
 \end{figure}\par

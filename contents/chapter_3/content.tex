@@ -8,7 +8,7 @@ Lors du précédent chapitre, les interactions entre la peau et la lumière ont 
 
 Actuellement, l’informatique est une ressource omniprésente dans de nombreux domaines d’application. Ses facultés à divertir ou encore à guider ses usagers dans leurs choix quotidiens personnels et professionnels en font un précieux allié. De nouvelles pratiques font leurs apparitions, intégrant la machine au cœur des processus décisionnels. Les disciplines médicales évoluent largement et l’ordinateur permet de répondre aux besoins croissants de précision, de reproductibilité intra et inter opérateur, et permet un gain de temps au sein des milieux cliniques. Dans un cadre bien défini, il s’agit également d’un moyen de formaliser la connaissance au travers d’un outil pouvant être utilisé par des non-initiés.\par
 
-Cette nouvelle partie permet de dérouler un peu plus le plan de ce manuscrit, en abordant cette fois-ci les systèmes d'intelligence artificielle et leur utilité vis-à-vis des données médicales de ce manuscrit.\par
+Cette nouvelle partie permet de dérouler un peu plus le plan de ce manuscrit, en abordant cette fois-ci les systèmes d'intelligence artificielle et leur utilité vis-à-vis des données médicales à la disposition de ce travail.\par
 \newpage
 
 \section{Généralités sur l'intelligence artificielle}
@@ -79,7 +79,7 @@ Ces approches dites supervisées se regroupent ainsi au travers de deux catégor
     \item la \textbf{régression}, c’est-à-dire la prédiction de valeurs continues, soit l’ensemble des nombres réels noté $\pmb{\mathbb{R}}$.
 \end{itemize}\par
 
-Les travaux de ce manuscrit portent sur les méthodes de classification, qui se traduisent par la catégorisation d'images cliniques pathologiques ou de lésions selon divers niveau de dangerosité. En prenant appui sur l'un des travaux~\cite{Kotsiantis2007}, une synthèse de ces méthodes et de leur principe respectif est fourni, dont~:
+Les travaux de ce manuscrit portent sur les méthodes de classification, qui se traduisent par la catégorisation d'images cliniques pathologiques ou de lésions selon divers niveaux de dangerosité. En prenant appui sur l'un des travaux~\cite{Kotsiantis2007}, une synthèse de ces méthodes et de leur principe respectif est fournie, dont~:
 \begin{itemize}
     \item \textbf{les approches logiques} qui correspondent à des approches par succession de décisions~\cite{Kotsiantis2007}. Dans cette catégorie, le principal représentant est celui des arbres de décision~\cite{Breiman1984}, également connu sous le terme de \gls{cart}, dont le principe peut se résumer à la construction d'un graphe, dans lequel chaque noeud est associé à une décision définie par le choix d'une caractéristique et d'un seuil~\cite{Quinlan1986}. Toute la complexité de ces approches repose sur le choix de ces caractéristiques dont la priorité dépend de l'ordre d'importance dans la séparation du problème.
     \item \textbf{les approches statistiques} qui correspondent à des approches probabilistes, qui déterminent la probabilité d'appartenance d'un élément à une classe. Le \gls{nbm}~\cite{Zhang2004} est un exemple typique de ce type d'approche, dans lequel chaque caractéristique est considérée comme indépendante. La relation entre caractéristique et annotation se définit ainsi comme le produit des probabilités de chacune d'entre elles d'appartenir à la classe supposée (voir l'\Cref{eq:bayesian}). Ce type de classification bayésienne peut également être étendue sous la forme de réseau~\cite{Kononenko1989}.
@@ -201,7 +201,7 @@ Un très bon représentant de ces types de réseaux est le \gls{mlp} utilisé à
 
 \subsection{Réseau neuronal convolutif}
 \label{sec:convolutionnal_neural_network}
-Les \gls{cnn} sont une extension des réseaux de neurones profond, essentiellement utilisés dans un but de traitement de l'image. Moins développé par la littérature, ce principe de réseaux peut être étendu à des données telles que des signaux (1D) ou des volumes (3D).\par
+Les \gls{cnn} sont une extension des réseaux de neurones profonds, essentiellement utilisés dans un but de traitement de l'image. Moins développé par la littérature, ce principe de réseaux peut être étendu à des données telles que des signaux (1D) ou des volumes (3D).\par
 
 Ces \gls{cnn} sont une réponse à l'application des \gls{ann} à des problématiques impliquant des données images et des contraintes multiples qu'ils comportent. Parmi ces contraintes de l'application des \gls{ann} aux images, peuvent être évoqués~:~
 \begin{inlinerate}
@@ -277,12 +277,12 @@ L’un des principaux outils à disposition afin d'évaluer la performance est l
     \label{fig:scheme_confusion_matrix}
 \end{figure}
 
-Bien que déjà réduite, l'information de cette matrice est encore très riche et difficile à utiliser comme critère de sélection. Pour cela, diverses métriques éprouvées sont à envisager selon la problématique de recherche. Parmi les plus courantes d'entre elles, les critères de \textbf{précision}, \textbf{sensibilité} (également appelé \textbf{rappel}) ou encore \textbf{spécificité} sont pléthores dans la littérature mais ont tendance à ne capter qu'une partie du problème. Par exemple, la sensibilité est un critère très important en médecine ou détection de fraude, mais ne qualifie en rien la spécificité du modèle. De même, la moyenne fait également partie des critères extraits dans le domaine de l'intelligence artificielle, mais peut également manquer de sens en cas de non balancement de l'information~\cite{Guo2008} ou même ne pas mettre en avant un important gouffre entre spécificité et sensibilité. Ces métriques sont représentés de manière graphique sur la \Cref{fig:scheme_confusion_metrics} ou sous forme mathématique sur l'\Cref{eq:metrics_basics}.\par
+Bien que déjà réduite, l'information de cette matrice est encore très riche et difficile à utiliser comme critère de sélection. Pour cela, diverses métriques éprouvées sont à envisager selon la problématique de recherche. Parmi les plus courantes d'entre elles, les critères de \textbf{précision}, \textbf{sensibilité} (également appelé \textbf{rappel}) ou encore \textbf{spécificité} sont pléthores dans la littérature mais ont tendance à ne capter qu'une partie du problème. Par exemple, la sensibilité est un critère très important en médecine ou détection de fraude, mais ne qualifie en rien la spécificité du modèle. De même, la moyenne fait également partie des critères extraits dans le domaine de l'intelligence artificielle, mais peut également manquer de sens en cas de non balancement de l'information~\cite{Guo2008} ou même ne pas mettre en avant un important gouffre entre spécificité et sensibilité. Ces métriques sont représentées de manière graphique sur la \Cref{fig:scheme_confusion_metrics} ou sous forme mathématique sur l'\Cref{eq:metrics_basics}.\par
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{contents/chapter_3/resources/scheme_confusion_metrics.pdf}
-    \caption{Schéma représentatif des principaux métriques obtenues à partir de la matrice de confusion~:~la \textit{précision}, le \textit{rappel} ou la \textit{sensibilité} et la \textit{specificité}.}
+    \caption{Schéma représentatif des principales métriques obtenues à partir de la matrice de confusion~:~la \textit{précision}, le \textit{rappel} ou la \textit{sensibilité} et la \textit{specificité}.}
     \label{fig:scheme_confusion_metrics}
 \end{figure}
 
@@ -320,7 +320,7 @@ D'autres alternatives moins biaisées ont également été formulées~\cite{Soko
 \label{subsec:hyperparameter}
 Avant d’entrer plus en profondeur dans le sujet, il est nécessaire de revenir sur le terme \textbf{d’hyperparamètres}. Il caractérise les paramètres d'un processus d'apprentissage automatique dont le réglage doit être effectué avant la phase d'entraînement et dont les valeurs dépendent des données à traiter. Le réglage des hyperparamètres peut rarement être déterminé par la simple observation des données, et nécessite ainsi un réglage en fonction de chaque situation rencontrée.\par
 
-L’une des premières techniques permettant ce réglage consiste à définir une \textit{grille} de ces hyperparamètres, contenant pour chacun leurs possibles variations~\cite{Liu2006}. Il s'agit de la méthode la plus équitable puisqu'elle consiste à évaluer chaque combinaison par comparaison des performances finales (voir la \Cref{fig:example_hyperparameter_selection} - Gauche). Néanmoins, elle possède deux limitations majeures, dont~:
+L’une des premières techniques permettant ce réglage consiste à définir une \textit{grille} de ces hyperparamètres, contenant pour chacun, leurs possibles variations~\cite{Liu2006}. Il s'agit de la méthode la plus équitable puisqu'elle consiste à évaluer chaque combinaison par comparaison des performances finales (voir la \Cref{fig:example_hyperparameter_selection} - Gauche). Néanmoins, elle possède deux limitations majeures, dont~:
 \begin{itemize}
     \item son \textbf{temps de calcul}, qui va croître de manière exponentielle en fonction du nombre d'hyperparamètres à valider,
     \item sa \textbf{précision}, qui va dépendre du pas choisi pour chacun des paramètres.
@@ -368,7 +368,7 @@ Ces deux méthodes répondent à la problématique de l'évaluation, mais n'appo
 
 \section{Fusion d’informations}
 \label{sec:fusion_information}
-Dernier aspect de ce sujet, la fusion d’informations se définit comme l’action de « combiner des informations issues de plusieurs sources afin d’améliorer la prise de décision »~\cite{Bloch2003}. Cette fusion se retrouve dans de nombreux domaines d'application dont celui de la santé ou encore de la biométrie, et peut être considérée comme un moyen d'augmenter la fiabilité de systèmes. L'intérêt croissant pour ce domaine correspond, entre autres, à une réponse de l'augmentation et de la diversification du nombre de capteurs présents. L'ouvrage de Bloch~\cite{Bloch2003} justifie la fusion d'informations, par différentes notions auxquelles sont soumises chaque capteur, dont~:
+Dernier aspect de ce sujet, la fusion d’informations se définit comme l’action de « combiner des informations issues de plusieurs sources afin d’améliorer la prise de décision »~\cite{Bloch2003}. Cette fusion se retrouve dans de nombreux domaines d'application dont celui de la santé ou encore de la biométrie, et peut être considérée comme un moyen d'augmenter la fiabilité de systèmes. L'intérêt croissant pour ce domaine correspond, entre autres, à une réponse de l'augmentation et de la diversification du nombre de capteurs présents. L'ouvrage de Bloch~\cite{Bloch2003} justifie la fusion d'informations, par différentes notions auxquelles chaque capteur est soumis, dont~:
 \begin{itemize}
     \item \textbf{l'incertitude}~:~c’est-à-dire son « degré de conformité avec la réalité ».
     \item \textbf{l'imprécision}~:~définie comme une « mesure du défaut quantitatif de connaissance, sur une mesure ».
@@ -404,7 +404,7 @@ Il est nécessaire également de caractériser le résultat de la fusion d'infor
 
 La fusion à \textbf{bas niveau} s'exerce au niveau du capteur, quand celui-ci bénéficie de plusieurs relevés d'informations physiques, ou après l'acquisition de données provenant de plusieurs capteurs. Cela va nécessiter une cohérence entre ces modalités~:~un référentiel, un repère commun permettant la mise en parallèle de ces dernières. La fusion à ce niveau consiste essentiellement à fournir une cohérence de ces modalités d'information, voire à réduire cette dernière afin de n'obtenir que celle jugée pertinente dans le cadre de son utilisation.\par
 
-La fusion à \textbf{moyen niveau} s'exerce au niveau de caractéristiques, c’est-à-dire après un premier traitement de chacune des modalités pour n'extraire que les éléments nécessaires à la réalisation du processus. Il s'agit d'une mise en commun des vecteurs d'information dans leur totalité ou réduite nécessitant dans ce second cas une sélection de l'information pertinente.\par
+La fusion à \textbf{moyen niveau} s'exerce au niveau de caractéristiques, c’est-à-dire après un premier traitement de chacune des modalités pour n'extraire que les éléments nécessaires à la réalisation du processus. Il s'agit d'une mise en commun des vecteurs d'information dans leur totalité ou réduite, nécessitant dans ce second cas une sélection de l'information pertinente.\par
 
 Enfin, la fusion à \textbf{haut niveau} s'exerce après les mécanismes de prise de décision. C’est-à-dire que les branches correspondant à chaque modalité exercent indépendamment leur prise de décision. Il est donc nécessaire de définir une stratégie permettant de privilégier une décision ou d'extraire une décision à partir de l'information. Deux catégories sont ainsi identifiables~:
 \begin{inlinerate}
@@ -412,7 +412,7 @@ Enfin, la fusion à \textbf{haut niveau} s'exerce après les mécanismes de pris
     \item et la \textbf{fusion de modèles} de prédiction dans lequel le but est d'obtenir une décision globale tenant compte des différentes décisions.
 \end{inlinerate}\par
 
-Plus particulièrement, dans le cadre de problématique binaire, la fusion de modèle comporte deux niveaux conceptuels de décision basés sur le type d'information mise à disposition par ces modèles. D'une part, au plus haut niveau~:~la fusion appliquée au \textbf{niveau décisionnel}. Seules les décisions issues de chaque modèle sont alors considérées selon diverses stratégies~:~le vote à la majorité ou encore la pondération des votes en sont deux représentants. D'autre part, au plus bas niveau~:~la fusion appliquée aux scores~\cite{Kittler1998}. Dans le cadre de problématiques à plusieurs classes, il est possible d'évoquer une troisième prise de décision au niveau du rang, c’est-à-dire en considérant la position de chaque classe prédite issue des divers modèles.\par
+Plus particulièrement, dans le cadre de problématique binaire, la fusion de modèle comporte deux niveaux conceptuels de décision basés sur le type d'information mise à disposition par ces modèles. D'une part, le plus haut niveau reprend l'idée d'une fusion appliquée au \textbf{niveau décisionnel}. Seules les décisions issues de chaque modèle sont alors considérées selon diverses stratégies~:~le vote à la majorité ou encore la pondération des votes en sont deux représentants. D'autre part, le plus bas niveau reprend l'idée d'une fusion appliquée aux scores~\cite{Kittler1998}. Dans le cadre de problématiques à plusieurs classes, il est possible d'évoquer une troisième prise de décision au niveau du rang, c’est-à-dire en considérant la position de chaque classe prédite issue des divers modèles.\par
 
 
 % \subsection{Équilibrage de données}
