@@ -156,13 +156,23 @@
 		\global\phdthesismainabstracttrue%
 		\gdef\phdthesismainabstract{#2}%
 		\setdocabstract{#2}%
-		\gdef\phdthesismaindocumenttitle{Titre\;:}
-		\gdef\phdthesismainabstracttitle{R\'esum\'e\;:}
+		\ifthenelse{\equal{english}{#1}}{%
+			\gdef\phdthesismaindocumenttitle{Title\;:}
+			\gdef\phdthesismainabstracttitle{Abstract:}
+		}{%
+			\gdef\phdthesismaindocumenttitle{Titre\;:}
+			\gdef\phdthesismainabstracttitle{R\'esum\'e\;:}
+		}%
 	}{%
 		\global\phdthesisminorabstracttrue%
 		\gdef\phdthesisminorabstract{#2}%
-		\gdef\phdthesisminordocumenttitle{Titre\;:}
-		\gdef\phdthesisminorabstracttitle{R\'esum\'e\;:}
+		\ifthenelse{\equal{english}{#1}}{%
+			\gdef\phdthesisminordocumenttitle{Title\;:}
+			\gdef\phdthesisminorabstracttitle{Abstract:}
+		}{%
+			\gdef\phdthesisminordocumenttitle{Titre\;:}
+			\gdef\phdthesisminorabstracttitle{R\'esum\'e\;:}
+		}%
 	}%
 }
 

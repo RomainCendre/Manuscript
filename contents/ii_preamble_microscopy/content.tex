@@ -11,7 +11,7 @@ Ainsi dans cette partie, seules les données \gls{mcr} des 224 lésions mises à
 Chaque lésion contient des images \gls{mcr} jugées pertinentes par deux des trois médecins investigateurs dont l'acquisition des images provient de la \gls{jde}. En effet, ces deux pathologies sont observables à ce niveau de profondeur~:
 \begin{itemize}
     \item les \textbf{pathologies de \gls{lm}} résultent d'une prolifération de cellules au niveau de la lame basale (extrémité supérieure de la \gls{jde}),
-    \item les \textbf{pathologies de \gls{lmm}} résultent de l'intrusion de la mélanine se propageant le long des follicules pileux (extrémité supérieure et intérieur de la \gls{jde}).
+    \item les \textbf{pathologies de \gls{lmm}} résultent de l'intrusion de la mélanine se propageant le long des follicules pileux (extrémité supérieure et inférieure de la \gls{jde}).
 \end{itemize} Ces images dont l'acquisition est réalisée au niveau de la \gls{jde} sont donc ainsi parfaitement adaptées à la caractérisation de ce phénomène par les médecins.\par
 
 Du point de vue des caractéristiques, ces images arborent une taille constante de \SI{1000}{\px} $\times$ \SI{1000}{\px} pour une section mesurée de \SI{920}{\micro\metre} $\times$ \SI{920}{\micro\metre} et une résolution en profondeur comprise entre \SI{3}{\micro\metre} et \SI{5}{\micro\metre}. Ces données fournissent ainsi une résolution de \SI{1}{\micro\metre}. Les informations d'acquisition (profondeur, longueur d'onde, \ldots) contenues dans les images ne pourront être utilisées car non exploitables (procédure de calibration non réalisée, informations manquantes, \ldots).\par
@@ -27,7 +27,7 @@ Du point de vue des caractéristiques, ces images arborent une taille constante 
     \end{center} 
 \end{figure}\par
 
-L'objectif visé par cette partie est d'égaler ces scores à l'aide de méthodes de diagnostic sur base d'images issues de la \gls{mcr}. À ce titre, les méta-données extraites des informations patient (telles que l'âge, le sexe ou encore l'emplacement de la lésion) ne sont pas exploitées, bien que l'âge ait été mis à disposition des experts en \gls{mcr} durant leur évaluation. Ce choix est justifié car contrairement aux connaissances des experts, ces méta-données ne sont pas représentatives de la population réelle et peuvent induire des biais de corrélations sur des données extérieures à la base employée. Ainsi, les évaluations des méthodes ne portent que sur \textbf{l'aspect de vision} de ces données \gls{mcr}.\par
+L'objectif visé par cette partie est d'égaler ces scores à l'aide de méthodes de diagnostic sur base d'images issues de la \gls{mcr}. À ce titre, les méta-données extraites des informations patient (telles que l'âge, le sexe ou encore l'emplacement de la lésion) ne sont pas exploitées, bien que l'âge ait été mis à disposition des experts en \gls{mcr} durant leur évaluation. Ce choix est justifié car contrairement aux connaissances des experts, ces méta-données ne sont pas représentatives de la population réelle et peuvent induire des biais de corrélations sur des données extérieures à la base employée. Ainsi, les évaluations des méthodes sur ne portent que sur l'information fournie par les images de ces données \gls{mcr}.\par
 
 Ainsi, diverses ressources d'intelligence artificielle évoquées lors du \Cref{chap:chapter_3} sont mobilisées lors de ce travail. Des apports ont été réalisés pour permettre le déroulement des expériences présentées lors des chapitres suivants. En effet, la base d'images actuelle ne possède que des annotations au niveau des patients, ce qui limite fortement l'étendue des travaux essentiellement basés sur des méthodes d'apprentissage supervisé. À l'aide d'un outil graphique réalisé pour cette étude (\Cref{fig:example_gui_annotation}) et grâce au travail de l'un des dermatologues investigateurs, divers niveaux d'annotations supplémentaires sont obtenus, dont~:
 \begin{itemize}
@@ -53,8 +53,8 @@ Ainsi, diverses ressources d'intelligence artificielle évoquées lors du \Cref{
 Les annotations au niveau des lésions bien que initialement sur deux classes, donnent naturellement lieu au niveau des images à des annotations sur \textbf{trois classes}. Ces annotations, dont des exemples sont visibles sur la \Cref{fig:example_rcm_data}, sont les suivantes~:
 \begin{itemize}
     \item Un premier type d'annotation du nom de \textit{malin} a été apposé \textit{sur des images} contenant \textbf{au moins} du tissu de type malin et \textit{sur des sous-images} contenant essentiellement celui-ci.
-    \item Un second type d'annotation du nom de \textit{bénin} a été apposé \textit{sur des images} ne contenant \textbf{aucun} tissus malin mais \textbf{au moins} du tissu bénin et \textit{sur des sous-images} composées de celui-ci.
-    \item  Enfin, un troisième type d'annotation du nom \textit{sain} a été renseigné \textit{sur des images} ne contenant \textbf{aucun} des deux types de tissus précédents et \textit{sur des sous-images} composées de tissus sains. 
+    \item Un second type d'annotation du nom de \textit{bénin} a été apposé \textit{sur des images} ne contenant \textbf{aucun} tissu malin mais \textbf{au moins} du tissu bénin et \textit{sur des sous-images} composées de celui-ci.
+    \item  Enfin, un troisième type d'annotation du nom \textit{sain} a été renseigné \textit{sur des images} ne contenant \textbf{aucun} des deux types de tissus précédents et \textit{sur des sous-images} composées uniquement de tissus sains. 
 \end{itemize}\par
 
 La répartition complète de cette base annotée est disponible sur la \Cref{fig:scheme_rcm_statistics} dans laquelle peut être visualisée la composition des annotations de la base d'images au niveau des \textbf{lésions}, des \textbf{images} et des \textbf{sous-images}. D'une part, est visible la répartition des données de \textit{la base de référence} ou \textit{base initiale}~\cite{Cinotti2018} de laquelle est issue \textbf{l'évaluation des experts} mais également servant à \textbf{l'entraînement et l'évaluation des méthodes} qui suivent. D'autre part, est visible la répartition des \textit{données additionnelles} qui servent à \textbf{corriger le non-balancement lors de la phase d'entraînement}.\par
@@ -69,15 +69,15 @@ La répartition complète de cette base annotée est disponible sur la \Cref{fig
 
 \begin{figure}[H]
     \begin{center}
-        \includegraphics[width=0.8\linewidth]{contents/ii_preamble_microscopy/resources/scheme_rcm_statistics.pdf}
-        \caption{Répartition des annotations réalisées par l'expert sur lésions, les images et sous-images. En bleu foncé, la base initiale de Cinotti~\cite{Cinotti2018}~;~En bleu clair, les données additionnelles.}
+        \includegraphics[width=0.75\linewidth]{contents/ii_preamble_microscopy/resources/scheme_rcm_statistics.pdf}
+        \caption{Répartition des annotations réalisées par l'expert sur sur les lésions, les images et les sous-images. En bleu foncé, la base initiale de Cinotti~\al{Cinotti2018}~;~En bleu clair, les données additionnelles.}
         \label{fig:scheme_rcm_statistics}
     \end{center} 
 \end{figure}\par
 
 Afin de répondre à ce besoin de diagnostic au niveau des lésions acquises par \gls{mcr}, cette partie dédiée à cette modalité dans laquelle est développée une méthodologie ascendante se compose de trois chapitres~:
 \begin{itemize}
-    \item dans un premier temps, le \Cref{chap:chapter_5} aborde la \textbf{prise de décision au niveau de l'image} par des schémas simples permettant une prise de décision sur les images \gls{mcr},
+    \item dans un premier temps, le \Cref{chap:chapter_5} aborde la \textbf{prise de décision au niveau de l'image} par des schémas simples,
     \item dans un second temps, le \Cref{chap:chapter_6} propose des méthodes destinées à \textbf{améliorer ce diagnostic image} par la mise en oeuvre de schémas avancés permettant à nouveau la prise de décision sur les images \gls{mcr},
     \item enfin, le \Cref{chap:chapter_7} se focalise sur une \textbf{prise de diagnostic au niveau du patient} par la présentation de processus décisionnel au niveau lésionnel.
 \end{itemize}\par

@@ -6,9 +6,9 @@
 \chapterintro
 Lors des précédents chapitres ont été présentés les trois domaines sollicités par ce travail. Ce nouveau chapitre se consacre à la présentation des données utilisées pour évaluer ces travaux et procède au recensement des méthodes cliniques sur les modalités concernées.\par
 
-Dans un premier temps, la \textit{matière} utilisée afin de mener cette recherche est détaillée dans la \Cref{sec:clinical_data}. En effet, les expérimentations et résultats de ce manuscrit prennent appui sur une base de données initialement conçue pour la réalisation d'une étude clinique.  D’une part, cette étude clinique est décrite point par point en reprenant ses objectifs, les conditions d'inclusion permettant la constitution de la base de données, mais également les conclusions sur lesquelles ce travail s'appuie. D’autre part, une structuration de cette base de données est nécessaire ainsi que la mise à disposition d’une interface logicielle permettant l’accès à ses informations, présentés à la fin de cette section.\par
+Dans un premier temps, la \textit{matière} utilisée afin de mener cette recherche est détaillée dans la \Cref{sec:clinical_data}. En effet, les expérimentations et résultats de ce manuscrit prennent appui sur une base de données initialement conçue pour la réalisation d'une étude clinique.  D’une part, cette étude clinique est décrite point par point en reprenant ses objectifs, les conditions d'inclusion permettant la constitution de la base de données, mais également les conclusions sur lesquelles ce travail s'appuie. D’autre part, une structuration de cette base de données est nécessaire ainsi que la mise à disposition d’une interface logicielle permettant l’accès à ses informations, présentées à la fin de cette section.\par
 
-Dans un second temps, la \Cref{sec:clinical_methods} est dédiée à l’analyse de critères pertinents sur les trois modalités cliniques mises à disposition de ce travail. L'objectif de cette section est de comprendre les éléments importants recensés par les dermatologues lors d'un examen clinique.\par
+Dans un second temps, la \Cref{sec:clinical_methods} est dédiée à l’analyse de critères pertinents sur les trois modalités cliniques mises à disposition de ce travail. L'objectif de cette section est de comprendre les éléments importants utilisés par les dermatologues lors d'un examen clinique.\par
 \newpage
 
 \section{Données de travail}
@@ -19,25 +19,25 @@ Par cette section, divers aspects de ces données de travail sont présentés. D
 
 \subsection{Présentation des données}
 \label{sec:dataset_introduction}
-Cette base de données compile diverses \textbf{lésions faciales} possédant les critères d'inclusions suivants~:
+Cette base de données compile diverses \textbf{lésions faciales} possédant les critères d'inclusion suivants~:
 \begin{itemize}
     \item les images proviennent de patients inclus entre les \textbf{années 2011 et 2015}, dont les données ont exclusivement été acquises au \textbf{\gls{chuste}},
     \item les données sont disponibles pour chaque patient sous trois modalités d'image différentes que sont la \textbf{photographie clinique}, la \textbf{dermatoscopie} et la \textbf{\gls{mcr}},
     \item les lésions considérées dans cette base sont celles dont le diagnostic différentiel, c’est-à-dire par élimination méthodique des causes (voir \Cref{subsec:lentigo}), était \textbf{fortement controversé} et \textbf{supposé comme appartenant à un \gls{lm} ou \gls{lmm}}.
 \end{itemize}\par
 
-En termes de composition, la base regroupe 201 patients répartis entre 96 femmes et 105 hommes d'un âge moyen égal à 70 ans compris entre 29 et 97 ans comme présentés sur la \Cref{fig:statistics_age_sex}. Cette base comporte 223 lésions uniques avec pour diagnostic de référence l'histologie. Ainsi, sont mis à la disposition de ce travail~:
+Les acquisitions sont réalisées par l'un des trois experts investigateurs de l'étude clinique~\cite{Cinotti2018} et \textbf{tout cas de collisions de tumeurs au sein est exclu de cette étude}. En termes de composition, la base regroupe 201 patients répartis entre 96 femmes et 105 hommes d'un âge moyen égal à 70 ans compris entre 29 et 97 ans comme présenté sur la \Cref{fig:statistics_age_sex}. Cette base comporte 223 lésions uniques avec l'histologie pour diagnostic de référence. Ainsi, sont mis à la disposition de ce travail~:
 \begin{itemize}
     \item 115 \textbf{lésions malignes}, scindée en 92 \gls{lm} et 23 \gls{lmm},
     \item 108 \textbf{lésions bénignes}, dont 20 \gls{cbc}, 37 \gls{ls}, 23 \gls{ks}, 15 \gls{kap}, 8 nævus, 2 kératoses lichénoïde, 2 cicatrices et 1 maladie de Bowen pigmentée.
 \end{itemize}\par
 
-Les acquisitions sont réalisées par l'un des trois experts investigateurs de l'étude clinique~\cite{Cinotti2018}. \textbf{Tout cas de collisions de tumeurs au sein est exclu de cette étude}. D'une part, les données de dermatoscopie sont produites à l'aide d'une caméra \textit{PowerShot® G7}~\textsuperscript{\ref{footnote:device_powershot}} couplée au dispositif proposé par \textit{Fotofinder}~\textsuperscript{\ref{footnote:device_fotofinder}}. D'autre part, les données de \gls{mcr} sont produites à l'aide d'un \textit{VivaScope 3000®}~\textsuperscript{\ref{footnote:device_mavig}}. En revanche, aucune information liée à l'acquisition des données de photographie clinique n'a été mentionnée.\par
+D'une part, les données de dermatoscopie sont produites à l'aide d'une caméra \textit{PowerShot® G7}~\textsuperscript{\ref{footnote:device_powershot}} couplée au dispositif proposé par \textit{Fotofinder}~\textsuperscript{\ref{footnote:device_fotofinder}}. D'autre part, les données de \gls{mcr} sont produites à l'aide d'un \textit{VivaScope 3000®}~\textsuperscript{\ref{footnote:device_mavig}}. En revanche, aucune information liée à l'acquisition des données de photographie clinique n'a été mentionnée.\par
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{contents/chapter_4/resources/statistics_age_sex.pdf}
-    \caption{À gauche, répartition en fonction de l'âge et du sexe. À droite, répartition entre l'âge et le sexe en tenant compte du diagnostic binaire.}
+    \caption{À gauche, répartition en fonction de l'âge et du sexe, tous diagnostics confondus. À droite, répartition entre l'âge et le sexe en tenant compte du diagnostic binaire.}
     \label{fig:statistics_age_sex}
 \end{figure}\par
 
@@ -80,7 +80,7 @@ Par ailleurs, les cas cliniques ont été présentés dans un ordre différent e
     \label{fig:experts_evaluation}
 \end{figure}\par
 
-Néanmoins, quelques modifications sont à souligner par rapport à ces données initiales. Tout d'abord, une lésion non incluse faute de diagnostic histologique au moment de l'étude clinique est intégré à la base de données employée amenant à \textbf{un total de 224 lésions} dans le cadre de ce manuscrit. De plus, certaines lésions initialement considérées comme bénignes par l'analyse histologique se sont avérées malignes suite à des contrôles annuels ultérieurs. Ainsi, ce manuscrit favorise le diagnostic le plus juste au moment de l'écriture, menant à une base de données comportant en définitive \textbf{138 lésions malignes et 86 lésions bénignes}.\par
+Néanmoins, quelques modifications sont à souligner par rapport à ces données initiales. Tout d'abord, une lésion non incluse faute de diagnostic histologique au moment de l'étude clinique est intégrée à la base de données employée amenant à \textbf{un total de 224 lésions} dans le cadre de ce manuscrit. De plus, certaines lésions initialement considérées comme bénignes par l'analyse histologique se sont avérées malignes suite à des contrôles annuels ultérieurs. Ainsi, ce manuscrit favorise le diagnostic le plus juste au moment de l'écriture, menant à une base de données comportant en définitive \textbf{138 lésions malignes et 86 lésions bénignes}.\par
 \clearpage
 
 \subsection{Structuration des données}
@@ -95,7 +95,7 @@ Les données sensibles de cette base sont anonymisées afin de ne pas pouvoir r�
     \item d'un \textbf{répertoire d'images} comprenant les divers cas cliniques recensés dans l'étude sous divers formats d'image.
 \end{itemize}\par
 
-Afin d'exploiter au mieux cette base, quelques modifications sont apportées. D'une part, la diversité des formats images est un frein quant à la gestion de ces données, ainsi \textbf{un format matriciel sans perte de type bitmap} est adopté. D'autre part, la structure de la base dans l'état ne permet pas l'utilisation d'annotations au niveau des images ou des niveaux supplémentaires. Afin de rendre cet aspect plus dynamique, une structure reprenant les données de manière imbriquée est choisie. La racine de cette nouvelle structure reprend le tableau des lésions initial, dont chaque ligne est associée à une unique lésion. Ce procédé est ainsi répété de manière récursive, chaque dossier de lésion se compose lui-même de tableaux d'annotations propres au type d'annotations stockées. Par ailleurs, certains apports d'informations ont été réalisés pour permettre un bon déroulement de la suite de ce travail, tel que l'appartenance à un patient afin de ne pas proposer des données d'un même patient lors de l'entraînement et du test. Cette nouvelle structure est synthétisée sur la \Cref{fig:db_structure} - Bas.\par
+Afin d'exploiter au mieux cette base, quelques modifications sont apportées. D'une part, la diversité des formats images est un frein quant à la gestion de ces données, ainsi \textbf{un format matriciel sans perte de type bitmap} est adopté. D'autre part, la structure de la base dans l'état ne permet pas l'utilisation d'annotations au niveau des images ou à des niveaux alternatifs. Afin de rendre cet aspect plus dynamique, une structure reprenant les données de manière imbriquée est choisie. La racine de cette nouvelle structure reprend le tableau initial des lésions, \textbf{dont chaque ligne est associée à une unique lésion}. Ce procédé est ainsi répété de manière récursive~:~chaque dossier de lésion se compose lui-même de tableaux d'annotations propres au type d'annotations stockées. Par ailleurs, certains apports d'informations ont été réalisés pour permettre un bon déroulement de la suite de ce travail, tel que \textbf{l'appartenance à un patient à l'aide d'un identifiant unique} afin de ne pas proposer des données d'un même patient lors des phases d'entraînement et de test. Cette nouvelle structure de données est synthétisée sur la \Cref{fig:db_structure} - Bas.\par
 
 \begin{figure}[H]
     \centering
@@ -107,9 +107,9 @@ Afin d'exploiter au mieux cette base, quelques modifications sont apportées. D'
 
 \subsection{Interface logicielle}
 \label{sec:dataset_api}
-Malgré l'état actuel de la base de données, celui-ci ne permet pas son exploitation en l'état. Ainsi, un second aspect de la gestion de cette base de données a consisté à mettre en oeuvre une interface logicielle permettant d'accéder à celles-ci.\par
+Malgré cette structuration de la base de données, celle-ci ne permet pas son exploitation en l'état. Ainsi, un second aspect de la gestion de cette base de données a consisté à mettre en oeuvre une interface logicielle permettant d'accéder à celles-ci.\par
 
-Les données de cette base au format image représente un volume non négligeable impossible à charger en mémoire vive avec la capacité à disposition de ce travail. Afin de ne pas excéder cette capacité, les données images sont chargées et maintenues en mémoire sous forme d'emplacement sur le disque dur jusqu'à leur utilisation définitive. Diverses méthodes d'accès à ces données sont mises à disposition, dont~:
+Les données de cette base au format image représentent un volume non négligeable impossible à charger en mémoire vive avec la capacité à disposition de ce travail. Afin de ne pas excéder cette capacité, les données images sont chargées et maintenues en mémoire sous forme d'emplacement sur le disque dur jusqu'à leur utilisation définitive. Diverses méthodes d'accès à ces données sont mises à disposition, dont~:
 \begin{itemize}
     \item une méthode \textit{get\_images()} avec pour objectif de retourner une structure de données sous forme de table contenant les méta-données et références aux images.
     \item une méthode \textit{get\_sliding\_window()} avec pour objectif de retourner une structure de données sous forme de table contenant les méta-données et références pré-extraites par balayage d'une fenêtre glissante \textit{en zone temporaire}.
@@ -119,14 +119,14 @@ Les données de cette base au format image représente un volume non négligeabl
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth]{contents/chapter_4/resources/schema_database_api.pdf}
-    \caption{Schéma de représentation de l'interface logicielle mise en place pour permettre les divers accès à la base mise à disposition. Par cette interface, trois méthodes sont mises à disposition des expérimentations qui suivent.}
+    \caption{Schéma de représentation de l'interface logicielle mise en place pour permettre les divers accès à la base de données employée dans ce manuscrit. Par cette interface, trois méthodes sont mises à la disposition des expérimentations qui suivent.}
     \label{fig:schema_database_api}
 \end{figure}\par
 \clearpage
 
-\section{Méthodes cliniques}
+\section{Méthodes cliniques de diagnostic}
 \label{sec:clinical_methods}
-Pour permettre l'identification de pathologies en dermatologie plus routinière, la mise en avant de critères de diagnostic est une démarche clé mise en place pour rendre cette tâche plus efficace. Ces méthodes de mise en avant de critères ont démarré au milieu des années 1980 pour améliorer la prise en charge du mélanome, sous la forme~:
+Pour permettre l'identification de pathologies en dermatologie plus routinière, la mise en avant de critères de diagnostic est une démarche clé mise en place pour rendre cette tâche plus efficace. Ces méthodes ont démarré au milieu des années 1980 pour améliorer la prise en charge du mélanome, sous la forme~:
 \begin{itemize}
     \item d'\textbf{acronyme}~:~l'idée est de proposer une méthode de diagnostic facile à mémoriser. Le précurseur de ces méthodes est le travail de Friedman, qui propose l'acronyme \textbf{ABCD} pour une observation à l'oeil nu de lésions pigmentées et est utilisable par de nombreuses personnes expertes ou non~\cite{Friedman1985}. Ainsi, cette première version insiste sur l'importance de quatre critères, dont~:~l'\textbf{A}symétrie, la \textbf{B}ordure (irrégularités), la \textbf{C}ouleur (variations) et le \textbf{D}iamètre (supérieur à 6mm). Cet acronyme s'est étendu à un cinquième critère d'\textbf{É}volution~\cite{Abbasi2004}.
     \item de \textbf{liste}~:~de critères positifs et négatifs, correspondant à des caractéristiques rédhibitoires ou non, et amenant à un score final. Ce score varie selon la pathologie considérée et permettra d'en déduire une décision à prendre. L'un des exemples dans le cadre de lésions pigmentées est celui de MacKie en 1986~\cite{mackie1986}. Ces critères ont été révisés et se destinent néanmoins à un public expert.
@@ -134,7 +134,7 @@ Pour permettre l'identification de pathologies en dermatologie plus routinière,
 
 Ces démarches d'identification de critères clés pour parvenir à un diagnostic se sont progressivement étendues à une multitude de pathologies et de dispositifs d'analyse médicaux. Les pathologies de \gls{lm} et \gls{lmm} ne font ainsi pas exception à ce principe.\par
 
-Dans certains travaux, l'utilisation de la dermatoscopie à permis une prise en charge précoce là ou la photographie clinique n'y parvient pas~\cite{Stante2005}. C'est donc naturellement que des critères sont recherchés sur la modalité de dermatoscopie, afin d'aider le praticien à diagnostiquer cette pathologie. Des caractéristiques propres aux pathologies de \gls{lm} sont ainsi mises en avant tels qu'une importante densité vasculaire, des structures rhomboïdes rouges, des motifs en forme de cibles ou encore un assombrissement lors de l'examen par dermatoscopie~\cite{Pralong2012}. Ces critères sont visualisables sur la \Cref{fig:example_dermoscopy_pattern}. Au moment de la rédaction de ce manuscrit, un travail de recherche reprend les critères précédemment cités et propose un ensemble de critères positifs et négatifs relatés dans la \Cref{tab:dermoscopy_algorithm_lentigo}. En déterminant un seuil de score d'une valeur de 1, ce travail parvient à détecter les pathologies de \gls{lm} avec une sensibilité de 0,95 et une spécificité de 0,75 sur une base de lésions contenant 42 \gls{lm} et 123 lésions bénignes~\cite{Ozbagcivan2019}.\par
+Dans certains travaux, l'utilisation de la dermatoscopie à permis une prise en charge précoce là ou la photographie clinique n'y parvient pas~\cite{Stante2005}. C'est donc naturellement que des critères sont recherchés sur la modalité de dermatoscopie, afin d'aider le praticien à diagnostiquer cette pathologie. Des caractéristiques propres aux pathologies de \gls{lm} sont ainsi mises en avant telles qu'une importante densité vasculaire, des structures rhomboïdes rouges, des motifs en forme de cibles ou encore un assombrissement lors de l'examen par dermatoscopie~\cite{Pralong2012}. Ces critères sont visualisables sur la \Cref{fig:example_dermoscopy_pattern}. Un travail de recherche reprend les critères précédemment cités et propose un ensemble de critères positifs et négatifs relatés dans la \Cref{tab:dermoscopy_algorithm_lentigo}. En déterminant un seuil de score d'une valeur de 1, ce travail parvient à détecter les pathologies de \gls{lm} avec une sensibilité de 0,95 et une spécificité de 0,75 sur une base de lésions contenant 42 \gls{lm} et 123 lésions bénignes~\cite{Ozbagcivan2019}.\par
 
 \begin{table}[H]
     \centering
@@ -162,14 +162,14 @@ Dans certains travaux, l'utilisation de la dermatoscopie à permis une prise en 
     \end{center} 
 \end{figure}\par
 
-La modalité de \gls{mcr} n'est pas exempte de ces démarches simplifiées, notamment pour le diagnostic du \gls{lm} avec les travaux de Pellacani~\al{Pellacani2007} et de Guitera~\al{Guitera2010}. Ces deux travaux proposent sous forme de table de critères ceux jugés positifs et négatifs, dont la \Cref{tab:rcm_algorithm_lentigo} donne un aperçu de la production de ces articles. Leur étude comptabilise 81 cas de \gls{lm} et 203 lésions bénignes, sur lesquels une valeur de seuil de 2 a été jugée comme pertinente au regard de l'étude statistique menée. Celui-ci a permis de détecter avec 85~\% de sensibilité et 76~\% de spécificité les \gls{lm}.\par
+La modalité de \gls{mcr} n'est pas exempte de ces démarches simplifiées, notamment pour le diagnostic du \gls{lm} avec les travaux de Pellacani~\al{Pellacani2007} et de Guitera~\al{Guitera2010}. Ces deux articles proposent sous forme de table de critères ceux jugés positifs et négatifs, dont la \Cref{tab:rcm_algorithm_lentigo} fournit un aperçu. Leur étude comptabilise 81 cas de \gls{lm} et 203 lésions bénignes, sur lesquels une valeur de seuil de 2 a été jugée comme pertinente au regard de l'étude statistique menée. Celui-ci a permis de détecter avec 85~\% de sensibilité et 76~\% de spécificité les \gls{lm}.\par
 
 \begin{table}[H]
 \centering
     \begin{tabular}{ll}
         \toprule
         Type de caractéristiques                        & Caractéristiques                                              \\\hline
-        \multirow{2}{*}{Positives Majeures (+2 points)} & Papilles à contour faiblement définis                         \\\cline{2-2}
+        \multirow{2}{*}{Positives Majeures (+2 points)} & Papilles à contour faiblement défini                         \\\cline{2-2}
                                                         & Cellules pagétoides rondes >\SI{20}{\micro\metre}             \\\midrule
         \multirow{3}{*}{Positives Mineures (+1 points)} & Présence de cellules atypiques dans la \gls{jde}              \\\cline{2-2}
                                                         & Combinaison de follicule / cellules atypique / pagétoide      \\\cline{2-2}
@@ -182,7 +182,7 @@ La modalité de \gls{mcr} n'est pas exempte de ces démarches simplifiées, nota
  
 Ainsi, une caractéristique a été déterminée comme pertinente par leurs auteurs lorsque celle-ci s'exprimait de manière plus significative dans l'un des deux groupes pathologiques (\gls{lm} ou bénin). L'un de ces travaux~\cite{Guitera2010} procède à une analyse de ces caractéristiques par profondeur croissante de la peau, dont peuvent être cités les éléments majeurs suivants~:
 \begin{itemize}
-    \item au niveau de \textbf{l'épiderme}, les auteurs ont constaté que les pathologies de \gls{lm} comportent un désordre des cellules de l'épiderme (56~\% des lésions \gls{lm} contre 18~\% des lésions bénignes). Également, une infiltration pagétoïde a été reportée dans la plupart des cas de \gls{lm} (75~\% des lésions \gls{lm} contre 28~\% des lésions bénignes). En opposition, un épiderme homogène, caractérisé par des motifs en nid d'abeilles, a été constatés dans 92~\% des cas bénins. Ces éléments peuvent être observés sur la \Cref{fig:example_rcm_pattern_1}.
+    \item au niveau de \textbf{l'épiderme}, les auteurs ont constaté que les pathologies de \gls{lm} comportent un désordre des cellules de l'épiderme (56~\% des lésions \gls{lm} contre 18~\% des lésions bénignes). Également, une infiltration pagétoïde a été reportée dans la plupart des cas de \gls{lm} (75~\% des lésions \gls{lm} contre 28~\% des lésions bénignes). En opposition, un épiderme homogène, caractérisé par des motifs en nid d'abeilles, a été constaté dans 92~\% des cas bénins. Ces éléments peuvent être observés sur la \Cref{fig:example_rcm_pattern_1}.
     \item au niveau de la \textbf{\gls{jde}}, les auteurs ont constaté que les papilles non démarquées étaient observées dans la majorité des \gls{lm} (68~\% \gls{lm} and in 17~\% des cas bénins). Ces éléments peuvent être observés sur la \Cref{fig:example_rcm_pattern_2}.
     \item au niveau du \textbf{derme}, 15~\% des cas de \gls{lm} présentent des cellules nucléées larges contre 2~\% des lésions bénignes. Ces éléments peuvent être observés sur la \Cref{fig:example_rcm_pattern_3}.
 \end{itemize}\par
@@ -205,7 +205,7 @@ Dans l'étude menée par Cinotti~\al{Cinotti2018}, les auteurs investigateurs on
 \begin{figure}[p]
     \begin{center}
         \includegraphics[width=\linewidth]{contents/chapter_4/resources/example_rcm_pattern_2.pdf}
-        \caption{Exemples de cas de données cliniques \gls{mcr} par Guitera~\al{Guitera2010}. En a) et au niveau de la flèche, exemple de papille à frontière non marquée (\textit{Nonedge papillae}) et de cellules atypiques d'un \gls{lm} acquise à la jonction \gls{jde}~;~En b), exemple de papilles à frontières marquées (\textit{Edge papillae}) d'une pathologie bénigne. En c), exemple de cellules atypiques au niveau de la \gls{jde} typique de \gls{lm}~;~En d), exemple de halo noir autour de cellules atypiques de l'épiderme issu d'un \gls{lm}. Repère~:~barre = \SI{50}{\micro\metre}.}
+        \caption{Exemples de cas de données cliniques \gls{mcr} par Guitera~\al{Guitera2010}. En a) et au niveau de la flèche, exemple de papille à frontières non marquées (\textit{Nonedge papillae}) et de cellules atypiques d'un \gls{lm} acquise à la jonction \gls{jde}~;~En b), exemple de papilles à frontières marquées (\textit{Edge papillae}) d'une pathologie bénigne. En c), exemple de cellules atypiques au niveau de la \gls{jde} typique de \gls{lm}~;~En d), exemple de halo noir autour de cellules atypiques de l'épiderme issu d'un \gls{lm}. Repère~:~barre = \SI{50}{\micro\metre}.}
         \label{fig:example_rcm_pattern_2}
     \end{center} 
 \end{figure}\par
